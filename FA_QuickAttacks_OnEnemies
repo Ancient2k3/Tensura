@@ -24,7 +24,7 @@ _G.Method = 2
 local Its_Disable_ATKEnemies, _WaitTime_Enemies
 
 Its_Disable_ATKEnemies = false
-_WaitTime_Enemies = 0.05
+_WaitTime_Enemies = 0.0001
 
 -- Function --
 function IsAlive(Character)
