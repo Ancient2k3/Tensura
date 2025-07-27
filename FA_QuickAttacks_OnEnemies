@@ -106,7 +106,9 @@ RunService.RenderStepped:Connect(function()
         if not _G.SuperFastAttack_Enemies then
             AttackNoCD(0.3)
         else
-            AttackNoCD(0.0002)
+            for x = 1, 5 do
+                task.spawn(AttackNoCD, 0.3)
+            end
         end
         wait(_WaitTime_Enemies)
     end
