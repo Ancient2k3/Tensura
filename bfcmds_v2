@@ -540,7 +540,7 @@ function EveryCommands()
             _ToPos(CFrame.new(-4608, 873, -1668), 5)
             task.wait()
             _ToPart("Seconds_Sea_NPC", Vector3.new(0, 2.5, 0))
-            _InvokeServer("CommF_", "Second Sea", "TravelDressora")
+            _InvokeServer("CommF_", "Second Sea", "TravelDressrosa")
         elseif Scripts_Cmds[2] == "3" then
             _InvokeServer("CommF_", "Final Sea", "TravelZou")
         end
