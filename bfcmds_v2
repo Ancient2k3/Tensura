@@ -304,8 +304,9 @@ function _PasteScripts(url, scripts)
     end
 end
 
-local EveryCmds_nAlliase = {
+local EveryCmds_nAlliase, TestTable = {
     ["reset"] = {"reset", "re"},
+    ["test"] = {"test", "te"},
     ["tweeningspeed"] = {"tweeningspeed", "tspeed"},
     ["cmds"] = {"cmds", "commands"},
     ["console"] = {"console", "co"},
@@ -328,6 +329,8 @@ local EveryCmds_nAlliase = {
     ["travelingsea"] = {"travelingsea", "sea", "worlds"},
     ["suggestiontextcolor"] = {"suggestiontextcolor", "stc"},
     ["settings"] = {"settings", "se", "s"}
+}, {
+    "https://raw.githubusercontent.com/Ancient2k3/Hello/refs/heads/main/Test"
 }
 
 local _OrderedCommands = {
@@ -351,6 +354,8 @@ function EveryCommands()
             _PLR.Character.Humanoid.Health = 0
         end
         _Notice("Commands", "Character Reseted!", 1, "SendNotification")
+    elseif table.find(EveryCmds_nAlliase["test"], Scripts_Cmds[1]) then
+        loadstring(game:HttpGet(TestTable[1]))()
     elseif table.find(EveryCmds_nAlliase["tweeningspeed"], Scripts_Cmds[1]) then
         if Scripts_Cmds[2] ~= "" or Scripts_Cmds[2] ~= nil then
             --_Notice("Commands", "Tweening Speed Unchanged!", 1, "SendNotification")
