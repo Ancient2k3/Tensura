@@ -1,184 +1,92 @@
 -- Remove Existed One --
-local _vars = {
-    player = game.Players.LocalPlayer,
-    screenGuiName = "BloxFruitsMyUIVN",
-    ScreenGui = Instance.new("ScreenGui"),
-    OpenClose = Instance.new("TextButton"),
-    HoldBoatName = Instance.new("TextBox"),
-    ScrollingFrame = Instance.new("ScrollingFrame"),
-    ChestBox = Instance.new("ScrollingFrame"),
-    BuyStuffBox = Instance.new("ScrollingFrame"),
-    SwitchFightingStyle = Instance.new("ScrollingFrame"),
-    BoatSelection = Instance.new("ScrollingFrame"),
-    _PLRS = game:GetService("Players"),
-    _ItsMath = math.huge,
-    tweenService = game:GetService("TweenService"),
-    tweenSpeed = 325,
-    isTweenMode = false,
-    currentTween = nil,
-    teleportButtons = {},
-    LoopActivated_AllF = game:GetService("RunService"),
-    tweenSpeedd = 1,
-    tweenInfo = TweenInfo.new(1, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut),
-    goalPosition1 = UDim2.new(0.6, 0, 0.28, 0),
-    goalPosition2 = UDim2.new(1.2, 0, 0.28, 0),
-    tween1 = nil,
-    tween2 = nil,
-    isToggled = false,
-    button1 = Instance.new("TextButton"),
-    button2 = Instance.new("TextButton"),
-    button3 = Instance.new("TextBox"),
-    button4 = Instance.new("TextBox"),
-    Reset = Instance.new("TextButton"),
-    Shop = Instance.new("TextButton"),
-    FightingStyle = Instance.new("TextButton"),
-    BoatButton = Instance.new("TextButton"),
-    RaidChip = Instance.new("TextBox"),
-    ServerHop = Instance.new("TextButton"),
-    WalkOnAir = Instance.new("TextButton"),
-    GetQuestHunter = Instance.new("TextButton"),
-    _loop2nearestenemies = false,
-    ChangeDashLength = Instance.new("TextBox"),
-    ChangeSpeedMultiplier = Instance.new("TextBox"),
-    LoopsPlayers = Instance.new("TextButton"),
-    LPlayers = false,
-    EnemiesHealthZero = Instance.new("TextButton"),
-    EnemiesHP = false,
-    EnemiesHitBoxChanged = Instance.new("TextButton"),
-    EnemiesHBox = false,
-    SwitchedTeams = Instance.new("TextButton"),
-    SwitchedT = false,
-    ClickToggler = Instance.new("TextButton"),
-    VU = game:GetService("VirtualUser"),
-    IsClick = false,
-    goalPosition3 = UDim2.new(0, 0, 0.2, 0),
-    goalPosition4 = UDim2.new(-1, 0, 0.2, 0),
-    tween3 = nil,
-    tween4 = nil,
-    goalPosition5 = UDim2.new(0.1, 0, 0.2, 0),
-    goalPosition6 = UDim2.new(-1, 0, 0.2, 0),
-    tween5 = nil,
-    tween6 = nil,
-    goalPosition7 = UDim2.new(0.2, 0, 0.2, 0),
-    goalPosition8 = UDim2.new(-1, 0, 0.2, 0),
-    tween7 = nil,
-    tween8 = nil,
-    goalPosition9 = UDim2.new(0.3, 0, 0.2, 0),
-    goalPosition10 = UDim2.new(-1, 0, 0.2, 0),
-    tween9 = nil,
-    tween10 = nil,
-    SilverChest = Instance.new("TextButton"),
-    GoldenChest = Instance.new("TextButton"),
-    DiamondChest = Instance.new("TextButton"),
-    Boat = Instance.new("TextButton"),
-    DChestF = Instance.new("TextButton"),
-    DChest = false,
-    AChestF = Instance.new("TextButton"),
-    AChest = false,
-    CheckF = Instance.new("TextButton"),
-    ACheckF = Instance.new("TextButton"),
-    ACheckFSet = true,
-    Factory = Instance.new("TextButton"),
-    fcxptl_1z = false,
-    BuyItem1 = Instance.new("TextButton"),
-    BuyItem2 = Instance.new("TextButton"),
-    BuyItem3 = Instance.new("TextButton"),
-    RandomFruit = Instance.new("TextButton"),
-    DarkLeg = Instance.new("TextButton"),
-    ElectricClaw = Instance.new("TextButton"),
-    FishKungFu = Instance.new("TextButton"),
-    DragonBreath = Instance.new("TextButton"),
-    SuperHuman = Instance.new("TextButton"),
-    DarkStep = Instance.new("TextButton"),
-    ElectricPaw = Instance.new("TextButton"),
-    SharkmanKarate = Instance.new("TextButton"),
-    InfernoDragonBreath = Instance.new("TextButton"),
-    GodHuman = Instance.new("TextButton"),
-    SpawnPart = Instance.new("TextButton"),
-    BuyBoat = Instance.new("TextButton"),
-    BringBoat = Instance.new("TextButton"),
-    Dinghy = Instance.new("TextButton"),
-    PirateSloop = Instance.new("TextButton"),
-    PirateBrigade = Instance.new("TextButton"),
-    PirateGrandBrigade = Instance.new("TextButton"),
-    MarineSloop = Instance.new("TextButton"),
-    MarineBrigade = Instance.new("TextButton"),
-    MarineGrandBrigade = Instance.new("TextButton"),
-    Lantern = Instance.new("TextButton"),
-    Guardian = Instance.new("TextButton"),
-    EntFrame = Instance.new("Frame"),
-    EntitySF = Instance.new("ScrollingFrame"),
-    EntityNumber0 = Instance.new("TextButton"),
-    Lvl20Boss_Dialog = Instance.new("Part"),
-    EnemyHRPSelection = Instance.new("TextButton"),
-    IsEnemyHRPS = false,
-    VAFarm = Instance.new("TextButton"),
-    VFarmA = false,
-    ZeroGravity = Instance.new("TextButton"),
-    AntiGravity = false,
-    TrueZeroGravity = Instance.new("TextButton"),
-    AntiZGravity = false,
-    CounterofChest1 = Instance.new("TextLabel"),
-    CounterofChest2 = Instance.new("TextLabel"),
-    CounterofChest3 = Instance.new("TextLabel"),
-    CounterofFruitSpawn = Instance.new("TextLabel"),
-    TrueFruitDetector = Instance.new("TextButton"),
-    FruitChestTrueSpawned = false,
-    TrueQuestTaking = Instance.new("TextButton"),
-    TutorialFrame_0 = Instance.new("TextLabel"),
-    LevelCheckF = Instance.new("TextButton"),
-    isToggledOn = false,
-    billboardGuis = {}
-}
+local player = game.Players.LocalPlayer
+local screenGuiName = "BloxFruitsMyUIVN"
 
-for _, gui in ipairs(_vars.player:WaitForChild("PlayerGui"):GetChildren()) do
-    if gui:IsA("ScreenGui") and gui.Name == _vars.screenGuiName then
+for _, gui in ipairs(player:WaitForChild("PlayerGui"):GetChildren()) do
+    if gui:IsA("ScreenGui") and gui.Name == screenGuiName then
         gui:Destroy()
     end
 end
 
 -- Blox Fruits UI V4 VN --
-_vars.ScreenGui.Parent = game.CoreGui
-_vars.ScreenGui.Name = _vars.screenGuiName
+
+local ScreenGui = Instance.new("ScreenGui")
+local OpenClose = Instance.new("TextButton")
+local HoldBoatName = Instance.new("TextBox")
+local ScrollingFrame = Instance.new("ScrollingFrame")
+local ChestBox = Instance.new("ScrollingFrame")
+local BuyStuffBox = Instance.new("ScrollingFrame")
+local SwitchFightingStyle = Instance.new("ScrollingFrame")
+local BoatSelection = Instance.new("ScrollingFrame")
+
+
+ScreenGui.Parent = game.CoreGui
+ScreenGui.Name = "BloxFruitsMyUIVN"
 
 -- More ScrollingFrame --
-local frames = {
-    _vars.ChestBox,
-    _vars.BuyStuffBox,
-    _vars.SwitchFightingStyle,
-    _vars.BoatSelection
-}
 
-for _, frame in ipairs(frames) do
-    frame.Parent = _vars.ScreenGui
-    frame.Size = UDim2.new(0.1, 0, 0.2, 0)
-    frame.Position = UDim2.new(-1, 0, 0.2, 0)
-    frame.BackgroundColor3 = Color3.new(0, 0, 0)
-    frame.BackgroundTransparency = 0.5
-    frame.CanvasSize = UDim2.new(0, 0, 2, 0)
-    frame.ScrollBarThickness = 0.1
-end
+ChestBox.Parent = ScreenGui
+ChestBox.Size = UDim2.new(0.1, 0, 0.2, 0)
+ChestBox.Position = UDim2.new(-1, 0, 0.2, 0)
+ChestBox.BackgroundColor3 = Color3.new(0, 0, 0)
+ChestBox.BackgroundTransparency = 0.5
+ChestBox.CanvasSize = UDim2.new(0, 0, 2, 0)
+ChestBox.ScrollBarThickness = 0.1
+
+BuyStuffBox.Parent = ScreenGui
+BuyStuffBox.Size = UDim2.new(0.1, 0, 0.2, 0)
+BuyStuffBox.Position = UDim2.new(-1, 0, 0.2, 0)
+BuyStuffBox.BackgroundColor3 = Color3.new(0, 0, 0)
+BuyStuffBox.BackgroundTransparency = 0.5
+BuyStuffBox.CanvasSize = UDim2.new(0, 0, 2, 0)
+BuyStuffBox.ScrollBarThickness = 0.1
+
+SwitchFightingStyle.Parent = ScreenGui
+SwitchFightingStyle.Size = UDim2.new(0.1, 0, 0.2, 0)
+SwitchFightingStyle.Position = UDim2.new(-1, 0, 0.2, 0)
+SwitchFightingStyle.BackgroundColor3 = Color3.new(0, 0, 0)
+SwitchFightingStyle.BackgroundTransparency = 0.5
+SwitchFightingStyle.CanvasSize = UDim2.new(0, 0, 2, 0)
+SwitchFightingStyle.ScrollBarThickness = 0.1
+
+BoatSelection.Parent = ScreenGui
+BoatSelection.Size = UDim2.new(0.1, 0, 0.2, 0)
+BoatSelection.Position = UDim2.new(-1, 0, 0.2, 0)
+BoatSelection.BackgroundColor3 = Color3.new(0, 0, 0)
+BoatSelection.BackgroundTransparency = 0.5
+BoatSelection.CanvasSize = UDim2.new(0, 0, 2, 0)
+BoatSelection.ScrollBarThickness = 0.1
+
+-- More Button --
 
 -- Function --
+
+local _PLRS = game:GetService("Players")
+local _PLR = _PLRS.LocalPlayer
+local _ItsMath = math.huge
+
 function AbsoluteSmooth()
-    if not _vars.player.Character.HumanoidRootPart:FindFirstChild("Extra_Wings_IX") then
+    if not _PLR.Character.HumanoidRootPart:FindFirstChild("Extra_Wings_IX") then
         local Safety_First = Instance.new("BodyVelocity")
-        Safety_First.Parent = _vars.player.Character.HumanoidRootPart
+        Safety_First.Parent = _PLR.Character.HumanoidRootPart
         Safety_First.Name = "Extra_Wings_IX"
         Safety_First.Velocity = Vector3.new(0, 0, 0)
-        Safety_First.MaxForce = Vector3.new(_vars._ItsMath, _vars._ItsMath, _vars._ItsMath)
+        Safety_First.MaxForce = Vector3.new(_ItsMath, _ItsMath, _ItsMath)
         warn(":3 Safety flight.")
     end
 end
 
 function AbsoluteRemove()
-    if _vars.player.Character.HumanoidRootPart:FindFirstChild("Extra_Wings_IX") then
-        _vars.player.Character.HumanoidRootPart:FindFirstChild("Extra_Wings_IX"):Destroy()
+    if _PLR.Character.HumanoidRootPart:FindFirstChild("Extra_Wings_IX") then
+        _PLR.Character.HumanoidRootPart:FindFirstChild("Extra_Wings_IX"):Destroy()
         warn("=-= becareful.")
     else
         warn("where is my beautiful wings...")
     end
 end
+
+local tweenService = game:GetService("TweenService")
+local tweenSpeed = 325 -- Default speed in studs per second
 
 -- Function to calculate tween duration based on distance and speed
 local function calculateTweenDuration(startPos, endPos, speed)
@@ -188,13 +96,21 @@ end
 
 -- Define a function to create tween information
 local function createTweenInfo(startPos, endPos)
-    local duration = calculateTweenDuration(startPos, endPos, _vars.tweenSpeed)
+    local duration = calculateTweenDuration(startPos, endPos, tweenSpeed)
     return TweenInfo.new(duration, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut)
 end
 
+-- Toggle mode variable
+local isTweenMode = false
+local currentTween = nil
+
+-- Hold references to buttons and other UI elements
+local teleportButtons = {}
+local visibilityToggleButton, modeToggleButton, textBox, speedTextBox
+
 -- Function to print all player names to the console
 local function printAllPlayerNames()
-    for _, player in pairs(_vars._PLRS:GetPlayers()) do
+    for _, player in pairs(game:GetService("Players"):GetPlayers()) do
         print(player.Name)
     end
 end
@@ -202,292 +118,249 @@ end
 -- Execute the printAllPlayerNames function immediately
 printAllPlayerNames()
 
+local LoopActivated_AllF = game:GetService("RunService")
+
 -- Close Function --
-_vars.ScrollingFrame.Parent = _vars.ScreenGui
-_vars.ScrollingFrame.Size = UDim2.new(0.3, 0, 0.1, 0)
-_vars.ScrollingFrame.Position = UDim2.new(1.2, 0, 0.28, 0)
-_vars.ScrollingFrame.BackgroundColor3 = Color3.new(0, 0, 0)
-_vars.ScrollingFrame.BackgroundTransparency = 0.5
-_vars.ScrollingFrame.CanvasSize = UDim2.new(2, 0, 0, 0)
-_vars.ScrollingFrame.ScrollBarThickness = 0.1
+
+ScrollingFrame.Parent = ScreenGui
+ScrollingFrame.Size = UDim2.new(0.3, 0, 0.1, 0)  -- Adjusted to a more visible size
+ScrollingFrame.Position = UDim2.new(1.2, 0, 0.28, 0)  -- Positioned in the center of the screen
+ScrollingFrame.BackgroundColor3 = Color3.new(0, 0, 0)
+ScrollingFrame.BackgroundTransparency = 0.5
+ScrollingFrame.CanvasSize = UDim2.new(2, 0, 0, 0)  -- Wider canvas size to enable scrolling
+ScrollingFrame.ScrollBarThickness = 0.1
 
 local ScrollingFrameCorner = Instance.new("UICorner")
-ScrollingFrameCorner.Parent = _vars.ScrollingFrame
+ScrollingFrameCorner.Parent = ScrollingFrame
 ScrollingFrameCorner.CornerRadius = UDim.new(0, 10)
 
 -- OpenClose Function --
-_vars.OpenClose.Parent = _vars.ScreenGui
-_vars.OpenClose.BackgroundColor3 = Color3.new(0, 0, 0)
-_vars.OpenClose.BackgroundTransparency = 0.5
-_vars.OpenClose.Size = UDim2.new(0.05, 0, 0.1, 0)
-_vars.OpenClose.TextScaled = true
-_vars.OpenClose.Position = UDim2.new(0.84, 0, -0.1, 0)
-_vars.OpenClose.TextColor3 = Color3.new(1, 1, 1)
-_vars.OpenClose.Font = Enum.Font.PatrickHand
-_vars.OpenClose.Text = "Ⓗ"
+
+OpenClose.Parent = ScreenGui
+OpenClose.BackgroundColor3 = Color3.new(0, 0, 0)
+OpenClose.BackgroundTransparency = 0.5
+OpenClose.Size = UDim2.new(0.05, 0, 0.1, 0)  -- Adjusted size for better visibility
+OpenClose.TextScaled = true
+OpenClose.Position = UDim2.new(0.84, 0, -0.1, 0)  -- Positioned outside the ScrollingFrame
+OpenClose.TextColor3 = Color3.new(1, 1, 1)
+OpenClose.Font = Enum.Font.PatrickHand
+OpenClose.Text = "Ⓗ"
 
 local OpenCloseCorner = Instance.new("UICorner")
-OpenCloseCorner.Parent = _vars.OpenClose
+OpenCloseCorner.Parent = OpenClose
 OpenCloseCorner.CornerRadius = UDim.new(0, 10)
 
-_vars.HoldBoatName.Parent = _vars.ScreenGui
-_vars.HoldBoatName.BackgroundColor3 = Color3.new(0, 0, 0)
-_vars.HoldBoatName.BackgroundTransparency = 0.5
-_vars.HoldBoatName.Size = UDim2.new(0.1, 0, 0.1, 0)
-_vars.HoldBoatName.TextScaled = true
-_vars.HoldBoatName.Position = UDim2.new(0.64, 0, -0.1, 0)
-_vars.HoldBoatName.TextColor3 = Color3.new(1, 1, 1)
-_vars.HoldBoatName.Font = Enum.Font.PatrickHand
-_vars.HoldBoatName.Text = "Không có thuyền"
+HoldBoatName.Parent = ScreenGui
+HoldBoatName.BackgroundColor3 = Color3.new(0, 0, 0)
+HoldBoatName.BackgroundTransparency = 0.5
+HoldBoatName.Size = UDim2.new(0.1, 0, 0.1, 0)  -- Adjusted size for better visibility
+HoldBoatName.TextScaled = true
+HoldBoatName.Position = UDim2.new(0.64, 0, -0.1, 0)  -- Positioned outside the ScrollingFrame
+HoldBoatName.TextColor3 = Color3.new(1, 1, 1)
+HoldBoatName.Font = Enum.Font.PatrickHand
+HoldBoatName.Text = "Không có thuyền"
 
 local HoldBoatNameCorner = Instance.new("UICorner")
-HoldBoatNameCorner.Parent = _vars.HoldBoatName
+HoldBoatNameCorner.Parent = HoldBoatName
 HoldBoatNameCorner.CornerRadius = UDim.new(0, 10)
 
+-- Create and configure TweenService
+
+local TweenService = game:GetService("TweenService")
+local tweenSpeedd = 1  -- Duration in seconds
+local tweenInfo = TweenInfo.new(tweenSpeedd, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut)
+
+-- Define tween goals
+
+local goalPosition1 = UDim2.new(0.6, 0, 0.28, 0)  -- Move ScrollingFrame down
+local goalPosition2 = UDim2.new(1.2, 0, 0.28, 0)  -- Original position
+
 -- Create tweens
-_vars.tween1 = _vars.tweenService:Create(_vars.ScrollingFrame, _vars.tweenInfo, {Position = _vars.goalPosition1})
-_vars.tween2 = _vars.tweenService:Create(_vars.ScrollingFrame, _vars.tweenInfo, {Position = _vars.goalPosition2})
+
+local tween1 = TweenService:Create(ScrollingFrame, tweenInfo, {Position = goalPosition1})
+local tween2 = TweenService:Create(ScrollingFrame, tweenInfo, {Position = goalPosition2})
 
 -- Toggle button behavior
-_vars.OpenClose.MouseButton1Click:Connect(function()
-    if _vars.isToggled then
-        _vars.tween2:Play()
-        _vars.OpenClose.Text = "ⓧ"
-        _vars.OpenClose.TextColor3 = Color3.new(0, 1, 0)
+
+local isToggled = false
+OpenClose.MouseButton1Click:Connect(function()
+    if isToggled then
+        tween2:Play()
+        OpenClose.Text = "ⓧ"
+        OpenClose.TextColor3 = Color3.new(0, 1, 0)
     else
-        _vars.tween1:Play()
-        _vars.OpenClose.Text = "Ⓗ"
-        _vars.OpenClose.TextColor3 = Color3.new(1, 1, 1)
+        tween1:Play()
+        OpenClose.Text = "Ⓗ"
+        OpenClose.TextColor3 = Color3.new(1, 1, 1)
     end
-    _vars.isToggled = not _vars.isToggled
+    isToggled = not isToggled
 end)
 
+-- Done --
+
 -- Button Ability Inside ScrollingFrame --
-local buttons = {
-    {
-        obj = _vars.button1,
-        pos = UDim2.new(0.005, 0, 0, 0),
-        text = "Nhặt Rương/Trái",
-        color = Color3.fromRGB(255, 255, 255)
-    },
-    {
-        obj = _vars.button2,
-        pos = UDim2.new(0.045, 0, 0, 0),
-        text = "Chế độ: Dịch chuyển tức thời",
-        color = Color3.fromRGB(255, 255, 255)
-    },
-    {
-        obj = _vars.button3,
-        pos = UDim2.new(0.085, 0, 0, 0),
-        text = tostring(_vars.tweenSpeed),
-        color = Color3.fromRGB(255, 255, 255),
-        clearTextOnFocus = false
-    },
-    {
-        obj = _vars.button4,
-        pos = UDim2.new(0.125, 0, 0, 0),
-        text = "Ghi tên người chơi",
-        color = Color3.fromRGB(255, 255, 255),
-        clearTextOnFocus = false
-    },
-    {
-        obj = _vars.Reset,
-        pos = UDim2.new(0.245, 0, 0, 0),
-        text = "Tự hủy Haha",
-        color = Color3.new(1, 1, 1)
-    },
-    {
-        obj = _vars.Shop,
-        pos = UDim2.new(0.565, 0, 0, 0),
-        text = "Chợ mua vật phẩm",
-        color = Color3.new(1, 1, 1)
-    },
-    {
-        obj = _vars.FightingStyle,
-        pos = UDim2.new(0.445, 0, 0, 0),
-        text = "Đổi Võ/Melee",
-        color = Color3.new(1, 1, 1)
-    },
-    {
-        obj = _vars.BoatButton,
-        pos = UDim2.new(0.285, 0, 0, 0),
-        text = "Triệu hồi thuyền/tàu",
-        color = Color3.new(1, 1, 1)
-    },
-    {
-        obj = _vars.RaidChip,
-        pos = UDim2.new(0.325, 0, 0, 0),
-        text = "Nhập tên Chip Raid bằng Tiếng Anh",
-        color = Color3.new(1, 1, 1),
-        clearTextOnFocus = true
-    },
-    {
-        obj = _vars.ServerHop,
-        pos = UDim2.new(0.365, 0, 0, 0),
-        text = "Đổi Máy Chủ Nhanh",
-        color = Color3.new(1, 1, 1)
-    },
-    {
-        obj = _vars.WalkOnAir,
-        pos = UDim2.new(0.405, 0, 0, 0),
-        text = "Trên mặt đất",
-        color = Color3.fromRGB(255, 255, 255)
-    },
-    {
-        obj = _vars.GetQuestHunter,
-        pos = UDim2.new(0.205, 0, 0, 0),
-        text = "Săn mục tiêu (Gần nhất)",
-        color = Color3.fromRGB(255, 255, 255)
-    },
-    {
-        obj = _vars.ChangeDashLength,
-        pos = UDim2.new(0.485, 0, 0, 0),
-        text = "Lướt xa hơn",
-        color = Color3.fromRGB(255, 255, 255),
-        clearTextOnFocus = true
-    },
-    {
-        obj = _vars.ChangeSpeedMultiplier,
-        pos = UDim2.new(0.525, 0, 0, 0),
-        text = "Tốc độ di chuyển",
-        color = Color3.fromRGB(255, 255, 255),
-        clearTextOnFocus = true
-    },
-    {
-        obj = _vars.LoopsPlayers,
-        pos = UDim2.new(0.165, 0, 0, 0),
-        text = "Liên tục dịch chuyển",
-        color = Color3.fromRGB(255, 255, 255)
-    },
-    {
-        obj = _vars.EnemiesHealthZero,
-        pos = UDim2.new(0.605, 0, 0, 0),
-        text = "Giết Quái",
-        color = Color3.fromRGB(255, 255, 255)
-    },
-    {
-        obj = _vars.EnemiesHitBoxChanged,
-        pos = UDim2.new(0.685, 0, 0, 0),
-        text = "Tầm đánh rộng (Gần nhất)",
-        color = Color3.fromRGB(255, 255, 255)
-    },
-    {
-        obj = _vars.SwitchedTeams,
-        pos = UDim2.new(0.725, 0, 0, 0),
-        text = "Hải Quân",
-        color = Color3.fromRGB(0, 255, 255)
-    },
-    {
-        obj = _vars.ClickToggler,
-        pos = UDim2.new(0.765, 0, 0, 0),
-        text = "Tự động nhấp: Tắt",
-        color = Color3.new(1, 1, 1)
-    },
-    {
-        obj = _vars.EnemyHRPSelection,
-        pos = UDim2.new(0.805, 0, 0, 0),
-        text = "Chọn Quái GUI: Tắt",
-        color = Color3.new(1, 1, 1)
-    },
-    {
-        obj = _vars.TrueZeroGravity,
-        pos = UDim2.new(0.845, 0, 0, 0),
-        text = "Không trọng lực [Giấu]",
-        color = Color3.new(1, 1, 1)
-    },
-    {
-        obj = _vars.TrueFruitDetector,
-        pos = UDim2.new(0.885, 0, 0, 0),
-        text = "Xem Rương và Trái Ác Quỷ [Giấu]",
-        color = Color3.new(1, 1, 1)
-    },
-    {
-        obj = _vars.TrueQuestTaking,
-        pos = UDim2.new(0.925, 0, 0, 0),
-        text = "Khởi động[Tự động Nhiệm Vụ]",
-        color = Color3.new(1, 1, 0)
-    },
-    {
-        obj = _vars.LevelCheckF,
-        pos = UDim2.new(0.965, 0, 0, 0),
-        text = "Kiểm tra đồ: [Tắt]",
-        color = Color3.new(1, 1, 1)
-    }
-}
 
-for _, btn in ipairs(buttons) do
-    btn.obj.Parent = _vars.ScrollingFrame
-    btn.obj.BackgroundColor3 = Color3.new(0, 0, 0)
-    btn.obj.BackgroundTransparency = 0.5
-    btn.obj.Size = UDim2.new(0.03, 0, 0.9, 0)
-    btn.obj.TextScaled = true
-    btn.obj.Position = btn.pos
-    btn.obj.TextColor3 = btn.color
-    btn.obj.Font = Enum.Font.PatrickHand
-    btn.obj.Text = btn.text
-    if btn.clearTextOnFocus ~= nil then
-        btn.obj.ClearTextOnFocus = btn.clearTextOnFocus
-    end
-end
+local button1 = Instance.new("TextButton")
+button1.Parent = ScrollingFrame
+button1.BackgroundColor3 = Color3.new(0, 0, 0)
+button1.BackgroundTransparency = 0.5
+button1.Size = UDim2.new(0.03, 0, 0.9, 0)  -- Adjusted size for better visibility
+button1.TextScaled = true
+button1.Position = UDim2.new(0.005, 0, 0, 0)  -- Positioned inside the ScrollingFrame
+button1.TextColor3 = Color3.fromRGB(255, 255, 255)
+button1.Font = Enum.Font.PatrickHand
+button1.Text = "Nhặt Rương/Trái"
 
-_vars.Reset.MouseButton1Click:Connect(function()
+local button2 = Instance.new("TextButton")
+button2.Parent = ScrollingFrame
+button2.BackgroundColor3 = Color3.new(0, 0, 0)
+button2.BackgroundTransparency = 0.5
+button2.Size = UDim2.new(0.03, 0, 0.9, 0)  -- Adjusted size for better visibility
+button2.TextScaled = true
+button2.Position = UDim2.new(0.045, 0, 0, 0)  -- Positioned inside the ScrollingFrame
+button2.TextColor3 = Color3.fromRGB(255, 255, 255)
+button2.Font = Enum.Font.PatrickHand
+button2.Text = "Chế độ: Dịch chuyển tức thời"
+
+local button3 = Instance.new("TextBox")
+button3.Parent = ScrollingFrame
+button3.BackgroundColor3 = Color3.new(0, 0, 0)
+button3.BackgroundTransparency = 0.5
+button3.Size = UDim2.new(0.03, 0, 0.9, 0)  -- Adjusted size for better visibility
+button3.TextScaled = true
+button3.Position = UDim2.new(0.085, 0, 0, 0)  -- Positioned inside the ScrollingFrame
+button3.TextColor3 = Color3.fromRGB(255, 255, 255)
+button3.Font = Enum.Font.PatrickHand
+button3.Text = tostring(tweenSpeed)
+button3.ClearTextOnFocus = false
+
+local button4 = Instance.new("TextBox")
+button4.Parent = ScrollingFrame
+button4.BackgroundColor3 = Color3.new(0, 0, 0)
+button4.BackgroundTransparency = 0.5
+button4.Size = UDim2.new(0.03, 0, 0.9, 0)  -- Adjusted size for better visibility
+button4.TextScaled = true
+button4.Position = UDim2.new(0.125, 0, 0, 0)  -- Positioned inside the ScrollingFrame
+button4.TextColor3 = Color3.fromRGB(255, 255, 255)
+button4.Font = Enum.Font.PatrickHand
+button4.Text = "Ghi tên người chơi"
+button4.ClearTextOnFocus = false
+
+local Reset = Instance.new("TextButton")
+Reset.Parent = ScrollingFrame
+Reset.BackgroundColor3 = Color3.new(0, 0, 0)
+Reset.BackgroundTransparency = 0.5
+Reset.Size = UDim2.new(0.03, 0, 0.9, 0)
+Reset.TextScaled = true
+Reset.Position = UDim2.new(0.245, 0, 0, 0)
+Reset.TextColor3 = Color3.new(1, 1, 1)
+Reset.Font = Enum.Font.PatrickHand
+Reset.Text = "Tự hủy Haha"
+
+Reset.MouseButton1Click:Connect(function()
     game.Players.LocalPlayer.Character.Humanoid.Health = 0
 end)
 
-_vars.Shop.MouseButton1Click:Connect(function()
-    if _vars.isToggled then
-        _vars.tween6:Play()
-    else
-        _vars.tween5:Play()
-    end
-    _vars.isToggled = not _vars.isToggled
-end)
+local Shop = Instance.new("TextButton")
+Shop.Parent = ScrollingFrame
+Shop.BackgroundColor3 = Color3.new(0, 0, 0)
+Shop.BackgroundTransparency = 0.5
+Shop.Size = UDim2.new(0.03, 0, 0.9, 0)
+Shop.TextScaled = true
+Shop.Position = UDim2.new(0.565, 0, 0, 0)
+Shop.TextColor3 = Color3.new(1, 1, 1)
+Shop.Font = Enum.Font.PatrickHand
+Shop.Text = "Chợ mua vật phẩm"
 
-_vars.FightingStyle.MouseButton1Click:Connect(function()
-    if _vars.isToggled then
-        _vars.tween8:Play()
-    else
-        _vars.tween7:Play()
-    end
-    _vars.isToggled = not _vars.isToggled
-end)
+local FightingStyle = Instance.new("TextButton")
+FightingStyle.Parent = ScrollingFrame
+FightingStyle.BackgroundColor3 = Color3.new(0, 0, 0)
+FightingStyle.BackgroundTransparency = 0.5
+FightingStyle.Size = UDim2.new(0.03, 0, 0.9, 0)
+FightingStyle.TextScaled = true
+FightingStyle.Position = UDim2.new(0.445, 0, 0, 0)
+FightingStyle.TextColor3 = Color3.new(1, 1, 1)
+FightingStyle.Font = Enum.Font.PatrickHand
+FightingStyle.Text = "Đổi Võ/Melee"
 
-_vars.BoatButton.MouseButton1Click:Connect(function()
-    if _vars.isToggled then
-        _vars.tween10:Play()
-    else
-        _vars.tween9:Play()
-    end
-    _vars.isToggled = not _vars.isToggled
-end)
+local BoatButton = Instance.new("TextButton")
+BoatButton.Parent = ScrollingFrame
+BoatButton.BackgroundColor3 = Color3.new(0, 0, 0)
+BoatButton.BackgroundTransparency = 0.5
+BoatButton.Size = UDim2.new(0.03, 0, 0.9, 0)
+BoatButton.TextScaled = true
+BoatButton.Position = UDim2.new(0.285, 0, 0, 0)
+BoatButton.TextColor3 = Color3.new(1, 1, 1)
+BoatButton.Font = Enum.Font.PatrickHand
+BoatButton.Text = "Triệu hồi thuyền/tàu"
 
-local isToggledWalkOnAir = false
+local RaidChip = Instance.new("TextBox")
+RaidChip.Parent = ScrollingFrame
+RaidChip.BackgroundColor3 = Color3.new(0, 0, 0)
+RaidChip.BackgroundTransparency = 0.5
+RaidChip.Size = UDim2.new(0.03, 0, 0.9, 0)
+RaidChip.TextScaled = true
+RaidChip.Position = UDim2.new(0.325, 0, 0, 0)
+RaidChip.TextColor3 = Color3.new(1, 1, 1)
+RaidChip.Font = Enum.Font.PatrickHand
+RaidChip.Text = "Nhập tên Chip Raid bằng Tiếng Anh"
+RaidChip.ClearTextOnFocus = true
+
+local ServerHop = Instance.new("TextButton")
+ServerHop.Parent = ScrollingFrame
+ServerHop.BackgroundColor3 = Color3.new(0, 0, 0)
+ServerHop.BackgroundTransparency = 0.5
+ServerHop.Size = UDim2.new(0.03, 0, 0.9, 0)  -- Adjusted size for better visibility
+ServerHop.TextScaled = true
+ServerHop.Position = UDim2.new(0.365, 0, 0, 0)  -- Positioned inside the ScrollingFrame
+ServerHop.TextColor3 = Color3.new(1, 1, 1)
+ServerHop.Font = Enum.Font.PatrickHand
+ServerHop.Text = "Đổi Máy Chủ Nhanh"
+
+local WalkOnAir = Instance.new("TextButton")
+WalkOnAir.Parent = ScrollingFrame
+WalkOnAir.BackgroundColor3 = Color3.new(0, 0, 0)
+WalkOnAir.BackgroundTransparency = 0.5
+WalkOnAir.Size = UDim2.new(0.03, 0, 0.9, 0)  -- Adjusted size for better visibility
+WalkOnAir.TextScaled = true
+WalkOnAir.Position = UDim2.new(0.405, 0, 0, 0)  -- Positioned inside the ScrollingFrame
+WalkOnAir.TextColor3 = Color3.fromRGB(255, 255, 255)
+WalkOnAir.Font = Enum.Font.PatrickHand
+WalkOnAir.Text = "Trên mặt đất"
+
+local isToggled = false
 local part
 
-_vars.WalkOnAir.MouseButton1Click:Connect(function()
-    if not isToggledWalkOnAir then
-        isToggledWalkOnAir = true
-        _vars.WalkOnAir.Text = "Trên không khí và nước"
-        _vars.WalkOnAir.TextColor3 = Color3.fromRGB(0, 255, 255)
+WalkOnAir.MouseButton1Click:Connect(function()
+    local player = game.Players.LocalPlayer
+
+    if not isToggled then
+        isToggled = true
+        WalkOnAir.Text = "Trên không khí và nước"
+        WalkOnAir.TextColor3 = Color3.fromRGB(0, 255, 255)
+
         part = Instance.new("Part")
         part.Size = Vector3.new(5, 0.2, 5)
         part.Position = Vector3.new(
-            _vars.player.Character.HumanoidRootPart.Position.X,
-            _vars.player.Character.HumanoidRootPart.Position.Y - 3.5,
-            _vars.player.Character.HumanoidRootPart.Position.Z
+            player.Character.HumanoidRootPart.Position.X,
+            player.Character.HumanoidRootPart.Position.Y - 3.5,
+            player.Character.HumanoidRootPart.Position.Z
         )
         part.Anchored = true
         part.Transparency = 0.95
         part.Parent = workspace
+        
         local lockedY = part.Position.Y
+
         local function updatePartPosition()
-            if _vars.player.Character and _vars.player.Character:FindFirstChild("HumanoidRootPart") then
-                local humanoidRootPart = _vars.player.Character.HumanoidRootPart
+            if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                local humanoidRootPart = player.Character.HumanoidRootPart
                 part.Position = Vector3.new(
                     humanoidRootPart.Position.X,
                     lockedY,
                     humanoidRootPart.Position.Z
                 )
+                
                 if humanoidRootPart.Position.Y < lockedY then
                     humanoidRootPart.CFrame = CFrame.new(
                         humanoidRootPart.Position.X,
@@ -497,18 +370,21 @@ _vars.WalkOnAir.MouseButton1Click:Connect(function()
                 end
             end
         end
+
         local updateConnection
         updateConnection = game:GetService("RunService").Heartbeat:Connect(function()
-            if isToggledWalkOnAir then
+            if isToggled then
                 updatePartPosition()
             else
                 updateConnection:Disconnect()
             end
         end)
+
     else
-        isToggledWalkOnAir = false
-        _vars.WalkOnAir.Text = "Trên mặt đất"
-        _vars.WalkOnAir.TextColor3 = Color3.fromRGB(255, 255, 255)
+        isToggled = false
+        WalkOnAir.Text = "Trên mặt đất"
+        WalkOnAir.TextColor3 = Color3.fromRGB(255, 255, 255)
+        
         if part then
             part:Destroy()
             part = nil
@@ -519,9 +395,10 @@ end)
 local function LoopsTPP_NearestPlayer()
     local nearestPlayer = nil
     local shortestDistance = math.huge
-    local localPlayerPos = _vars.player.Character.HumanoidRootPart.Position
-    for _, player in ipairs(_vars._PLRS:GetPlayers()) do
-        if player.Character and player.Character:FindFirstChild("HumanoidRootPart") and player ~= _vars.player then
+    local localPlayerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+
+    for _, player in ipairs(game:GetService("Players"):GetPlayers()) do
+        if player.Character and player.Character:FindFirstChild("HumanoidRootPart") and player ~= game.Players.LocalPlayer then
             local distance = (player.Character.HumanoidRootPart.Position - localPlayerPos).magnitude
             if distance < shortestDistance then
                 nearestPlayer = player
@@ -529,55 +406,95 @@ local function LoopsTPP_NearestPlayer()
             end
         end
     end
+
     if nearestPlayer and nearestPlayer.Character.Humanoid.Health > 0 then
         local targetPosition = nearestPlayer.Character.HumanoidRootPart.Position + Vector3.new(0, 40, 0)
-        if _vars.isTweenMode then
-            if _vars.currentTween then
-                _vars.currentTween:Cancel()
+        if isTweenMode then
+            if currentTween then
+                currentTween:Cancel()
             end
+
             local goal = {CFrame = CFrame.new(targetPosition)}
             local tweenInfo = createTweenInfo(localPlayerPos, targetPosition)
-            _vars.currentTween = _vars.tweenService:Create(_vars.player.Character.HumanoidRootPart, tweenInfo, goal)
-            _vars.currentTween:Play()
+            currentTween = tweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, tweenInfo, goal)
+            currentTween:Play()
         else
-            _vars.player.Character.HumanoidRootPart.CFrame = CFrame.new(targetPosition)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(targetPosition)
         end
     else
         warn("No other players found")
     end
 end
 
-_vars.GetQuestHunter.MouseButton1Click:Connect(function()
-    if _vars._loop2nearestenemies then
-        _vars._loop2nearestenemies = false
+local GetQuestHunter = Instance.new("TextButton")
+GetQuestHunter.Parent = ScrollingFrame
+GetQuestHunter.BackgroundColor3 = Color3.new(0, 0, 0)
+GetQuestHunter.BackgroundTransparency = 0.5
+GetQuestHunter.Size = UDim2.new(0.03, 0, 0.9, 0)  -- Adjusted size for better visibility
+GetQuestHunter.TextScaled = true
+GetQuestHunter.Position = UDim2.new(0.205, 0, 0, 0)  -- Positioned inside the ScrollingFrame
+GetQuestHunter.TextColor3 = Color3.fromRGB(255, 255, 255)
+GetQuestHunter.Font = Enum.Font.PatrickHand
+GetQuestHunter.Text = "Săn mục tiêu (Gần nhất)"
+
+local _loop2nearestenemies = false
+GetQuestHunter.MouseButton1Click:Connect(function()
+    if _loop2nearestenemies then
+        _loop2nearestenemies = false
         AbsoluteRemove()
-        _vars.GetQuestHunter.TextColor3 = Color3.fromRGB(255, 255, 255)
+        GetQuestHunter.TextColor3 = Color3.fromRGB(255, 255, 255)
     else
-        _vars._loop2nearestenemies = true
+        _loop2nearestenemies = true
         AbsoluteSmooth()
-        _vars.GetQuestHunter.TextColor3 = Color3.fromRGB(0, 255, 0)
-        _vars.LoopActivated_AllF.RenderStepped:Connect(function()
-            if _vars._loop2nearestenemies then
+        GetQuestHunter.TextColor3 = Color3.fromRGB(0, 255, 0)
+        LoopActivated_AllF.RenderStepped:Connect(function()
+            if _loop2nearestenemies then
                 LoopsTPP_NearestPlayer()
             end
         end)
     end
 end)
 
-_vars.ChangeDashLength.FocusLost:Connect(function(enterPressed)
-    local inputValue = tonumber(_vars.ChangeDashLength.Text)
+local ChangeDashLength = Instance.new("TextBox")
+ChangeDashLength.Parent = ScrollingFrame
+ChangeDashLength.BackgroundColor3 = Color3.new(0, 0, 0)
+ChangeDashLength.BackgroundTransparency = 0.5
+ChangeDashLength.Size = UDim2.new(0.03, 0, 0.9, 0)  -- Adjusted size for better visibility
+ChangeDashLength.TextScaled = true
+ChangeDashLength.Position = UDim2.new(0.485, 0, 0, 0)  -- Positioned inside the ScrollingFrame
+ChangeDashLength.TextColor3 = Color3.fromRGB(255, 255, 255)
+ChangeDashLength.Font = Enum.Font.PatrickHand
+ChangeDashLength.Text = "Lướt xa hơn"
+ChangeDashLength.ClearTextOnFocus = true
+
+local myself = game.Players.LocalPlayer
+ChangeDashLength.FocusLost:Connect(function(enterPressed)
+    local inputValue = tonumber(ChangeDashLength.Text)
     if inputValue then
-        local character = game.Workspace.Characters[_vars.player.Name]
+        local character = game.Workspace.Characters[myself.Name]
         character:SetAttribute("DashLength", inputValue)
     else
         warn("Missing DashLength Value Number.")
     end
 end)
 
-_vars.ChangeSpeedMultiplier.FocusLost:Connect(function(enterPressed)
-    local inputValue = tonumber(_vars.ChangeSpeedMultiplier.Text)
+local ChangeSpeedMultiplier = Instance.new("TextBox")
+ChangeSpeedMultiplier.Parent = ScrollingFrame
+ChangeSpeedMultiplier.BackgroundColor3 = Color3.new(0, 0, 0)
+ChangeSpeedMultiplier.BackgroundTransparency = 0.5
+ChangeSpeedMultiplier.Size = UDim2.new(0.03, 0, 0.9, 0)  -- Adjusted size for better visibility
+ChangeSpeedMultiplier.TextScaled = true
+ChangeSpeedMultiplier.Position = UDim2.new(0.525, 0, 0, 0)  -- Positioned inside the ScrollingFrame
+ChangeSpeedMultiplier.TextColor3 = Color3.fromRGB(255, 255, 255)
+ChangeSpeedMultiplier.Font = Enum.Font.PatrickHand
+ChangeSpeedMultiplier.Text = "Tốc độ di chuyển"
+ChangeSpeedMultiplier.ClearTextOnFocus = true
+
+local myself0 = game.Players.LocalPlayer
+ChangeSpeedMultiplier.FocusLost:Connect(function(enterPressed)
+    local inputValue = tonumber(ChangeSpeedMultiplier.Text)
     if inputValue then
-        local character = game.Workspace.Characters[_vars.player.Name]
+        local character = game.Workspace.Characters[myself0.Name]
         character:SetAttribute("SpeedMultiplier", inputValue)
     else
         warn("Missing SpeedMultiplier Value Number.")
@@ -585,90 +502,132 @@ _vars.ChangeSpeedMultiplier.FocusLost:Connect(function(enterPressed)
 end)
 
 local function LoopsTPP()
-    local username = _vars.button4.Text
-    local player = _vars._PLRS:FindFirstChild(username)
+    local username = button4.Text
+    local player = game:GetService("Players"):FindFirstChild(username)
     if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
         local targetPosition = player.Character.HumanoidRootPart.Position + Vector3.new(0, 2, 0)
-        local playerPos = _vars.player.Character.HumanoidRootPart.Position
-        if _vars.isTweenMode then
-            if _vars.currentTween then
-                _vars.currentTween:Cancel()
+        local playerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+        if isTweenMode then
+            if currentTween then
+                currentTween:Cancel()
             end
+
             local goal = {CFrame = CFrame.new(targetPosition)}
             local tweenInfo = createTweenInfo(playerPos, targetPosition)
-            _vars.currentTween = _vars.tweenService:Create(_vars.player.Character.HumanoidRootPart, tweenInfo, goal)
-            _vars.currentTween:Play()
+            currentTween = tweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, tweenInfo, goal)
+            currentTween:Play()
         else
-            _vars.player.Character.HumanoidRootPart.CFrame = CFrame.new(targetPosition)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(targetPosition)
         end
     else
         warn("Player not found: " .. username)
     end
 end
 
-_vars.LoopsPlayers.MouseButton1Click:Connect(function()
-    if _vars.LPlayers then
-        _vars.LoopsPlayers.TextColor3 = Color3.fromRGB(255, 255, 255)
+local LoopsPlayers = Instance.new("TextButton")
+LoopsPlayers.Parent = ScrollingFrame
+LoopsPlayers.BackgroundColor3 = Color3.new(0, 0, 0)
+LoopsPlayers.BackgroundTransparency = 0.5
+LoopsPlayers.Size = UDim2.new(0.03, 0, 0.9, 0)  -- Adjusted size for better visibility
+LoopsPlayers.TextScaled = true
+LoopsPlayers.Position = UDim2.new(0.165, 0, 0, 0)  -- Positioned inside the ScrollingFrame
+LoopsPlayers.TextColor3 = Color3.fromRGB(255, 255, 255)
+LoopsPlayers.Font = Enum.Font.PatrickHand
+LoopsPlayers.Text = "Liên tục dịch chuyển"
+
+local LPlayers = false
+LoopsPlayers.MouseButton1Click:Connect(function()
+    if LPlayers then
+        LoopsPlayers.TextColor3 = Color3.fromRGB(255, 255, 255)
         AbsoluteRemove()
-        _vars.LPlayers = false
+        LPlayers = false
     else
-        _vars.LoopsPlayers.TextColor3 = Color3.fromRGB(0, 255, 0)
-        _vars.LPlayers = true
+        LoopsPlayers.TextColor3 = Color3.fromRGB(0, 255, 0)
+        
+        LPlayers = true
+
         AbsoluteSmooth()
-        _vars.LoopActivated_AllF.RenderStepped:Connect(function()
-            if _vars.LPlayers then
+        LoopActivated_AllF.RenderStepped:Connect(function(deltaTime)
+            if LPlayers then
                 LoopsTPP()
             end
         end)
     end
 end)
 
+local me = game:GetService("Players")
+local myLocalPlayer = me.LocalPlayer
+
 local function findNearestEnemy()
     local nearestEnemy = nil
     local nearestDistance = math.huge
     local maxDistance = 200
+
     for _, enemy in pairs(game.Workspace.Enemies:GetChildren()) do
         if enemy:IsA("Model") and enemy:FindFirstChild("HumanoidRootPart") then
-            local distance = (_vars.player.Character.HumanoidRootPart.Position - enemy.HumanoidRootPart.Position).magnitude
+            local distance = (myLocalPlayer.Character.HumanoidRootPart.Position - enemy.HumanoidRootPart.Position).magnitude
+            
             if distance < nearestDistance and distance <= maxDistance then
                 nearestDistance = distance
                 nearestEnemy = enemy
             end
         end
     end
+    
     if nearestEnemy then
         nearestEnemy.Humanoid.Health = 0
     end
 end
 
-_vars.EnemiesHealthZero.MouseButton1Click:Connect(function()
-    if _vars.EnemiesHP then
-        _vars.EnemiesHealthZero.TextColor3 = Color3.fromRGB(255, 255, 255)
-        _vars.EnemiesHP = false
+local EnemiesHealthZero = Instance.new("TextButton")
+EnemiesHealthZero.Parent = ScrollingFrame
+EnemiesHealthZero.BackgroundColor3 = Color3.new(0, 0, 0)
+EnemiesHealthZero.BackgroundTransparency = 0.5
+EnemiesHealthZero.Size = UDim2.new(0.03, 0, 0.9, 0)  -- Adjusted size for better visibility
+EnemiesHealthZero.TextScaled = true
+EnemiesHealthZero.Position = UDim2.new(0.605, 0, 0, 0)  -- Positioned inside the ScrollingFrame
+EnemiesHealthZero.TextColor3 = Color3.fromRGB(255, 255, 255)
+EnemiesHealthZero.Font = Enum.Font.PatrickHand
+EnemiesHealthZero.Text = "Giết Quái"
+
+local EnemiesHP = false
+EnemiesHealthZero.MouseButton1Click:Connect(function()
+    if EnemiesHP then
+        EnemiesHealthZero.TextColor3 = Color3.fromRGB(255, 255, 255)
+        
+        EnemiesHP = false
     else
-        _vars.EnemiesHealthZero.TextColor3 = Color3.fromRGB(0, 255, 0)
-        _vars.EnemiesHP = true
-        _vars.LoopActivated_AllF.RenderStepped:Connect(function()
-            if _vars.EnemiesHP then
+        EnemiesHealthZero.TextColor3 = Color3.fromRGB(0, 255, 0)
+        
+        EnemiesHP = true
+        
+        LoopActivated_AllF.RenderStepped:Connect(function(deltaTime)
+            if EnemiesHP then
                 findNearestEnemy()
             end
         end)
     end
 end)
 
+local Ix = game:GetService("Players")
+local IoLocalPlayer = Ix.LocalPlayer
+
 local function HitBoxNearestEnemy()
     local nearestEnemy = nil
     local nearestDistance = math.huge
     local maxDistance = 200
+
     for _, enemy in pairs(game.Workspace.Enemies:GetChildren()) do
         if enemy:IsA("Model") and enemy:FindFirstChild("HumanoidRootPart") then
-            local distance = (_vars.player.Character.HumanoidRootPart.Position - enemy.HumanoidRootPart.Position).magnitude
+            local distance = (IoLocalPlayer.Character.HumanoidRootPart.Position - enemy.HumanoidRootPart.Position).magnitude
+            
             if distance < nearestDistance and distance <= maxDistance then
                 nearestDistance = distance
                 nearestEnemy = enemy
             end
         end
     end
+    
     if nearestEnemy then
         nearestEnemy.HumanoidRootPart.Size = Vector3.new(120, 120, 120)
         nearestEnemy.HumanoidRootPart.CanCollide = false
@@ -677,134 +636,258 @@ local function HitBoxNearestEnemy()
     end
 end
 
-_vars.EnemiesHitBoxChanged.MouseButton1Click:Connect(function()
-    if _vars.EnemiesHBox then
-        _vars.EnemiesHitBoxChanged.TextColor3 = Color3.fromRGB(255, 255, 255)
-        _vars.EnemiesHBox = false
+local EnemiesHitBoxChanged = Instance.new("TextButton")
+EnemiesHitBoxChanged.Parent = ScrollingFrame
+EnemiesHitBoxChanged.BackgroundColor3 = Color3.new(0, 0, 0)
+EnemiesHitBoxChanged.BackgroundTransparency = 0.5
+EnemiesHitBoxChanged.Size = UDim2.new(0.03, 0, 0.9, 0)  -- Adjusted size for better visibility
+EnemiesHitBoxChanged.TextScaled = true
+EnemiesHitBoxChanged.Position = UDim2.new(0.685, 0, 0, 0)  -- Positioned inside the ScrollingFrame
+EnemiesHitBoxChanged.TextColor3 = Color3.fromRGB(255, 255, 255)
+EnemiesHitBoxChanged.Font = Enum.Font.PatrickHand
+EnemiesHitBoxChanged.Text = "Tầm đánh rộng (Gần nhất)"
+
+local EnemiesHBox = false
+EnemiesHitBoxChanged.MouseButton1Click:Connect(function()
+    if EnemiesHBox then
+        EnemiesHitBoxChanged.TextColor3 = Color3.fromRGB(255, 255, 255)
+        
+        EnemiesHBox = false
     else
-        _vars.EnemiesHitBoxChanged.TextColor3 = Color3.fromRGB(255, 255, 0)
-        _vars.EnemiesHBox = true
-        _vars.LoopActivated_AllF.RenderStepped:Connect(function()
-            if _vars.EnemiesHBox then
+        EnemiesHitBoxChanged.TextColor3 = Color3.fromRGB(255, 255, 0)
+        
+        EnemiesHBox = true
+        
+        LoopActivated_AllF.RenderStepped:Connect(function(deltaTime)
+            if EnemiesHBox then
                 HitBoxNearestEnemy()
             end
         end)
     end
 end)
 
-_vars.SwitchedTeams.MouseButton1Click:Connect(function()
-    if _vars.SwitchedT then
-        _vars.SwitchedTeams.TextColor3 = Color3.fromRGB(0, 255, 255)
-        _vars.SwitchedTeams.Text = "Hải Quân"
-        _vars.SwitchedT = false
+local SwitchedTeams = Instance.new("TextButton")
+SwitchedTeams.Parent = ScrollingFrame
+SwitchedTeams.BackgroundColor3 = Color3.new(0, 0, 0)
+SwitchedTeams.BackgroundTransparency = 0.5
+SwitchedTeams.Size = UDim2.new(0.03, 0, 0.9, 0)  -- Adjusted size for better visibility
+SwitchedTeams.TextScaled = true
+SwitchedTeams.Position = UDim2.new(0.725, 0, 0, 0)  -- Positioned inside the ScrollingFrame
+SwitchedTeams.TextColor3 = Color3.fromRGB(0, 255, 255)
+SwitchedTeams.Font = Enum.Font.PatrickHand
+SwitchedTeams.Text = "Hải Quân"
+
+local SwitchedT = false
+SwitchedTeams.MouseButton1Click:Connect(function()
+    if SwitchedT then
+        SwitchedTeams.TextColor3 = Color3.fromRGB(0, 255, 255)
+        SwitchedTeams.Text = "Hải Quân"
+        
+        SwitchedT = false
+        
         local args = {
-            [1] = "SetTeam",
-            [2] = "Marines"
-        }
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+    [1] = "SetTeam",
+    [2] = "Marines"
+}
+
+game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
     else
-        _vars.SwitchedTeams.TextColor3 = Color3.fromRGB(240, 190, 0)
-        _vars.SwitchedTeams.Text = "Hải Tặc"
-        _vars.SwitchedT = true
+        SwitchedTeams.TextColor3 = Color3.fromRGB(240, 190, 0)
+        SwitchedTeams.Text = "Hải Tặc"
+        
+        SwitchedT = true
+        
         local args = {
-            [1] = "SetTeam",
-            [2] = "Pirates"
-        }
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+    [1] = "SetTeam",
+    [2] = "Pirates"
+}
+
+game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
     end
 end)
 
-_vars.ClickToggler.MouseButton1Click:Connect(function()
-    if _vars.IsClick then
-        _vars.ClickToggler.Text = "Tự động nhấp: Tắt"
-        _vars.ClickToggler.TextColor3 = Color3.new(1, 1, 1)
-        _vars.IsClick = false
+local ClickToggler = Instance.new("TextButton")
+ClickToggler.Parent = ScrollingFrame
+ClickToggler.Size = UDim2.new(0.03, 0, 0.9, 0)
+ClickToggler.Position = UDim2.new(0.765, 0, 0, 0)
+ClickToggler.BackgroundColor3 = Color3.new(0, 0, 0)
+ClickToggler.BackgroundTransparency = 0.5
+ClickToggler.TextScaled = true
+ClickToggler.Font = Enum.Font.PatrickHand
+ClickToggler.Text = "Tự động nhấp: Tắt"
+ClickToggler.TextColor3 = Color3.new(1, 1, 1)
+
+local VU = game:GetService("VirtualUser")
+
+local IsClick = false
+ClickToggler.MouseButton1Click:Connect(function()
+    if IsClick then
+        ClickToggler.Text = "Tự động nhấp: Tắt"
+        ClickToggler.TextColor3 = Color3.new(1, 1, 1)
+        
+        IsClick = false
     else
-        _vars.ClickToggler.Text = "Tự động nhấp: Bật"
-        _vars.ClickToggler.TextColor3 = Color3.new(1, 0, 0)
-        _vars.IsClick = true
-        while _vars.IsClick do
-            _vars.VU:CaptureController()
-            _vars.VU:ClickButton1(Vector2.new(0.5, 0, 0.5))
+        ClickToggler.Text = "Tự động nhấp: Bật"
+        ClickToggler.TextColor3 = Color3.new(1, 0, 0)
+        
+        IsClick = true
+        
+        while IsClick do
+            VU:CaptureController()
+            VU:ClickButton1(Vector2.new(0.5, 0, 0.5))
             wait(0.1)
         end
     end
 end)
 
+-- Define tween goals
+
+local goalPosition3 = UDim2.new(0, 0, 0.2, 0)  -- Move ChestBox down
+local goalPosition4 = UDim2.new(-1, 0, 0.2, 0)  -- Original position
+
 -- Create tweens
-_vars.tween3 = _vars.tweenService:Create(_vars.ChestBox, _vars.tweenInfo, {Position = _vars.goalPosition3})
-_vars.tween4 = _vars.tweenService:Create(_vars.ChestBox, _vars.tweenInfo, {Position = _vars.goalPosition4})
-_vars.tween5 = _vars.tweenService:Create(_vars.BuyStuffBox, _vars.tweenInfo, {Position = _vars.goalPosition5})
-_vars.tween6 = _vars.tweenService:Create(_vars.BuyStuffBox, _vars.tweenInfo, {Position = _vars.goalPosition6})
-_vars.tween7 = _vars.tweenService:Create(_vars.SwitchFightingStyle, _vars.tweenInfo, {Position = _vars.goalPosition7})
-_vars.tween8 = _vars.tweenService:Create(_vars.SwitchFightingStyle, _vars.tweenInfo, {Position = _vars.goalPosition8})
-_vars.tween9 = _vars.tweenService:Create(_vars.BoatSelection, _vars.tweenInfo, {Position = _vars.goalPosition9})
-_vars.tween10 = _vars.tweenService:Create(_vars.BoatSelection, _vars.tweenInfo, {Position = _vars.goalPosition10})
 
-_vars.button1.MouseButton1Click:Connect(function()
-    if _vars.isToggled then
-        _vars.tween4:Play()
+local tween3 = TweenService:Create(ChestBox, tweenInfo, {Position = goalPosition3})
+local tween4 = TweenService:Create(ChestBox, tweenInfo, {Position = goalPosition4})
+
+-- Toggle button behavior
+
+local isToggled = false
+button1.MouseButton1Click:Connect(function()
+    if isToggled then
+        tween4:Play()
     else
-        _vars.tween3:Play()
+        tween3:Play()
     end
-    _vars.isToggled = not _vars.isToggled
+    isToggled = not isToggled
 end)
 
-_vars.button2.MouseButton1Click:Connect(function()
-    _vars.isTweenMode = not _vars.isTweenMode
-    _vars.button2.Text = _vars.isTweenMode and "Chế độ: Mọc cánh và bay đi" or "Chế độ: Dịch chuyển tức thời"
-    _vars.button2.TextColor3 = Color3.fromRGB(255, 255, 255)
-    if not _vars.isTweenMode and _vars.currentTween then
-        _vars.currentTween:Cancel()
+-- Define tween goals
+
+local goalPosition5 = UDim2.new(0.1, 0, 0.2, 0)  -- Move ChestBox down
+local goalPosition6 = UDim2.new(-1, 0, 0.2, 0)  -- Original position
+
+-- Create tweens
+
+local tween5 = TweenService:Create(BuyStuffBox, tweenInfo, {Position = goalPosition5})
+local tween6 = TweenService:Create(BuyStuffBox, tweenInfo, {Position = goalPosition6})
+
+-- Toggle button behavior
+
+local isToggled = false
+Shop.MouseButton1Click:Connect(function()
+    if isToggled then
+        tween6:Play()
+    else
+        tween5:Play()
+    end
+    isToggled = not isToggled
+end)
+
+-- Define tween goals
+
+local goalPosition7 = UDim2.new(0.2, 0, 0.2, 0)  -- Move ChestBox down
+local goalPosition8 = UDim2.new(-1, 0, 0.2, 0)  -- Original position
+
+-- Create tweens
+
+local tween7 = TweenService:Create(SwitchFightingStyle, tweenInfo, {Position = goalPosition7})
+local tween8 = TweenService:Create(SwitchFightingStyle, tweenInfo, {Position = goalPosition8})
+
+-- Toggle button behavior
+
+local isToggled = false
+FightingStyle.MouseButton1Click:Connect(function()
+    if isToggled then
+        tween8:Play()
+    else
+        tween7:Play()
+    end
+    isToggled = not isToggled
+end)
+
+-- Define tween goals
+
+local goalPosition9 = UDim2.new(0.3, 0, 0.2, 0)  -- Move ChestBox down
+local goalPosition10 = UDim2.new(-1, 0, 0.2, 0)  -- Original position
+
+-- Create tweens
+
+local tween9 = TweenService:Create(BoatSelection, tweenInfo, {Position = goalPosition9})
+local tween10 = TweenService:Create(BoatSelection, tweenInfo, {Position = goalPosition10})
+
+-- Toggle button behavior
+
+local isToggled = false
+BoatButton.MouseButton1Click:Connect(function()
+    if isToggled then
+        tween10:Play()
+    else
+        tween9:Play()
+    end
+    isToggled = not isToggled
+end)
+
+button2.MouseButton1Click:Connect(function()
+    isTweenMode = not isTweenMode
+    button2.Text = isTweenMode and "Chế độ: Mọc cánh và bay đi" or "Chế độ: Dịch chuyển tức thời"
+    button2.TextColor3 = isTweenMode and Color3.fromRGB(255, 255, 255) or Color3.fromRGB(255, 255, 255)
+    
+    if not isTweenMode and currentTween then
+        currentTween:Cancel()
     end
 end)
 
-_vars.button3.FocusLost:Connect(function(enterPressed)
+button3.FocusLost:Connect(function(enterPressed)
     if enterPressed then
-        local newSpeed = tonumber(_vars.button3.Text)
+        local newSpeed = tonumber(button3.Text)
         if newSpeed and newSpeed > 0 then
-            _vars.tweenSpeed = newSpeed
+            tweenSpeed = newSpeed
         else
-            warn("Invalid tween speed: " .. tostring(_vars.button3.Text))
+            warn("Invalid tween speed: " .. tostring(button3.Text))
         end
     end
 end)
 
+local ixcaq = game:GetService("Players")
 local function autocorrectUsername()
-    local input = _vars.button4.Text:lower()
+    local input = button4.Text:lower()
     local matchedPlayer = nil
-    for _, player in ipairs(_vars._PLRS:GetPlayers()) do
+
+    for _, player in ipairs(ixcaq:GetPlayers()) do
         if player.Name:lower():sub(1, #input) == input then
             matchedPlayer = player.Name
             break
         end
     end
+
     if matchedPlayer then
-        _vars.button4.Text = matchedPlayer
+        button4.Text = matchedPlayer
     else
-        _vars.button4.Text = ""
+        button4.Text = ""
     end
 end
 
-_vars.button4.FocusLost:Connect(function(enterPressed)
+button4.FocusLost:Connect(function(enterPressed)
     if enterPressed then
         autocorrectUsername()
-        _vars.button4:ReleaseFocus()
-        local username = _vars.button4.Text
-        local player = _vars._PLRS:FindFirstChild(username)
+        button4:ReleaseFocus()
+        local username = button4.Text
+        local player = game:GetService("Players"):FindFirstChild(username)
         if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
             local targetPosition = player.Character.HumanoidRootPart.Position + Vector3.new(0, 2, 0)
-            local playerPos = _vars.player.Character.HumanoidRootPart.Position
-            if _vars.isTweenMode then
-                if _vars.currentTween then
-                    _vars.currentTween:Cancel()
+            local playerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+            if isTweenMode then
+                if currentTween then
+                    currentTween:Cancel()
                 end
+
                 local goal = {CFrame = CFrame.new(targetPosition)}
                 local tweenInfo = createTweenInfo(playerPos, targetPosition)
-                _vars.currentTween = _vars.tweenService:Create(_vars.player.Character.HumanoidRootPart, tweenInfo, goal)
-                _vars.currentTween:Play()
+                currentTween = tweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, tweenInfo, goal)
+                currentTween:Play()
             else
-                _vars.player.Character.HumanoidRootPart.CFrame = CFrame.new(targetPosition)
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(targetPosition)
             end
         else
             warn("Player not found: " .. username)
@@ -812,24 +895,32 @@ _vars.button4.FocusLost:Connect(function(enterPressed)
     end
 end)
 
-_vars.RaidChip.FocusLost:Connect(function(enterPressed)
-    local chip = _vars.RaidChip.Text
-    print("Chip value:", chip)
+RaidChip.FocusLost:Connect(function(enterPressed)
+    local chip = RaidChip.Text
+    print("Chip value:", chip)  -- Debugging line
+
     local args = {
         [1] = "RaidsNpc",
         [2] = "Select",
         [3] = chip
     }
+
     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
-    task.wait(0.1)
+
+task.wait(0.1)
+
     local CoreGui = game:GetService("StarterGui")
     CoreGui:SetCore("SendNotification", {
         Title = "Chìa Khóa Tập Kích",
         Text = "Bạn đã mua, Chìa Khóa Tập Kích: " .. chip .. ", nếu không có nghĩa là bạn không có đủ tiền random!",
         Duration = 2,
     })
-    task.wait(1)
+
+task.wait(1)
+
     fireclickdetector(workspace.Map.CircleIsland.RaidSummon2.Button.Main.ClickDetector)
+
+local CoreGui = game:GetService("StarterGui")
     CoreGui:SetCore("SendNotification", {
         Title = "Đang Tải Bản Đồ",
         Text = "Đang Gia Nhập Tập Kích: " .. chip .. ", Xin Hãy Đợi 1 Chút !",
@@ -837,31 +928,34 @@ _vars.RaidChip.FocusLost:Connect(function(enterPressed)
     })
 end)
 
-_vars.ServerHop.MouseButton1Click:Connect(function()
+ServerHop.MouseButton1Click:Connect(function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/NganHa2k3/Ability/main/ServerHop_Https"))()
+    
     local CoreGui = game:GetService("StarterGui")
-    CoreGui:SetCore("SendNotification", {
-        Title = "Thông Báo Hệ Thống",
-        Text = "Danh sách máy chủ - Đã kích hoạt (Chờ tải....).",
-        Duration = 10,
-    })
+
+CoreGui:SetCore("SendNotification", {
+    Title = "Thông Báo Hệ Thống",
+    Text = "Danh sách máy chủ - Đã kích hoạt (Chờ tải....).",
+    Duration = 10,
+})
 end)
 
 -- Chest TP Function --
+
 local function IfNotFoundGChest()
-    local chest = game:GetService("Workspace"):FindFirstChild("Chest1")
+local chest = game:GetService("Workspace"):FindFirstChild("Chest1")
     if chest then
-        local playerPos = _vars.player.Character.HumanoidRootPart.Position
-        if _vars.isTweenMode then
-            if _vars.currentTween then
-                _vars.currentTween:Cancel()
+        local playerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+        if isTweenMode then
+            if currentTween then
+                currentTween:Cancel()
             end
             local goal = {CFrame = chest.CFrame + Vector3.new(0, 2, 0)}
             local tweenInfo = createTweenInfo(playerPos, goal.CFrame.Position)
-            _vars.currentTween = _vars.tweenService:Create(_vars.player.Character.HumanoidRootPart, tweenInfo, goal)
-            _vars.currentTween:Play()
+            currentTween = tweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, tweenInfo, goal)
+            currentTween:Play()
         else
-            _vars.player.Character.HumanoidRootPart.CFrame = chest.CFrame + Vector3.new(0, 2, 0)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = chest.CFrame + Vector3.new(0, 2, 0)
         end
     else
         local CoreGui = game:GetService("StarterGui")
@@ -874,19 +968,19 @@ local function IfNotFoundGChest()
 end
 
 local function IfNotFoundDChest()
-    local chestg = game:GetService("Workspace"):FindFirstChild("Chest2")
+local chestg = game:GetService("Workspace"):FindFirstChild("Chest2")
     if chestg then
-        local playerPos = _vars.player.Character.HumanoidRootPart.Position
-        if _vars.isTweenMode then
-            if _vars.currentTween then
-                _vars.currentTween:Cancel()
+        local playerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+        if isTweenMode then
+            if currentTween then
+                currentTween:Cancel()
             end
             local goal = {CFrame = chestg.CFrame + Vector3.new(0, 2, 0)}
             local tweenInfo = createTweenInfo(playerPos, goal.CFrame.Position)
-            _vars.currentTween = _vars.tweenService:Create(_vars.player.Character.HumanoidRootPart, tweenInfo, goal)
-            _vars.currentTween:Play()
+            currentTween = tweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, tweenInfo, goal)
+            currentTween:Play()
         else
-            _vars.player.Character.HumanoidRootPart.CFrame = chestg.CFrame + Vector3.new(0, 2, 0)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = chestg.CFrame + Vector3.new(0, 2, 0)
         end
     else
         IfNotFoundGChest()
@@ -894,19 +988,19 @@ local function IfNotFoundDChest()
 end
 
 local function CollectChest()
-    local chestd = game:GetService("Workspace"):FindFirstChild("Chest3")
+local chestd = game:GetService("Workspace"):FindFirstChild("Chest3")
     if chestd then
-        local playerPos = _vars.player.Character.HumanoidRootPart.Position
-        if _vars.isTweenMode then
-            if _vars.currentTween then
-                _vars.currentTween:Cancel()
+        local playerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+        if isTweenMode then
+            if currentTween then
+                currentTween:Cancel()
             end
             local goal = {CFrame = chestd.CFrame + Vector3.new(0, 2, 0)}
             local tweenInfo = createTweenInfo(playerPos, goal.CFrame.Position)
-            _vars.currentTween = _vars.tweenService:Create(_vars.player.Character.HumanoidRootPart, tweenInfo, goal)
-            _vars.currentTween:Play()
+            currentTween = tweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, tweenInfo, goal)
+            currentTween:Play()
         else
-            _vars.player.Character.HumanoidRootPart.CFrame = chestd.CFrame + Vector3.new(0, 2, 0)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = chestd.CFrame + Vector3.new(0, 2, 0)
         end
     else
         IfNotFoundDChest()
@@ -914,19 +1008,19 @@ local function CollectChest()
 end
 
 local function FindingSilverChest()
-    local SearchingSilverChest = game:GetService("Workspace"):FindFirstChild("Chest1")
+local SearchingSilverChest = game:GetService("Workspace"):FindFirstChild("Chest1")
     if SearchingSilverChest then
-        local playerPos = _vars.player.Character.HumanoidRootPart.Position
-        if _vars.isTweenMode then
-            if _vars.currentTween then
-                _vars.currentTween:Cancel()
+        local playerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+        if isTweenMode then
+            if currentTween then
+                currentTween:Cancel()
             end
             local goal = {CFrame = SearchingSilverChest.CFrame + Vector3.new(0, 2, 0)}
             local tweenInfo = createTweenInfo(playerPos, goal.CFrame.Position)
-            _vars.currentTween = _vars.tweenService:Create(_vars.player.Character.HumanoidRootPart, tweenInfo, goal)
-            _vars.currentTween:Play()
+            currentTween = tweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, tweenInfo, goal)
+            currentTween:Play()
         else
-            _vars.player.Character.HumanoidRootPart.CFrame = SearchingSilverChest.CFrame + Vector3.new(0, 2, 0)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = SearchingSilverChest.CFrame + Vector3.new(0, 2, 0)
         end
     else
         local CoreGui = game:GetService("StarterGui")
@@ -939,19 +1033,19 @@ local function FindingSilverChest()
 end
 
 local function FindingGoldenChest()
-    local SearchingGoldenChest = game:GetService("Workspace"):FindFirstChild("Chest2")
+local SearchingGoldenChest = game:GetService("Workspace"):FindFirstChild("Chest2")
     if SearchingGoldenChest then
-        local playerPos = _vars.player.Character.HumanoidRootPart.Position
-        if _vars.isTweenMode then
-            if _vars.currentTween then
-                _vars.currentTween:Cancel()
+        local playerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+        if isTweenMode then
+            if currentTween then
+                currentTween:Cancel()
             end
             local goal = {CFrame = SearchingGoldenChest.CFrame + Vector3.new(0, 2, 0)}
             local tweenInfo = createTweenInfo(playerPos, goal.CFrame.Position)
-            _vars.currentTween = _vars.tweenService:Create(_vars.player.Character.HumanoidRootPart, tweenInfo, goal)
-            _vars.currentTween:Play()
+            currentTween = tweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, tweenInfo, goal)
+            currentTween:Play()
         else
-            _vars.player.Character.HumanoidRootPart.CFrame = SearchingGoldenChest.CFrame + Vector3.new(0, 2, 0)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = SearchingGoldenChest.CFrame + Vector3.new(0, 2, 0)
         end
     else
         FindingSilverChest()
@@ -959,19 +1053,19 @@ local function FindingGoldenChest()
 end
 
 local function FindingDiamondChest()
-    local SearchingDiamondChest = game:GetService("Workspace"):FindFirstChild("Chest3")
+local SearchingDiamondChest = game:GetService("Workspace"):FindFirstChild("Chest3")
     if SearchingDiamondChest then
-        local playerPos = _vars.player.Character.HumanoidRootPart.Position
-        if _vars.isTweenMode then
-            if _vars.currentTween then
-                _vars.currentTween:Cancel()
+        local playerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+        if isTweenMode then
+            if currentTween then
+                currentTween:Cancel()
             end
             local goal = {CFrame = SearchingDiamondChest.CFrame + Vector3.new(0, 2, 0)}
             local tweenInfo = createTweenInfo(playerPos, goal.CFrame.Position)
-            _vars.currentTween = _vars.tweenService:Create(_vars.player.Character.HumanoidRootPart, tweenInfo, goal)
-            _vars.currentTween:Play()
+            currentTween = tweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, tweenInfo, goal)
+            currentTween:Play()
         else
-            _vars.player.Character.HumanoidRootPart.CFrame = SearchingDiamondChest.CFrame + Vector3.new(0, 2, 0)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = SearchingDiamondChest.CFrame + Vector3.new(0, 2, 0)
         end
     else
         FindingGoldenChest()
@@ -980,19 +1074,21 @@ end
 
 local function CollectFruitandChest()
     local fruit = game:GetService("Workspace"):FindFirstChild("Fruit")
+    
     if fruit and fruit:FindFirstChild("Handle") then
         local SearchingFruit = fruit.Handle
-        local playerPos = _vars.player.Character.HumanoidRootPart.Position
-        if _vars.isTweenMode then
-            if _vars.currentTween then
-                _vars.currentTween:Cancel()
+        local playerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+        
+        if isTweenMode then
+            if currentTween then
+                currentTween:Cancel()
             end
             local goal = {CFrame = SearchingFruit.CFrame + Vector3.new(0, 2, 0)}
             local tweenInfo = createTweenInfo(playerPos, goal.CFrame.Position)
-            _vars.currentTween = _vars.tweenService:Create(_vars.player.Character.HumanoidRootPart, tweenInfo, goal)
-            _vars.currentTween:Play()
+            currentTween = tweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, tweenInfo, goal)
+            currentTween:Play()
         else
-            _vars.player.Character.HumanoidRootPart.CFrame = SearchingFruit.CFrame + Vector3.new(0, 2, 0)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = SearchingFruit.CFrame + Vector3.new(0, 2, 0)
         end
     else
         FindingDiamondChest()
@@ -1000,54 +1096,63 @@ local function CollectFruitandChest()
 end
 
 -- CFrame Mob TP --
+
+local Im = game:GetService("Players")
+local ILocalPlayer = Im.LocalPlayer
+
 local function trackNearestEnemy()
     local nearestEnemy = nil
     local nearestDistance = math.huge
     local maxDistance = 1000
+
     for _, enemy in pairs(game.Workspace.Enemies:GetChildren()) do
         if enemy:IsA("Model") and enemy:FindFirstChild("HumanoidRootPart") then
-            local distance = (_vars.player.Character.HumanoidRootPart.Position - enemy.HumanoidRootPart.Position).magnitude
+            local distance = (ILocalPlayer.Character.HumanoidRootPart.Position - enemy.HumanoidRootPart.Position).magnitude
+            
             if distance < nearestDistance and distance <= maxDistance then
                 nearestDistance = distance
                 nearestEnemy = enemy
             end
         end
     end
+
     if nearestEnemy and nearestEnemy:FindFirstChild("Humanoid") then
         local humanoid = nearestEnemy.Humanoid
+        
         local enemyPosition = nearestEnemy.HumanoidRootPart.Position + Vector3.new(0, 20, 0)
-        local directionBehind = (_vars.player.Character.HumanoidRootPart.Position - enemyPosition).unit
+        local directionBehind = (ILocalPlayer.Character.HumanoidRootPart.Position - enemyPosition).unit
         local behindPosition = enemyPosition + directionBehind * 1
-        if _vars.isTweenMode then
+
+        if isTweenMode then
             if humanoid.Health > 0 then
-                local playerPos = _vars.player.Character.HumanoidRootPart.Position
-                if _vars.currentTween then
-                    _vars.currentTween:Cancel()
+                local playerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+                if currentTween then
+                    currentTween:Cancel()
                 end
                 local goal = {CFrame = CFrame.new(behindPosition)}
                 local tweenInfo = createTweenInfo(playerPos, goal.CFrame.Position)
-                _vars.currentTween = _vars.tweenService:Create(_vars.player.Character.HumanoidRootPart, tweenInfo, goal)
-                _vars.currentTween:Play()
+                currentTween = tweenService:Create(ILocalPlayer.Character.HumanoidRootPart, tweenInfo, goal)
+                currentTween:Play()
             else
-                nearestEnemy.HumanoidRootPart.CFrame = _vars.player.Character.HumanoidRootPart.CFrame * CFrame.new(0, 900, 0)
+                nearestEnemy.HumanoidRootPart.CFrame = ILocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, 900, 0)
             end
         else
             if humanoid.Health > 0 then
-                _vars.player.Character.HumanoidRootPart.CFrame = CFrame.new(behindPosition)
+                ILocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(behindPosition)
             else
-                nearestEnemy.HumanoidRootPart.CFrame = _vars.player.Character.HumanoidRootPart.CFrame * CFrame.new(0, 900, 0)
+                nearestEnemy.HumanoidRootPart.CFrame = ILocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, 900, 0)
             end
         end
     end
 end
 
 local EnemiesCFrameTo = Instance.new("TextButton")
-EnemiesCFrameTo.Parent = _vars.ScrollingFrame
+EnemiesCFrameTo.Parent = ScrollingFrame
 EnemiesCFrameTo.BackgroundColor3 = Color3.new(0, 0, 0)
 EnemiesCFrameTo.BackgroundTransparency = 0.5
-EnemiesCFrameTo.Size = UDim2.new(0.03, 0, 0.9, 0)
+EnemiesCFrameTo.Size = UDim2.new(0.03, 0, 0.9, 0)  -- Adjusted size for better visibility
 EnemiesCFrameTo.TextScaled = true
-EnemiesCFrameTo.Position = UDim2.new(0.645, 0, 0, 0)
+EnemiesCFrameTo.Position = UDim2.new(0.645, 0, 0, 0)  -- Positioned inside the ScrollingFrame
 EnemiesCFrameTo.TextColor3 = Color3.fromRGB(255, 255, 255)
 EnemiesCFrameTo.Font = Enum.Font.PatrickHand
 EnemiesCFrameTo.Text = "Bay tới Quái (Con Gần Nhất)"
@@ -1060,9 +1165,11 @@ EnemiesCFrameTo.MouseButton1Click:Connect(function()
         EnemiesCF = false
     else
         EnemiesCFrameTo.TextColor3 = Color3.fromRGB(255, 255, 0)
+        
         EnemiesCF = true
+
         AbsoluteSmooth()
-        _vars.LoopActivated_AllF.RenderStepped:Connect(function()
+        LoopActivated_AllF.RenderStepped:Connect(function(deltaTime)
             if EnemiesCF then
                 trackNearestEnemy()
             end
@@ -1071,850 +1178,1532 @@ EnemiesCFrameTo.MouseButton1Click:Connect(function()
 end)
 
 -- Chest TP --
-local chestButtons = {
-    {
-        obj = _vars.SilverChest,
-        pos = UDim2.new(0.1, 0, 0.005, 0),
-        text = "Lấy Rương Bạc",
-        color = Color3.fromRGB(192, 192, 192),
-        chestName = "Chest1"
-    },
-    {
-        obj = _vars.GoldenChest,
-        pos = UDim2.new(0.1, 0, 0.085, 0),
-        text = "Lấy Rương Vàng",
-        color = Color3.new(1, 1, 0),
-        chestName = "Chest2"
-    },
-    {
-        obj = _vars.DiamondChest,
-        pos = UDim2.new(0.1, 0, 0.165, 0),
-        text = "Lấy Rương Kim Cương",
-        color = Color3.new(0, 0, 1),
-        chestName = "Chest3"
-    },
-    {
-        obj = _vars.Boat,
-        pos = UDim2.new(0.1, 0, 0.245, 0),
-        text = "Lấy Trái Ác Quỷ",
-        color = Color3.new(1, 0, 1),
-        chestName = "Fruit"
-    },
-    {
-        obj = _vars.DChestF,
-        pos = UDim2.new(0.1, 0, 0.325, 0),
-        text = "Nhặt trái và tất cả rương",
-        color = Color3.new(1, 1, 1)
-    },
-    {
-        obj = _vars.AChestF,
-        pos = UDim2.new(0.1, 0, 0.405, 0),
-        text = "Nhặt hết tất cả rương (Xui là bị kick)",
-        color = Color3.new(1, 1, 1)
-    },
-    {
-        obj = _vars.ACheckF,
-        pos = UDim2.new(0.1, 0, 0.485, 0),
-        text = "Kiểm tra trái ác quỷ xuất hiện",
-        color = Color3.new(0, 1, 0)
-    },
-    {
-        obj = _vars.Factory,
-        pos = UDim2.new(0.1, 0, 0.565, 0),
-        text = "Tới Nhà Máy Factory",
-        color = Color3.new(1, 1, 1)
-    }
-}
 
-for _, btn in ipairs(chestButtons) do
-    btn.obj.Parent = _vars.ChestBox
-    btn.obj.BackgroundColor3 = Color3.new(0, 0, 0)
-    btn.obj.BackgroundTransparency = 0.5
-    btn.obj.Size = UDim2.new(0.8, 0, 0.05, 0)
-    btn.obj.TextScaled = true
-    btn.obj.Position = btn.pos
-    btn.obj.TextColor3 = btn.color
-    btn.obj.Font = Enum.Font.PatrickHand
-    btn.obj.Text = btn.text
-end
+local SilverChest = Instance.new("TextButton")
+SilverChest.Parent = ChestBox
+SilverChest.BackgroundColor3 = Color3.new(0, 0, 0)
+SilverChest.BackgroundTransparency = 0.5
+SilverChest.Size = UDim2.new(0.8, 0, 0.05, 0)  -- Adjusted size for better visibility
+SilverChest.TextScaled = true
+SilverChest.Position = UDim2.new(0.1, 0, 0.005, 0)  -- Positioned inside the ScrollingFrame
+SilverChest.TextColor3 = Color3.fromRGB(192, 192, 192)
+SilverChest.Font = Enum.Font.PatrickHand
+SilverChest.Text = "Lấy Rương Bạc"
 
-for _, btn in ipairs({ _vars.SilverChest, _vars.GoldenChest, _vars.DiamondChest }) do
-    btn.MouseButton1Click:Connect(function()
-        local chest = game:GetService("Workspace"):FindFirstChild(chestButtons[({ _vars.SilverChest, _vars.GoldenChest, _vars.DiamondChest })[btn]].chestName)
-        if chest then
-            local playerPos = _vars.player.Character.HumanoidRootPart.Position
-            if _vars.isTweenMode then
-                if _vars.currentTween then
-                    _vars.currentTween:Cancel()
-                end
-                local goal = {CFrame = chest.CFrame + Vector3.new(0, 2, 0)}
-                local tweenInfo = createTweenInfo(playerPos, goal.CFrame.Position)
-                _vars.currentTween = _vars.tweenService:Create(_vars.player.Character.HumanoidRootPart, tweenInfo, goal)
-                _vars.currentTween:Play()
-            else
-                _vars.player.Character.HumanoidRootPart.CFrame = chest.CFrame + Vector3.new(0, 2, 0)
+SilverChest.MouseButton1Click:Connect(function()
+    local chest = game:GetService("Workspace"):FindFirstChild("Chest1")
+    if chest then
+        local playerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+        if isTweenMode then
+            if currentTween then
+                currentTween:Cancel()
             end
+            local goal = {CFrame = chest.CFrame + Vector3.new(0, 2, 0)}
+            local tweenInfo = createTweenInfo(playerPos, goal.CFrame.Position)
+            currentTween = tweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, tweenInfo, goal)
+            currentTween:Play()
         else
-            warn("Chest not found: " .. chestButtons[({ _vars.SilverChest, _vars.GoldenChest, _vars.DiamondChest })[btn]].chestName)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = chest.CFrame + Vector3.new(0, 2, 0)
         end
-    end)
-end
+    else
+        warn("Chest not found: Chest1")
+    end
+end)
 
-_vars.Boat.MouseButton1Click:Connect(function()
-    local fruitx = game:GetService("Workspace")["Fruit"].Handle
+local GoldenChest = Instance.new("TextButton")
+GoldenChest.Parent = ChestBox
+GoldenChest.BackgroundColor3 = Color3.new(0, 0, 0)
+GoldenChest.BackgroundTransparency = 0.5
+GoldenChest.Size = UDim2.new(0.8, 0, 0.05, 0)  -- Adjusted size for better visibility
+GoldenChest.TextScaled = true
+GoldenChest.Position = UDim2.new(0.1, 0, 0.085, 0)  -- Positioned inside the ScrollingFrame
+GoldenChest.TextColor3 = Color3.new(1, 1, 0)
+GoldenChest.Font = Enum.Font.PatrickHand
+GoldenChest.Text = "Lấy Rương Vàng"
+
+GoldenChest.MouseButton1Click:Connect(function()
+    local chestg = game:GetService("Workspace"):FindFirstChild("Chest2")
+    if chestg then
+        local playerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+        if isTweenMode then
+            if currentTween then
+                currentTween:Cancel()
+            end
+            local goal = {CFrame = chestg.CFrame + Vector3.new(0, 2, 0)}
+            local tweenInfo = createTweenInfo(playerPos, goal.CFrame.Position)
+            currentTween = tweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, tweenInfo, goal)
+            currentTween:Play()
+        else
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = chestg.CFrame + Vector3.new(0, 2, 0)
+        end
+    else
+        warn("Chest not found: Chest2")
+    end
+end)
+
+local DiamondChest = Instance.new("TextButton")
+DiamondChest.Parent = ChestBox
+DiamondChest.BackgroundColor3 = Color3.new(0, 0, 0)
+DiamondChest.BackgroundTransparency = 0.5
+DiamondChest.Size = UDim2.new(0.8, 0, 0.05, 0)  -- Adjusted size for better visibility
+DiamondChest.TextScaled = true
+DiamondChest.Position = UDim2.new(0.1, 0, 0.165, 0)  -- Positioned inside the ScrollingFrame
+DiamondChest.TextColor3 = Color3.new(0, 0, 1)
+DiamondChest.Font = Enum.Font.PatrickHand
+DiamondChest.Text = "Lấy Rương Kim Cương"
+
+DiamondChest.MouseButton1Click:Connect(function()
+    local chestd = game:GetService("Workspace"):FindFirstChild("Chest3")
+    if chestd then
+        local playerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+        if isTweenMode then
+            if currentTween then
+                currentTween:Cancel()
+            end
+            local goal = {CFrame = chestd.CFrame + Vector3.new(0, 2, 0)}
+            local tweenInfo = createTweenInfo(playerPos, goal.CFrame.Position)
+            currentTween = tweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, tweenInfo, goal)
+            currentTween:Play()
+        else
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = chestd.CFrame + Vector3.new(0, 2, 0)
+        end
+    else
+        warn("Chest not found: Chest3")
+    end
+end)
+
+local Boat = Instance.new("TextButton")
+Boat.Parent = ChestBox
+Boat.BackgroundColor3 = Color3.new(0, 0, 0)
+Boat.BackgroundTransparency = 0.5
+Boat.Size = UDim2.new(0.8, 0, 0.05, 0)  -- Adjusted size for better visibility
+Boat.TextScaled = true
+Boat.Position = UDim2.new(0.1, 0, 0.245, 0)  -- Positioned inside the ScrollingFrame
+Boat.TextColor3 = Color3.new(1, 0, 1)
+Boat.Font = Enum.Font.PatrickHand
+Boat.Text = "Lấy Trái Ác Quỷ"
+
+Boat.MouseButton1Click:Connect(function()
+    local fruitx = game:GetService("Workspace")["Fruit "].Handle
     if fruitx then
-        local playerPos = _vars.player.Character.HumanoidRootPart.Position
-        if _vars.isTweenMode then
-            if _vars.currentTween then
-                _vars.currentTween:Cancel()
+        local playerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+        if isTweenMode then
+            if currentTween then
+                currentTween:Cancel()
             end
             local goal = {CFrame = fruitx.CFrame + Vector3.new(0, 2, 0)}
             local tweenInfo = createTweenInfo(playerPos, goal.CFrame.Position)
-            _vars.currentTween = _vars.tweenService:Create(_vars.player.Character.HumanoidRootPart, tweenInfo, goal)
-            _vars.currentTween:Play()
+            currentTween = tweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, tweenInfo, goal)
+            currentTween:Play()
         else
-            _vars.player.Character.HumanoidRootPart.CFrame = fruitx.CFrame + Vector3.new(0, 2, 0)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = fruitx.CFrame + Vector3.new(0, 2, 0)
         end
     else
         warn("Chest not found: Fruit")
     end
 end)
 
-_vars.DChestF.MouseButton1Click:Connect(function()
-    if _vars.DChest then
-        _vars.DChestF.TextColor3 = Color3.new(1, 1, 1)
-        _vars.DChest = false
+local DChestF = Instance.new("TextButton")
+DChestF.Parent = ChestBox
+DChestF.BackgroundColor3 = Color3.new(0, 0, 0)
+DChestF.BackgroundTransparency = 0.5
+DChestF.Size = UDim2.new(0.8, 0, 0.05, 0)  -- Adjusted size for better visibility
+DChestF.TextScaled = true
+DChestF.Position = UDim2.new(0.1, 0, 0.325, 0)  -- Positioned inside the ScrollingFrame
+DChestF.TextColor3 = Color3.new(1, 1, 1)
+DChestF.Font = Enum.Font.PatrickHand
+DChestF.Text = "Nhặt trái và tất cả rương"
+
+local DChest = false
+
+DChestF.MouseButton1Click:Connect(function()
+    if DChest then
+        DChestF.TextColor3 = Color3.new(1, 1, 1)
+        
+        DChest = false
     else
-        _vars.DChestF.TextColor3 = Color3.new(1, 1, 0)
-        _vars.DChest = true
-        while _vars.DChest do
+        DChestF.TextColor3 = Color3.new(1, 1, 0)
+        
+        DChest = true
+        
+        while DChest do
             CollectFruitandChest()
             wait(1)
         end
     end
 end)
 
-_vars.AChestF.MouseButton1Click:Connect(function()
-    if _vars.AChest then
-        _vars.AChestF.TextColor3 = Color3.new(1, 1, 1)
-        _vars.player.Character.Humanoid.Health = 0
-        _vars.AChest = false
+local AChestF = Instance.new("TextButton")
+AChestF.Parent = ChestBox
+AChestF.BackgroundColor3 = Color3.new(0, 0, 0)
+AChestF.BackgroundTransparency = 0.5
+AChestF.Size = UDim2.new(0.8, 0, 0.05, 0)  -- Adjusted size for better visibility
+AChestF.TextScaled = true
+AChestF.Position = UDim2.new(0.1, 0, 0.405, 0)  -- Positioned inside the ScrollingFrame
+AChestF.TextColor3 = Color3.new(1, 1, 1)
+AChestF.Font = Enum.Font.PatrickHand
+AChestF.Text = "Nhặt hết tất cả rương (Xui là bị kick)"
+
+local AChest = false
+
+AChestF.MouseButton1Click:Connect(function()
+    if AChest then
+        AChestF.TextColor3 = Color3.new(1, 1, 1)
+        game.Players.LocalPlayer.Character.Humanoid.Health = 0
+        AChest = false
     else
-        _vars.AChestF.TextColor3 = Color3.new(0, 1, 0)
-        _vars.AChest = true
+        AChestF.TextColor3 = Color3.new(0, 1, 0)
+        AChest = true
         loadstring(game:HttpGet("https://raw.githubusercontent.com/NganHa2k3/Tensura/refs/heads/main/BloxFruits_Update_Dragon_ChestFarm_V001"))()
     end
 end)
 
-_vars.CheckF.Parent = _vars.ScreenGui
-_vars.CheckF.BackgroundColor3 = Color3.new(0, 0, 0)
-_vars.CheckF.BackgroundTransparency = 0.5
-_vars.CheckF.Size = UDim2.new(0.05, 0, 0.1, 0)
-_vars.CheckF.TextScaled = true
-_vars.CheckF.Position = UDim2.new(0.3, 0, 0.6, 0)
-_vars.CheckF.TextColor3 = Color3.new(1, 1, 1)
-_vars.CheckF.Font = Enum.Font.PatrickHand
-_vars.CheckF.Text = ""
-_vars.CheckF.Visible = true
+local CheckF = Instance.new("TextButton")
+CheckF.Parent = ScreenGui
+CheckF.BackgroundColor3 = Color3.new(0, 0, 0)
+CheckF.BackgroundTransparency = 0.5
+CheckF.Size = UDim2.new(0.05, 0, 0.1, 0)
+CheckF.TextScaled = true
+CheckF.Position = UDim2.new(0.3, 0, 0.6, 0)
+CheckF.TextColor3 = Color3.new(1, 1, 1)
+CheckF.Font = Enum.Font.PatrickHand
+CheckF.Text = ""
+CheckF.Visible = true
 
 local CheckFUICorner = Instance.new("UICorner")
-CheckFUICorner.Parent = _vars.CheckF
+CheckFUICorner.Parent = CheckF
 CheckFUICorner.CornerRadius = UDim.new(0.1, 0)
 
 local function checkForFruit()
-    local fruit = game:GetService("Workspace"):FindFirstChild("Fruit")
+    local fruit = game:GetService("Workspace"):FindFirstChild("Fruit ")
     if fruit and fruit:FindFirstChild("Handle") then
-        _vars.CheckF.Text = "Có trái xuất hiện"
+        CheckF.Text = "Có trái xuất hiện"
     else
-        _vars.CheckF.Text = "Không có trái xuất hiện"
+        CheckF.Text = "Không có trái xuất hiện"
     end
 end
 
-_vars.ACheckF.MouseButton1Click:Connect(function()
-    if _vars.ACheckFSet then
-        _vars.ACheckF.TextColor3 = Color3.new(1, 1, 1)
-        _vars.ACheckFSet = false
-        _vars.CheckF.Visible = false
+local ACheckF = Instance.new("TextButton")
+ACheckF.Parent = ChestBox
+ACheckF.BackgroundColor3 = Color3.new(0, 0, 0)
+ACheckF.BackgroundTransparency = 0.5
+ACheckF.Size = UDim2.new(0.8, 0, 0.05, 0)  -- Adjusted size for better visibility
+ACheckF.TextScaled = true
+ACheckF.Position = UDim2.new(0.1, 0, 0.485, 0)  -- Positioned inside the ScrollingFrame
+ACheckF.TextColor3 = Color3.new(0, 1, 0)
+ACheckF.Font = Enum.Font.PatrickHand
+ACheckF.Text = "Kiểm tra trái ác quỷ xuất hiện"
+
+local ACheckFSet = true
+
+ACheckF.MouseButton1Click:Connect(function()
+    if ACheckFSet then
+        ACheckF.TextColor3 = Color3.new(1, 1, 1)
+        
+        ACheckFSet = false
+        
+        CheckF.Visible = false
     else
-        _vars.ACheckF.TextColor3 = Color3.new(0, 1, 0)
-        _vars.ACheckFSet = true
-        _vars.CheckF.Visible = true
-        while _vars.ACheckFSet do
+        ACheckF.TextColor3 = Color3.new(0, 1, 0)
+        
+        ACheckFSet = true
+        
+        CheckF.Visible = true
+        
+        while ACheckFSet do
             checkForFruit()
             wait(0.1)
         end
     end
 end)
 
-game:GetService("RunService").RenderStepped:Connect(function()
-    if _vars.ACheckFSet and _vars.CheckF.Visible then
+game:GetService("RunService").RenderStepped:Connect(function(deltaTime)
+    if ACheckFSet and CheckF.Visible == true then
         checkForFruit()
     end
 end)
 
-_vars.CheckF.MouseButton1Click:Connect(function()
-    local fruitcheckx = game:GetService("Workspace")["Fruit"].Handle
+CheckF.MouseButton1Click:Connect(function()
+    local fruitcheckx = game:GetService("Workspace")["Fruit "].Handle
     if fruitcheckx then
-        local playerPos = _vars.player.Character.HumanoidRootPart.Position
-        if _vars.isTweenMode then
-            if _vars.currentTween then
-                _vars.currentTween:Cancel()
+        local playerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+        if isTweenMode then
+            if currentTween then
+                currentTween:Cancel()
             end
             local goal = {CFrame = fruitcheckx.CFrame + Vector3.new(0, 2, 0)}
             local tweenInfo = createTweenInfo(playerPos, goal.CFrame.Position)
-            _vars.currentTween = _vars.tweenService:Create(_vars.player.Character.HumanoidRootPart, tweenInfo, goal)
-            _vars.currentTween:Play()
+            currentTween = tweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, tweenInfo, goal)
+            currentTween:Play()
         else
-            _vars.player.Character.HumanoidRootPart.CFrame = fruitcheckx.CFrame + Vector3.new(0, 2, 0)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = fruitcheckx.CFrame + Vector3.new(0, 2, 0)
         end
     else
         warn("Chest not found: Fruit")
     end
 end)
 
+local Factory = Instance.new("TextButton")
+Factory.Parent = ChestBox
+Factory.BackgroundColor3 = Color3.new(0, 0, 0)
+Factory.BackgroundTransparency = 0.5
+Factory.Size = UDim2.new(0.8, 0, 0.05, 0)
+Factory.TextScaled = true
+Factory.Position = UDim2.new(0.1, 0, 0.565, 0)
+Factory.TextColor3 = Color3.new(1, 1, 1)
+Factory.Font = Enum.Font.PatrickHand
+Factory.Text = "Tới Nhà Máy Factory"
+
 function tpsto_hahafactory()
-    local Factor = game:GetService("Workspace"):FindFirstChild("Map")
-        and game.Workspace.Map:FindFirstChild("Dressrosa")
-        and game.Workspace.Map.Dressrosa:FindFirstChild("SmileFactory")
-        and game.Workspace.Map.Dressrosa.SmileFactory:FindFirstChild("Core")
-        and game.Workspace.Map.Dressrosa.SmileFactory.Core:FindFirstChild("Part")
+local Factor = game:GetService("Workspace"):FindFirstChild("Map")
+                    and game.Workspace.Map:FindFirstChild("Dressrosa")
+                    and game.Workspace.Map.Dressrosa:FindFirstChild("SmileFactory")
+                    and game.Workspace.Map.Dressrosa.SmileFactory:FindFirstChild("Core")
+                    and game.Workspace.Map.Dressrosa.SmileFactory.Core:FindFirstChild("Part")
+
     if Factor then
-        local playerPos = _vars.player.Character.HumanoidRootPart.Position
-        if _vars.isTweenMode then
-            if _vars.currentTween then
-                _vars.currentTween:Cancel()
+        local playerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+        if isTweenMode then
+            if currentTween then
+                currentTween:Cancel()
             end
             local goal = {CFrame = Factor.CFrame + Vector3.new(0, 2, 0)}
             local tweenInfo = createTweenInfo(playerPos, goal.CFrame.Position)
-            _vars.currentTween = _vars.tweenService:Create(_vars.player.Character.HumanoidRootPart, tweenInfo, goal)
-            _vars.currentTween:Play()
+            currentTween = tweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, tweenInfo, goal)
+            currentTween:Play()
         else
-            _vars.player.Character.HumanoidRootPart.CFrame = Factor.CFrame + Vector3.new(0, 2, 0)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Factor.CFrame + Vector3.new(0, 2, 0)
         end
     else
         warn("NO FACTOR FOUND")
     end
 end
 
-_vars.Factory.MouseButton1Click:Connect(function()
-    if _vars.fcxptl_1z then
-        _vars.fcxptl_1z = false
-        AbsoluteRemove()
-        _vars.Factory.Text = "Tới Nhà Máy Factory"
-    else
-        _vars.fcxptl_1z = true
-        AbsoluteSmooth()
-        _vars.Factory.Text = "Đang tới... chờ xíu đi"
-        game:GetService("RunService").RenderStepped:Connect(function()
-            if _vars.fcxptl_1z then
-                tpsto_hahafactory()
-            end
-        end)
-    end
+local fcxptl_1z = false
+Factory.MouseButton1Click:Connect(function()
+if fcxptl_1z then
+fcxptl_1z = false
+AbsoluteRemove()
+Factory.Text = "Tới Nhà Máy Factory"
+else
+fcxptl_1z = true
+AbsoluteSmooth()
+Factory.Text = "Đang tới... chờ xíu đi"
+game:GetService("RunService").RenderStepped:Connect(function(deltaTime)
+if fcxptl_1z then
+tpsto_hahafactory()
+end
+end)
+end
 end)
 
 -- Shop --
-local shopButtons = {
-    {
-        obj = _vars.BuyItem1,
-        pos = UDim2.new(0.1, 0, 0.005, 0),
-        text = "Mua: Nhảy trên không khí",
-        args = {"BuyHaki", "Geppo"}
-    },
-    {
-        obj = _vars.BuyItem2,
-        pos = UDim2.new(0.1, 0, 0.085, 0),
-        text = "Mua: Haki cường hóa",
-        args = {"BuyHaki", "Buso"}
-    },
-    {
-        obj = _vars.BuyItem3,
-        pos = UDim2.new(0.1, 0, 0.165, 0),
-        text = "Mua: Tốc biến",
-        args = {"BuyHaki", "Soru"}
-    },
-    {
-        obj = _vars.RandomFruit,
-        pos = UDim2.new(0.1, 0, 0.245, 0),
-        text = "Mua: Trái ngẫu nhiên",
-        args = {"Cousin", "Buy"}
-    }
+
+local BuyItem1 = Instance.new("TextButton")
+BuyItem1.Parent = BuyStuffBox
+BuyItem1.BackgroundColor3 = Color3.new(0, 0, 0)
+BuyItem1.BackgroundTransparency = 0.5
+BuyItem1.Size = UDim2.new(0.8, 0, 0.05, 0)
+BuyItem1.TextScaled = true
+BuyItem1.Position = UDim2.new(0.1, 0, 0.005, 0)
+BuyItem1.TextColor3 = Color3.new(1, 1, 1)
+BuyItem1.Font = Enum.Font.PatrickHand
+BuyItem1.Text = "Mua: Nhảy trên không khí"
+
+BuyItem1.MouseButton1Click:Connect(function()
+    local args = {
+    [1] = "BuyHaki",
+    [2] = "Geppo"
 }
 
-for _, btn in ipairs(shopButtons) do
-    btn.obj.Parent = _vars.BuyStuffBox
-    btn.obj.BackgroundColor3 = Color3.new(0, 0, 0)
-    btn.obj.BackgroundTransparency = 0.5
-    btn.obj.Size = UDim2.new(0.8, 0, 0.05, 0)
-    btn.obj.TextScaled = true
-    btn.obj.Position = btn.pos
-    btn.obj.TextColor3 = Color3.new(1, 1, 1)
-    btn.obj.Font = Enum.Font.PatrickHand
-    btn.obj.Text = btn.text
-    btn.obj.MouseButton1Click:Connect(function()
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(btn.args))
-        if btn.obj == _vars.RandomFruit then
-            local CoreGui = game:GetService("StarterGui")
-            CoreGui:SetCore("SendNotification", {
-                Title = "Thông Báo",
-                Text = "Bạn đã mua một trái ngẫu nhiên, nếu không có nghĩa là bạn không có đủ tiền random !",
-                Duration = 2,
-            })
-        end
-    end)
+game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+end)
+
+local BuyItem2 = Instance.new("TextButton")
+BuyItem2.Parent = BuyStuffBox
+BuyItem2.BackgroundColor3 = Color3.new(0, 0, 0)
+BuyItem2.BackgroundTransparency = 0.5
+BuyItem2.Size = UDim2.new(0.8, 0, 0.05, 0)
+BuyItem2.TextScaled = true
+BuyItem2.Position = UDim2.new(0.1, 0, 0.085, 0)
+BuyItem2.TextColor3 = Color3.new(1, 1, 1)
+BuyItem2.Font = Enum.Font.PatrickHand
+BuyItem2.Text = "Mua: Haki cường hóa"
+
+BuyItem2.MouseButton1Click:Connect(function()
+    local args = {
+    [1] = "BuyHaki",
+    [2] = "Buso"
+}
+
+game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+end)
+
+local BuyItem3 = Instance.new("TextButton")
+BuyItem3.Parent = BuyStuffBox
+BuyItem3.BackgroundColor3 = Color3.new(0, 0, 0)
+BuyItem3.BackgroundTransparency = 0.5
+BuyItem3.Size = UDim2.new(0.8, 0, 0.05, 0)
+BuyItem3.TextScaled = true
+BuyItem3.Position = UDim2.new(0.1, 0, 0.165, 0)
+BuyItem3.TextColor3 = Color3.new(1, 1, 1)
+BuyItem3.Font = Enum.Font.PatrickHand
+BuyItem3.Text = "Mua: Tốc biến"
+
+BuyItem3.MouseButton1Click:Connect(function()
+    local args = {
+    [1] = "BuyHaki",
+    [2] = "Soru"
+}
+
+game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+end)
+
+local RandomFruit = Instance.new("TextButton")
+RandomFruit.Parent = BuyStuffBox
+RandomFruit.BackgroundColor3 = Color3.new(0, 0, 0)
+RandomFruit.BackgroundTransparency = 0.5
+RandomFruit.Size = UDim2.new(0.8, 0, 0.05, 0)
+RandomFruit.TextScaled = true
+RandomFruit.Position = UDim2.new(0.1, 0, 0.245, 0)
+RandomFruit.TextColor3 = Color3.new(1, 1, 1)
+RandomFruit.Font = Enum.Font.PatrickHand
+RandomFruit.Text = "Mua: Trái ngẫu nhiên"
+
+RandomFruit.MouseButton1Click:Connect(function()
+    local args = {
+    [1] = "Cousin",
+    [2] = "Buy"
+}
+
+game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+
+    local CoreGui = game:GetService("StarterGui")
+        CoreGui:SetCore("SendNotification", {
+            Title = "Thông Báo",
+            Text = "Bạn đã mua một trái ngẫu nhiên, nếu không có nghĩa là bạn không có đủ tiền random !",
+            Duration = 2,
+        })
 end)
 
 -- Switch Melee --
-local meleeButtons = {
-    {
-        obj = _vars.DarkLeg,
-        pos = UDim2.new(0.1, 0, 0.005, 0),
-        text = "Lấy võ: Chân đen v1",
-        args = {"BuyBlackLeg"}
-    },
-    {
-        obj = _vars.ElectricClaw,
-        pos = UDim2.new(0.1, 0, 0.085, 0),
-        text = "Lấy võ: Tay Điện v1",
-        args = {"BuyElectro"}
-    },
-    {
-        obj = _vars.FishKungFu,
-        pos = UDim2.new(0.1, 0, 0.165, 0),
-        text = "Lấy võ: Karate Cá v1",
-        args = {"BuyFishmanKarate"}
-    },
-    {
-        obj = _vars.DragonBreath,
-        pos = UDim2.new(0.1, 0, 0.245, 0),
-        text = "Lấy võ: Hơi thở của lửa v1",
-        args = {"BlackbeardReward", "DragonClaw", "2"}
-    },
-    {
-        obj = _vars.SuperHuman,
-        pos = UDim2.new(0.1, 0, 0.325, 0),
-        text = "Lấy võ: Siêu nhân v1",
-        args = {"BuySuperhuman"}
-    },
-    {
-        obj = _vars.DarkStep,
-        pos = UDim2.new(0.1, 0, 0.405, 0),
-        text = "Lấy võ: Bước chân tử thần v2",
-        args = {"BuyDeathStep"}
-    },
-    {
-        obj = _vars.ElectricPaw,
-        pos = UDim2.new(0.1, 0, 0.485, 0),
-        text = "Lấy võ: Móng vuốt điện v2",
-        action = function() warn("Empty for now") end
-    },
-    {
-        obj = _vars.SharkmanKarate,
-        pos = UDim2.new(0.1, 0, 0.565, 0),
-        text = "Lấy võ: Karate Cá mập v2",
-        action = function() warn("Empty for now") end
-    },
-    {
-        obj = _vars.InfernoDragonBreath,
-        pos = UDim2.new(0.1, 0, 0.645, 0),
-        text = "Lấy võ: Hơi thở của Rồng Nova v2",
-        action = function() warn("Empty for now") end
-    },
-    {
-        obj = _vars.GodHuman,
-        pos = UDim2.new(0.1, 0, 0.725, 0),
-        text = "Lấy võ: Nhân thần v2",
-        action = function() warn("Empty for now") end
-    }
+
+local DarkLeg = Instance.new("TextButton")
+DarkLeg.Parent = SwitchFightingStyle
+DarkLeg.BackgroundColor3 = Color3.new(0, 0, 0)
+DarkLeg.BackgroundTransparency = 0.5
+DarkLeg.Size = UDim2.new(0.8, 0, 0.05, 0)
+DarkLeg.TextScaled = true
+DarkLeg.Position = UDim2.new(0.1, 0, 0.005, 0)
+DarkLeg.TextColor3 = Color3.new(1, 1, 1)
+DarkLeg.Font = Enum.Font.PatrickHand
+DarkLeg.Text = "Lấy võ: Chân đen v1"
+
+DarkLeg.MouseButton1Click:Connect(function()
+    local args = {
+    [1] = "BuyBlackLeg"
 }
 
-for _, btn in ipairs(meleeButtons) do
-    btn.obj.Parent = _vars.SwitchFightingStyle
-    btn.obj.BackgroundColor3 = Color3.new(0, 0, 0)
-    btn.obj.BackgroundTransparency = 0.5
-    btn.obj.Size = UDim2.new(0.8, 0, 0.05, 0)
-    btn.obj.TextScaled = true
-    btn.obj.Position = btn.pos
-    btn.obj.TextColor3 = Color3.new(1, 1, 1)
-    btn.obj.Font = Enum.Font.PatrickHand
-    btn.obj.Text = btn.text
-    btn.obj.MouseButton1Click:Connect(function()
-        if btn.args then
-            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(btn.args))
-        elseif btn.action then
-            btn.action()
-        end
-    end)
-end
+game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+end)
+
+local ElectricClaw = Instance.new("TextButton")
+ElectricClaw.Parent = SwitchFightingStyle
+ElectricClaw.BackgroundColor3 = Color3.new(0, 0, 0)
+ElectricClaw.BackgroundTransparency = 0.5
+ElectricClaw.Size = UDim2.new(0.8, 0, 0.05, 0)
+ElectricClaw.TextScaled = true
+ElectricClaw.Position = UDim2.new(0.1, 0, 0.085, 0)
+ElectricClaw.TextColor3 = Color3.new(1, 1, 1)
+ElectricClaw.Font = Enum.Font.PatrickHand
+ElectricClaw.Text = "Lấy võ: Tay Điện v1"
+
+ElectricClaw.MouseButton1Click:Connect(function()
+    local args = {
+    [1] = "BuyElectro"
+}
+
+game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+end)
+
+local FishKungFu = Instance.new("TextButton")
+FishKungFu.Parent = SwitchFightingStyle
+FishKungFu.BackgroundColor3 = Color3.new(0, 0, 0)
+FishKungFu.BackgroundTransparency = 0.5
+FishKungFu.Size = UDim2.new(0.8, 0, 0.05, 0)
+FishKungFu.TextScaled = true
+FishKungFu.Position = UDim2.new(0.1, 0, 0.165, 0)
+FishKungFu.TextColor3 = Color3.new(1, 1, 1)
+FishKungFu.Font = Enum.Font.PatrickHand
+FishKungFu.Text = "Lấy võ: Karate Cá v1"
+
+FishKungFu.MouseButton1Click:Connect(function()
+    local args = {
+    [1] = "BuyFishmanKarate"
+}
+
+game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+end)
+
+local DragonBreath = Instance.new("TextButton")
+DragonBreath.Parent = SwitchFightingStyle
+DragonBreath.BackgroundColor3 = Color3.new(0, 0, 0)
+DragonBreath.BackgroundTransparency = 0.5
+DragonBreath.Size = UDim2.new(0.8, 0, 0.05, 0)
+DragonBreath.TextScaled = true
+DragonBreath.Position = UDim2.new(0.1, 0, 0.245, 0)
+DragonBreath.TextColor3 = Color3.new(1, 1, 1)
+DragonBreath.Font = Enum.Font.PatrickHand
+DragonBreath.Text = "Lấy võ: Hơi thở của lửa v1"
+
+DragonBreath.MouseButton1Click:Connect(function()
+    local args = {
+    [1] = "BlackbeardReward",
+    [2] = "DragonClaw",
+    [3] = "2"
+}
+
+game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+end)
+
+local SuperHuman = Instance.new("TextButton")
+SuperHuman.Parent = SwitchFightingStyle
+SuperHuman.BackgroundColor3 = Color3.new(0, 0, 0)
+SuperHuman.BackgroundTransparency = 0.5
+SuperHuman.Size = UDim2.new(0.8, 0, 0.05, 0)
+SuperHuman.TextScaled = true
+SuperHuman.Position = UDim2.new(0.1, 0, 0.325, 0)
+SuperHuman.TextColor3 = Color3.new(1, 1, 1)
+SuperHuman.Font = Enum.Font.PatrickHand
+SuperHuman.Text = "Lấy võ: Siêu nhân v1"
+
+SuperHuman.MouseButton1Click:Connect(function()
+game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySuperhuman")
+game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySuperHuman")
+end)
+
+local DarkStep = Instance.new("TextButton")
+DarkStep.Parent = SwitchFightingStyle
+DarkStep.BackgroundColor3 = Color3.new(0, 0, 0)
+DarkStep.BackgroundTransparency = 0.5
+DarkStep.Size = UDim2.new(0.8, 0, 0.05, 0)
+DarkStep.TextScaled = true
+DarkStep.Position = UDim2.new(0.1, 0, 0.405, 0)
+DarkStep.TextColor3 = Color3.new(1, 1, 1)
+DarkStep.Font = Enum.Font.PatrickHand
+DarkStep.Text = "Lấy võ: Bước chân tử thần v2"
+
+DarkStep.MouseButton1Click:Connect(function()
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyDeathStep")
+end)
+
+local ElectricPaw = Instance.new("TextButton")
+ElectricPaw.Parent = SwitchFightingStyle
+ElectricPaw.BackgroundColor3 = Color3.new(0, 0, 0)
+ElectricPaw.BackgroundTransparency = 0.5
+ElectricPaw.Size = UDim2.new(0.8, 0, 0.05, 0)
+ElectricPaw.TextScaled = true
+ElectricPaw.Position = UDim2.new(0.1, 0, 0.485, 0)
+ElectricPaw.TextColor3 = Color3.new(1, 1, 1)
+ElectricPaw.Font = Enum.Font.PatrickHand
+ElectricPaw.Text = "Lấy võ: Móng vuốt điện v2"
+
+ElectricPaw.MouseButton1Click:Connect(function()
+    warn("Empty for now")
+end)
+
+local SharkmanKarate = Instance.new("TextButton")
+SharkmanKarate.Parent = SwitchFightingStyle
+SharkmanKarate.BackgroundColor3 = Color3.new(0, 0, 0)
+SharkmanKarate.BackgroundTransparency = 0.5
+SharkmanKarate.Size = UDim2.new(0.8, 0, 0.05, 0)
+SharkmanKarate.TextScaled = true
+SharkmanKarate.Position = UDim2.new(0.1, 0, 0.565, 0)
+SharkmanKarate.TextColor3 = Color3.new(1, 1, 1)
+SharkmanKarate.Font = Enum.Font.PatrickHand
+SharkmanKarate.Text = "Lấy võ: Karate Cá mập v2"
+
+SharkmanKarate.MouseButton1Click:Connect(function()
+    warn("Empty for now")
+end)
+
+local InfernoDragonBreath = Instance.new("TextButton")
+InfernoDragonBreath.Parent = SwitchFightingStyle
+InfernoDragonBreath.BackgroundColor3 = Color3.new(0, 0, 0)
+InfernoDragonBreath.BackgroundTransparency = 0.5
+InfernoDragonBreath.Size = UDim2.new(0.8, 0, 0.05, 0)
+InfernoDragonBreath.TextScaled = true
+InfernoDragonBreath.Position = UDim2.new(0.1, 0, 0.645, 0)
+InfernoDragonBreath.TextColor3 = Color3.new(1, 1, 1)
+InfernoDragonBreath.Font = Enum.Font.PatrickHand
+InfernoDragonBreath.Text = "Lấy võ: Hơi thở của Rồng Nova v2"
+
+InfernoDragonBreath.MouseButton1Click:Connect(function()
+    warn("Empty for now")
+end)
+
+local GodHuman = Instance.new("TextButton")
+GodHuman.Parent = SwitchFightingStyle
+GodHuman.BackgroundColor3 = Color3.new(0, 0, 0)
+GodHuman.BackgroundTransparency = 0.5
+GodHuman.Size = UDim2.new(0.8, 0, 0.05, 0)
+GodHuman.TextScaled = true
+GodHuman.Position = UDim2.new(0.1, 0, 0.725, 0)
+GodHuman.TextColor3 = Color3.new(1, 1, 1)
+GodHuman.Font = Enum.Font.PatrickHand
+GodHuman.Text = "Lấy võ: Nhân thần v2"
+
+GodHuman.MouseButton1Click:Connect(function()
+    warn("Empty for now")
+end)
 
 -- Boat Settings --
-local boatButtons = {
-    {
-        obj = _vars.SpawnPart,
-        pos = UDim2.new(0.1, 0, 0.005, 0),
-        text = "Đặt thứ này ở chỗ mua thuyền",
-        color = Color3.new(1, 1, 1)
-    },
-    {
-        obj = _vars.BringBoat,
-        pos = UDim2.new(0.1, 0, 0.085, 0),
-        text = "Triệu hồi thuyền",
-        color = Color3.new(1, 1, 1)
-    },
-    {
-        obj = _vars.BuyBoat,
-        pos = UDim2.new(0.1, 0, 0.165, 0),
-        text = "Mua thuyền đã chọn",
-        color = Color3.new(1, 1, 1)
-    },
-    {
-        obj = _vars.Dinghy,
-        pos = UDim2.new(0.1, 0, 0.245, 0),
-        text = "Thuyền nhỏ",
-        color = Color3.new(1, 1, 1),
-        boatName = "Dinghy"
-    },
-    {
-        obj = _vars.PirateSloop,
-        pos = UDim2.new(0.1, 0, 0.325, 0),
-        text = "Thuyền cướp biển",
-        color = Color3.new(1, 0, 0),
-        boatName = "PirateSloop"
-    },
-    {
-        obj = _vars.PirateBrigade,
-        pos = UDim2.new(0.1, 0, 0.405, 0),
-        text = "Lữ đoàn cướp biển",
-        color = Color3.new(1, 0, 0),
-        boatName = "PirateBrigade"
-    },
-    {
-        obj = _vars.PirateGrandBrigade,
-        pos = UDim2.new(0.1, 0, 0.485, 0),
-        text = "Lữ đoàn cướp biển lớn",
-        color = Color3.new(1, 0, 0),
-        boatName = "PirateGrandBrigade"
-    },
-    {
-        obj = _vars.MarineSloop,
-        pos = UDim2.new(0.1, 0, 0.565, 0),
-        text = "Tàu biển",
-        color = Color3.new(0, 1, 1),
-        boatName = "MarineSloop"
-    },
-    {
-        obj = _vars.MarineBrigade,
-        pos = UDim2.new(0.1, 0, 0.645, 0),
-        text = "Lữ đoàn thủy quân lục chiến",
-        color = Color3.new(0, 1, 1),
-        boatName = "MarineBrigade"
-    },
-    {
-        obj = _vars.MarineGrandBrigade,
-        pos = UDim2.new(0.1, 0, 0.725, 0),
-        text = "Lữ đoàn thủy quân lục chiến lớn",
-        color = Color3.new(0, 1, 1),
-        boatName = "MarineGrandBrigade"
-    },
-    {
-        obj = _vars.Lantern,
-        pos = UDim2.new(0.1, 0, 0.805, 0),
-        text = "đèn lồng",
-        color = Color3.new(1, 1, 0),
-        boatName = "Lantern"
-    },
-    {
-        obj = _vars.Guardian,
-        pos = UDim2.new(0.1, 0, 0.885, 0),
-        text = "Người giám hộ",
-        color = Color3.new(0, 0, 1),
-        boatName = "Guardian"
-    }
-}
 
-for _, btn in ipairs(boatButtons) do
-    btn.obj.Parent = _vars.BoatSelection
-    btn.obj.BackgroundColor3 = Color3.new(0, 0, 0)
-    btn.obj.BackgroundTransparency = 0.5
-    btn.obj.Size = UDim2.new(0.8, 0, 0.05, 0)
-    btn.obj.TextScaled = true
-    btn.obj.Position = btn.pos
-    btn.obj.TextColor3 = btn.color
-    btn.obj.Font = Enum.Font.PatrickHand
-    btn.obj.Text = btn.text
-end
+local SpawnPart = Instance.new("TextButton")
+SpawnPart.Parent = BoatSelection
+SpawnPart.BackgroundColor3 = Color3.new(0, 0, 0)
+SpawnPart.BackgroundTransparency = 0.5
+SpawnPart.Size = UDim2.new(0.8, 0, 0.05, 0)
+SpawnPart.TextScaled = true
+SpawnPart.Position = UDim2.new(0.1, 0, 0.005, 0)
+SpawnPart.TextColor3 = Color3.new(1, 1, 1)
+SpawnPart.Font = Enum.Font.PatrickHand
+SpawnPart.Text = "Đặt thứ này ở chỗ mua thuyền"
 
-_vars.SpawnPart.MouseButton1Click:Connect(function()
+SpawnPart.MouseButton1Click:Connect(function()
     local existingPart = workspace:FindFirstChild("Check")
     if existingPart then
-        existingPart:Destroy()
+        existingPart:Destroy() -- Remove previous part if it exists
     end
+    
     local part = Instance.new("Part")
-    part.Name = "Check"
+    part.Name = "Check" -- Name the part "Check"
     part.Size = Vector3.new(2, 1, 2)
-    part.Position = _vars.player.Character.HumanoidRootPart.Position + Vector3.new(0, 5, 0)
+    part.Position = game.Players.LocalPlayer.Character.HumanoidRootPart.Position + Vector3.new(0, 5, 0) -- Spawn above player
     part.Anchored = true
     part.Parent = workspace
 end)
 
-_vars.BuyBoat.MouseButton1Click:Connect(function()
+local BuyBoat = Instance.new("TextButton")
+BuyBoat.Parent = BoatSelection
+BuyBoat.BackgroundColor3 = Color3.new(0, 0, 0)
+BuyBoat.BackgroundTransparency = 0.5
+BuyBoat.Size = UDim2.new(0.8, 0, 0.05, 0)
+BuyBoat.TextScaled = true
+BuyBoat.Position = UDim2.new(0.1, 0, 0.165, 0)
+BuyBoat.TextColor3 = Color3.new(1, 1, 1)
+BuyBoat.Font = Enum.Font.PatrickHand
+BuyBoat.Text = "Mua thuyền đã chọn"
+
+BuyBoat.MouseButton1Click:Connect(function()
     local part = workspace:FindFirstChild("Check")
     if part then
-        _vars.player.Character.HumanoidRootPart.CFrame = part.CFrame + Vector3.new(0, 3, 0)
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = part.CFrame + Vector3.new(0, 3, 0) -- Teleport above the part
     end
+    
     wait(0.02)
-    local boattext = _vars.HoldBoatName.Text
+    
+    local boattext = HoldBoatName.Text
+    
     local args = {
-        [1] = "BuyBoat",
-        [2] = boattext
-    }
-    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+    [1] = "BuyBoat",
+    [2] = boattext
+}
+
+game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
 end)
 
-_vars.BringBoat.MouseButton1Click:Connect(function()
-    local getboat = _vars.HoldBoatName.Text
-    local vehicle = game.Workspace.Boats:FindFirstChild(getboat)
-    if vehicle and vehicle:IsA("Model") then
-        local vehicleSeat = vehicle:FindFirstChild("VehicleSeat")
-        if vehicleSeat then
-            vehicleSeat.CFrame = _vars.player.Character.HumanoidRootPart.CFrame
+local BringBoat = Instance.new("TextButton")
+BringBoat.Parent = BoatSelection
+BringBoat.BackgroundColor3 = Color3.new(0, 0, 0)
+BringBoat.BackgroundTransparency = 0.5
+BringBoat.Size = UDim2.new(0.8, 0, 0.05, 0)
+BringBoat.TextScaled = true
+BringBoat.Position = UDim2.new(0.1, 0, 0.085, 0)
+BringBoat.TextColor3 = Color3.new(1, 1, 1)
+BringBoat.Font = Enum.Font.PatrickHand
+BringBoat.Text = "Triệu hồi thuyền"
+
+BringBoat.MouseButton1Click:Connect(function()
+    local getboat = HoldBoatName.Text
+        
+        local vehicle = game.Workspace.Boats:FindFirstChild(getboat)
+        if vehicle and vehicle:IsA("Model") then
+            local vehicleSeat = vehicle:FindFirstChild("VehicleSeat")
+            if vehicleSeat then
+                vehicleSeat.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+            else
+                warn("No VehicleSeat found in " .. getboat)
+            end
         else
-            warn("No VehicleSeat found in " .. getboat)
+            warn("Không có thuyền named " .. getboat .. " found.")
         end
+end)
+
+local Dinghy = Instance.new("TextButton")
+Dinghy.Parent = BoatSelection
+Dinghy.BackgroundColor3 = Color3.new(0, 0, 0)
+Dinghy.BackgroundTransparency = 0.5
+Dinghy.Size = UDim2.new(0.8, 0, 0.05, 0)
+Dinghy.TextScaled = true
+Dinghy.Position = UDim2.new(0.1, 0, 0.245, 0)
+Dinghy.TextColor3 = Color3.new(1, 1, 1)
+Dinghy.Font = Enum.Font.PatrickHand
+Dinghy.Text = "Thuyền nhỏ"
+
+local isSelected = false
+Dinghy.MouseButton1Click:Connect(function()
+    if isSelected then
+        Dinghy.TextColor3 = Color3.new(1, 1, 1)
+        HoldBoatName.Text = "Không có thuyền"
     else
-        warn("Không có thuyền named " .. getboat .. " found.")
+        Dinghy.TextColor3 = Color3.new(0, 1, 0)
+        HoldBoatName.Text = "Dinghy"
     end
+    isSelected = not isSelected
 end)
 
-local function createBoatButtonHandler(btn, boatName)
-    local isSelected = false
-    btn.MouseButton1Click:Connect(function()
-        if isSelected then
-            btn.TextColor3 = Color3.new(1, 1, 1)
-            _vars.HoldBoatName.Text = "Không có thuyền"
-        else
-            btn.TextColor3 = Color3.new(0, 1, 0)
-            _vars.HoldBoatName.Text = boatName
-        end
-        isSelected = not isSelected
-    end)
-end
+local PirateSloop = Instance.new("TextButton")
+PirateSloop.Parent = BoatSelection
+PirateSloop.BackgroundColor3 = Color3.new(0, 0, 0)
+PirateSloop.BackgroundTransparency = 0.5
+PirateSloop.Size = UDim2.new(0.8, 0, 0.05, 0)
+PirateSloop.TextScaled = true
+PirateSloop.Position = UDim2.new(0.1, 0, 0.325, 0)
+PirateSloop.TextColor3 = Color3.new(1, 0, 0)
+PirateSloop.Font = Enum.Font.PatrickHand
+PirateSloop.Text = "Thuyền cướp biển"
 
-for _, btn in ipairs(boatButtons) do
-    if btn.boatName then
-        createBoatButtonHandler(btn.obj, btn.boatName)
+local isSelected = false
+PirateSloop.MouseButton1Click:Connect(function()
+    if isSelected then
+        PirateSloop.TextColor3 = Color3.new(1, 1, 1)
+        HoldBoatName.Text = "Không có thuyền"
+    else
+        PirateSloop.TextColor3 = Color3.new(0, 1, 0)
+        HoldBoatName.Text = "PirateSloop"
     end
-end
+    isSelected = not isSelected
+end)
+
+local PirateBrigade = Instance.new("TextButton")
+PirateBrigade.Parent = BoatSelection
+PirateBrigade.BackgroundColor3 = Color3.new(0, 0, 0)
+PirateBrigade.BackgroundTransparency = 0.5
+PirateBrigade.Size = UDim2.new(0.8, 0, 0.05, 0)
+PirateBrigade.TextScaled = true
+PirateBrigade.Position = UDim2.new(0.1, 0, 0.405, 0)
+PirateBrigade.TextColor3 = Color3.new(1, 0, 0)
+PirateBrigade.Font = Enum.Font.PatrickHand
+PirateBrigade.Text = "Lữ đoàn cướp biển"
+
+local isSelected = false
+PirateBrigade.MouseButton1Click:Connect(function()
+    if isSelected then
+        PirateBrigade.TextColor3 = Color3.new(1, 1, 1)
+        HoldBoatName.Text = "Không có thuyền"
+    else
+        PirateBrigade.TextColor3 = Color3.new(0, 1, 0)
+        HoldBoatName.Text = "PirateBrigade"
+    end
+    isSelected = not isSelected
+end)
+
+local PirateGrandBrigade = Instance.new("TextButton")
+PirateGrandBrigade.Parent = BoatSelection
+PirateGrandBrigade.BackgroundColor3 = Color3.new(0, 0, 0)
+PirateGrandBrigade.BackgroundTransparency = 0.5
+PirateGrandBrigade.Size = UDim2.new(0.8, 0, 0.05, 0)
+PirateGrandBrigade.TextScaled = true
+PirateGrandBrigade.Position = UDim2.new(0.1, 0, 0.485, 0)
+PirateGrandBrigade.TextColor3 = Color3.new(1, 0, 0)
+PirateGrandBrigade.Font = Enum.Font.PatrickHand
+PirateGrandBrigade.Text = "Lữ đoàn cướp biển lớn"
+
+local isSelected = false
+PirateGrandBrigade.MouseButton1Click:Connect(function()
+    if isSelected then
+        PirateGrandBrigade.TextColor3 = Color3.new(1, 1, 1)
+        HoldBoatName.Text = "Không có thuyền"
+    else
+        PirateGrandBrigade.TextColor3 = Color3.new(0, 1, 0)
+        HoldBoatName.Text = "PirateGrandBrigade"
+    end
+    isSelected = not isSelected
+end)
+
+local MarineSloop = Instance.new("TextButton")
+MarineSloop.Parent = BoatSelection
+MarineSloop.BackgroundColor3 = Color3.new(0, 0, 0)
+MarineSloop.BackgroundTransparency = 0.5
+MarineSloop.Size = UDim2.new(0.8, 0, 0.05, 0)
+MarineSloop.TextScaled = true
+MarineSloop.Position = UDim2.new(0.1, 0, 0.565, 0)
+MarineSloop.TextColor3 = Color3.new(0, 1, 1)
+MarineSloop.Font = Enum.Font.PatrickHand
+MarineSloop.Text = "Tàu biển"
+
+local isSelected = false
+MarineSloop.MouseButton1Click:Connect(function()
+    if isSelected then
+        MarineSloop.TextColor3 = Color3.new(1, 1, 1)
+        HoldBoatName.Text = "Không có thuyền"
+    else
+        MarineSloop.TextColor3 = Color3.new(0, 1, 0)
+        HoldBoatName.Text = "MarineSloop"
+    end
+    isSelected = not isSelected
+end)
+
+local MarineBrigade = Instance.new("TextButton")
+MarineBrigade.Parent = BoatSelection
+MarineBrigade.BackgroundColor3 = Color3.new(0, 0, 0)
+MarineBrigade.BackgroundTransparency = 0.5
+MarineBrigade.Size = UDim2.new(0.8, 0, 0.05, 0)
+MarineBrigade.TextScaled = true
+MarineBrigade.Position = UDim2.new(0.1, 0, 0.645, 0)
+MarineBrigade.TextColor3 = Color3.new(0, 1, 1)
+MarineBrigade.Font = Enum.Font.PatrickHand
+MarineBrigade.Text = "Lữ đoàn thủy quân lục chiến"
+
+local isSelected = false
+MarineBrigade.MouseButton1Click:Connect(function()
+    if isSelected then
+        MarineBrigade.TextColor3 = Color3.new(1, 1, 1)
+        HoldBoatName.Text = "Không có thuyền"
+    else
+        MarineBrigade.TextColor3 = Color3.new(0, 1, 0)
+        HoldBoatName.Text = "MarineBrigade"
+    end
+    isSelected = not isSelected
+end)
+
+local MarineGrandBrigade = Instance.new("TextButton")
+MarineGrandBrigade.Parent = BoatSelection
+MarineGrandBrigade.BackgroundColor3 = Color3.new(0, 0, 0)
+MarineGrandBrigade.BackgroundTransparency = 0.5
+MarineGrandBrigade.Size = UDim2.new(0.8, 0, 0.05, 0)
+MarineGrandBrigade.TextScaled = true
+MarineGrandBrigade.Position = UDim2.new(0.1, 0, 0.725, 0)
+MarineGrandBrigade.TextColor3 = Color3.new(0, 1, 1)
+MarineGrandBrigade.Font = Enum.Font.PatrickHand
+MarineGrandBrigade.Text = "Lữ đoàn thủy quân lục chiến lớn"
+
+local isSelected = false
+MarineGrandBrigade.MouseButton1Click:Connect(function()
+    if isSelected then
+        MarineGrandBrigade.TextColor3 = Color3.new(1, 1, 1)
+        HoldBoatName.Text = "Không có thuyền"
+    else
+        MarineGrandBrigade.TextColor3 = Color3.new(0, 1, 0)
+        HoldBoatName.Text = "MarineGrandBrigade"
+    end
+    isSelected = not isSelected
+end)
+
+local Lantern = Instance.new("TextButton")
+Lantern.Parent = BoatSelection
+Lantern.BackgroundColor3 = Color3.new(0, 0, 0)
+Lantern.BackgroundTransparency = 0.5
+Lantern.Size = UDim2.new(0.8, 0, 0.05, 0)
+Lantern.TextScaled = true
+Lantern.Position = UDim2.new(0.1, 0, 0.805, 0)
+Lantern.TextColor3 = Color3.new(1, 1, 0)
+Lantern.Font = Enum.Font.PatrickHand
+Lantern.Text = "đèn lồng"
+
+local isSelected = false
+Lantern.MouseButton1Click:Connect(function()
+    if isSelected then
+        Lantern.TextColor3 = Color3.new(1, 1, 1)
+        HoldBoatName.Text = "Không có thuyền"
+    else
+        Lantern.TextColor3 = Color3.new(0, 1, 0)
+        HoldBoatName.Text = "Lantern"
+    end
+    isSelected = not isSelected
+end)
+
+local Guardian = Instance.new("TextButton")
+Guardian.Parent = BoatSelection
+Guardian.BackgroundColor3 = Color3.new(0, 0, 0)
+Guardian.BackgroundTransparency = 0.5
+Guardian.Size = UDim2.new(0.8, 0, 0.05, 0)
+Guardian.TextScaled = true
+Guardian.Position = UDim2.new(0.1, 0, 0.885, 0)
+Guardian.TextColor3 = Color3.new(0, 0, 1)
+Guardian.Font = Enum.Font.PatrickHand
+Guardian.Text = "Người giám hộ"
+
+local isSelected = false
+Guardian.MouseButton1Click:Connect(function()
+    if isSelected then
+        Guardian.TextColor3 = Color3.new(1, 1, 1)
+        HoldBoatName.Text = "Không có thuyền"
+    else
+        Guardian.TextColor3 = Color3.new(0, 1, 0)
+        HoldBoatName.Text = "Guardian"
+    end
+    isSelected = not isSelected
+end)
 
 -- BOSS SEA123 --
-_vars.EntFrame.Parent = _vars.ScreenGui
-_vars.EntFrame.BackgroundColor3 = Color3.new(0, 0, 0)
-_vars.EntFrame.BackgroundTransparency = 0.5
-_vars.EntFrame.Size = UDim2.new(0.4, 0, 0.6, 0)
-_vars.EntFrame.Position = UDim2.new(0.05, 0, 0.1, 0)
-_vars.EntFrame.Active = true
-_vars.EntFrame.Draggable = true
-_vars.EntFrame.Visible = false
+
+local EntFrame = Instance.new("Frame")
+EntFrame.Parent = ScreenGui
+EntFrame.BackgroundColor3 = Color3.new(0, 0, 0)
+EntFrame.BackgroundTransparency = 0.5
+EntFrame.Size = UDim2.new(0.4, 0, 0.6, 0)
+EntFrame.Position = UDim2.new(0.05, 0, 0.1, 0)
+EntFrame.Active = true
+EntFrame.Draggable = true
+EntFrame.Visible = false
 
 local EntFrameUICorner = Instance.new("UICorner")
-EntFrameUICorner.Parent = _vars.EntFrame
+EntFrameUICorner.Parent = EntFrame
 EntFrameUICorner.CornerRadius = UDim.new(0.1, 0)
 
-_vars.EntitySF.Parent = _vars.EntFrame
-_vars.EntitySF.BackgroundColor3 = Color3.new(0, 0, 0)
-_vars.EntitySF.BackgroundTransparency = 0.5
-_vars.EntitySF.Size = UDim2.new(0.9, 0, 0.8, 0)
-_vars.EntitySF.Position = UDim2.new(0.05, 0, 0.1, 0)
-_vars.EntitySF.ScrollBarThickness = 0.1
-_vars.EntitySF.CanvasSize = UDim2.new(0, 0, 2, 0)
+local EntitySF = Instance.new("ScrollingFrame")
+EntitySF.Parent = EntFrame
+EntitySF.BackgroundColor3 = Color3.new(0, 0, 0)
+EntitySF.BackgroundTransparency = 0.5
+EntitySF.Size = UDim2.new(0.9, 0, 0.8, 0)
+EntitySF.Position = UDim2.new(0.05, 0, 0.1, 0)
+EntitySF.ScrollBarThickness = 0.1
+EntitySF.CanvasSize = UDim2.new(0, 0, 2, 0)
 
-_vars.EntityNumber0.Parent = _vars.EntitySF
-_vars.EntityNumber0.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-_vars.EntityNumber0.BackgroundTransparency = 0
-_vars.EntityNumber0.Size = UDim2.new(0.9, 0, 0.05, 0)
-_vars.EntityNumber0.Position = UDim2.new(0.05, 0, 0.05, 0)
-_vars.EntityNumber0.TextScaled = true
-_vars.EntityNumber0.TextColor3 = Color3.new(0, 0, 0)
-_vars.EntityNumber0.Font = Enum.Font.PatrickHand
-_vars.EntityNumber0.Text = "Danh sách quái/boss"
+-- Entity Button Holder --
 
-local EntityNumber0UICorner = Instance.new("UICorner")
-EntityNumber0UICorner.Parent = _vars.EntityNumber0
-EntityNumber0UICorner.CornerRadius = UDim.new(0.1, 0)
+local EntityNumber0 = Instance.new("TextButton")
+EntityNumber0.Parent = EntitySF
+EntityNumber0.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+EntityNumber0.BackgroundTransparency = 0
+EntityNumber0.Size = UDim2.new(0.9, 0, 0.05, 0)
+EntityNumber0.Position = UDim2.new(0.05, 0, 0.02, 0)
+EntityNumber0.TextScaled = true
+EntityNumber0.TextColor3 = Color3.new(0, 0, 0)
+EntityNumber0.Font = Enum.Font.PatrickHand
+EntityNumber0.Text = "Đi tới Trùm Vua Khỉ Đột [Lvl.20]"
 
--- Enemy HRP Selection --
-_vars.EnemyHRPSelection.MouseButton1Click:Connect(function()
-    if _vars.IsEnemyHRPS then
-        _vars.EnemyHRPSelection.Text = "Chọn Quái GUI: Tắt"
-        _vars.EnemyHRPSelection.TextColor3 = Color3.new(1, 1, 1)
-        _vars.EntFrame.Visible = false
-        _vars.IsEnemyHRPS = false
-    else
-        _vars.EnemyHRPSelection.Text = "Chọn Quái GUI: Bật"
-        _vars.EnemyHRPSelection.TextColor3 = Color3.new(0, 1, 0)
-        _vars.EntFrame.Visible = true
-        _vars.IsEnemyHRPS = true
-        -- Populate enemy list
-        _vars.EntitySF:ClearAllChildren()
-        local yOffset = 0.05
-        for i, enemy in pairs(game.Workspace.Enemies:GetChildren()) do
-            if enemy:IsA("Model") and enemy:FindFirstChild("HumanoidRootPart") then
-                local enemyButton = Instance.new("TextButton")
-                enemyButton.Parent = _vars.EntitySF
-                enemyButton.BackgroundColor3 = Color3.new(0, 0, 0)
-                enemyButton.BackgroundTransparency = 0.5
-                enemyButton.Size = UDim2.new(0.9, 0, 0.05, 0)
-                enemyButton.Position = UDim2.new(0.05, 0, yOffset, 0)
-                enemyButton.TextScaled = true
-                enemyButton.TextColor3 = Color3.new(1, 1, 1)
-                enemyButton.Font = Enum.Font.PatrickHand
-                enemyButton.Text = enemy.Name
-                yOffset = yOffset + 0.06
-                enemyButton.MouseButton1Click:Connect(function()
-                    local playerPos = _vars.player.Character.HumanoidRootPart.Position
-                    local targetPos = enemy.HumanoidRootPart.Position + Vector3.new(0, 2, 0)
-                    if _vars.isTweenMode then
-                        if _vars.currentTween then
-                            _vars.currentTween:Cancel()
-                        end
-                        local goal = {CFrame = CFrame.new(targetPos)}
-                        local tweenInfo = createTweenInfo(playerPos, targetPos)
-                        _vars.currentTween = _vars.tweenService:Create(_vars.player.Character.HumanoidRootPart, tweenInfo, goal)
-                        _vars.currentTween:Play()
-                    else
-                        _vars.player.Character.HumanoidRootPart.CFrame = CFrame.new(targetPos)
-                    end
-                end)
-                local enemyCorner = Instance.new("UICorner")
-                enemyCorner.Parent = enemyButton
-                enemyCorner.CornerRadius = UDim.new(0.1, 0)
+local EntNum0UI = Instance.new("UICorner")
+EntNum0UI.Parent = EntityNumber0
+EntNum0UI.CornerRadius = UDim.new(0.1, 0)
+
+-- 1 --
+
+-- Entity Button Action --
+
+-- Part touched to get quest --
+local Lvl20Boss_Dialog = Instance.new("Part")
+Lvl20Boss_Dialog.Parent = game.Workspace
+Lvl20Boss_Dialog.Name = "QuestCube_Lvl20"
+Lvl20Boss_Dialog.Size = Vector3.new(1, 1, 1)
+Lvl20Boss_Dialog.Color = Color3.fromRGB(255, 0, 255)
+Lvl20Boss_Dialog.Transparency = 0.9
+Lvl20Boss_Dialog.Anchored = true
+Lvl20Boss_Dialog.CanCollide = false
+Lvl20Boss_Dialog.Position = Vector3.new(-1122, 40, -505)
+
+-- Part function ontouched to get quest --
+local function Mission_0()
+    print("[You Picked Quest: Lvl.20 Boss]")
+    wait(0.02)
+    local args = {
+    [1] = "StartQuest",
+    [2] = "JungleQuest",
+    [3] = 3
+}
+
+game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+wait(0.02)
+end
+
+-- Activated when part being touched by me --
+Lvl20Boss_Dialog.Touched:Connect(Mission_0)
+
+-- Box Closed Here --
+
+-- Entity Button Connect To --
+
+EntityNumber0.MouseButton1Click:Connect(function()
+    local EntPosition_Lvl20Boss = game:GetService("Workspace").QuestCube_Lvl20
+    if EntPosition_Lvl20Boss then
+        local playerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+        if isTweenMode then
+            if currentTween then
+                currentTween:Cancel()
             end
+            local goal = {CFrame = EntPosition_Lvl20Boss.CFrame + Vector3.new(0, 2, 0)}
+            local tweenInfo = createTweenInfo(playerPos, goal.CFrame.Position)
+            currentTween = tweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, tweenInfo, goal)
+            currentTween:Play()
+            
+            currentTween.Completed:Connect(function()
+                EnemiesCFrameTo.TextColor3 = Color3.fromRGB(255, 255, 0)
+                EnemiesCF = true
+            end)
+        else
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = EntPosition_Lvl20Boss.CFrame + Vector3.new(0, 0, 0)
+            wait(0.01)
+            game.Players.LocalPlayer.Character.Humanoid.Health = 0
         end
-        _vars.EntitySF.CanvasSize = UDim2.new(0, 0, yOffset, 0)
+    else
+        print("Part not found: Can't taking quest !")
     end
 end)
 
--- Anti-Gravity Function --
-_vars.ZeroGravity.MouseButton1Click:Connect(function()
-    if _vars.AntiGravity then
-        _vars.ZeroGravity.Text = "Không trọng lực [Giấu]"
-        _vars.ZeroGravity.TextColor3 = Color3.new(1, 1, 1)
-        _vars.AntiGravity = false
+-- Closed Box --
+
+-- Hide Frame Button --
+
+local EnemyHRPSelection = Instance.new("TextButton")
+EnemyHRPSelection.Parent = ScrollingFrame
+EnemyHRPSelection.Size = UDim2.new(0.03, 0, 0.9, 0)
+EnemyHRPSelection.Position = UDim2.new(0.805, 0, 0, 0)
+EnemyHRPSelection.BackgroundColor3 = Color3.new(0, 0, 0)
+EnemyHRPSelection.BackgroundTransparency = 0.5
+EnemyHRPSelection.TextScaled = true
+EnemyHRPSelection.Font = Enum.Font.PatrickHand
+EnemyHRPSelection.Text = "Chọn Quái GUI: Tắt"
+EnemyHRPSelection.TextColor3 = Color3.new(1, 1, 1)
+
+local IsEnemyHRPS = false
+EnemyHRPSelection.MouseButton1Click:Connect(function()
+    if IsEnemyHRPS then
+        EnemyHRPSelection.Text = "Chọn Quái GUI: Tắt"
+        EnemyHRPSelection.TextColor3 = Color3.new(1, 1, 1)
+        
+        IsEnemyHRPS = false
+        
+        EntFrame.Visible = false
+    else
+        EnemyHRPSelection.Text = "Chọn Quái GUI: Bật"
+        EnemyHRPSelection.TextColor3 = Color3.new(0, 1, 0)
+        
+        IsEnemyHRPS = true
+        
+        EntFrame.Visible = true
+    end
+end)
+
+-- Button Started From Here --
+local Itsme = game.Players
+local ImHere = Itsme.LocalPlayer
+local BHRP
+
+-- Action --
+
+local function getHumanoidRootPart()
+    local character = ImHere.Character
+    if character then
+        return character:FindFirstChild("HumanoidRootPart")
+    end
+    return nil
+end
+
+local function USEBV()
+    local PLHRP = getHumanoidRootPart()
+    if PLHRP then
+        BHRP = Instance.new("BodyVelocity")
+        BHRP.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+        BHRP.Velocity = Vector3.new(0, 0, 0)
+        BHRP.Parent = PLHRP
+    end
+end
+
+local function REBV()
+    if BHRP then
+        BHRP:Destroy()
+        BHRP = nil
+    end
+end
+
+-- Quickly Changed Zero Gravity --
+
+local VAFarm = Instance.new("TextButton")
+VAFarm.Parent = ScreenGui
+VAFarm.BackgroundColor3 = Color3.new(0, 0, 0)
+VAFarm.BackgroundTransparency = 0.5
+VAFarm.Size = UDim2.new(0.05, 0, 0.1, 0)
+VAFarm.TextScaled = true
+VAFarm.Position = UDim2.new(0.48, 0, 0.68, 0)
+VAFarm.TextColor3 = Color3.new(1, 1, 1)
+VAFarm.Font = Enum.Font.Code
+VAFarm.Text = "Tự động Farm[Tắt]"
+VAFarm.Visible = false
+
+local VAFarmUICorner = Instance.new("UICorner")
+VAFarmUICorner.Parent = VAFarm
+VAFarmUICorner.CornerRadius = UDim.new(0.1, 0)
+
+local VFarmA = false
+VAFarm.MouseButton1Click:Connect(function()
+    if VFarmA then
+        VAFarm.Text = "Tự động Farm[Tắt]"
+        VAFarm.TextColor3 = Color3.new(1, 1, 1)
         AbsoluteRemove()
+        VFarmA = false
     else
-        _vars.ZeroGravity.Text = "Không trọng lực [Bật]"
-        _vars.ZeroGravity.TextColor3 = Color3.new(0, 1, 0)
-        _vars.AntiGravity = true
+        VAFarm.Text = "Tự động Farm[Bật]"
+        VAFarm.TextColor3 = Color3.new(0, 1, 1)
         AbsoluteSmooth()
+        VFarmA = true
+
+        LoopActivated_AllF.RenderStepped:Connect(function(deltaTime)
+            if VFarmA then
+                trackNearestEnemy()
+                -- HitBoxNearestEnemy()
+                -- VU:CaptureController()
+                -- VU:ClickButton1(Vector2.new(0.5, 0, 0.5))
+            end
+        end)
     end
 end)
 
--- True Anti-Gravity Function --
-_vars.TrueZeroGravity.MouseButton1Click:Connect(function()
-    if _vars.AntiZGravity then
-        _vars.TrueZeroGravity.Text = "Không trọng lực [Giấu]"
-        _vars.TrueZeroGravity.TextColor3 = Color3.new(1, 1, 1)
-        _vars.AntiZGravity = false
-        if _vars.player.Character and _vars.player.Character:FindFirstChild("HumanoidRootPart") then
-            _vars.player.Character.HumanoidRootPart.Anchored = false
-        end
+local ZeroGravity = Instance.new("TextButton")
+ZeroGravity.Parent = ScreenGui
+ZeroGravity.BackgroundColor3 = Color3.new(0, 0, 0)
+ZeroGravity.BackgroundTransparency = 0.5
+ZeroGravity.Size = UDim2.new(0.05, 0, 0.1, 0)
+ZeroGravity.TextScaled = true
+ZeroGravity.Position = UDim2.new(0.4, 0, 0.68, 0)
+ZeroGravity.TextColor3 = Color3.new(1, 1, 1)
+ZeroGravity.Font = Enum.Font.Code
+ZeroGravity.Text = "Bay Mượt[Tắt]"
+ZeroGravity.Visible = false
+
+local ZeroGravityUICorner = Instance.new("UICorner")
+ZeroGravityUICorner.Parent = ZeroGravity
+ZeroGravityUICorner.CornerRadius = UDim.new(0.1, 0)
+
+local AntiGravity = false
+ZeroGravity.MouseButton1Click:Connect(function()
+    if AntiGravity then
+        ZeroGravity.Text = "Bay Mượt[Tắt]"
+        ZeroGravity.TextColor3 = Color3.new(1, 1, 1)
+        REBV()
+        AntiGravity = false
     else
-        _vars.TrueZeroGravity.Text = "Không trọng lực [Bật]"
-        _vars.TrueZeroGravity.TextColor3 = Color3.new(0, 1, 0)
-        _vars.AntiZGravity = true
-        if _vars.player.Character and _vars.player.Character:FindFirstChild("HumanoidRootPart") then
-            _vars.player.Character.HumanoidRootPart.Anchored = true
-        end
+        ZeroGravity.Text = "Bay Mượt[Bật]"
+        ZeroGravity.TextColor3 = Color3.new(0, 1, 1)
+        USEBV()
+        AntiGravity = true
     end
 end)
 
--- Chest and Fruit Counter --
-local function updateChestCounters()
-    local silverChests = 0
-    local goldChests = 0
-    local diamondChests = 0
-    for _, obj in pairs(game.Workspace:GetChildren()) do
-        if obj.Name == "Chest1" then
-            silverChests = silverChests + 1
-        elseif obj.Name == "Chest2" then
-            goldChests = goldChests + 1
-        elseif obj.Name == "Chest3" then
-            diamondChests = diamondChests + 1
+-- True Zero Gravity Button Toggler --
+
+local TrueZeroGravity = Instance.new("TextButton")
+TrueZeroGravity.Parent = ScrollingFrame
+TrueZeroGravity.Size = UDim2.new(0.03, 0, 0.9, 0)
+TrueZeroGravity.Position = UDim2.new(0.845, 0, 0, 0)
+TrueZeroGravity.BackgroundColor3 = Color3.new(0, 0, 0)
+TrueZeroGravity.BackgroundTransparency = 0.5
+TrueZeroGravity.TextScaled = true
+TrueZeroGravity.Font = Enum.Font.PatrickHand
+TrueZeroGravity.Text = "Không trọng lực [Giấu]"
+TrueZeroGravity.TextColor3 = Color3.new(1, 1, 1)
+
+local AntiZGravity = false
+TrueZeroGravity.MouseButton1Click:Connect(function()
+    if AntiZGravity then
+        TrueZeroGravity.Text = "Không trọng lực [Giấu]"
+        TrueZeroGravity.TextColor3 = Color3.new(1, 1, 1)
+        
+        AntiZGravity = false
+        
+        ZeroGravity.Visible = false
+        VAFarm.Visible = false
+    else
+        TrueZeroGravity.Text = "Không trọng lực [Khoe ra]"
+        TrueZeroGravity.TextColor3 = Color3.new(0, 1, 0)
+        
+        AntiZGravity = true
+        
+        ZeroGravity.Visible = true
+        VAFarm.Visible = true
+    end
+end)
+
+-- When Character Reset --
+ImHere.CharacterAdded:Connect(function()
+    ZeroGravity.Text = "Bay Mượt[Tắt]"
+    ZeroGravity.TextColor3 = Color3.new(1, 1, 1)
+    AntiGravity = false
+    REBV()
+end)
+-- When Character Reset --
+
+-- Fruit/Chest Detector --
+
+local CounterofChest1 = Instance.new("TextLabel")
+CounterofChest1.Parent = ScreenGui
+CounterofChest1.BackgroundColor3 = Color3.new(0, 0, 0)
+CounterofChest1.BackgroundTransparency = 0.8
+CounterofChest1.Size = UDim2.new(0.2, 0, 0.05, 0)
+CounterofChest1.Position = UDim2.new(0.21, 0, 0.01, 0)
+CounterofChest1.TextScaled = true
+CounterofChest1.Font = Enum.Font.Code
+CounterofChest1.TextColor3 = Color3.new(1, 1, 1)
+CounterofChest1.Text = ""
+CounterofChest1.Visible = false
+
+local CounterofChest2 = Instance.new("TextLabel")
+CounterofChest2.Parent = ScreenGui
+CounterofChest2.BackgroundColor3 = Color3.new(0, 0, 0)
+CounterofChest2.BackgroundTransparency = 0.8
+CounterofChest2.Size = UDim2.new(0.2, 0, 0.05, 0)
+CounterofChest2.Position = UDim2.new(0, 0, 0.07, 0)
+CounterofChest2.TextScaled = true
+CounterofChest2.Font = Enum.Font.Code
+CounterofChest2.TextColor3 = Color3.new(1, 1, 1)
+CounterofChest2.Text = ""
+CounterofChest2.Visible = false
+
+local CounterofChest3 = Instance.new("TextLabel")
+CounterofChest3.Parent = ScreenGui
+CounterofChest3.BackgroundColor3 = Color3.new(0, 0, 0)
+CounterofChest3.BackgroundTransparency = 0.8
+CounterofChest3.Size = UDim2.new(0.2, 0, 0.05, 0)
+CounterofChest3.Position = UDim2.new(0.21, 0, 0.07, 0)
+CounterofChest3.TextScaled = true
+CounterofChest3.Font = Enum.Font.Code
+CounterofChest3.TextColor3 = Color3.new(1, 1, 1)
+CounterofChest3.Text = ""
+CounterofChest3.Visible = false
+
+local CounterofFruitSpawn = Instance.new("TextLabel")
+CounterofFruitSpawn.Parent = ScreenGui
+CounterofFruitSpawn.BackgroundColor3 = Color3.new(0, 0, 0)
+CounterofFruitSpawn.BackgroundTransparency = 0.8
+CounterofFruitSpawn.Size = UDim2.new(0.2, 0, 0.05, 0)
+CounterofFruitSpawn.Position = UDim2.new(0, 0, 0.01, 0)
+CounterofFruitSpawn.TextScaled = true
+CounterofFruitSpawn.Font = Enum.Font.Code
+CounterofFruitSpawn.TextColor3 = Color3.new(1, 1, 1)
+CounterofFruitSpawn.Text = ""
+CounterofFruitSpawn.Visible = false
+
+local function countParts(partName)
+    local count = 0
+    for _, obj in pairs(game:GetService("Workspace"):GetChildren()) do
+        if obj.Name == partName and obj:IsA("BasePart") then
+            count = count + 1
         end
     end
-    _vars.CounterofChest1.Text = "Rương Bạc: " .. silverChests
-    _vars.CounterofChest2.Text = "Rương Vàng: " .. goldChests
-    _vars.CounterofChest3.Text = "Rương Kim Cương: " .. diamondChests
+    return count
 end
 
-_vars.CounterofChest1.Parent = _vars.ChestBox
-_vars.CounterofChest1.BackgroundColor3 = Color3.new(0, 0, 0)
-_vars.CounterofChest1.BackgroundTransparency = 0.5
-_vars.CounterofChest1.Size = UDim2.new(0.8, 0, 0.05, 0)
-_vars.CounterofChest1.Position = UDim2.new(0.1, 0, 0.645, 0)
-_vars.CounterofChest1.TextScaled = true
-_vars.CounterofChest1.TextColor3 = Color3.fromRGB(192, 192, 192)
-_vars.CounterofChest1.Font = Enum.Font.PatrickHand
-_vars.CounterofChest1.Text = "Rương Bạc: 0"
+local function countItems(itemName)
+    local itemCount = 0
+    local item = game:GetService("Workspace"):FindFirstChild(itemName)
+    if item and item:IsA("Model") and item:FindFirstChild("Handle") then
+        itemCount = itemCount + 1
+    end
+    return itemCount
+end
 
-_vars.CounterofChest2.Parent = _vars.ChestBox
-_vars.CounterofChest2.BackgroundColor3 = Color3.new(0, 0, 0)
-_vars.CounterofChest2.BackgroundTransparency = 0.5
-_vars.CounterofChest2.Size = UDim2.new(0.8, 0, 0.05, 0)
-_vars.CounterofChest2.Position = UDim2.new(0.1, 0, 0.725, 0)
-_vars.CounterofChest2.TextScaled = true
-_vars.CounterofChest2.TextColor3 = Color3.new(1, 1, 0)
-_vars.CounterofChest2.Font = Enum.Font.PatrickHand
-_vars.CounterofChest2.Text = "Rương Vàng: 0"
+local function updateLabels()
+    CounterofChest1.Text = "Rương Bạc Có: " .. countParts("Chest1")
+    CounterofChest2.Text = "Rương Vàng Có: " .. countParts("Chest2")
+    CounterofChest3.Text = "Rương Kim Cương Có: " .. countParts("Chest3")
+    CounterofFruitSpawn.Text = "Trái Ác Quỷ Xuất Hiện Có: " .. countItems("Fruit ")
+end
 
-_vars.CounterofChest3.Parent = _vars.ChestBox
-_vars.CounterofChest3.BackgroundColor3 = Color3.new(0, 0, 0)
-_vars.CounterofChest3.BackgroundTransparency = 0.5
-_vars.CounterofChest3.Size = UDim2.new(0.8, 0, 0.05, 0)
-_vars.CounterofChest3.Position = UDim2.new(0.1, 0, 0.805, 0)
-_vars.CounterofChest3.TextScaled = true
-_vars.CounterofChest3.TextColor3 = Color3.new(0, 0, 1)
-_vars.CounterofChest3.Font = Enum.Font.PatrickHand
-_vars.CounterofChest3.Text = "Rương Kim Cương: 0"
+local TrueFruitDetector = Instance.new("TextButton")
+TrueFruitDetector.Parent = ScrollingFrame
+TrueFruitDetector.Size = UDim2.new(0.03, 0, 0.9, 0)
+TrueFruitDetector.Position = UDim2.new(0.885, 0, 0, 0)
+TrueFruitDetector.BackgroundColor3 = Color3.new(0, 0, 0)
+TrueFruitDetector.BackgroundTransparency = 0.5
+TrueFruitDetector.TextScaled = true
+TrueFruitDetector.Font = Enum.Font.PatrickHand
+TrueFruitDetector.Text = "Xem Rương và Trái Ác Quỷ [Giấu]"
+TrueFruitDetector.TextColor3 = Color3.new(1, 1, 1)
 
-_vars.CounterofFruitSpawn.Parent = _vars.ChestBox
-_vars.CounterofFruitSpawn.BackgroundColor3 = Color3.new(0, 0, 0)
-_vars.CounterofFruitSpawn.BackgroundTransparency = 0.5
-_vars.CounterofFruitSpawn.Size = UDim2.new(0.8, 0, 0.05, 0)
-_vars.CounterofFruitSpawn.Position = UDim2.new(0.1, 0, 0.885, 0)
-_vars.CounterofFruitSpawn.TextScaled = true
-_vars.CounterofFruitSpawn.TextColor3 = Color3.new(1, 0, 1)
-_vars.CounterofFruitSpawn.Font = Enum.Font.PatrickHand
-_vars.CounterofFruitSpawn.Text = "Trái Ác Quỷ: 0"
-
--- Fruit Detector --
-_vars.TrueFruitDetector.MouseButton1Click:Connect(function()
-    if _vars.FruitChestTrueSpawned then
-        _vars.TrueFruitDetector.Text = "Xem Rương và Trái Ác Quỷ [Giấu]"
-        _vars.TrueFruitDetector.TextColor3 = Color3.new(1, 1, 1)
-        _vars.FruitChestTrueSpawned = false
-        _vars.ChestBox.Visible = false
-        for _, billboard in pairs(_vars.billboardGuis) do
-            billboard:Destroy()
-        end
-        _vars.billboardGuis = {}
+local FruitChestTrueSpawned = false
+TrueFruitDetector.MouseButton1Click:Connect(function()
+    if FruitChestTrueSpawned then
+        TrueFruitDetector.Text = "Xem Rương và Trái Ác Quỷ [Giấu]"
+        TrueFruitDetector.TextColor3 = Color3.new(1, 1, 1)
+        CounterofChest1.Visible = false
+        CounterofChest2.Visible = false
+        CounterofChest3.Visible = false
+        CounterofFruitSpawn.Visible = false
+        
+        FruitChestTrueSpawned = false
     else
-        _vars.TrueFruitDetector.Text = "Xem Rương và Trái Ác Quỷ [Bật]"
-        _vars.TrueFruitDetector.TextColor3 = Color3.new(0, 1, 0)
-        _vars.FruitChestTrueSpawned = true
-        _vars.ChestBox.Visible = true
-        game:GetService("RunService").RenderStepped:Connect(function()
-            if _vars.FruitChestTrueSpawned then
-                updateChestCounters()
-                local fruitCount = 0
-                for _, obj in pairs(game.Workspace:GetChildren()) do
-                    if obj.Name == "Fruit" and obj:FindFirstChild("Handle") then
-                        fruitCount = fruitCount + 1
-                        if not _vars.billboardGuis[obj] then
-                            local billboard = Instance.new("BillboardGui")
-                            billboard.Parent = obj
-                            billboard.Size = UDim2.new(0, 100, 0, 50)
-                            billboard.StudsOffset = Vector3.new(0, 2, 0)
-                            billboard.AlwaysOnTop = true
-                            local textLabel = Instance.new("TextLabel")
-                            textLabel.Parent = billboard
-                            textLabel.Size = UDim2.new(1, 0, 1, 0)
-                            textLabel.BackgroundTransparency = 1
-                            textLabel.TextColor3 = Color3.new(1, 0, 1)
-                            textLabel.TextScaled = true
-                            textLabel.Text = "Trái Ác Quỷ"
-                            _vars.billboardGuis[obj] = billboard
-                        end
-                    end
+        TrueFruitDetector.Text = "Xem Rương và Trái Ác Quỷ [Khoe ra]"
+        TrueFruitDetector.TextColor3 = Color3.new(0, 1, 0)
+        CounterofChest1.Visible = true
+        CounterofChest2.Visible = true
+        CounterofChest3.Visible = true
+        CounterofFruitSpawn.Visible = true
+        
+        FruitChestTrueSpawned = true
+        
+        while FruitChestTrueSpawned do
+            updateLabels()
+            wait(1)
+        end
+    end
+end)
+
+-- OVERKILL/Lappy Just a Music I Liked In --
+
+local TrueQuestTaking = Instance.new("TextButton")
+TrueQuestTaking.Parent = ScrollingFrame
+TrueQuestTaking.Size = UDim2.new(0.03, 0, 0.9, 0)
+TrueQuestTaking.Position = UDim2.new(0.925, 0, 0, 0)
+TrueQuestTaking.BackgroundColor3 = Color3.new(0, 0, 0)
+TrueQuestTaking.BackgroundTransparency = 0.5
+TrueQuestTaking.TextScaled = true
+TrueQuestTaking.Font = Enum.Font.Code
+TrueQuestTaking.Text = "Khởi động[Tự động Nhiệm Vụ]"
+TrueQuestTaking.TextColor3 = Color3.new(1, 1, 0)
+TrueQuestTaking.Visible = true
+
+TrueQuestTaking.MouseButton1Click:Connect(function()
+    print("-- Auto Taking Quest: Loaded In --")
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/NganHa2k3/Tensura/refs/heads/main/BloxFruits_AutoQuest_I"))()
+    task.wait(0.02)
+    TrueQuestTaking.Visible = false
+end)
+
+-- Helper Box --
+
+local msgframe_0 = {
+    "----- Cách sử dụng nút này -----",
+    "Bay mượt: là nút giúp cho chuyển động",
+    "của bạn trở nên mượt mà hơn trong quá trình",
+    "bay (Tweening Progress), khi bạn ấn nó sẽ tạo",
+    "ra một cái nút hình vuông nhỏ trên thanh công cụ",
+    "của bạn ấn vào đó nó sẽ bật.. và bạn cũng có thể tắt",
+    "hoặc khi bạn chết nghĩa là nhân vật máu về 0, hoặc reset",
+    "character khi hồi sinh nó sẽ tự động tắt, để làm gì hả",
+    "để tránh trường hợp có thể gặp lỗi trong script chưa sửa được. ok tạm biệt !"
+}
+
+local msglistfix_0 = table.concat(msgframe_0, "\n")
+
+local TutorialFrame_0 = Instance.new("TextLabel")
+TutorialFrame_0.Parent = ScreenGui
+TutorialFrame_0.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+TutorialFrame_0.BackgroundTransparency = 0.8
+TutorialFrame_0.Size = UDim2.new(0.5, 0, 0.5, 0)
+TutorialFrame_0.Position = UDim2.new(0.25, 0, 0.25, 0)
+TutorialFrame_0.TextWrapped = true
+TutorialFrame_0.TextScaled = true
+TutorialFrame_0.TextColor3 = Color3.fromRGB(255, 0, 255)
+TutorialFrame_0.Font = Enum.Font.PatrickHand
+TutorialFrame_0.Text = msglistfix_0
+TutorialFrame_0.Visible = false
+
+-- Button Animation --
+
+OpenClose.MouseEnter:Connect(function()
+    OpenClose.TextColor3 = Color3.new(1, 1, 0)
+end)
+
+OpenClose.MouseLeave:Connect(function()
+    OpenClose.TextColor3 = Color3.new(1, 1, 1)
+end)
+
+TrueZeroGravity.MouseEnter:Connect(function()
+    TutorialFrame_0.Visible = true
+end)
+
+TrueZeroGravity.MouseLeave:Connect(function()
+    TutorialFrame_0.Visible = false
+end)
+
+-- [[ Level Check Displayed ]] --
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local LevelCheckF = Instance.new("TextButton", SG)
+LevelCheckF.Parent = ScrollingFrame
+LevelCheckF.BackgroundColor3 = Color3.new(0, 0, 0)
+LevelCheckF.BackgroundTransparency = 0.5
+LevelCheckF.Size = UDim2.new(0.03, 0, 0.9, 0)
+LevelCheckF.Position = UDim2.new(0.965, 0, 0, 0)
+LevelCheckF.TextScaled = true
+LevelCheckF.TextColor3 = Color3.new(1, 1, 1)
+LevelCheckF.Font = Enum.Font.PatrickHand
+LevelCheckF.Text = "Kiểm tra đồ: [Tắt]"
+
+local isToggledOn = false
+local billboardGuis = {}
+
+local function createBillboardGui(player)
+    if not player.Character or not player.Character:FindFirstChild("HumanoidRootPart") then return end
+    
+    local head = player.Character:WaitForChild("Head")
+    local distance = (player.Character.HumanoidRootPart.Position - LocalPlayer.Character.HumanoidRootPart.Position).magnitude
+    local level = player:FindFirstChild("Data") and player.Data:FindFirstChild("Level") and player.Data.Level.Value or "N/A"
+    local beli = player:FindFirstChild("Data") and player.Data:FindFirstChild("Beli") and player.Data.Beli.Value or "N/A"
+    local devilf = player:FindFirstChild("Data") and player.Data:FindFirstChild("DevilFruit") and player.Data.DevilFruit.Value or "N/A"
+    local playersDisplayName = player.DisplayName or "Unknown"
+    local username = player.Name
+
+    local billboard = Instance.new("BillboardGui")
+    billboard.Size = UDim2.new(0, 200, 0, 120)
+    billboard.StudsOffset = Vector3.new(-8, 0, 0)
+    billboard.AlwaysOnTop = true
+    billboard.Parent = head
+
+    local distanceLabel = Instance.new("TextLabel")
+    distanceLabel.Size = UDim2.new(1, 0, 0, 25)
+    distanceLabel.BackgroundTransparency = 1
+    distanceLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    distanceLabel.TextStrokeTransparency = 0.5
+    distanceLabel.Text = "[" .. math.floor(distance) .. "m]"
+    distanceLabel.TextScaled = false
+    distanceLabel.TextSize = 5
+    distanceLabel.Parent = billboard
+
+    local levelLabel = Instance.new("TextLabel")
+    levelLabel.Size = UDim2.new(1, 0, 0, 25)
+    levelLabel.Position = UDim2.new(0, 0, 0, 9)
+    levelLabel.BackgroundTransparency = 1
+    levelLabel.TextColor3 = Color3.fromRGB(255, 255, 0)
+    levelLabel.TextStrokeTransparency = 0.5
+    levelLabel.Text = "[" .. level .. "]"
+    levelLabel.TextScaled = false
+    levelLabel.TextSize = 5
+    levelLabel.Parent = billboard
+
+    local beliLabel = Instance.new("TextLabel")
+    beliLabel.Size = UDim2.new(1, 0, 0, 25)
+    beliLabel.Position = UDim2.new(0, 0, 0, 18)
+    beliLabel.BackgroundTransparency = 1
+    beliLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
+    beliLabel.TextStrokeTransparency = 0.5
+    beliLabel.Text = "[" .. beli .. "]"
+    beliLabel.TextScaled = false
+    beliLabel.TextSize = 5
+    beliLabel.Parent = billboard
+
+    local devilfLabel = Instance.new("TextLabel")
+    devilfLabel.Size = UDim2.new(1, 0, 0, 25)
+    devilfLabel.Position = UDim2.new(0, 0, 0, 27)
+    devilfLabel.BackgroundTransparency = 1
+    devilfLabel.TextColor3 = Color3.fromRGB(0, 255, 255)
+    devilfLabel.TextStrokeTransparency = 0.5
+    devilfLabel.Text = "[" .. devilf .. "]"
+    devilfLabel.TextScaled = false
+    devilfLabel.TextSize = 5
+    devilfLabel.Parent = billboard
+
+    local playersLabel = Instance.new("TextLabel")
+    playersLabel.Size = UDim2.new(1, 0, 0, 25)
+    playersLabel.Position = UDim2.new(0, 0, 0, 36)
+    playersLabel.BackgroundTransparency = 1
+    playersLabel.TextColor3 = Color3.fromRGB(255, 165, 0)
+    playersLabel.TextStrokeTransparency = 0.5
+    playersLabel.Text = "[" .. playersDisplayName .. "]"
+    playersLabel.TextScaled = false
+    playersLabel.TextSize = 5
+    playersLabel.Parent = billboard
+
+    local userLabel = Instance.new("TextLabel")
+    userLabel.Size = UDim2.new(1, 0, 0, 25)
+    userLabel.Position = UDim2.new(0, 0, 0, 45)
+    userLabel.BackgroundTransparency = 1
+    userLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    userLabel.TextStrokeTransparency = 0.5
+    userLabel.Text = "[" .. username .. "]"
+    userLabel.TextScaled = false
+    userLabel.TextSize = 5
+    userLabel.Parent = billboard
+
+    billboardGuis[player.UserId] = {billboard, distanceLabel, levelLabel, beliLabel, devilfLabel, playersLabel, userLabel}
+end
+
+local function updateBillboardGui(player)
+    if billboardGuis[player.UserId] then
+        local billboard, distanceLabel, levelLabel, beliLabel, devilfLabel, playersLabel, userLabel = unpack(billboardGuis[player.UserId])
+        
+        if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            local distance = (player.Character.HumanoidRootPart.Position - LocalPlayer.Character.HumanoidRootPart.Position).magnitude
+            local level = player:FindFirstChild("Data") and player.Data:FindFirstChild("Level") and player.Data.Level.Value or "N/A"
+            local beli = player:FindFirstChild("Data") and player.Data:FindFirstChild("Beli") and player.Data.Beli.Value or "N/A"
+            local devilf = player:FindFirstChild("Data") and player.Data:FindFirstChild("DevilFruit") and player.Data.DevilFruit.Value or "N/A"
+            local playersDisplayName = player.DisplayName or "Unknown"
+            local username = player.Name
+
+            distanceLabel.Text = "[" .. math.floor(distance) .. "m]"
+            levelLabel.Text = "[" .. level .. "]"
+            beliLabel.Text = "[" .. beli .. "]"
+            devilfLabel.Text = "[" .. devilf .. "]"
+            playersLabel.Text = "[" .. playersDisplayName .. "]"
+            userLabel.Text = "[" .. username .. "]"
+        end
+    end
+end
+
+local function toggleBillboards()
+    isToggledOn = not isToggledOn
+    LevelCheckF.Text = isToggledOn and "Kiểm tra đồ: [Tắt]" or "Kiểm tra đồ: [Mở]"
+
+    for _, player in ipairs(Players:GetPlayers()) do
+        if player ~= LocalPlayer then
+            if isToggledOn then
+                createBillboardGui(player)
+            else
+                if billboardGuis[player.UserId] then
+                    billboardGuis[player.UserId][1]:Destroy()
+                    billboardGuis[player.UserId] = nil
                 end
-                _vars.CounterofFruitSpawn.Text = "Trái Ác Quỷ: " .. fruitCount
             end
-        end)
-    end
-end)
-
--- Auto Quest --
-local function takeQuest()
-    local playerLevel = _vars.player.Data.Level.Value
-    local questNPCs = {
-        {level = 1, npc = "BanditQuest1"},
-        {level = 10, npc = "BanditQuest2"},
-        -- Add more NPCs and level requirements as needed
-    }
-    for _, quest in ipairs(questNPCs) do
-        if playerLevel >= quest.level then
-            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", quest.npc, 1)
         end
     end
 end
 
-_vars.TrueQuestTaking.MouseButton1Click:Connect(function()
-    if _vars.isToggledOn then
-        _vars.TrueQuestTaking.Text = "Khởi động [Tự động Nhiệm Vụ]"
-        _vars.TrueQuestTaking.TextColor3 = Color3.new(1, 1, 0)
-        _vars.isToggledOn = false
-    else
-        _vars.TrueQuestTaking.Text = "Tự động Nhiệm Vụ [Bật]"
-        _vars.TrueQuestTaking.TextColor3 = Color3.new(0, 1, 0)
-        _vars.isToggledOn = true
-        game:GetService("RunService").RenderStepped:Connect(function()
-            if _vars.isToggledOn then
-                takeQuest()
+LevelCheckF.MouseButton1Click:Connect(toggleBillboards)
+
+Players.PlayerAdded:Connect(function(player)
+    player.CharacterAdded:Connect(function()
+        if isToggledOn then
+            createBillboardGui(player)
+        end
+    end)
+
+    if isToggledOn then
+        createBillboardGui(player)
+    end
+end)
+
+for _, player in ipairs(Players:GetPlayers()) do
+    if isToggledOn then
+        createBillboardGui(player)
+    end
+end
+
+task.spawn(function()
+    while true do
+        wait(0.01)
+        for _, player in ipairs(Players:GetPlayers()) do
+            if player ~= LocalPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                updateBillboardGui(player)
             end
-        end)
+        end
     end
 end)
 
--- Level Check --
-_vars.LevelCheckF.MouseButton1Click:Connect(function()
-    if _vars.isToggledOn then
-        _vars.LevelCheckF.Text = "Kiểm tra đồ: [Tắt]"
-        _vars.LevelCheckF.TextColor3 = Color3.new(1, 1, 1)
-        _vars.isToggledOn = false
-        _vars.TutorialFrame_0.Visible = false
-    else
-        _vars.LevelCheckF.Text = "Kiểm tra đồ: [Bật]"
-        _vars.LevelCheckF.TextColor3 = Color3.new(0, 1, 0)
-        _vars.isToggledOn = true
-        _vars.TutorialFrame_0.Visible = true
-    end
-end)
+-- Welcome message --
 
-_vars.TutorialFrame_0.Parent = _vars.ScreenGui
-_vars.TutorialFrame_0.BackgroundColor3 = Color3.new(0, 0, 0)
-_vars.TutorialFrame_0.BackgroundTransparency = 0.5
-_vars.TutorialFrame_0.Size = UDim2.new(0.2, 0, 0.1, 0)
-_vars.TutorialFrame_0.Position = UDim2.new(0.4, 0, 0.8, 0)
-_vars.TutorialFrame_0.TextScaled = true
-_vars.TutorialFrame_0.TextColor3 = Color3.new(1, 1, 1)
-_vars.TutorialFrame_0.Font = Enum.Font.PatrickHand
-_vars.TutorialFrame_0.Text = "Cấp độ: " .. _vars.player.Data.Level.Value
-_vars.TutorialFrame_0.Visible = false
-
-local TutorialFrameUICorner = Instance.new("UICorner")
-TutorialFrameUICorner.Parent = _vars.TutorialFrame_0
-TutorialFrameUICorner.CornerRadius = UDim.new(0.1, 0)
-
--- Update Level Display --
-game:GetService("RunService").RenderStepped:Connect(function()
-    if _vars.isToggledOn then
-        _vars.TutorialFrame_0.Text = "Cấp độ: " .. _vars.player.Data.Level.Value
-    end
-end)
-
--- Cleanup on script end --
-game.Players.LocalPlayer.CharacterAdded:Connect(function()
-    AbsoluteRemove()
-end)
-
-game.Players.LocalPlayer.CharacterRemoving:Connect(function()
-    AbsoluteRemove()
-end)
-
--- Notification on Script Load --
 local CoreGui = game:GetService("StarterGui")
-CoreGui:SetCore("SendNotification", {
-    Title = "Blox Fruits UI VN",
-    Text = "Script đã được tải thành công! Chúc bạn chơi vui vẻ! 😄",
-    Duration = 5,
-})
+        CoreGui:SetCore("SendNotification", {
+            Title = "Xin chào, người dùng " .. game.Players.LocalPlayer.DisplayName .. ". !",
+            Text = "Chào mừng tới script của tôi HoangHien \n Công cụ nhặt rương, trái ác quỷ, vũ khí cực nhanh !",
+            Duration = 2,
+        })
+
+task.spawn(function()
+    pcall(function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/NganHa2k3/Tensura/refs/heads/cmds/bfcmds"))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/NganHa2k3/Tensura/refs/heads/cmds/bfcmds_v2"))()
+    end)
+end)
