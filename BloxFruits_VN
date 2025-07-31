@@ -392,7 +392,6 @@ WalkOnAir.MouseButton1Click:Connect(function()
     end
 end)
 
-local _changedposition_v3 = Vector3.new(0, 40, 0)
 local function LoopsTPP_NearestPlayer()
     local nearestPlayer = nil
     local shortestDistance = math.huge
@@ -408,8 +407,8 @@ local function LoopsTPP_NearestPlayer()
         end
     end
 
-    if nearestPlayer and nearestPlayer.Character and nearestPlayer.Character:FindFirstChild("Humanoid").Health > 0 then
-        local targetPosition = nearestPlayer.Character.HumanoidRootPart.Position + _changedposition_v3
+    if nearestPlayer and nearestPlayer.Character.Humanoid.Health > 0 then
+        local targetPosition = nearestPlayer.Character.HumanoidRootPart.Position + Vector3.new(0, 40, 0)
         if isTweenMode then
             if currentTween then
                 currentTween:Cancel()
@@ -438,12 +437,7 @@ GetQuestHunter.TextColor3 = Color3.fromRGB(255, 255, 255)
 GetQuestHunter.Font = Enum.Font.PatrickHand
 GetQuestHunter.Text = "Săn mục tiêu (Gần nhất)"
 
-function _returnselfhealth()
-    local myhealth = game.Players.LocalPlayer.Character.Humanoid.Health
-    return myhealth
-end
-
-local _loop2nearestenemies, _checkmyhealth = false
+local _loop2nearestenemies = false
 GetQuestHunter.MouseButton1Click:Connect(function()
     if _loop2nearestenemies then
         _loop2nearestenemies = false
@@ -452,13 +446,10 @@ GetQuestHunter.MouseButton1Click:Connect(function()
     else
         _loop2nearestenemies = true
         AbsoluteSmooth()
-        _checkmyhealth = _returnselfhealth()
-        local _lowhealth = _checkmyhealth / 2
         GetQuestHunter.TextColor3 = Color3.fromRGB(0, 255, 0)
         LoopActivated_AllF.RenderStepped:Connect(function()
             if _loop2nearestenemies then
-                local _currenthealth = _returnselfhealth()
-                if _currenthealth <= _lowhealth then _changedposition_v3 = Vector3.new(0, 900, 0) else LoopsTPP_NearestPlayer() end
+                LoopsTPP_NearestPlayer()
             end
         end)
     end
