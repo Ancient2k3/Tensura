@@ -307,6 +307,8 @@ end
 local EveryCmds_nAlliase, TestTable = {
     ["reset"] = {"reset", "re"},
     ["test"] = {"test", "te"},
+    ["serverhop"] = {"serverhop", "shop"},
+    ["autofarmchest"] = {"autofarmchest", "afc"},
     ["tweeningspeed"] = {"tweeningspeed", "tspeed"},
     ["cmds"] = {"cmds", "commands"},
     ["console"] = {"console", "co"},
@@ -318,6 +320,7 @@ local EveryCmds_nAlliase, TestTable = {
     ["island"] = {"island", "il"},
     ["refunds"] = {"refunds", "rf"},
     ["race"] = {"race", "reroll"},
+    ["raid"] = {"raid", "chip"},
     ["fastattack"] = {"fastattack", "fa"},
     ["superfastattack"] = {"superfastattack", "sfa"},
     ["attackmode"] = {"attackmode", "am"},
@@ -368,7 +371,7 @@ function EveryCommands()
         if not _alreadyRunIYEdited then
             _alreadyRunIYEdited = true
             local success, result = pcall(function()
-                loadstring(game:HttpGet("https://raw.githubusercontent.com/HoangHien2k3/Tensura/refs/heads/edit/Scripts/InfiniteYield-Edited/Source_Edited.luau"))()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/HoangHienXScripts/Scripts/refs/heads/modified/InfiniteYield/MainSource.luau"))()
             end)
             if success then
                 _Notice("IY-Edited", "Successfully loaded!", 1, "SendNotification")
@@ -396,9 +399,23 @@ function EveryCommands()
         end)
         --print("Nothing for now!")
         --_Notice("Nah", "Nothing for now!", 1, "DevConsoleVisible")
+    elseif table.find(EveryCmds_nAlliase["raid"], Scripts_Cmds[1]) then
+         if _FirstSea then _Notice("Commands", "Can't doing RAID at first sea\nso let me just buy it for fun if u had enough money or level...", 1, "SendNotification")
+            _RlS.Remotes.CommF_:InvokeServer("RaidsNpc", "Select", Scripts_Cmds[2])
+         elseif _SecondsSea then _Notice("Commands", "Starting RAID: " .. Scripts_Cmds[2] .. "...", 1, "SendNotification")
+            _RlS.Remotes.CommF_:InvokeServer("RaidsNpc", "Select", Scripts_Cmds[2])
+            task.wait(0.05)
+            fireclickdetector(_WS.Map.CircleIsland.RaidSummon2.Button.Main.ClickDetector)
+         elseif _ThirdSea then _Notice("Commands", "Starting RAID: " .. Scripts_Cmds[2] .. "...", 1, "SendNotification")
+            _RlS.Remotes.CommF_:InvokeServer("RaidsNpc", "Select", Scripts_Cmds[2])
+            task.wait(0.05)
+            warn("Current has nothing here...")
+         end
     elseif table.find(EveryCmds_nAlliase["console"], Scripts_Cmds[1]) then
         _Notice("nothing", "nothing", 1, "DevConsoleVisible")
         _Notice("Commands", "Developer Console Opened!", 1, "SendNotification")
+    elseif table.find(EveryCmds_nAlliase["serverhop"], Scripts_Cmds[1]) then
+        _PasteScripts("https://raw.githubusercontent.com/Ancient2k3/Ability/main/ServerHop_Https", function() _Notice("Commands", "SERVER HOPPING IN FEW SECONDS!", 1, "SendNotification") end)
     elseif table.find(EveryCmds_nAlliase["upstat"], Scripts_Cmds[1]) then
         if Scripts_Cmds[2] == "melee" then
             _AutoStatus += 1
@@ -419,6 +436,8 @@ function EveryCommands()
     elseif table.find(EveryCmds_nAlliase["jobid"], Scripts_Cmds[1]) then
         _Clipboard(game.JobId)
         _Notice("Commands", "JobId: " .. game.JobId .. "\n -- Server JobId Saved --", 1, "SendNotification")
+    elseif table.find(EveryCmds_nAlliase["autofarmchest"], Scripts_Cmds[1]) then
+        _PasteScripts("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/BloxFruits_Update_Dragon_ChestFarm_V001", function() print("-- Running Auto Farming Chest --") end)
     elseif table.find(EveryCmds_nAlliase["refunds"], Scripts_Cmds[1]) then
         if Scripts_Cmds[2] == "code" or Scripts_Cmds[2] == "c" then
             game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer("Sub2GamerRobot_Reset1")
