@@ -8,7 +8,7 @@ local _blacklistedmaps = {}
 function _find_part(m)
     if m.PrimaryPart then return m.PrimaryPart end
     for nothing, part in ipairs(m:GetDescendants()) do
-        if part:IsA("Part") or part:IsA("MeshPart") then
+        if part:IsA("Part") or part:IsA("MeshPart") and part.Position.Y > 2 then
             return part
         end
     end
