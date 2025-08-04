@@ -308,6 +308,7 @@ local EveryCmds_nAlliase, TestTable = {
     ["reset"] = {"reset", "re"},
     ["test"] = {"test", "te"},
     ["serverhop"] = {"serverhop", "shop"},
+    ["maxvision"] = {"maxvision", "mv"},
     ["autofarmchest"] = {"autofarmchest", "afc"},
     ["tweeningspeed"] = {"tweeningspeed", "tspeed"},
     ["cmds"] = {"cmds", "commands"},
@@ -414,6 +415,12 @@ function EveryCommands()
     elseif table.find(EveryCmds_nAlliase["console"], Scripts_Cmds[1]) then
         _Notice("nothing", "nothing", 1, "DevConsoleVisible")
         _Notice("Commands", "Developer Console Opened!", 1, "SendNotification")
+    elseif table.find(EveryCmds_nAlliase["maxvision"], Scripts_Cmds[1]) then
+        _Notice("Commands", "Observation Haki Vision Radius Has Increase to MAX LEVEL", 1, "SendNotification")
+        _PLRS.LocalPlayer.VisionRadius.Value = 90000
+        if _PLRS.LocalPlayer:GetAttribute("KenHaki") ~= true then
+            firesignal(_PLRS.LocalPlayer.PlayerGui.MobileContextButtons.ContextButtonFrame.BoundActionKen.Button.MouseButton1Down)
+        end
     elseif table.find(EveryCmds_nAlliase["serverhop"], Scripts_Cmds[1]) then
         _PasteScripts("https://raw.githubusercontent.com/Ancient2k3/Ability/main/ServerHop_Https", function() _Notice("Commands", "SERVER HOPPING IN FEW SECONDS!", 1, "SendNotification") end)
     elseif table.find(EveryCmds_nAlliase["upstat"], Scripts_Cmds[1]) then
