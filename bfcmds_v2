@@ -693,16 +693,43 @@ function EveryCommands()
                 _ToPos(CFrame.new(-286.98901, 100.17145, 597.73639), 5)
                 task.wait()
                 _ToPart("KingdomOfRose_RaceV3", Vector3.new(0, 2.5, 0))
+            elseif Scripts_Cmds[2] == "cursedship" or Scripts_Cmds[2] == "cs" then
+                _ToPos(CFrame.new(919, 125, 32869), 5)
+                task.wait()
+                _ToPart("CursedShip_Island", Vector3.new(0, 2.5, 0))
+            elseif Scripts_Cmds[2] == "castle" or Scripts_Cmds[2] == "cots" then
+                _ToPos(CFrame.new(-5073, 315, -3153), 5)
+                task.wait()
+                _ToPart("CastleOnTheSea_Island", Vector3.new(0, 2.5, 0))
+            elseif Scripts_Cmds[2] == "hydra" or Scripts_Cmds[2] == "hyd" then
+                _ToPos(CFrame.new(5666, 1013, -310), 5)
+                task.wait()
+                _ToPart("Hydra_Island", Vector3.new(0, 2.5, 0))
+            elseif Scripts_Cmds[2] == "mansion" or Scripts_Cmds[2] == "m" then
+                _ToPos(CFrame.new(-12471, 375, -7551), 5)
+                task.wait()
+                _ToPart("Base_SafeZone_Mansion", Vector3.new(0, 2.5, 0))
+            elseif Scripts_Cmds[2] == "greattree" or Scripts_Cmds[2] == "gt" then
+                _ToPos(CFrame.new(3031, 2281, -7326), 5)
+                task.wait()
+                _ToPart("GreatTree_Highest", Vector3.new(0, 2.5, 0))
+            elseif Scripts_Cmds[2] == "roomv4" or Scripts_Cmds[2] == "r4" then
+                _ToPos(CFrame.new(28286, 14897, 103), 5)
+                task.wait()
+                _ToPart("V4_TempleOfTime", Vector3.new(0, 2.5, 0))
             elseif Scripts_Cmds[2] == "?" then
                 if _FirstSea then
                     print("List of all island name, do 'island' with these name for teleportation: ms, ps, mt, j, pv, d, s, mf, a1, p, mv, f, uw, ls, hs or ? for shown command info...")
                     print("Others way or name of the island for teleportation: marinestarter, piratestarter, middletown, jungle, piratevillage, desert, snowy, marineford, arena1, prison, magmavillage, fountain, underwater, lowersky, highersky. That's all !")
                     _Notice("nah", "nothing nothing...", 1, "DevConsoleVisible")
                 elseif _SecondsSea then
-                    print("List of all island name, do 'island' with these name for teleportation: d2, a2, c, r3 or ? for shown command info...")
-                    print("Others way or name of the island for teleportation: dock2, arena2, cafe, roomv3. That's all !")
+                    print("List of all island name, do 'island' with these name for teleportation: d2, a2, c, r3, cs or ? for shown command info...")
+                    print("Others way or name of the island for teleportation: dock2, arena2, cafe, roomv3, cursedship. That's all !")
+                    _Notice("nah", "nothing here... again?", 1, "DevConsoleVisible")
                 elseif _ThirdSea then
-                    print("Nothing for now")
+                    print("List of all island name, do 'island' with these name for teleportation: cots, hyd, m, gt, r4 or ? for shown command info...")
+                    print("Others way or name of the island for teleportation: castle, hydra, mansion, greattree, roomv4. That's all !")
+                    _Notice("nah", "nothing here... hehe?", 1, "DevConsoleVisible")
                 else
                     print("Can't know what is your Sea World!")
                 end
@@ -993,8 +1020,14 @@ elseif _SecondsSea then
     _Part(CFrame.new(-383.42191, 73.06046, 349.10770), "KingdomOfRose_Cafe")
     _Part(CFrame.new(-1939.58630, 241.66844, 1750.40906), "KingdomOfRose_Arena")
     _Part(CFrame.new(-2019.60767, 125.53294, -77.13563), "KingdomOfRose_RaceV3")
+    _Part(CFrame.new(919, 125, 32869), "CursedShip_Island")
 elseif _ThirdSea then
     _Notice("Script Notice", "Worlds Detected: Third Sea!", 1, "SendNotification")
+    _Part(CFrame.new(-5073, 315, -3153), "CastleOnTheSea_Island")
+    _Part(CFrame.new(5666, 1013, -310), "Hydra_Island")
+    _Part(CFrame.new(-12471, 375, -7551), "Base_SafeZone_Mansion")
+    _Part(CFrame.new(3031, 2281, -7326), "GreatTree_Highest")
+    _Part(CFrame.new(28286, 14897, 103), "V4_TempleOfTime")
 else
     _Notice("Script Notice", "Worlds Detected: Error!", 1, "SendNotification")
 end
