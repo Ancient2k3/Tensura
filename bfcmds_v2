@@ -263,12 +263,11 @@ function _CT_Cancel()
 end
 
 function _TpBoat_ToPos(pos)
-    for a, b in pairs(_WS.Boats:GetChildren()) do
-        if b:IsA("Model") and b:FindFirstChild("Owner") then
-            local myboat = b.Owner
-            if myboat.Value == _PLRS.LocalPlayer.Name and b.PrimaryPart ~= "" then
-                b.PrimaryPart.CFrame = CFrame.new(pos)
-            end
+    for a, b in pairs(_WS.Boats:GetDescendants()) do
+        if b:IsA("StringValue") and b.Value == _PLR.Name then
+            local boatmodelis = b.Parent
+            boatmodelis:FindFirstChild("VehicleSeat")
+            
         end
     end
 end
@@ -350,10 +349,10 @@ local EveryCmds_nAlliase, TestTable = {
 }
 
 local _OrderedCommands = {
-    "reset", "test", "serverhop", "maxvision", "autofarmchest", "tweeningspeed <number?>", "cmds", "console", "speed <number?>", "dash <number?>", "upstat <melee/defends/...>", "jobid", "autofarmnearby", "bringboat <username/posX> <posY> <posZ>",
-    "island <?>", "refunds", "race", "raid <fruitname>", "fastattack", "superfastattack", "attackmode <mobs/players>",
+    "reset", "test", "serverhop", "maxvision", "autofarmchest", "tweeningspeed", "cmds", "console", "speed", "dash", "upstat", "jobid", "autofarmnearby", "bringboat",
+    "island", "refunds", "race", "raid", "fastattack", "superfastattack", "attackmode",
     "pvp", "removehrpbodyvelocity", "iyedited", "remotespy",
-    "explorer", "travelingsea <1/2/3>", "suggestiontextcolor <Red> <Green> <Blue>", "settings"
+    "explorer", "travelingsea", "suggestiontextcolor", "settings"
 }
 
 function EveryCommands()
@@ -670,53 +669,53 @@ function EveryCommands()
                 task.wait()
                 _ToPart("HighestSky_Island", Vector3.new(0, 9, 0))
             elseif Scripts_Cmds[2] == "dock2" or Scripts_Cmds[2] == "d2" then
-                _ToPos(CFrame.new(-286.98901, 306.17145, 597.73639), 5)
+                _ToPos(CFrame.new(-286.98901, 306.17145, 597.73639), 15)
                 task.wait(1.5)
                 _ToPos(CFrame.new(-286.98901, 100.17145, 597.73639), 5)
                 task.wait()
                 _ToPart("KingdomOfRose_Dock2", Vector3.new(0, 9, 0))
             elseif Scripts_Cmds[2] == "arena2" or Scripts_Cmds[2] == "a2" then
-                _ToPos(CFrame.new(-286.98901, 306.17145, 597.73639), 5)
+                _ToPos(CFrame.new(-286.98901, 306.17145, 597.73639), 15)
                 task.wait(1.5)
                 _ToPos(CFrame.new(-286.98901, 800.17145, 597.73639), 5)
                 task.wait()
                 _ToPart("KingdomOfRose_Arena", Vector3.new(0, 9, 0))
             elseif Scripts_Cmds[2] == "cafe" or Scripts_Cmds[2] == "c" then
-                _ToPos(CFrame.new(-286.98901, 306.17145, 597.73639), 5)
+                _ToPos(CFrame.new(-286.98901, 306.17145, 597.73639), 15)
                 task.wait(1.5)
                 _ToPos(CFrame.new(-286.98901, 100.17145, 597.73639), 5)
                 task.wait()
                 _ToPart("KingdomOfRose_Cafe", Vector3.new(0, 9, 0))
             elseif Scripts_Cmds[2] == "roomv3" or Scripts_Cmds[2] == "r3" then
-                _ToPos(CFrame.new(-286.98901, 306.17145, 597.73639), 5)
+                _ToPos(CFrame.new(-286.98901, 306.17145, 597.73639), 15)
                 task.wait(1.5)
                 _ToPos(CFrame.new(-286.98901, 100.17145, 597.73639), 5)
                 task.wait()
                 _ToPart("KingdomOfRose_RaceV3", Vector3.new(0, 2.5, 0))
             elseif Scripts_Cmds[2] == "cursedship" or Scripts_Cmds[2] == "cs" then
-                _ToPos(CFrame.new(919, 125, 32869), 5)
+                _ToPos(CFrame.new(919, 125, 32869), 15)
                 task.wait()
                 _ToPart("CursedShip_Island", Vector3.new(0, 2.5, 0))
             elseif Scripts_Cmds[2] == "castle" or Scripts_Cmds[2] == "cots" then
-                _ToPos(CFrame.new(-5073, 315, -3153), 5)
-                task.wait()
-                _ToPart("CastleOnTheSea_Island", Vector3.new(0, 2.5, 0))
+                _ToPos(CFrame.new(-5073, 315, -3153), 15)
+                --task.wait()
+                --_ToPart("CastleOnTheSea_Island", Vector3.new(0, 2.5, 0))
             elseif Scripts_Cmds[2] == "hydra" or Scripts_Cmds[2] == "hyd" then
-                _ToPos(CFrame.new(5666, 1013, -310), 5)
-                task.wait()
-                _ToPart("Hydra_Island", Vector3.new(0, 2.5, 0))
+                _ToPos(CFrame.new(5666, 1013, -310), 15)
+                --task.wait()
+                --_ToPart("Hydra_Island", Vector3.new(0, 2.5, 0))
             elseif Scripts_Cmds[2] == "mansion" or Scripts_Cmds[2] == "m" then
-                _ToPos(CFrame.new(-12471, 375, -7551), 5)
-                task.wait()
-                _ToPart("Base_SafeZone_Mansion", Vector3.new(0, 2.5, 0))
+                _ToPos(CFrame.new(-12471, 375, -7551), 15)
+                --task.wait()
+                --_ToPart("Base_SafeZone_Mansion", Vector3.new(0, 2.5, 0))
             elseif Scripts_Cmds[2] == "greattree" or Scripts_Cmds[2] == "gt" then
-                _ToPos(CFrame.new(3031, 2281, -7326), 5)
-                task.wait()
-                _ToPart("GreatTree_Highest", Vector3.new(0, 2.5, 0))
+                _ToPos(CFrame.new(3031, 2281, -7326), 15)
+                --task.wait()
+                --_ToPart("GreatTree_Highest", Vector3.new(0, 2.5, 0))
             elseif Scripts_Cmds[2] == "roomv4" or Scripts_Cmds[2] == "r4" then
-                _ToPos(CFrame.new(28286, 14897, 103), 5)
-                task.wait()
-                _ToPart("V4_TempleOfTime", Vector3.new(0, 2.5, 0))
+                _ToPos(CFrame.new(28286, 14897, 103), 15)
+                --task.wait()
+                --_ToPart("V4_TempleOfTime", Vector3.new(0, 2.5, 0))
             elseif Scripts_Cmds[2] == "?" then
                 if _FirstSea then
                     print("List of all island name, do 'island' with these name for teleportation: ms, ps, mt, j, pv, d, s, mf, a1, p, mv, f, uw, ls, hs or ? for shown command info...")
