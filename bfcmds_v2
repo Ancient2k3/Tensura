@@ -474,7 +474,7 @@ function EveryCommands()
                 _Notice("Commands", "Missing X value (must be a number)", 1, "SendNotification")
             end
         elseif _ThirdSea then
-            if _WS.Boats:GetChildren() >= 1 then _TpBoat_ToPos(-42611, 0, 510)
+            if #_WS.Boats:GetChildren() >= 1 then _TpBoat_ToPos(-42611, 0, 510)
                 _Notice("Commands", "Boat has been successfully teleported! \nto SEA Danger 5 nearby 6", 1, "SendNotification")
             else
                 _Notice("Commands", "There is no boats has been found!", 1, "SendNotification")
