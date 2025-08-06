@@ -1,7 +1,7 @@
 -- Blox Fruits: Commands Scripts Fixed + Changed, HoangHien --
 local _WS, _CG, _RlS, _RS, _TS, _StGui, _SGui, _GetFocusedButton, _GetCommands, _GetCorrectedCommands, _SettingsFrame, _SettingsScroll
 local EndPoint, StartPoint, OnFocused_SlideOut, OnFocused_SlideIn, intBGC_All, col1, col2, col3
-local _PLRS, _PLR, _Char, _Him, _He, _FirstSea, _SecondsSea, _ThirdSea
+local _PLRS, _PLR, _Char, _Him, _He, _StoredBoats _FirstSea, _SecondsSea, _ThirdSea
 local FA_VariableCheck_0, FA_Toggle, FA_Toggle_II, Cmdbar_ItsOnFocused, _SSCRL_Canvasmain, _ButtonHeight, _ButtonPadding, Its_SettingsUIEnable, numtest, thisisenable, intCLabel_Txc, _alreadyRunIYEdited, _AutoStatus, _CurrentTween, _AutoEnablePvp, _EnablePvpOne, _TweeningSpeed, _FAmode, _CurrentVersion
 
 _CurrentVersion = 1.26
@@ -18,6 +18,7 @@ _PLR = _PLRS.LocalPlayer
 _Char = _PLR.Character
 _Him = _Char:WaitForChild("HumanoidRootPart")
 _He = _Char:WaitForChild("Humanoid")
+_StoredBoats = _WS:WaitForChild("Boats")
 _FirstSea = _WS.Map:FindFirstChild("MobBoss") -- I hate Github for this slow update
 _SecondsSea = _WS.Map:FindFirstChild("GreenBit")
 _ThirdSea = _WS.Map:FindFirstChild("TikiOutpost")
@@ -262,15 +263,24 @@ function _CT_Cancel()
     end
 end
 
-function _TpBoat_ToPos(pos)
-    for a, b in pairs(_WS.Boats:GetDescendants()) do
-        if b:IsA("ObjectValue") and b.Name == "Owner" and b.Value == _PLRS.LocalPlayer.Name then print("Boat owner found: " .. b.Value)
-            local boatmodelis = b.Parent
-            print("TARGET: <" .. boatmodelis.Name .. ">")
-            local seat = boatmodelis:FindFirstChild("VehicleSeat")
-            if boatmodelis then boatmodelis:SetPrimaryPartCFrame(pos) else print("There is no boat model found!") end
-            if seat then seat.Position = Vector3.new(pos) else print("There is no seat found!") end
+function _ReturnOwnerBoatIs()
+    local model = nil
+    for a, b in pairs(_StoredBoats:GetDescendants()) do
+        if b:IsA("ObjectValue") and b.Value == _PLR.Name then
+            model = b.Parent
         end
+    end
+    return model
+end
+
+function _TpBoat_ToPos(pos)
+    local _owner_boat = _ReturnOwnerBoatIs()
+    local _IsBoatName = _owner_boat.Name or "N/A"
+    print("Boat founded: " .. _IsBoatName)
+    if _IsBoatName ~= "N/A" then
+        _owner_boat.PrimaryPart.CFrame = CFrame.new(pos)
+    else
+        print("No boat to teleported!")
     end
 end
 
@@ -475,7 +485,7 @@ function EveryCommands()
                 _Notice("Commands", "Missing X value (must be a number)", 1, "SendNotification")
             end
         elseif _ThirdSea then
-            if #_WS.Boats:GetChildren() > 0 then _TpBoat_ToPos(-42611, 0, 510)
+            if _ReturnOwnerBoatIs() then _TpBoat_ToPos(-42611, 0, 510)
                 _Notice("Commands", "Boat has been successfully teleported! \nto SEA Danger 5 nearby 6", 1, "SendNotification")
             else
                 _Notice("Commands", "There is no boats has been found!", 1, "SendNotification")
