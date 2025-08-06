@@ -264,10 +264,12 @@ end
 
 function _TpBoat_ToPos(pos)
     for a, b in pairs(_WS.Boats:GetDescendants()) do
-        if b:IsA("ObjectValue") and b.Name == "Owner" and b.Value == _PLRS.LocalPlayer.Name then
+        if b:IsA("ObjectValue") and b.Name == "Owner" and b.Value == _PLRS.LocalPlayer.Name then print("Boat owner found: " .. b.Value)
             local boatmodelis = b.Parent
+            print("TARGET: <" .. boatmodelis.Name .. ">")
             local seat = boatmodelis:FindFirstChild("VehicleSeat")
-            if seat then seat:SetPrimaryPartCFrame(CFrame.new(pos)) else print("There is no seat found!") end
+            if boatmodelis then boatmodelis:SetPrimaryPartCFrame(pos) else print("There is no boat model found!") end
+            if seat then seat.Position = Vector3.new(pos) else print("There is no seat found!") end
         end
     end
 end
