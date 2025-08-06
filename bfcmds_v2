@@ -4,7 +4,7 @@ local EndPoint, StartPoint, OnFocused_SlideOut, OnFocused_SlideIn, intBGC_All, c
 local _PLRS, _PLR, _Char, _Him, _He, _StoredBoats _FirstSea, _SecondsSea, _ThirdSea
 local FA_VariableCheck_0, FA_Toggle, FA_Toggle_II, Cmdbar_ItsOnFocused, _SSCRL_Canvasmain, _ButtonHeight, _ButtonPadding, Its_SettingsUIEnable, numtest, thisisenable, intCLabel_Txc, _alreadyRunIYEdited, _AutoStatus, _CurrentTween, _AutoEnablePvp, _EnablePvpOne, _TweeningSpeed, _FAmode, _CurrentVersion
 
-_CurrentVersion = 1.26
+_CurrentVersion = 1.425
 
 _WS = game:GetService("Workspace")
 _CG = game:GetService("CoreGui")
