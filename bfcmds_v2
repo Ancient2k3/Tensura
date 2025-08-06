@@ -266,8 +266,8 @@ function _TpBoat_ToPos(pos)
     for a, b in pairs(_WS.Boats:GetDescendants()) do
         if b:IsA("StringValue") and b.Value == _PLR.Name then
             local boatmodelis = b.Parent
-            boatmodelis:FindFirstChild("VehicleSeat")
-            
+            local seat = boatmodelis:FindFirstChild("VehicleSeat")
+            if seat then seat:SetPrimaryPartCFrame(CFrame.new(pos)) else print("There is no seat found!") end
         end
     end
 end
