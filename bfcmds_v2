@@ -1,10 +1,11 @@
 -- Blox Fruits: Commands Scripts Fixed + Changed, HoangHien --
 local _WS, _CG, _RlS, _RS, _TS, _StGui, _SGui, _GetFocusedButton, _GetCommands, _GetCorrectedCommands, _SettingsFrame, _SettingsScroll
 local EndPoint, StartPoint, OnFocused_SlideOut, OnFocused_SlideIn, intBGC_All, col1, col2, col3
-local _PLRS, _PLR, _Char, _Him, _He, _StoredBoats, _FirstSea, _SecondsSea, _ThirdSea
-local FA_VariableCheck_0, FA_Toggle, FA_Toggle_II, Cmdbar_ItsOnFocused, _SSCRL_Canvasmain, _ButtonHeight, _ButtonPadding, Its_SettingsUIEnable, numtest, thisisenable, intCLabel_Txc, _alreadyRunIYEdited, _AutoStatus, _CurrentTween, _AutoEnablePvp, _EnablePvpOne, _TweeningSpeed, _FAmode, _CurrentVersion
+local _PLRS, _PLR, _Char, _Him, _He, _StoredBoats, _FirstSea, _SecondsSea, _ThirdSea, _ARandomPoint, _HHxScripts
+local FA_VariableCheck_0, FA_Toggle, FA_Toggle_II, Cmdbar_ItsOnFocused, _SSCRL_Canvasmain, _ButtonHeight, _ButtonPadding, Its_SettingsUIEnable, numtest, thisisenable, intCLabel_Txc, _alreadyRunIYEdited, _AutoStatus, _CurrentTween, _AutoEnablePvp, _EnablePvpOne, _TweeningSpeed, _FAmode, _CurrentVersion, _SomeLetter
 
 _CurrentVersion = 1.425
+_SomeLetter = {"H", "O", "A", "N", "G", "H", "I", "E", "N", "X", "S", "C", "R", "I", "P", "T", "S"}
 
 _WS = game:GetService("Workspace")
 _CG = game:GetService("CoreGui")
@@ -22,6 +23,8 @@ _StoredBoats = _WS:WaitForChild("Boats")
 _FirstSea = _WS.Map:FindFirstChild("MobBoss") -- I hate Github for this slow update
 _SecondsSea = _WS.Map:FindFirstChild("GreenBit")
 _ThirdSea = _WS.Map:FindFirstChild("TikiOutpost")
+_ARandomPoint = _SomeLetter[math.random(1, #_SomeLetter)]
+_HHxScripts = "RunningScript_" .. _ARandomPoint
 
 _G.Commands_Script_Language_Test = {}
 numtest, thisisenable, intCLabel_Txc = 1, false, Color3.fromRGB(255, 255, 255)
@@ -157,8 +160,16 @@ function _Noclip(_boolean)
 end
 
 function _Part(_cframe, _name)
+    if not _WS:FindFirstChild(_HHxScripts) then
+        local instancefolder_x = Instance.new("Folder", _WS)
+        instancefolder_x.Name = _HHxScripts
+        print("Creating: Folder")
+    else
+        print("Loaded instance to: Storage")
+    end
+    
     local epoint = Instance.new("Part")
-    epoint.Parent = game.Workspace
+    epoint.Parent = _WS:FindFirstChild(_HHxScripts)
     epoint.CFrame = _cframe
     epoint.Size = Vector3.new(0.1, 0.1, 0.1)
     epoint.CanCollide = false
@@ -179,7 +190,7 @@ function _Info(_Start, _End)
 end
 
 function _ToPart(_name, _h)
-    local _SPart = _WS:FindFirstChild(_name)
+    local _SPart = _WS:FindFirstChild(_HHxScripts):FindFirstChild(_name)
     if _SPart then
         _BV("false")
         _CT_Cancel()
@@ -704,6 +715,14 @@ function EveryCommands()
                 _ToPos(CFrame.new(-286.98901, 100.17145, 597.73639), 5)
                 task.wait()
                 _ToPart("KingdomOfRose_RaceV3", Vector3.new(0, 2.5, 0))
+            elseif Scripts_Cmds[2] == "kingdomofrosehighest" or Scripts_Cmds[2] == "hkor" then
+                _ToPos(CFrame.new(-286.98901, 306.17145, 597.73639), 15)
+                task.wait(1.5)
+                _ToPos(CFrame.new(-286.98901, 500.17145, 597.73639), 5)
+                task.wait()
+                _ToPart("SecrectAreaII_Sea2", Vector3.new(0, 2.5, 0))
+            elseif Scripts_Cmds[2] == "greenzone" or Scripts_Cmds[2] == "gz" then
+                _ToPart("GreenZone_Island", Vector3.new(0, 2.5, 0))
             elseif Scripts_Cmds[2] == "cursedship" or Scripts_Cmds[2] == "cs" then
                 _ToPos(CFrame.new(919, 125, 32869), 15)
                 task.wait()
@@ -1031,6 +1050,8 @@ elseif _SecondsSea then
     _Part(CFrame.new(-383.42191, 73.06046, 349.10770), "KingdomOfRose_Cafe")
     _Part(CFrame.new(-1939.58630, 241.66844, 1750.40906), "KingdomOfRose_Arena")
     _Part(CFrame.new(-2019.60767, 125.53294, -77.13563), "KingdomOfRose_RaceV3")
+    _Part(CFrame.new(-667, 2378, -450), "SecrectAreaII_Sea2")
+    _Part(CFrame.new(-2562, 1625, -3729), "GreenZone_Island")
     _Part(CFrame.new(919, 125, 32869), "CursedShip_Island")
 elseif _ThirdSea then
     _Notice("📑 Nơi ở hiện tại 📑", "Vùng biển: Biển 3!", 1, "SendNotification")
