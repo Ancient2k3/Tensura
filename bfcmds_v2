@@ -1,7 +1,7 @@
 -- Blox Fruits: Commands Scripts Fixed + Changed, HoangHien --
 local _WS, _CG, _RlS, _RS, _TS, _StGui, _SGui, _GetFocusedButton, _GetCommands, _GetCorrectedCommands, _SettingsFrame, _SettingsScroll
 local EndPoint, StartPoint, OnFocused_SlideOut, OnFocused_SlideIn, intBGC_All, col1, col2, col3
-local _PLRS, _PLR, _Char, _Him, _He, _StoredBoats _FirstSea, _SecondsSea, _ThirdSea
+local _PLRS, _PLR, _Char, _Him, _He, _StoredBoats, _FirstSea, _SecondsSea, _ThirdSea
 local FA_VariableCheck_0, FA_Toggle, FA_Toggle_II, Cmdbar_ItsOnFocused, _SSCRL_Canvasmain, _ButtonHeight, _ButtonPadding, Its_SettingsUIEnable, numtest, thisisenable, intCLabel_Txc, _alreadyRunIYEdited, _AutoStatus, _CurrentTween, _AutoEnablePvp, _EnablePvpOne, _TweeningSpeed, _FAmode, _CurrentVersion
 
 _CurrentVersion = 1.425
@@ -1007,7 +1007,7 @@ end)
 
 -- Checking Sea/Worlds/Place --
 if _FirstSea then
-    _Notice("Script Notice", "Worlds Detected: First Sea!", 1, "SendNotification")
+    _Notice("📑 Nơi ở hiện tại 📑", "Vùng biển: Biển khởi đầu!", 1, "SendNotification")
     _Part(CFrame.new(1550, 57, -2983), "ChristmasEvents_Island")
     _Part(CFrame.new(-2867, 400, 2128), "MarineStarter_Island")
     _Part(CFrame.new(1064, 400, 1443), "PirateStarter_Island")
@@ -1026,21 +1026,21 @@ if _FirstSea then
     _Part(CFrame.new(-7965, 6050, -1401), "HighestSky_Island")
     _Part(CFrame.new(-1166, 8, 1729), "Seconds_Sea_NPC")
 elseif _SecondsSea then
-    _Notice("Script Notice", "Worlds Detected: Seconds Sea!", 1, "SendNotification")
+    _Notice("📑 Nơi ở hiện tại 📑", "Vùng biển: Biển 2!", 1, "SendNotification")
     _Part(CFrame.new(-24.70779, 39.31746, 2704.16431), "KingdomOfRose_Dock2")
     _Part(CFrame.new(-383.42191, 73.06046, 349.10770), "KingdomOfRose_Cafe")
     _Part(CFrame.new(-1939.58630, 241.66844, 1750.40906), "KingdomOfRose_Arena")
     _Part(CFrame.new(-2019.60767, 125.53294, -77.13563), "KingdomOfRose_RaceV3")
     _Part(CFrame.new(919, 125, 32869), "CursedShip_Island")
 elseif _ThirdSea then
-    _Notice("Script Notice", "Worlds Detected: Third Sea!", 1, "SendNotification")
+    _Notice("📑 Nơi ở hiện tại 📑", "Vùng biển: Biển 3!", 1, "SendNotification")
     _Part(CFrame.new(-5073, 315, -3153), "CastleOnTheSea_Island")
     _Part(CFrame.new(5666, 1013, -310), "Hydra_Island")
     _Part(CFrame.new(-12471, 375, -7551), "Base_SafeZone_Mansion")
     _Part(CFrame.new(3031, 2281, -7326), "GreatTree_Highest")
     _Part(CFrame.new(28286, 14897, 103), "V4_TempleOfTime")
 else
-    _Notice("Script Notice", "Worlds Detected: Error!", 1, "SendNotification")
+    _Notice("📑 Nơi ở hiện tại 📑", "Vùng biển: Lỗi không thể biết!", 1, "SendNotification")
 end
 
-_Notice("BF Commands Scripts", "Completely Loaded!\nVersion: " .. _CurrentVersion, 1, "SendNotification")
+_Notice("HoangHienXScripts Present!", "Lệnh Blox Fruits, Đã hoàn tất tải!\nPhiên bản hiện tại: " .. _CurrentVersion, 1, "SendNotification")
