@@ -283,6 +283,7 @@ function _ReturnOwnerBoatIs(folder)
                 model = _objv.Parent
             end
         end
+    end
     return model
 end
 
@@ -352,6 +353,7 @@ local EveryCmds_nAlliase, TestTable = {
     ["speed"] = {"speed", "sp"},
     ["dash"] = {"dash", "da"},
     ["loadscript"] = {"loadscript", "ls"},
+    ["getinventory"] = {"getinventory", "girl"},
     ["upstat"] = {"upstat", "autostat", "as"},
     ["jobid"] = {"jobid", "saveserverjobid"},
     ["autofarmnearby"] = {"autofarmnearby", "afn"},
@@ -376,7 +378,7 @@ local EveryCmds_nAlliase, TestTable = {
 }
 
 local _OrderedCommands = {
-    "reset", "test", "serverhop", "maxvision", "autofarmchest", "tweeningspeed", "cmds", "console", "speed", "dash", "loadscript", "upstat", "jobid", "autofarmnearby", "bringboat",
+    "reset", "test", "serverhop", "maxvision", "autofarmchest", "tweeningspeed", "cmds", "console", "speed", "dash", "loadscript", "writetablereturn", "upstat", "jobid", "autofarmnearby", "bringboat",
     "island", "refunds", "race", "raid", "fastattack", "superfastattack", "attackmode",
     "pvp", "removehrpbodyvelocity", "iyedited", "remotespy",
     "explorer", "travelingsea", "suggestiontextcolor", "settings"
@@ -459,6 +461,36 @@ function EveryCommands()
         if _PLRS.LocalPlayer:GetAttribute("KenHaki") ~= true then
             firesignal(_PLRS.LocalPlayer.PlayerGui.MobileContextButtons.ContextButtonFrame.BoundActionKen.Button.MouseButton1Down)
         end
+    elseif table.find(EveryCmds_nAlliase["getinventory"], Scripts_Cmds[1]) then
+        function _checktable(t, time)
+            time = time or 0
+            local structure = string.rep(" ", time) .. "{\n"
+            for a, b in pairs(t) do
+                local _istype = type(b)
+                if _istype == "table" then
+                    structure = structure .. string.rep(" ", time + 4) .. a .. " = {\n"
+                    structure = structure .. _checktable(b, time + 8)
+                    structure = structure .. string.rep(" ", time + 4) .. "}\n"
+                elseif _istype == "function" then
+                    structure = structure .. string.rep(" ", time + 4) .. a .. " = function: " .. tostring(b) .. "\n"
+                elseif _istype == "boolean" then
+                    structure = structure .. string.rep(" ", time + 4) .. a .. " = " .. tostring(b) .. "\n"
+                elseif _istype == "number" then
+                    structure = structure .. string.rep(" ", time + 4) .. a .. " = " .. b .. "\n"
+                elseif _istype == "string" then
+                    structure = structure .. string.rep(" ", time + 4) .. a .. " = \"" .. b .. "\"\n"
+                elseif _istype == "nil" then
+                    structure = structure .. string.rep(" ", time + 4) .. a .. " = nil\n"
+                end
+            end
+            structure = structure .. string.rep(" ", time) .. "}\n"
+            return structure
+        end
+        
+        local target = game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory")
+        
+        local structure = _checktable(target, 0)
+        setclipboard(structure)
     elseif table.find(EveryCmds_nAlliase["serverhop"], Scripts_Cmds[1]) then
         _PasteScripts("https://raw.githubusercontent.com/Ancient2k3/Ability/main/ServerHop_Https", function() _Notice("Commands", "SERVER HOPPING IN FEW SECONDS!", 1, "SendNotification") end)
     elseif table.find(EveryCmds_nAlliase["upstat"], Scripts_Cmds[1]) then
@@ -489,12 +521,12 @@ function EveryCommands()
         elseif typeof(Scripts_Cmds[2]) == "number" or type(Scripts_Cmds[2]) == "number" then _Notice("Commands", "I'm currently... dumb!", 1, "SendNotification")
         else _Notice("Commands", "Invalid ARGS_2, Type Name!", 1, "SendNotification") end
     elseif table.find(EveryCmds_nAlliase["bringboat"], Scripts_Cmds[1]) then
-        local boat = _ReturnOwnerBoatIs(_StoredBoats)
-        if not boat then
-            _Notice("Commands", "No boat found to teleport!", 1, "SendNotification")
-            return
-        end
-
+        --local boat = _ReturnOwnerBoatIs(_StoredBoats)
+        --if not boat then
+        --    _Notice("Commands", "No boat found to teleport!", 1, "SendNotification")
+        --    return
+        --end
+        print("-- Running 'bringboat' Command! --")
         if Scripts_Cmds[2] == "?" then
             _Notice("Commands", "Usage: bringboat self | bringboat <player> | bringboat x y z | bringboat seadanger5to6 (Third Sea only)", 1, "SendNotification")
         elseif Scripts_Cmds[2] == "self" then
