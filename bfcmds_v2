@@ -274,23 +274,25 @@ function _CT_Cancel()
     end
 end
 
-function _ReturnOwnerBoatIs()
+function _ReturnOwnerBoatIs(folder)
     local model = nil
-    for a, b in pairs(_StoredBoats:GetDescendants()) do
-        if b:IsA("ObjectValue") and b.Value == _PLR.Name then
-            model = b.Parent
+    for a, b in pairs(folder:GetChildren()) do
+        if b:IsA("Model") then
+            local _objv = b:FindFirstChild("Owner")
+            if _objv and _objv.Value.Name == _PLR.Name then
+                model = _objv.Parent
+            end
         end
-    end
     return model
 end
 
 function _TpBoat_ToPos(pos)
-    local _owner_boat = _ReturnOwnerBoatIs()
+    local _owner_boat = _ReturnOwnerBoatIs(_StoredBoats)
     local _IsBoatName = _owner_boat.Name or "N/A"
     print("Boat founded: " .. _IsBoatName)
-    print("Owner Name: " .. _owner_boat:FindFirstChild("Owner").Value)
+    print("Owner Name: " .. _owner_boat:FindFirstChild("Owner").Value.Name)
     if _IsBoatName ~= "N/A" then
-        _owner_boat:SetPrimaryPartCFrame(CFrame.new(pos))
+        _owner_boat:SetPrimaryPartCFrame(CFrame.new(Vector3.new(pos)))
     else
         print("No boat to teleported!")
     end
@@ -488,7 +490,7 @@ function EveryCommands()
         else _Notice("Commands", "Invalid ARGS_2, Type Name!", 1, "SendNotification") end
     elseif table.find(EveryCmds_nAlliase["bringboat"], Scripts_Cmds[1]) then
         if _FirstSea or _SecondsSea then
-            if Scripts_Cmds[2] then
+            if typeof(Scripts_Cmds[2]) == "number" or type(Scripts_Cmds[2]) == "number" then
                 if Scripts_Cmds[3] then
                     if Scripts_Cmds[4] then
                         _Notice("Commands", "Boat has been successfully teleported! \nto POSITION: " .. Scripts_Cmds[2] .. ", " .. Scripts_Cmds[3] .. ", " .. Scripts_Cmds[4], 1, "SendNotification")
@@ -498,6 +500,13 @@ function EveryCommands()
                     end
                 else
                     _Notice("Commands", "Missing Y value (must be a number)", 1, "SendNotification")
+                end
+            elseif typeof(Scripts_Cmds[2]) == "string" or type(Scripts_Cmds[2]) == "string" then
+                if Scripts_Cmds[2] == "self" then
+                    local myPosition = _PLR.Character.HumanoidRootPart.Position
+                    print(_PLR.DisplayName .. " Position at: " .. myPosition)
+                    _TpBoat_ToPos(myPosition)
+                    _Notice("Commands", "Boat has been successfully teleported! \nto " .. _PLR.DisplayName, 1, "SendNotification")
                 end
             else
                 _Notice("Commands", "Missing X value (must be a number)", 1, "SendNotification")
