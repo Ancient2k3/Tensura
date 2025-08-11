@@ -288,8 +288,9 @@ function _TpBoat_ToPos(pos)
     local _owner_boat = _ReturnOwnerBoatIs()
     local _IsBoatName = _owner_boat.Name or "N/A"
     print("Boat founded: " .. _IsBoatName)
+    print("Owner Name: " .. _owner_boat:FindFirstChild("Owner").Value)
     if _IsBoatName ~= "N/A" then
-        _owner_boat.PrimaryPart.CFrame = CFrame.new(pos)
+        _owner_boat:SetPrimaryPartCFrame(CFrame.new(pos))
     else
         print("No boat to teleported!")
     end
@@ -348,6 +349,7 @@ local EveryCmds_nAlliase, TestTable = {
     ["console"] = {"console", "co"},
     ["speed"] = {"speed", "sp"},
     ["dash"] = {"dash", "da"},
+    ["loadscript"] = {"loadscript", "ls"},
     ["upstat"] = {"upstat", "autostat", "as"},
     ["jobid"] = {"jobid", "saveserverjobid"},
     ["autofarmnearby"] = {"autofarmnearby", "afn"},
@@ -372,7 +374,7 @@ local EveryCmds_nAlliase, TestTable = {
 }
 
 local _OrderedCommands = {
-    "reset", "test", "serverhop", "maxvision", "autofarmchest", "tweeningspeed", "cmds", "console", "speed", "dash", "upstat", "jobid", "autofarmnearby", "bringboat",
+    "reset", "test", "serverhop", "maxvision", "autofarmchest", "tweeningspeed", "cmds", "console", "speed", "dash", "loadscript", "upstat", "jobid", "autofarmnearby", "bringboat",
     "island", "refunds", "race", "raid", "fastattack", "superfastattack", "attackmode",
     "pvp", "removehrpbodyvelocity", "iyedited", "remotespy",
     "explorer", "travelingsea", "suggestiontextcolor", "settings"
@@ -479,6 +481,11 @@ function EveryCommands()
         _Notice("Commands", "JobId: " .. game.JobId .. "\n -- Server JobId Saved --", 1, "SendNotification")
     elseif table.find(EveryCmds_nAlliase["autofarmchest"], Scripts_Cmds[1]) then
         _PasteScripts("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/BloxFruits_Update_Dragon_ChestFarm_V001", function() print("-- Running Auto Farming Chest --") end)
+    elseif table.find(EveryCmds_nAlliase["loadscript"], Scripts_Cmds[1]) then
+        if typeof(Scripts_Cmds[2]) == "string" or type(Scripts_Cmds[2]) == "string" then
+            if Scripts_Cmds[2] == "redz" then loadstring(game:HttpGet("https://raw.githubusercontent.com/tlredz/Scripts/refs/heads/main/main.luau"))() else _Notice("Commands", "Not Exist This Script Named " .. Scripts_Cmds[2], 1, "SendNotification") end
+        elseif typeof(Scripts_Cmds[2]) == "number" or type(Scripts_Cmds[2]) == "number" then _Notice("Commands", "I'm currently... dumb!", 1, "SendNotification")
+        else _Notice("Commands", "Invalid ARGS_2, Type Name!", 1, "SendNotification") end
     elseif table.find(EveryCmds_nAlliase["bringboat"], Scripts_Cmds[1]) then
         if _FirstSea or _SecondsSea then
             if Scripts_Cmds[2] then
