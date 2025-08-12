@@ -293,7 +293,7 @@ function _TpBoat_ToPos(pos)
     print("Boat founded: " .. _IsBoatName)
     print("Owner Name: " .. _owner_boat:FindFirstChild("Owner").Value.Name)
     if _IsBoatName ~= "N/A" then
-        _owner_boat:SetPrimaryPartCFrame(CFrame.new(Vector3.new(pos)))
+        _owner_boat.PrimaryPart.Position = pos
     else
         print("No boat to teleported!")
     end
