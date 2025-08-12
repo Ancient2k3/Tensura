@@ -390,6 +390,7 @@ local EveryCmds_nAlliase, TestTable = {
     ["superfastattack"] = {"superfastattack", "sfa"},
     ["attackmode"] = {"attackmode", "am"},
     ["pvp"] = {"pvp", "autoenablepvp"},
+    ["setheight"] = {"setheight", "sh"},
     ["removehrpbodyvelocity"] = {"removehrpbodyvelocity", "rhrpbv"},
     ["iyedited"] = {"iyedited", "iy"},
     ["remotespy"] = {"remotespy", "rspy"},
@@ -404,7 +405,7 @@ local EveryCmds_nAlliase, TestTable = {
 local _OrderedCommands = {
     "reset", "test", "serverhop", "maxvision", "autofarmchest", "tweeningspeed", "cmds", "console", "speed", "dash", "spectate", "followto", "loadscript", "getinventory", "upstat", "jobid", "autofarmnearby", "bringboat",
     "island", "refunds", "race", "raid", "fastattack", "superfastattack", "attackmode",
-    "pvp", "removehrpbodyvelocity", "iyedited", "remotespy",
+    "pvp", "setheight", "removehrpbodyvelocity", "iyedited", "remotespy",
     "explorer", "travelingsea", "suggestiontextcolor", "settings"
 }
 
@@ -718,6 +719,11 @@ function EveryCommands()
             _Notice("Fast Attacks", "MODE Attack: On PLAYERS!", 1, "SendNotification")
         elseif Scripts_Cmds[2] == "?" then
             _Notice("Fast Attacks", "MODE Attack: attackmode mobs or players\nmobs, players...", 1, "SendNotification")
+        end
+    elseif table.find(EveryCmds_nAlliase["setheight"], Scripts_Cmds[1]) then
+        if _G._CurrentYAxis_XScript and Scripts_Cmds[2] then
+            _G._CurrentYAxis_XScript = Scripts_Cmds[2]
+            _Notice("Commands", "Follow Specific | Hunt Nearest (Players) \nY Axis has been changed to: " .. Scripts_Cmds[2], 1, "SendNotification")
         end
     elseif table.find(EveryCmds_nAlliase["autofarmnearby"], Scripts_Cmds[1]) then
         if _NearbyFarm then
