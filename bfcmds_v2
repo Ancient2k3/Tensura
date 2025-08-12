@@ -1,6 +1,6 @@
 -- Blox Fruits: Commands Scripts Fixed + Changed, HoangHien --
 local _WS, _CG, _RlS, _RS, _TS, _StGui, _SGui, _GetFocusedButton, _GetCommands, _GetCorrectedCommands, _SettingsFrame, _SettingsScroll
-local EndPoint, StartPoint, OnFocused_SlideOut, OnFocused_SlideIn, intBGC_All, col1, col2, col3
+local EndPoint, StartPoint, OnFocused_SlideOut, OnFocused_SlideIn, intBGC_All, col1, col2, col3, _IsSpectatingSomeOne
 local _PLRS, _PLR, _Char, _Him, _He, _StoredBoats, _FirstSea, _SecondsSea, _ThirdSea, _ARandomPoint, _HHxScripts
 local FA_VariableCheck_0, FA_Toggle, FA_Toggle_II, Cmdbar_ItsOnFocused, _SSCRL_Canvasmain, _ButtonHeight, _ButtonPadding, Its_SettingsUIEnable, numtest, thisisenable, intCLabel_Txc, _alreadyRunIYEdited, _AutoStatus, _CurrentTween, _AutoEnablePvp, _EnablePvpOne, _TweeningSpeed, _FAmode, _CurrentVersion, _SomeLetter
 
@@ -35,6 +35,7 @@ Cmdbar_ItsOnFocused = false
 Its_SettingsUIEnable = false
 _alreadyRunIYEdited = false
 _AutoEnablePvp = false
+_IsSpectatingSomeOne = false
 _CurrentTween = nil
 _AutoStatus = 0
 _FAmode = 1 -- attacking mobs as default
@@ -133,16 +134,26 @@ function _BV(State)
             Safety_First.Name = "Extra_Wings_IX"
             Safety_First.Velocity = Vector3.new(0, 0, 0)
             Safety_First.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-            warn(":3 Safety flight.")
+            --warn(":3 Safety flight.")
         end
     else
         if State == "false" then
             if _PLR.Character.HumanoidRootPart:FindFirstChild("Extra_Wings_IX") then
                 _PLR.Character.HumanoidRootPart:FindFirstChild("Extra_Wings_IX"):Destroy()
             end
-            warn("=-= becareful.")
+            --warn("=-= becareful.")
         end
     end
+end
+
+function _AutoCorrectName(input)
+    for _, player in ipairs(_PLRS:GetPlayers()) do
+        if string.lower(player.Name):sub(1, #input) == string.lower(input) or
+        string.lower(player.DisplayName):sub(1, #input) == string.lower(input) then
+            return player
+        end
+    end
+    return nil
 end
 
 function _Noclip(_boolean)
@@ -150,10 +161,10 @@ function _Noclip(_boolean)
         if _N:IsA("BasePart") then
             if _boolean == true then
                 _N.CanCollide = false
-                warn(":0 noclipping on.")
+                --warn(":0 noclipping on.")
             elseif _boolean == false then
                 _N.CanCollide = true
-                warn(":l noclipping off.")
+                --warn(":l noclipping off.")
             end
         end
     end
@@ -215,6 +226,17 @@ function _ToPart(_name, _h)
         -- end)
     else
         _Notice("Commands", "Error not found Islands named: " .. _name, 1, "SendNotification")
+    end
+end
+
+function _Spectating(players_camera)
+    if players_camera and players_camera.Character and players_camera.Character:FindFirstChild("HumanoidRootPart") then
+        local dcamera = game:GetService("Workspace").CurrentCamera
+        dcamera.CameraSubject = players_camera.Character.HumanoidRootPart
+        dcamera.CFrame = players_camera.Character.HumanoidRootPart.CFrame
+        print("Successfully spectating: " .. players_camera.DisplayName)
+    else
+        print("Not found Humanoid of: " .. players_camera.DisplayName)
     end
 end
 
@@ -352,6 +374,8 @@ local EveryCmds_nAlliase, TestTable = {
     ["console"] = {"console", "co"},
     ["speed"] = {"speed", "sp"},
     ["dash"] = {"dash", "da"},
+    ["spectate"] = {"spectate", "view"},
+    ["followto"] = {"followto", "flyto"},
     ["loadscript"] = {"loadscript", "ls"},
     ["getinventory"] = {"getinventory", "girl"},
     ["upstat"] = {"upstat", "autostat", "as"},
@@ -378,7 +402,7 @@ local EveryCmds_nAlliase, TestTable = {
 }
 
 local _OrderedCommands = {
-    "reset", "test", "serverhop", "maxvision", "autofarmchest", "tweeningspeed", "cmds", "console", "speed", "dash", "loadscript", "getinventory", "upstat", "jobid", "autofarmnearby", "bringboat",
+    "reset", "test", "serverhop", "maxvision", "autofarmchest", "tweeningspeed", "cmds", "console", "speed", "dash", "spectate", "followto", "loadscript", "getinventory", "upstat", "jobid", "autofarmnearby", "bringboat",
     "island", "refunds", "race", "raid", "fastattack", "superfastattack", "attackmode",
     "pvp", "removehrpbodyvelocity", "iyedited", "remotespy",
     "explorer", "travelingsea", "suggestiontextcolor", "settings"
@@ -407,6 +431,15 @@ function EveryCommands()
             local new_TweeningSpeedValue = tonumber(Scripts_Cmds[2])
             _TweeningSpeed = new_TweeningSpeedValue
             _Notice("Commands", "Tweening Speed Changed to " .. _TweeningSpeed, 1, "SendNotification")
+        end
+    elseif table.find(EveryCmds_nAlliase["spectate"], Scripts_Cmds[1]) then
+        if not _IsSpectatingSomeOne then
+            _IsSpectatingSomeOne = true
+            if Scripts_Cmds[2] then _Spectating(_AutoCorrectName(Scripts_Cmds[2])) else _Notice("Commands", "argument 2 must be a player name!", 1, "SendNotification") end
+        else
+            _IsSpectatingSomeOne = false
+            local _SpectatingBackToSelf = _PLRS.LocalPlayer.Name
+            _Spectating(_SpectatingBackToSelf)
         end
     elseif table.find(EveryCmds_nAlliase["iyedited"], Scripts_Cmds[1]) then
         if not _alreadyRunIYEdited then
