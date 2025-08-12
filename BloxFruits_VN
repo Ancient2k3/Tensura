@@ -9,6 +9,7 @@ for _, gui in ipairs(player:WaitForChild("PlayerGui"):GetChildren()) do
 end
 
 -- Blox Fruits UI V4 VN --
+_G._CurrentYAxis_XScript = _G._CurrentYAxis_XScript or 2
 
 local ScreenGui = Instance.new("ScreenGui")
 local OpenClose = Instance.new("TextButton")
@@ -408,7 +409,7 @@ local function LoopsTPP_NearestPlayer()
     end
 
     if nearestPlayer and nearestPlayer.Character.Humanoid.Health > 0 then
-        local targetPosition = nearestPlayer.Character.HumanoidRootPart.Position + Vector3.new(0, 40, 0)
+        local targetPosition = nearestPlayer.Character.HumanoidRootPart.Position + Vector3.new(0, _G._CurrentYAxis_XScript, 0)
         if isTweenMode then
             if currentTween then
                 currentTween:Cancel()
@@ -505,7 +506,7 @@ local function LoopsTPP()
     local username = button4.Text
     local player = game:GetService("Players"):FindFirstChild(username)
     if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-        local targetPosition = player.Character.HumanoidRootPart.Position + Vector3.new(0, 2, 0)
+        local targetPosition = player.Character.HumanoidRootPart.Position + Vector3.new(0, _G._CurrentYAxis_XScript, 0)
         local playerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
         if isTweenMode then
             if currentTween then
