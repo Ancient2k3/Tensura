@@ -10,7 +10,7 @@ end
 
 -- Blox Fruits UI V4 VN --
 _G._CurrentYAxis_XScript = _G._CurrentYAxis_XScript or 2
-
+_G._CurrentDistanceBehind_XScript = _G._CurrentDistanceBehind_XScript or 1
 local ScreenGui = Instance.new("ScreenGui")
 local OpenClose = Instance.new("TextButton")
 local HoldBoatName = Instance.new("TextBox")
@@ -410,12 +410,14 @@ local function LoopsTPP_NearestPlayer()
 
     if nearestPlayer and nearestPlayer.Character.Humanoid.Health > 0 then
         local targetPosition = nearestPlayer.Character.HumanoidRootPart.Position + Vector3.new(0, _G._CurrentYAxis_XScript, 0)
+        local dirb = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - targetPosition).unit
+        local twbehind = targetPosition + dirb * _G._CurrentDistanceBehind_XScript
         if isTweenMode then
             if currentTween then
                 currentTween:Cancel()
             end
 
-            local goal = {CFrame = CFrame.new(targetPosition)}
+            local goal = {CFrame = CFrame.new(twbehind)}
             local tweenInfo = createTweenInfo(localPlayerPos, targetPosition)
             currentTween = tweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, tweenInfo, goal)
             currentTween:Play()
@@ -508,12 +510,14 @@ local function LoopsTPP()
     if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
         local targetPosition = player.Character.HumanoidRootPart.Position + Vector3.new(0, _G._CurrentYAxis_XScript, 0)
         local playerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+        local dirbx = (playerPos - targetPosition).unit
+        local twbehindx = targetPosition + dirbx * _G._CurrentDistanceBehind_XScript
         if isTweenMode then
             if currentTween then
                 currentTween:Cancel()
             end
 
-            local goal = {CFrame = CFrame.new(targetPosition)}
+            local goal = {CFrame = CFrame.new(twbehindx)}
             local tweenInfo = createTweenInfo(playerPos, targetPosition)
             currentTween = tweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, tweenInfo, goal)
             currentTween:Play()
