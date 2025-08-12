@@ -378,7 +378,7 @@ local EveryCmds_nAlliase, TestTable = {
 }
 
 local _OrderedCommands = {
-    "reset", "test", "serverhop", "maxvision", "autofarmchest", "tweeningspeed", "cmds", "console", "speed", "dash", "loadscript", "writetablereturn", "upstat", "jobid", "autofarmnearby", "bringboat",
+    "reset", "test", "serverhop", "maxvision", "autofarmchest", "tweeningspeed", "cmds", "console", "speed", "dash", "loadscript", "getinventory", "upstat", "jobid", "autofarmnearby", "bringboat",
     "island", "refunds", "race", "raid", "fastattack", "superfastattack", "attackmode",
     "pvp", "removehrpbodyvelocity", "iyedited", "remotespy",
     "explorer", "travelingsea", "suggestiontextcolor", "settings"
