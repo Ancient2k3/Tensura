@@ -38,7 +38,10 @@ local gameScripts = {
     [3754482795] = "https://raw.githubusercontent.com/NganHa2k3/Tensura/refs/heads/place/ElementalTycoon",
 
     -- Grow a Garden --
-    [7436755782] = "https://raw.githubusercontent.com/NganHa2k3/Tensura/refs/heads/place/Grow%20a%20Garden.luau"
+    [7436755782] = "https://raw.githubusercontent.com/NganHa2k3/Tensura/refs/heads/place/Grow%20a%20Garden.luau",
+
+    -- Blue Lock Rivals --
+    [6325068386] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/BlueLockRivals.luau"
 }
 
 local function loadGameScript(gameId)
