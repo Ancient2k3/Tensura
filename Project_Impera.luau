@@ -1,32 +1,56 @@
 -- Project IMPERA: Script --
 local _ws, _plrs, _coreui = game:GetService("Workspace"), game:GetService("Players"), game:GetService("CoreGui")
 local _plr = _plrs.LocalPlayer
-local _tr, _airbullet = Instance.new("ScreenGui", _coreui)
+
+local _tr = Instance.new("ScreenGui", _coreui)
 _tr.Name = "__PR_ImperaScript"
-_airbullet = Instance.new("TextButton", _tr)
-local _smk, _var = {"S", "K", "I", "D", "D", "E", "R"}, {IsEnabled = false} _airbullet.Name = "__Loop " .. _smk[math.random(1, #_smk)]
-_G._Shootmode = {
+
+local _airbullet = Instance.new("TextButton", _tr)
+local _smk, _var = {"S", "K", "I", "D", "D", "E", "R"}, {IsEnabled = false}
+_airbullet.Name = "__Loop " .. _smk[math.random(1, #_smk)]
+
+_G._Shootmode = _G._Shootmode or {
     Mode = "Multiple",
-    Delay = 0.3
+    Delay = 0.002
 }
+
+function _get_character()
+    local _char = _plr.Character
+    while not _char or not _char:FindFirstChild("HumanoidRootPart") do
+        _char = _plr.CharacterAdded:Wait()
+        task.wait()
+    end
+    return _char
+end
+
 function _return_nearest_plr()
-    local _char, _n, _cl, _dis = _plr.Character or _plr.CharacterAdded:Wait(), nil, math.huge
+    local _char = _get_character()
+    local _n, _cl, _dis = nil, math.huge, nil
     if not _char then return nil end
-    for _, plr in ipairs(_plrs:GetPlayers()) do if plr ~= _plr and _plr.Character then
-        _dis = (plr.Character.HumanoidRootPart.Position - _char.HumanoidRootPart.Position).magnitude
-        if _dis < _cl then _cl = _dis
-            _n = plr
+    for _, plr in ipairs(_plrs:GetPlayers()) do
+        if plr ~= _plr and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart") then
+            _dis = (plr.Character.HumanoidRootPart.Position - _char.HumanoidRootPart.Position).magnitude
+            if _dis < _cl then
+                _cl = _dis
+                _n = plr
+            end
         end
-    end end
+    end
     return _n
-end function _firingskill()
-    local _target_enemies, _finalhrp, _finalpos = _return_nearest_plr()
-    _finalhrp = _target_enemies and _target_enemies.Character:FindFirstChild("HumanoidRootPart") or _plr.Character:FindFirstChild("HumanoidRootPart")
-    if _finalhrp then _finalpos = _finalhrp.Position
+end
+
+function _firingskill()
+    local _target_enemies = _return_nearest_plr()
+    local _finalhrp = _target_enemies and _target_enemies.Character:FindFirstChild("HumanoidRootPart") or _plr.Character:FindFirstChild("HumanoidRootPart")
+    if _finalhrp then
+        local _finalpos = _finalhrp.Position
         _plr.Character:FindFirstChild("Death Step").RemoteFunction:InvokeServer("X", _finalpos)
     end
-end function _shoot(t)
-    if _G._Shootmode.Mode == "Single" then _firingskill()
+end
+
+function _shoot(t)
+    if _G._Shootmode.Mode == "Single" then
+        _firingskill()
     elseif _G._Shootmode.Mode == "Multiple" then
         if not _var.IsEnabled then
             _var.IsEnabled = true
@@ -34,8 +58,11 @@ end function _shoot(t)
         else
             _var.IsEnabled = false
             t.TextColor3 = Color3.new(1, 1, 1)
-        end while _var.IsEnabled do wait(_G._Shootmode.Delay or 0.15)
-            _firingskill()
+        end
+        while _var.IsEnabled do
+            wait(_G._Shootmode.Delay)
+            task.spawn(_firingskill) wait(0.001)
+            task.spawn(_firingskill)
         end
     end
 end
@@ -50,7 +77,10 @@ _airbullet.TextColor3 = Color3.new(1, 1, 1)
 _airbullet.Font = Enum.Font.Arcade
 _airbullet.Text = "FIRING"
 _airbullet.Visible = true
+
 local _ins_uic = Instance.new("UICorner", _airbullet)
 _ins_uic.CornerRadius = UDim.new(0.15, 0)
 
-_airbullet.MouseButton1Click:Connect(function() _shoot(_airbullet) end)
+_airbullet.MouseButton1Click:Connect(function()
+    _shoot(_airbullet)
+end)
