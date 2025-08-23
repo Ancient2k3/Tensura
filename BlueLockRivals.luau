@@ -50,10 +50,10 @@ function _reachgoal(t)
     local team, hrp = _returnteam(), _plr.Character:FindFirstChild("HumanoidRootPart")
     if hrp and team == "Home" then
         t.TextColor3 = Color3.new(1, 0, 1)
-        hrp.CFrame = _ws.Goals:FindFirstChild("Goal").GoalLine.CFrame
+        hrp.CFrame = _ws.Goals:FindFirstChild("Goal1").GoalLine.CFrame
     elseif hrp and team == "Away" then
         t.TextColor3 = Color3.new(0, 0, 1)
-        hrp.CFrame = _ws.Goals:FindFirstChild("Goal1").GoalLine.CFrame
+        hrp.CFrame = _ws.Goals:FindFirstChild("Goal").GoalLine.CFrame
     else
         t.TextColor3 = Color3.new(1, 0, 0) game:GetService("StarterGui"):SetCore("SendNotification", {
             Title = "[Notification:]", Text = "Team: " .. _returnteam() .. "\nCan't TP to Goals!", Duration = 0.5,
