@@ -580,7 +580,10 @@ local function findNearestEnemy()
     end
     
     if nearestEnemy then
+        nearestEnemy.Humanoid.PlatformStand = false
         nearestEnemy.Humanoid.Health = 0
+        nearestEnemy.Humanoid:ChangeState(Enum.HumanoidStateType.Dead)
+        nearestEnemy:BreakJoints()
     end
 end
 
