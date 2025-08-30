@@ -19,13 +19,15 @@ function _updatetimer(t, btn)
             t.Text = "Random Fruit"
             t.TextColor3 = Color3.fromRGB(0, 255, 0)
         end
-    elseif _variables.re_updatetimer >= 1000 then
+    elseif _variables.re_updatetimer > 0 and _variables.re_updatetimer < 999 then
+        btn.TextColor3 = Color3.fromRGB(200, 0, 190)
+    elseif _variables.re_updatetimer >= 1000 and _variables.re_updatetimer < 1999 then
         btn.TextColor3 = Color3.fromRGB(255, 0, 0)
-    elseif _variables.re_updatetimer >= 2000 then
+    elseif _variables.re_updatetimer >= 2000 and _variables.re_updatetimer < 2999 then
         btn.TextColor3 = Color3.fromRGB(255, 255, 0)
-    elseif _variables.re_updatetimer >= 3000 then
+    elseif _variables.re_updatetimer >= 3000 and _variables.re_updatetimer < 3249 then
         btn.TextColor3 = Color3.fromRGB(0, 255, 0)
-    elseif _variables.re_updatetimer >= 3250 then
+    elseif _variables.re_updatetimer >= 3250 and _variables.re_updatetimer < 3599 then
         btn.TextColor3 = Color3.fromRGB(255, 255, 255)
     end btn.Text = "Update : " .. _variables.re_updatetimer
 end
@@ -58,7 +60,7 @@ _txtlb1.TextSize = 9
 _txtlb1.Font = Enum.Font.Code
 _txtlb1.Text = ""
 _txtlb1.Visible = true
-_uic1 = Instance.new("uic1orner", _txtlb1)
+_uic1 = Instance.new("UICorner", _txtlb1)
 _uic1.CornerRadius = UDim.new(0.15, 0)
 
 _txtlb.MouseButton1Click:Connect(function()
