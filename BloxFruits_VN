@@ -408,7 +408,7 @@ local function LoopsTPP_NearestPlayer()
         end
     end
 
-    if nearestPlayer and nearestPlayer.Character.Humanoid.Health > 0 then
+    if nearestPlayer and nearestPlayer:GetAttribute("PvpDisabled") ~= true and nearestPlayer.Character.Humanoid.Health > 0 then
         local targetPosition = nearestPlayer.Character.HumanoidRootPart.Position + Vector3.new(0, _G._CurrentYAxis_XScript, 0)
         local dirb = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - targetPosition).unit
         local twbehind = targetPosition + dirb * _G._CurrentDistanceBehind_XScript
@@ -425,7 +425,7 @@ local function LoopsTPP_NearestPlayer()
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(targetPosition)
         end
     else
-        warn("No other players found")
+        warn("-- No ONE is Enabled PVP! --")
     end
 end
 
@@ -2714,5 +2714,6 @@ task.spawn(function()
     pcall(function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/NganHa2k3/Tensura/refs/heads/cmds/bfcmds"))()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/NganHa2k3/Tensura/refs/heads/cmds/bfcmds_v2"))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/RandomizerTimer.luau"))()
     end)
 end)
