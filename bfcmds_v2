@@ -1,11 +1,13 @@
 -- Blox Fruits: Commands Scripts Fixed + Changed, HoangHien --
 local _WS, _CG, _RlS, _RS, _TS, _StGui, _SGui, _GetFocusedButton, _GetCommands, _GetCorrectedCommands, _SettingsFrame, _SettingsScroll
 local EndPoint, StartPoint, OnFocused_SlideOut, OnFocused_SlideIn, intBGC_All, col1, col2, col3, _IsSpectatingSomeOne
-local _PLRS, _PLR, _Char, _Him, _He, _StoredBoats, _FirstSea, _SecondsSea, _ThirdSea, _ARandomPoint, _HHxScripts
+local _PLRS, _PLR, _Char, _Him, _He, _StoredBoats, _FirstSea, _SecondsSea, _ThirdSea, _ARandomPoint, _HHxScripts, _Worlds
 local FA_VariableCheck_0, FA_Toggle, FA_Toggle_II, Cmdbar_ItsOnFocused, _SSCRL_Canvasmain, _ButtonHeight, _ButtonPadding, Its_SettingsUIEnable, numtest, thisisenable, intCLabel_Txc, _alreadyRunIYEdited, _AutoStatus, _CurrentTween, _AutoEnablePvp, _EnablePvpOne, _TweeningSpeed, _FAmode, _BaseHealth, _HalfHealth, _CurrentVersion, _SomeLetter
 local _SpecialVariables = {
     Current_Event = "LightningEvents",
-    Farm_LightningEvent = false
+    Farm_LightningEvent = false,
+    Farm_NormalNPC = false,
+    Farm_BossesNPC = false
 }
 
 _CurrentVersion = 1.430
@@ -25,6 +27,7 @@ _Him = _Char:WaitForChild("HumanoidRootPart")
 _He = _Char:WaitForChild("Humanoid")
 _BaseHealth = _He.Health
 _StoredBoats = _WS:WaitForChild("Boats")
+_Worlds = _WS:WaitForChild("_WorldOrigin")
 _FirstSea = _WS.Map:FindFirstChild("MobBoss") -- I hate Github for this slow update
 _SecondsSea = _WS.Map:FindFirstChild("GreenBit")
 _ThirdSea = _WS.Map:FindFirstChild("TikiOutpost")
@@ -296,9 +299,9 @@ function _ToNearbyMobs()
     if _PLR.Character and _PLR.Character:FindFirstChild("Humanoid") then
         _CurrentPLR_Health = _PLR.Character.Humanoid.Health
         if _CurrentPLR_Health <= _HalfHealth then
-            _SafeSpot = Vector3.new(0, 525, 0)
+            _SafeSpot = Vector3.new(0, 900, 0)
         else
-            _SafeSpot = Vector3.new(0, 45, 0)
+            _SafeSpot = Vector3.new(0, 25, 0)
         end
     end
     
@@ -314,6 +317,39 @@ function _ToNearbyMobs()
         else
             _NearestEnemies.HumanoidRootPart.CFrame = _PLR.Character.HumanoidRootPart.CFrame * CFrame.new(0, 900, 0)
         end
+    end
+end
+
+function _ToNearbyBoss()
+    local near, ishuge, inrange, instorage, range, checkinghealth, safeheight
+    near = nil
+    ishuge = math.huge
+    inrange = 100000
+    instorage = _Worlds:FindFirstChild("EnemySpawns")
+    for _, enemy in pairs(instorage:GetChildren()) do
+        if enemy:IsA("Part") and enemy.Name:lower():match("boss") then
+            range = (_PLR.Character.HumanoidRootPart.Position - enemy.Position).Magnitude
+            if range < ishuge and range <= inrange then
+                ishuge = range
+                near = enemy
+            end
+        end
+    end
+    
+    if _PLR.Character and _PLR.Character:FindFirstChild("Humanoid") then
+        checkinghealth = _PLR.Character.Humanoid.Health
+        if checkinghealth <= _HalfHealth then
+            safeheight = Vector3.new(0, 900, 0)
+        else
+            safeheight = Vector3.new(0, 25, 0)
+        end
+    end
+    
+    if near then
+        local direction, behindpos
+        direction = (_PLR.Character.HumanoidRootPart.Position - near.Position).unit
+        behindpos = near.Position + (direction * -0.2) + safeheight
+        _TwPos(behindpos)
     end
 end
 
@@ -334,6 +370,14 @@ function _ReturnOwnerBoatIs(folder)
         end
     end
     return model
+end
+
+function _ReturnPlayerPos(name)
+    local usertargeted = _PLRS[name].Character:FindFirstChild("HumanoidRootPart")
+    if usertargeted then
+        return usertargeted.Position
+    end
+    return nil
 end
 
 function _TpBoat_ToPos(pos)
@@ -436,6 +480,7 @@ local EveryCmds_nAlliase, TestTable = {
     ["superfastattack"] = {"superfastattack", "sfa"},
     ["attackmode"] = {"attackmode", "am"},
     ["setfarmevent"] = {"setfarmevent", "sfe"},
+    ["autofarmbosses"] = {"autofarmbosses", "afb"},
     ["pvp"] = {"pvp", "autoenablepvp"},
     ["allhaki"] = {"allhaki", "ah"},
     ["setheight"] = {"setheight", "sh"},
@@ -452,7 +497,7 @@ local EveryCmds_nAlliase, TestTable = {
 
 local _OrderedCommands = {
     "reset", "randomfruit", "test", "serverhop", "maxvision", "autofarmchest", "tweeningspeed", "cmds", "console", "speed", "dash", "spectate", "followto", "loadscript", "melee", "getinventory", "upstat", "jobid", "autofarmnearby", "bringboat",
-    "island", "refunds", "race", "raid", "fastattack", "superfastattack", "attackmode", "setfarmevent",
+    "island", "refunds", "race", "raid", "fastattack", "superfastattack", "attackmode", "setfarmevent", "autofarmbosses",
     "pvp", "allhaki", "setheight", "removehrpbodyvelocity", "iyedited", "remotespy",
     "explorer", "travelingsea", "suggestiontextcolor", "settings"
 }
@@ -492,6 +537,11 @@ function EveryCommands()
             _IsSpectatingSomeOne = false
             local _SpectatingBackToSelf = _PLRS.LocalPlayer.Name
             _Spectating(_SpectatingBackToSelf)
+        end
+    elseif table.find(EveryCmds_nAlliase["followto"], Scripts_Cmds[1]) then
+        if Scripts_Cmds[2] then
+            _TwPos(_ReturnPlayerPos(_AutoCorrectName(Scripts_Cmds[2]).Name))
+            _Notice("Commands", "Currently Following to: " .. _AutoCorrectName(Scripts_Cmds[2]).Name, 1, "SendNotification")
         end
     elseif table.find(EveryCmds_nAlliase["iyedited"], Scripts_Cmds[1]) then
         if not _alreadyRunIYEdited then
@@ -821,18 +871,36 @@ function EveryCommands()
             _Notice("Commands", "Follow Specific | Hunt Nearest (Players) \nY Axis has been changed to: " .. Scripts_Cmds[2], 1, "SendNotification")
         end
     elseif table.find(EveryCmds_nAlliase["autofarmnearby"], Scripts_Cmds[1]) then
-        if _NearbyFarm then
-            _NearbyFarm = false
+        _CT_Cancel()
+        if _SpecialVariables.Farm_NormalNPC then
+            _SpecialVariables.Farm_NormalNPC = false
             _BV("false")
             _Noclip(false)
             _Notice("Commands", "Auto Follow Nearby Mobs is Deactivated!", 1, "SendNotification")
         else
-            _NearbyFarm = true
+            _SpecialVariables.Farm_BossesNPC = false
+            _SpecialVariables.Farm_NormalNPC = true
             _BV("false")
             task.wait(0.5)
             _BV("true")
             _Noclip(true)
             _Notice("Commands", "Auto Follow Nearby Mobs is Activated!", 1, "SendNotification")
+        end
+    elseif table.find(EveryCmds_nAlliase["autofarmbosses"], Scripts_Cmds[1]) then
+        _CT_Cancel()
+        if _SpecialVariables.Farm_BossesNPC then
+            _SpecialVariables.Farm_BossesNPC = false
+            _BV("false")
+            _Noclip(false)
+            _Notice("Commands", "Auto Follow Nearby Bosses is Deactivated!", 1, "SendNotification")
+        else
+            _SpecialVariables.Farm_NormalNPC = false
+            _SpecialVariables.Farm_BossesNPC = true
+            _BV("false")
+            task.wait(0.5)
+            _BV("true")
+            _Noclip(true)
+            _Notice("Commands", "Auto Follow Nearby Bosses is Activated!", 1, "SendNotification")
         end
     elseif table.find(EveryCmds_nAlliase["travelingsea"], Scripts_Cmds[1]) then
         if Scripts_Cmds[2] == "1" then
@@ -950,6 +1018,16 @@ function EveryCommands()
                 _ToPos(CFrame.new(919, 125, 32869), 15)
                 task.wait()
                 _ToPart("CursedShip_Island", Vector3.new(0, 2.5, 0))
+            elseif Scripts_Cmds[2] == "forgotten" or Scripts_Cmds[2] == "f" then
+                _ToPart("Forgotten_Island", Vector3.new(0, 2.5, 0))
+            elseif Scripts_Cmds[2] == "snowcastle" or Scripts_Cmds[2] == "sc" then
+                _ToPart("SnowCastle_Island", Vector3.new(0, 2.5, 0))
+            elseif Scripts_Cmds[2] == "orderlab" or Scripts_Cmds[2] == "ol" then
+                _ToPart("Order_LAB", Vector3.new(0, 2.5, 0))
+            elseif Scripts_Cmds[2] == "raidlab" or Scripts_Cmds[2] == "rl" then
+                _ToPart("Raid_LAB", Vector3.new(0, 2.5, 0))
+            elseif Scripts_Cmds[2] == "hotandcold" or Scripts_Cmds[2] == "hac" then
+                _ToPart("Girl_AND_Boy", Vector3.new(0, 2.5, 0))
             elseif Scripts_Cmds[2] == "castle" or Scripts_Cmds[2] == "cots" then
                 _CT_Cancel()
                 _ToPos(CFrame.new(-5073, 315, -3153), 15)
@@ -985,8 +1063,8 @@ function EveryCommands()
                     print("Others way or name of the island for teleportation: marinestarter, piratestarter, middletown, jungle, piratevillage, desert, snowy, marineford, arena1, prison, magmavillage, fountain, underwater, lowersky, highersky. That's all !")
                     _Notice("nah", "nothing nothing...", 1, "DevConsoleVisible")
                 elseif _SecondsSea then
-                    print("List of all island name, do 'island' with these name for teleportation: d2, a2, c, r3, cs, gz, hkor or ? for shown command info...")
-                    print("Others way or name of the island for teleportation: dock2, arena2, cafe, roomv3, cursedship, greenzone, kingdomofrosehighest. That's all !")
+                    print("List of all island name, do 'island' with these name for teleportation: d2, a2, c, r3, cs, gz, hkor, f, sc, ol, rl, hac or ? for shown command info...")
+                    print("Others way or name of the island for teleportation: dock2, arena2, cafe, roomv3, cursedship, greenzone, kingdomofrosehighest, forgotten, snowcastle, orderlab, raidlab, hotandcold. That's all !")
                     _Notice("nah", "nothing here... again?", 1, "DevConsoleVisible")
                 elseif _ThirdSea then
                     print("List of all island name, do 'island' with these name for teleportation: cots, hyd, m, gt, r4, t, sm or ? for shown command info...")
@@ -1200,7 +1278,7 @@ end)
 _RS.RenderStepped:Connect(function()
     if _AutoEnablePvp then
         _EnablePvpOne += 1
-        if _EnablePvpOne >= 20 then
+        if _EnablePvpOne >= 20 and _PLR:GetAttribute("PvpDisabled") == true then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EnablePvp")
             _EnablePvpOne = 0
         end
@@ -1208,8 +1286,14 @@ _RS.RenderStepped:Connect(function()
 end)
 
 _RS.RenderStepped:Connect(function(deltaTime)
-    if _NearbyFarm then
+    if _SpecialVariables.Farm_NormalNPC then
         _ToNearbyMobs()
+    end
+end)
+
+_RS.RenderStepped:Connect(function(deltaTime)
+    if _SpecialVariables.Farm_BossesNPC then
+        _ToNearbyBoss()
     end
 end)
 
@@ -1285,6 +1369,11 @@ elseif _SecondsSea then
     _Part(CFrame.new(-667, 2378, -450), "SecrectAreaII_Sea2")
     _Part(CFrame.new(-2562, 1625, -3729), "GreenZone_Island")
     _Part(CFrame.new(919, 125, 32869), "CursedShip_Island")
+    _Part(CFrame.new(-3936, 560, -10490), "Forgotten_Island")
+    _Part(CFrame.new(6012, 295, -6644), "SnowCastle_Island")
+    _Part(CFrame.new(-5572, 329, -5913), "Order_LAB")
+    _Part(CFrame.new(-6452, 250, -4496), "Raid_LAB")
+    _Part(CFrame.new(-6444, 743, -4960), "Girl_AND_Boy")
 elseif _ThirdSea then
     _Notice("📑 Nơi ở hiện tại 📑", "Vùng biển: Biển 3!", 1, "SendNotification")
     _Part(CFrame.new(-5073, 315, -3153), "CastleOnTheSea_Island")
