@@ -424,8 +424,8 @@ local function LoopsTPP_NearestPlayer()
         else
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(targetPosition)
         end
-    else
-        warn("-- No ONE is Enabled PVP! --")
+    --else
+    --    warn("-- No ONE is Enabled PVP! --")
     end
 end
 
@@ -580,9 +580,9 @@ local function findNearestEnemy()
     end
     
     if nearestEnemy then
-        nearestEnemy.Humanoid.PlatformStand = true
+        --nearestEnemy.Humanoid.PlatformStand = true
         nearestEnemy.Humanoid.Health = 0
-        nearestEnemy.Humanoid:ChangeState(15)
+        --nearestEnemy.Humanoid:ChangeState(15)
         nearestEnemy.Humanoid:ChangeState(Enum.HumanoidStateType.Dead)
         nearestEnemy:BreakJoints()
     end
@@ -1385,7 +1385,8 @@ CheckFUICorner.CornerRadius = UDim.new(0.1, 0)
 
 local function checkForFruit()
     local fruit = game:GetService("Workspace"):FindFirstChild("Fruit ")
-    if fruit and fruit:FindFirstChild("Handle") then
+    local fruitdropped = game:GetService("Workspace"):FindFirstChildOfClass("Tool")
+    if fruit and fruit:FindFirstChild("Handle") or fruitdropped.Name:lower():match("fruit") then
         CheckF.Text = "Có trái xuất hiện"
     else
         CheckF.Text = "Không có trái xuất hiện"
@@ -1434,13 +1435,15 @@ end)
 
 CheckF.MouseButton1Click:Connect(function()
     local fruitcheckx = game:GetService("Workspace")["Fruit "].Handle
-    if fruitcheckx then
+    local fruitdropped_check = game:GetService("Workspace"):FindFirstChildOfClass("Tool")
+    if fruitcheckx or fruitdropped_check.Name:lower():match("fruit") then
         local playerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+        local _fruits = fruitcheckx or fruitdropped_check
         if isTweenMode then
             if currentTween then
                 currentTween:Cancel()
             end
-            local goal = {CFrame = fruitcheckx.CFrame + Vector3.new(0, 2, 0)}
+            local goal = {CFrame = _fruits.CFrame + Vector3.new(0, 2, 0)}
             local tweenInfo = createTweenInfo(playerPos, goal.CFrame.Position)
             currentTween = tweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, tweenInfo, goal)
             currentTween:Play()
