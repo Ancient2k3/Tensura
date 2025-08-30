@@ -302,7 +302,7 @@ function _ToNearbyMobs()
     if _PLR.Character and _PLR.Character:FindFirstChild("Humanoid") then
         _CurrentPLR_Health = _PLR.Character.Humanoid.Health
         if _CurrentPLR_Health <= _HalfHealth then
-            _SafeSpot = Vector3.new(0, 900, 0)
+            _SafeSpot = Vector3.new(0, 455, 0)
         else
             _SafeSpot = Vector3.new(0, 25, 0)
         end
@@ -359,7 +359,7 @@ function _ToNearbyBoss()
     if _PLR.Character and _PLR.Character:FindFirstChild("Humanoid") then
         checkinghealth = _PLR.Character.Humanoid.Health
         if checkinghealth <= _HalfHealth then
-            safeheight = Vector3.new(0, 900, 0)
+            safeheight = Vector3.new(0, 455, 0)
         else
             safeheight = Vector3.new(0, 25, 0)
         end
