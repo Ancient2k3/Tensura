@@ -1438,7 +1438,7 @@ CheckF.MouseButton1Click:Connect(function()
     local fruitdropped_check = game:GetService("Workspace"):FindFirstChildOfClass("Tool")
     if fruitcheckx or fruitdropped_check.Name:lower():match("fruit") then
         local playerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
-        local _fruits = fruitcheckx or fruitdropped_check
+        local _fruits = fruitcheckx or fruitdropped_check.Handle
         if isTweenMode then
             if currentTween then
                 currentTween:Cancel()
