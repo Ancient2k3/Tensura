@@ -1,16 +1,18 @@
 -- Blox Fruits: Commands Scripts Fixed + Changed, HoangHien --
-local _WS, _CG, _RlS, _RS, _TS, _StGui, _SGui, _GetFocusedButton, _GetCommands, _GetCorrectedCommands, _SettingsFrame, _SettingsScroll
+local _WS, _CG, _RlS, _RS, _TS, _TPS, _StGui, _SGui, _GetFocusedButton, _GetCommands, _GetCorrectedCommands, _SettingsFrame, _SettingsScroll
 local EndPoint, StartPoint, OnFocused_SlideOut, OnFocused_SlideIn, intBGC_All, col1, col2, col3, _IsSpectatingSomeOne
 local _PLRS, _PLR, _Char, _Him, _He, _StoredBoats, _FirstSea, _SecondsSea, _ThirdSea, _ARandomPoint, _HHxScripts, _Worlds
 local FA_VariableCheck_0, FA_Toggle, FA_Toggle_II, Cmdbar_ItsOnFocused, _SSCRL_Canvasmain, _ButtonHeight, _ButtonPadding, Its_SettingsUIEnable, numtest, thisisenable, intCLabel_Txc, _alreadyRunIYEdited, _AutoStatus, _CurrentTween, _AutoEnablePvp, _EnablePvpOne, _TweeningSpeed, _FAmode, _BaseHealth, _HalfHealth, _CurrentVersion, _SomeLetter
 local _SpecialVariables = {
     Current_Event = "LightningEvents",
     Farm_LightningEvent = false,
+    CheckingUpdate = true,
     Farm_NormalNPC = false,
-    Farm_BossesNPC = false
+    Farm_BossesNPC = false,
+    Reset_Seconds = 0
 }
 
-_CurrentVersion = 1.430
+_CurrentVersion = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Status/refs/heads/main/Games/BFCommands_UPD.luau"))()
 _SomeLetter = {"H", "O", "A", "N", "G", "H", "I", "E", "N", "X", "S", "C", "R", "I", "P", "T", "S"}
 
 _WS = game:GetService("Workspace")
@@ -18,6 +20,7 @@ _CG = game:GetService("CoreGui")
 _RlS = game:GetService("ReplicatedStorage")
 _RS = game:GetService("RunService")
 _TS = game:GetService("TweenService")
+_TPS = game:GetService("TeleportService")
 _StGui = game:GetService("StarterGui")
 
 _PLRS = game:GetService("Players")
@@ -320,6 +323,23 @@ function _ToNearbyMobs()
     end
 end
 
+function _GetNearbyBossesName()
+    local near, ishuge, inrange, instorage, range
+    near = nil
+    ishuge = math.huge
+    inrange = 100000
+    instorage = _Worlds:FindFirstChild("EnemySpawns")
+    for _, enemy in pairs(instorage:GetChildren()) do
+        if enemy:IsA("Part") and enemy.Name:lower():match("boss") then
+            range = (_PLR.Character.HumanoidRootPart.Position - enemy.Position).Magnitude
+            if range < ishuge and range <= inrange then
+                ishuge = range
+                near = enemy
+            end
+        end
+    end if near then return near.Name end
+end
+
 function _ToNearbyBoss()
     local near, ishuge, inrange, instorage, range, checkinghealth, safeheight
     near = nil
@@ -455,6 +475,7 @@ local EveryCmds_nAlliase, TestTable = {
     ["reset"] = {"reset", "re"},
     ["randomfruit"] = {"randomfruit", "fruit"},
     ["test"] = {"test", "te"},
+    ["tobosses"] = {"tobosses", "tpb"},
     ["serverhop"] = {"serverhop", "shop"},
     ["maxvision"] = {"maxvision", "mv"},
     ["autofarmchest"] = {"autofarmchest", "afc"},
@@ -496,7 +517,7 @@ local EveryCmds_nAlliase, TestTable = {
 }
 
 local _OrderedCommands = {
-    "reset", "randomfruit", "test", "serverhop", "maxvision", "autofarmchest", "tweeningspeed", "cmds", "console", "speed", "dash", "spectate", "followto", "loadscript", "melee", "getinventory", "upstat", "jobid", "autofarmnearby", "bringboat",
+    "reset", "randomfruit", "test", "tobosses", "serverhop", "maxvision", "autofarmchest", "tweeningspeed", "cmds", "console", "speed", "dash", "spectate", "followto", "loadscript", "melee", "getinventory", "upstat", "jobid", "autofarmnearby", "bringboat",
     "island", "refunds", "race", "raid", "fastattack", "superfastattack", "attackmode", "setfarmevent", "autofarmbosses",
     "pvp", "allhaki", "setheight", "removehrpbodyvelocity", "iyedited", "remotespy",
     "explorer", "travelingsea", "suggestiontextcolor", "settings"
@@ -789,6 +810,9 @@ function EveryCommands()
             _AutoEnablePvp = true
             _Notice("Commands", "Auto Enable Pvp is Activated!", 1, "SendNotification")
         end
+    elseif table.find(EveryCmds_nAlliase["tobosses"], Scripts_Cmds[1]) then
+        _ToNearbyBoss()
+        _Notice("Commands", "Founded Bosses: " .. _GetNearbyBossesName(), 1, "SendNotification")
     elseif table.find(EveryCmds_nAlliase["speed"], Scripts_Cmds[1]) then
         local myCharacterIn_WS = _WS.Characters[_PLR.Name]
         if myCharacterIn_WS then
@@ -1281,6 +1305,20 @@ _RS.RenderStepped:Connect(function()
         if _EnablePvpOne >= 20 and _PLR:GetAttribute("PvpDisabled") == true then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EnablePvp")
             _EnablePvpOne = 0
+        end
+    end
+end)
+
+_RS.RenderStepped:Connect(function()
+    if _SpecialVariables.CheckingUpdate ~= false then
+        _SpecialVariables.Reset_Seconds += 1
+        if _SpecialVariables.Reset_Seconds >= 240 then _SpecialVariables.Reset_Seconds = 0
+            local _NewestVersion = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Status/refs/heads/main/Games/BFCommands_UPD.luau"))()
+            warn("Checked Version: " .. _NewestVersion)
+            if _CurrentVersion < _NewestVersion then
+                _TPS:Teleport(game.PlaceId, _PLR)
+                task.spawn(function() _PLR:Kick("ĐANG UPDATE BẢN CẬP NHẬP SCRIPT MỚI!") end)
+            end
         end
     end
 end)
