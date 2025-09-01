@@ -10,6 +10,7 @@ local _SpecialVariables = {
     CheckingUpdate = true,
     Farm_NormalNPC = false,
     Farm_BossesNPC = false,
+    OniRealm_CheckDistance = 500,
     Reset_Seconds = 0
 }
 
@@ -1356,13 +1357,15 @@ _RS.RenderStepped:Connect(function()
     local _HumanoidRP = _PLR.Character:FindFirstChild("HumanoidRootPart")
     local _OniRealmPart = _WS:FindFirstChild(_HHxScripts):FindFirstChild("OniRealmEvents_Island")
     if _HumanoidRP and _OniRealmPart then
-        if ().magnitude <= 500 then
+        if (_OniRealmPart.Position - _HumanoidRP.Position).magnitude <= _SpecialVariables.OniRealm_CheckDistance then
             if not _SpecialVariables.InOniRealm_Islands then
                 _SpecialVariables.InOniRealm_Islands = true
+                print("---- You're Joined Oni Realm Dimension! ----")
             end
         else
             if _SpecialVariables.InOniRealm_Islands then
                 _SpecialVariables.InOniRealm_Islands = false
+                print("---- You're Leaving Oni Realm Dimension! ----")
             end
         end
     end
