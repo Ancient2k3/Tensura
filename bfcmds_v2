@@ -10,7 +10,7 @@ local _SpecialVariables = {
     CheckingUpdate = true,
     Farm_NormalNPC = false,
     Farm_BossesNPC = false,
-    OniRealm_CheckDistance = 500,
+    OniRealm_CheckDistance = 1500,
     Reset_Seconds = 0
 }
 
@@ -1361,11 +1361,13 @@ _RS.RenderStepped:Connect(function()
             if not _SpecialVariables.InOniRealm_Islands then
                 _SpecialVariables.InOniRealm_Islands = true
                 print("---- You're Joined Oni Realm Dimension! ----")
+                _Notice("Oni Realm", "You Are Inside Oni Realm Event Islands!", 1, "SendNotification")
             end
         else
             if _SpecialVariables.InOniRealm_Islands then
                 _SpecialVariables.InOniRealm_Islands = false
                 print("---- You're Leaving Oni Realm Dimension! ----")
+                _Notice("Oni Realm", "You Are Outside Oni Realm Event Islands!", 1, "SendNotification")
             end
         end
     end
