@@ -6,6 +6,7 @@ local FA_VariableCheck_0, FA_Toggle, FA_Toggle_II, Cmdbar_ItsOnFocused, _SSCRL_C
 local _SpecialVariables = {
     Current_Event = "LightningEvents",
     Farm_LightningEvent = false,
+    InOniRealm_Islands = false,
     CheckingUpdate = true,
     Farm_NormalNPC = false,
     Farm_BossesNPC = false,
@@ -319,6 +320,10 @@ function _ToNearbyMobs()
             _TwPos(_PositionBehind)
         else
             _NearestEnemies.HumanoidRootPart.CFrame = _PLR.Character.HumanoidRootPart.CFrame * CFrame.new(0, 900, 0)
+        end
+    else
+        if _SpecialVariables.InOniRealm_Islands ~= false then
+            _ToPart("OniRealmEvents_Island", Vector3.new(0, 4, 0))
         end
     end
 end
@@ -1344,6 +1349,22 @@ end)
 _RS.RenderStepped:Connect(function(deltaTime)
     if _SpecialVariables.Farm_BossesNPC then
         _ToNearbyBoss()
+    end
+end)
+
+_RS.RenderStepped:Connect(function()
+    local _HumanoidRP = _PLR.Character:FindFirstChild("HumanoidRootPart")
+    local _OniRealmPart = _WS:FindFirstChild(_HHxScripts):FindFirstChild("OniRealmEvents_Island")
+    if _HumanoidRP and _OniRealmPart then
+        if ().magnitude <= 500 then
+            if not _SpecialVariables.InOniRealm_Islands then
+                _SpecialVariables.InOniRealm_Islands = true
+            end
+        else
+            if _SpecialVariables.InOniRealm_Islands then
+                _SpecialVariables.InOniRealm_Islands = false
+            end
+        end
     end
 end)
 
