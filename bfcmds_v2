@@ -1394,6 +1394,7 @@ end)
 if _FirstSea then
     _Notice("📑 Nơi ở hiện tại 📑", "Vùng biển: Biển khởi đầu!", 1, "SendNotification")
     _Part(CFrame.new(1550, 57, -2983), "ChristmasEvents_Island")
+    _Part(CFrame.new(-5432, -4165, 4182), "OniRealmEvents_Island")
     _Part(CFrame.new(-2867, 400, 2128), "MarineStarter_Island")
     _Part(CFrame.new(1064, 400, 1443), "PirateStarter_Island")
     _Part(CFrame.new(-798, 400, 1605), "MiddleTown_Island")
