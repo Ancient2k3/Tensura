@@ -327,11 +327,11 @@ function _ToNearbyMobs()
         if _RedCommander and _RedCommander:GetAttribute("Open") ~= true then
             if _SpecialVariables.InOniRealm_Islands ~= false then
                 --_ToPart("OniRealmEvents_Island", Vector3.new(0, 4, 0))
-                _TwPos(-5432, -4165, 4182)
+                _TwPos(Vector3.new(-5432, -4165, 4182))
             end
         else
             if _SpecialVariables.InOniRealm_Islands ~= false then
-                _TwPos(-5432, -4165, 4191)
+                _TwPos(Vector3.new(-5432, -4165, 4191))
             end
         end
     end
