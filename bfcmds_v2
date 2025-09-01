@@ -511,7 +511,9 @@ local EveryCmds_nAlliase, TestTable = {
     ["explorer"] = {"explorer", "dex"},
     ["travelingsea"] = {"travelingsea", "sea", "worlds"},
     ["suggestiontextcolor"] = {"suggestiontextcolor", "stc"},
-    ["settings"] = {"settings", "se", "s"}
+    ["settings"] = {"settings", "se", "s"},
+    ["onirealm"] = {"onirealm", "oni"},
+    ["sellfish"] = {"sellfish", "sf"}
 }, {
     "https://raw.githubusercontent.com/Ancient2k3/Hello/refs/heads/main/Test"
 }
@@ -520,7 +522,7 @@ local _OrderedCommands = {
     "reset", "randomfruit", "test", "tobosses", "serverhop", "maxvision", "autofarmchest", "tweeningspeed", "cmds", "console", "speed", "dash", "spectate", "followto", "loadscript", "melee", "getinventory", "upstat", "jobid", "autofarmnearby", "bringboat",
     "island", "refunds", "race", "raid", "fastattack", "superfastattack", "attackmode", "setfarmevent", "autofarmbosses",
     "pvp", "allhaki", "setheight", "removehrpbodyvelocity", "iyedited", "remotespy",
-    "explorer", "travelingsea", "suggestiontextcolor", "settings"
+    "explorer", "travelingsea", "suggestiontextcolor", "settings", "onirealm", "sellfish"
 }
 
 function EveryCommands()
@@ -539,7 +541,17 @@ function EveryCommands()
         _Notice("Commands", "Character Reseted!", 1, "SendNotification")
     elseif table.find(EveryCmds_nAlliase["test"], Scripts_Cmds[1]) then
         loadstring(game:HttpGet(TestTable[1]))()
+    elseif table.find(EveryCmds_nAlliase["sellfish"], Scripts_Cmds[1]) then
+        _RlS.Modules.Net:FindFirstChild("RF/JobsRemoteFunction"):InvokeServer("FishingNPC", "SellCorruptedFish")
+        _Notice("Commands", "ALL Corrupted Fish has been Converted to Oni Token!", 1, "SendNotification")
+    elseif table.find(EveryCmds_nAlliase["onirealm"], Scripts_Cmds[1]) then
+        _ToPart("MiddleTown_Island", Vector3.new(0, 9, 0))
+        task.wait(0.05)
+        _RlS.Modules.Net:FindFirstChild("RF/OniTempleTransportation"):InvokeServer("InitiateTeleportToTemple")
+        _Notice("Commands", "Teleported to Oni Realm Dimension!", 1, "SendNotification")
     elseif table.find(EveryCmds_nAlliase["randomfruit"], Scripts_Cmds[1]) then
+        _RlS.Remotes.CommF_:InvokeServer("Cousin", "BuyRedHead")
+        _RlS.Remotes.CommF_:InvokeServer("Cousin", "BuySummer")
         _RlS.Remotes.CommF_:InvokeServer("Cousin", "Buy")
         _Notice("Commands", "Randomized Fruits\n >> Successfully Tried <<", 1, "SendNotification")
     elseif table.find(EveryCmds_nAlliase["tweeningspeed"], Scripts_Cmds[1]) then
