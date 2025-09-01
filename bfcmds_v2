@@ -288,7 +288,7 @@ function _ToNearbyMobs()
                 end
             end
         else
-            if _Enemies:IsA("Model") and _Enemies.Name:lower():match("electrified") and _Enemies:FindFirstChild("HumanoidRootPart") then
+            if _Enemies:IsA("Model") and _Enemies:GetAttribute("IsElectrified") == true and _Enemies:FindFirstChild("HumanoidRootPart") then
                 _Range = (_PLR.Character.HumanoidRootPart.Position - _Enemies.HumanoidRootPart.Position).Magnitude
                 
                 if _Range < _Huge and _Range <= _InRange then
