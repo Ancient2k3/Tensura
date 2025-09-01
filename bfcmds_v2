@@ -323,9 +323,16 @@ function _ToNearbyMobs()
             _NearestEnemies.HumanoidRootPart.CFrame = _PLR.Character.HumanoidRootPart.CFrame * CFrame.new(0, 900, 0)
         end
     else
-        if _SpecialVariables.InOniRealm_Islands ~= false then
-            --_ToPart("OniRealmEvents_Island", Vector3.new(0, 4, 0))
-            _TwPos(-5432, -4165, 4182)
+        local _RedCommander = _WS.Map:FindFirstChild("Oni Realm")
+        if _RedCommander and _RedCommander:GetAttribute("Open") ~= true then
+            if _SpecialVariables.InOniRealm_Islands ~= false then
+                --_ToPart("OniRealmEvents_Island", Vector3.new(0, 4, 0))
+                _TwPos(-5432, -4165, 4182)
+            end
+        else
+            if _SpecialVariables.InOniRealm_Islands ~= false then
+                _TwPos(-5432, -4165, 4191)
+            end
         end
     end
 end
@@ -1351,6 +1358,18 @@ end)
 _RS.RenderStepped:Connect(function(deltaTime)
     if _SpecialVariables.Farm_BossesNPC then
         _ToNearbyBoss()
+    end
+end)
+
+_RS.RenderStepped:Connect(function()
+    if _SpecialVariables.Farm_NormalNPC or _SpecialVariables.Farm_BossesNPC then
+        if _PLR.Character and _PLR.Character:FindFirstChild("HumanoidRootPart") then
+            local _WingX = _PLR.Character.HumanoidRootPart:FindFirstChild("Extra_Wings_IX")
+            if not _WingX then
+                _BV("true")
+                _Noclip(true)
+            end
+        end
     end
 end)
 
