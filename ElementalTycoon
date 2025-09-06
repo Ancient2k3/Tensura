@@ -1,9 +1,9 @@
 -- HoangHien_Script: Elementals Tycoon --
 local coreui, starterui, singleone, mainframe, sframe, turretframe, toolframe
 local openui, lockbutton, switchpage
-local creditlb, autoshoot_turret, turretmode, nukeboom, storagetarget, airstrike_mode
+local creditlb, autoshoot_turret, turretmode, nukeboom, storagetarget, airstrike_mode, cashcollector
 local itsHidden, itsLocked, itsPage, itsDefends, switchmode, itOnWorking, current_turretmode, previous_pos, finaln, current_modeairstrike
-local ws, plrs, plr, self_name
+local ws, plrs, plr, self_name, firingpp, _cash
 
 itsHidden = false
 itsLocked = true
@@ -12,6 +12,8 @@ itsDefends = false
 switchmode = 1
 current_turretmode = 1
 current_modeairstrike = 1
+firingpp = fireproximityprompt
+_cash = false
 
 itOnWorking = true
 
@@ -43,6 +45,7 @@ turretmode = Instance.new("TextButton", turretframe)
 nukeboom = Instance.new("TextButton", turretframe)
 storagetarget = Instance.new("TextBox", singleone)
 airstrike_mode = Instance.new("TextButton", turretframe)
+cashcollector = Instance.new("TextButton", turretframe)
 
 singleone.Name = "Elementals_Script"
 
@@ -174,6 +177,16 @@ airstrike_mode.TextColor3 = Color3.new(1, 1, 0)
 airstrike_mode.Font = Enum.Font.Code
 airstrike_mode.Text = "Self"
 airstrike_mode.Visible = true
+
+cashcollector.BackgroundTransparency = 0.8
+cashcollector.BackgroundColor3 = Color3.new(0, 0, 0)
+cashcollector.Position = UDim2.new(0.02, 0, 0.5, 0)
+cashcollector.Size = UDim2.new(0.645, 0, 0.2, 0)
+cashcollector.TextScaled = true
+cashcollector.TextColor3 = Color3.new(1, 1, 1)
+cashcollector.Font = Enum.Font.Code
+cashcollector.Text = "Collect CASH"
+cashcollector.Visible = true
 
 -- Connected function --
 function correct_username(plrs_name)
@@ -487,6 +500,80 @@ function JusticeSky(pr)
     end
 end
 
+function _findcrate()
+    local crate = nil
+    for _, item in pairs(ws:GetChildren()) do
+        if item:IsA("Model") and item.Name == "BalloonCrate" then
+            crate = item:FindFirstChild("Crate")
+            if crate then return crate end
+        end
+    end
+end
+
+function _findchest()
+    local chest = nil
+    for _, item in pairs(ws.Treasure.Chests:GetChildren()) do
+        if item:IsA("Part") and item.Name == "Chest" and item:FindFirstChild("ProximityPrompt") then
+            chest = item
+            if chest then return chest end
+        end
+    end
+end
+
+function _finddollar()
+    local dollar = nil
+    for _, item in pairs(ws.Ignore:GetChildren()) do
+        if item:IsA("Part") and item.Name == "Dollar" then
+            item.Anchored = true
+            item.CanCollide = false
+            item.Transparency = 1
+            return item
+        end
+    end
+end
+
+function _getmoney(textlb)
+    local proximity_1, proximity_2
+    local crpoint, chpoint, dlpoint = 0, 0, 0
+    local player = plr.Character:FindFirstChild("HumanoidRootPart")
+    local originalpos = player.Position
+    local crate, chest, dollar = _findcrate(), _findchest(), _finddollar()
+    if crate then proximity_1 = crate:FindFirstChild("ProximityPrompt")
+        crpoint += 1
+        if crpoint >= 100 then
+            player.CFrame = CFrame.new(crate.Position) task.wait(0.5)
+            firingpp(proximity_1) task.wait(0.1)
+            player.CFrame = CFrame.new(originalpos)
+            textlb.Text = "Collecting: Crate"
+            crpoint = 0
+        end
+    else
+        crpoint = 0
+        if chest then proximity_2 = chest:FindFirstChild("ProximityPrompt")
+            chpoint += 1
+            if chpoint >= 100 then
+                player.CFrame = CFrame.new(chest.Position + Vector3.new(0, 2, 0)) task.wait(0.5)
+                firingpp(proximity_2) task.wait(0.1)
+                player.CFrame = CFrame.new(originalpos)
+                textlb.Text = "Collecting: Chest"
+                chpoint = 0
+            end
+        else
+            chpoint = 0
+            if dollar then dlpoint += 1
+                if dlpoint >= 100 then
+                    dollar.CFrame = CFrame.new(originalpos)
+                    textlb.Text = "Collecting: Dollar"
+                    dlpoint = 0
+                end
+            else
+                crpoint = 0 chpoint = 0 dlpoint = 0
+                textlb.Text = "Collecting: Nothing"
+            end
+        end
+    end
+end
+
 -- Connected button --
 music_mb1c(openui, function()
     if itsHidden then
@@ -606,6 +693,15 @@ end)
 
 music_mb1c(nukeboom, function()
     JusticeSky(ws)
+end)
+
+music_mb1c(cashcollector, function()
+    if not _cash then _cash = true
+        cashcollector.TextColor3 = Color3.new(0, 1, 0)
+    else _cash = false
+        cashcollector.TextColor3 = Color3.new(1, 1, 1) task.wait(0.1)
+        cashcollector.Text = "Collect CASH"
+    end while _cash do wait(0.05) _getmoney(cashcollector) end
 end)
 
 music_fl(storagetarget, enterPressed, function()
