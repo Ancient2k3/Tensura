@@ -1,7 +1,7 @@
 -- Blox Fruits: Commands Scripts Fixed + Changed, HoangHien --
 local _WS, _CG, _RlS, _RS, _TS, _TPS, _StGui, _SGui, _GetFocusedButton, _GetCommands, _GetCorrectedCommands, _SettingsFrame, _SettingsScroll
 local EndPoint, StartPoint, OnFocused_SlideOut, OnFocused_SlideIn, intBGC_All, col1, col2, col3, _IsSpectatingSomeOne
-local _PLRS, _PLR, _Char, _Him, _He, _StoredBoats, _FirstSea, _SecondsSea, _ThirdSea, _ARandomPoint, _HHxScripts, _Worlds
+local _PLRS, _PLR, _Char, _Him, _He, _StoredBoats, _FirstSea, _SecondsSea, _ThirdSea, _ARandomPoint, _HHxScripts, _Worlds, Safe_Pad
 local FA_VariableCheck_0, FA_Toggle, FA_Toggle_II, Cmdbar_ItsOnFocused, _SSCRL_Canvasmain, _ButtonHeight, _ButtonPadding, Its_SettingsUIEnable, numtest, thisisenable, intCLabel_Txc, _alreadyRunIYEdited, _AutoStatus, _CurrentTween, _AutoEnablePvp, _EnablePvpOne, _TweeningSpeed, _FAmode, _BaseHealth, _HalfHealth, _CurrentVersion, _SomeLetter
 local _SpecialVariables = {
     Current_Event = "LightningEvents",
@@ -11,6 +11,9 @@ local _SpecialVariables = {
     Farm_NormalNPC = false,
     Farm_BossesNPC = false,
     OniRealm_CheckDistance = 1500,
+    Is_LowHealth = false,
+    On_SafePAD = false,
+    Safemode_Enabled = true,
     Reset_Seconds = 0
 }
 
@@ -126,6 +129,15 @@ _SettingsScroll.CanvasSize = UDim2.new(0, 0, 0, 0)
 _SettingsScroll.ScrollBarThickness = 0.1
 _SettingsScroll.Visible = true
 
+Safe_Pad = Instance.new("Part")
+Safe_Pad.Size = Vector3.new(5, 0.2, 5)
+Safe_Pad.Color = Color3.fromRGB(0, 255, 0)
+Safe_Pad.Position = Vector3.new(_Him.Position.X, _Him.Position.Y + 10000, _Him.Position.Z)
+Safe_Pad.Anchored = true
+Safe_Pad.Transparency = 0.95
+Safe_Pad.Parent = _WS
+print("[New Update]: Safe PAD Created!")
+
 -- End --
 
 function _MouseButton1Click(Name, Scripts)
@@ -134,6 +146,8 @@ function _MouseButton1Click(Name, Scripts)
     end)
 end
 
+-- Short Func --
+function _ReverseBOOLEAN(boolean) return not boolean end
 function _FocusLost(Name, Var, Scripts)
     Name.FocusLost:Connect(function(Var)
         if Var then
@@ -203,6 +217,23 @@ function _Part(_cframe, _name)
     epoint.Color = Color3.new(0, 1, 1)
     epoint.Transparency = 0.9
     epoint.Name = _name
+end
+
+function _updatepart(l_player, on_part)
+    if l_player.Character and l_player.Character:FindFirstChild("HumanoidRootPart") then
+        local _hrp = l_player.Character:FindFirstChild("HumanoidRootPart")
+        if _hrp then on_part.Position = Vector3.new(_hrp.Position.X, on_part.Position.Y, _hrp.Position.Z)
+            if _SpecialVariables.Is_LowHealth and _hrp.Position.Y < on_part.Position.Y then
+                _SpecialVariables.On_SafePAD = true
+                _hrp.CFrame = CFrame.new(_hrp.Position.X, on_part.Position.Y + 2, _hrp.Position.Z)
+            else
+                if not _SpecialVariables.Is_LowHealth and _SpecialVariables.On_SafePAD then
+                    _SpecialVariables.On_SafePAD = false
+                    _hrp.CFrame = CFrame.new(_hrp.Position.X, _hrp.Position.Y - 10000, _hrp.Position.Z)
+                end
+            end
+        end
+    end
 end
 
 function _Dur(_Start, _End, _SP)
@@ -303,7 +334,7 @@ function _ToNearbyMobs()
     
     if _PLR.Character and _PLR.Character:FindFirstChild("Humanoid") then
         _CurrentPLR_Health = _PLR.Character.Humanoid.Health
-        if _CurrentPLR_Health <= _HalfHealth then
+        if _SpecialVariables.Safemode_Enabled and _CurrentPLR_Health <= _HalfHealth then
             _SafeSpot = Vector3.new(0, 455, 0)
         else
             _SafeSpot = Vector3.new(0, 25, 0)
@@ -372,7 +403,7 @@ function _ToNearbyBoss()
     
     if _PLR.Character and _PLR.Character:FindFirstChild("Humanoid") then
         checkinghealth = _PLR.Character.Humanoid.Health
-        if checkinghealth <= _HalfHealth then
+        if _SpecialVariables.Safemode_Enabled and checkinghealth <= _HalfHealth then
             safeheight = Vector3.new(0, 455, 0)
         else
             safeheight = Vector3.new(0, 25, 0)
@@ -502,7 +533,7 @@ local EveryCmds_nAlliase, TestTable = {
     ["followto"] = {"followto", "flyto"},
     ["loadscript"] = {"loadscript", "ls"},
     ["melee"] = {"melee", "fs"},
-    ["getinventory"] = {"getinventory", "girl"},
+    ["savingdump"] = {"savingdump", "sd"},
     ["upstat"] = {"upstat", "autostat", "as"},
     ["jobid"] = {"jobid", "saveserverjobid"},
     ["autofarmnearby"] = {"autofarmnearby", "afn"},
@@ -527,16 +558,17 @@ local EveryCmds_nAlliase, TestTable = {
     ["suggestiontextcolor"] = {"suggestiontextcolor", "stc"},
     ["settings"] = {"settings", "se", "s"},
     ["onirealm"] = {"onirealm", "oni"},
-    ["sellfish"] = {"sellfish", "sf"}
+    ["sellfish"] = {"sellfish", "sf"},
+    ["togglesafemode"] = {"togglesafemode", "tsm"}
 }, {
     "https://raw.githubusercontent.com/Ancient2k3/Hello/refs/heads/main/Test"
 }
 
 local _OrderedCommands = {
-    "reset", "randomfruit", "test", "tobosses", "serverhop", "maxvision", "autofarmchest", "tweeningspeed", "cmds", "console", "speed", "dash", "spectate", "followto", "loadscript", "melee", "getinventory", "upstat", "jobid", "autofarmnearby", "bringboat",
+    "reset", "randomfruit", "test", "tobosses", "serverhop", "maxvision", "autofarmchest", "tweeningspeed", "cmds", "console", "speed", "dash", "spectate", "followto", "loadscript", "melee", "savingdump", "upstat", "jobid", "autofarmnearby", "bringboat",
     "island", "refunds", "race", "raid", "fastattack", "superfastattack", "attackmode", "setfarmevent", "autofarmbosses",
     "pvp", "allhaki", "setheight", "removehrpbodyvelocity", "iyedited", "remotespy",
-    "explorer", "travelingsea", "suggestiontextcolor", "settings", "onirealm", "sellfish"
+    "explorer", "travelingsea", "suggestiontextcolor", "settings", "onirealm", "sellfish", "togglesafemode"
 }
 
 function EveryCommands()
@@ -558,6 +590,13 @@ function EveryCommands()
     elseif table.find(EveryCmds_nAlliase["sellfish"], Scripts_Cmds[1]) then
         _RlS.Modules.Net:FindFirstChild("RF/JobsRemoteFunction"):InvokeServer("FishingNPC", "SellCorruptedFish")
         _Notice("Commands", "ALL Corrupted Fish has been Converted to Oni Token!", 1, "SendNotification")
+    elseif table.find(EveryCmds_nAlliase["togglesafemode"], Scripts_Cmds[1]) then
+        _ReverseBOOLEAN(_SpecialVariables.Safemode_Enabled)
+        if _SpecialVariables.Safemode_Enabled then
+            _Notice("Commands", "Health safety mode is enabled!", 1, "SendNotification")
+        else
+            _Notice("Commands", "Health safety mode is disabled!", 1, "SendNotification")
+        end
     elseif table.find(EveryCmds_nAlliase["onirealm"], Scripts_Cmds[1]) then
         _ToPart("MiddleTown_Island", Vector3.new(0, 9, 0))
         task.wait(0.05)
@@ -655,7 +694,7 @@ function EveryCommands()
         if _PLRS.LocalPlayer:GetAttribute("KenHaki") ~= true then
             firesignal(_PLRS.LocalPlayer.PlayerGui.MobileContextButtons.ContextButtonFrame.BoundActionKen.Button.MouseButton1Down)
         end
-    elseif table.find(EveryCmds_nAlliase["getinventory"], Scripts_Cmds[1]) then
+    elseif table.find(EveryCmds_nAlliase["savingdump"], Scripts_Cmds[1]) then
         function _checktable(t, time)
             time = time or 0
             local structure = string.rep(" ", time) .. "{\n"
@@ -684,7 +723,8 @@ function EveryCommands()
         local target = game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory")
         
         local structure = _checktable(target, 0)
-        writefile(_PLRS.LocalPlayer.Name .. "_DATA_STRUCTURE.txt", structure)
+        --writefile(_PLRS.LocalPlayer.Name .. "_DATA_STRUCTURE.txt", structure)
+        setclipboard(structure)
         _Notice("Commands", "File saved: " .. _PLRS.LocalPlayer.Name .. "_DATA_STRUCTURE.txt\nCheck your file on device!", 1, "SendNotification")
     elseif table.find(EveryCmds_nAlliase["serverhop"], Scripts_Cmds[1]) then
         _PasteScripts("https://raw.githubusercontent.com/Ancient2k3/Ability/main/ServerHop_Https", function() _Notice("Commands", "SERVER HOPPING IN FEW SECONDS!", 1, "SendNotification") end)
@@ -1338,9 +1378,9 @@ end)
 _RS.RenderStepped:Connect(function()
     if _SpecialVariables.CheckingUpdate ~= false then
         _SpecialVariables.Reset_Seconds += 1
-        if _SpecialVariables.Reset_Seconds >= 240 then _SpecialVariables.Reset_Seconds = 0
+        if _SpecialVariables.Reset_Seconds >= 2400 then _SpecialVariables.Reset_Seconds = 0
             local _NewestVersion = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Status/refs/heads/main/Games/BFCommands_UPD.luau"))()
-            warn("Checked Version: " .. _NewestVersion)
+            print(" [This is Important!] \n [Checking Update]: " .. _NewestVersion)
             if _CurrentVersion < _NewestVersion then
                 _TPS:Teleport(game.PlaceId, _PLR)
                 task.spawn(function() _PLR:Kick("ĐANG UPDATE BẢN CẬP NHẬP SCRIPT MỚI!") end)
@@ -1359,6 +1399,25 @@ _RS.RenderStepped:Connect(function(deltaTime)
     if _SpecialVariables.Farm_BossesNPC then
         _ToNearbyBoss()
     end
+end)
+
+_RS.RenderStepped:Connect(function(deltaTime)
+    if not _SpecialVariables.Farm_NormalNPC and not _SpecialVariables.Farm_BossesNPC and _PLR.Character and _PLR.Character:FindFirstChild("Humanoid") then
+        local _updatedhealth = _PLR.Character.Humanoid.Health
+        if _updatedhealth <= _HalfHealth then
+            if not _SpecialVariables.Is_LowHealth then
+                _SpecialVariables.Is_LowHealth = true
+                print("[SAFE MODE]: You're Getting Low Health!\nCurrent HP: " .. _updatedhealth)
+                _Notice("Safety Mode", "Low Health Detected, Goto SAFE ZONE!\nCurrent HP: " .. _updatedhealth, 1, "SendNotification")
+            end
+        else
+            if _SpecialVariables.Is_LowHealth then
+                _SpecialVariables.Is_LowHealth = false
+                print("[SAFE MODE]: That Better!\nCurrent HP: " .. _updatedhealth)
+                _Notice("Safety Mode", "Health Restored, Back to Surface!\nCurrent HP: " .. _updatedhealth, 1, "SendNotification")
+            end
+        end
+    end _updatepart(_PLR, Safe_Pad)
 end)
 
 _RS.RenderStepped:Connect(function()
