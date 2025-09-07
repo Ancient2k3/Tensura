@@ -1,6 +1,6 @@
 -- Blox Fruits: Commands Scripts Fixed + Changed, HoangHien --
 local _WS, _CG, _RlS, _RS, _TS, _TPS, _StGui, _SGui, _GetFocusedButton, _GetCommands, _GetCorrectedCommands, _SettingsFrame, _SettingsScroll
-local EndPoint, StartPoint, OnFocused_SlideOut, OnFocused_SlideIn, intBGC_All, col1, col2, col3, _IsSpectatingSomeOne
+local EndPoint, StartPoint, OnFocused_SlideOut, OnFocused_SlideIn, intBGC_All, col1, col2, col3, _IsSpectatingSomeOne, RaphaelORB, PlaceHolder, ImageLB, At1, At2, Trail1
 local _PLRS, _PLR, _Char, _Him, _He, _StoredBoats, _FirstSea, _SecondsSea, _ThirdSea, _ARandomPoint, _HHxScripts, _Worlds, Safe_Pad
 local FA_VariableCheck_0, FA_Toggle, FA_Toggle_II, Cmdbar_ItsOnFocused, _SSCRL_Canvasmain, _ButtonHeight, _ButtonPadding, Its_SettingsUIEnable, numtest, thisisenable, intCLabel_Txc, _alreadyRunIYEdited, _AutoStatus, _CurrentTween, _AutoEnablePvp, _EnablePvpOne, _TweeningSpeed, _FAmode, _BaseHealth, _HalfHealth, _CurrentVersion, _SomeLetter
 local _SpecialVariables = {
@@ -14,7 +14,8 @@ local _SpecialVariables = {
     Is_LowHealth = false,
     On_SafePAD = false,
     Safemode_Enabled = true,
-    Reset_Seconds = 0
+    Reset_Seconds = 0,
+    Distance_Between_SPnPLR = 0
 }
 
 _CurrentVersion = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Status/refs/heads/main/Games/BFCommands_UPD.luau"))()
@@ -129,6 +130,48 @@ _SettingsScroll.CanvasSize = UDim2.new(0, 0, 0, 0)
 _SettingsScroll.ScrollBarThickness = 0.1
 _SettingsScroll.Visible = true
 
+RaphaelORB = Instance.new("Part", _WS)
+RaphaelORB.Size = Vector3.new(1.25, 1.25, 1.25)
+RaphaelORB.Color = Color3.fromRGB(255, 255, 0)
+RaphaelORB.Position = Vector3.new(0, 0, 0)
+RaphaelORB.Anchored = true
+RaphaelORB.Name = _PLR.DisplayName .. " Pet"
+RaphaelORB.Material = Enum.Material.Neon
+RaphaelORB.Shape = Enum.PartType.Ball
+RaphaelORB.CanCollide = false
+RaphaelORB.Transparency = 0.85
+print("[Script]: " .. _PLR.DisplayName .. " Pet, has been Created!")
+
+PlaceHolder = Instance.new("BillboardGui", RaphaelORB)
+PlaceHolder.Adornee = RaphaelORB
+PlaceHolder.AlwaysOnTop = true
+PlaceHolder.StudsOffset = Vector3.new(0, 0, 0)
+PlaceHolder.Size = UDim2.new(0, 100, 0, 100)
+
+ImageLB = Instance.new("TextLabel", PlaceHolder)
+ImageLB.BackgroundTransparency = 1
+ImageLB.BackgroundColor3 = Color3.new(1, 1, 1)
+ImageLB.Position = UDim2.new(0, 0, 0, 0)
+ImageLB.Size = UDim2.new(0, 200, 0, 50)
+ImageLB.TextScaled = false
+ImageLB.TextSize = 12
+ImageLB.TextColor3 = Color3.new(1, 0, 1)
+ImageLB.Font = Enum.Font.Arcade
+ImageLB.Text = "[Hi " .. _PLR.DisplayName .. " (Master)]"
+ImageLB.Visible = true
+
+At1 = Instance.new("Attachment", RaphaelORB)
+At2 = Instance.new("Attachment", RaphaelORB)
+At1.Position = Vector3.new(0, 0.5, 0)
+At2.Position = Vector3.new(0, -0.5, 0)
+
+Trail1 = Instance.new("Trail", RaphaelORB)
+Trail1.Attachment0 = At1
+Trail1.Attachment1 = At2
+Trail1.Color = ColorSequence.new(Color3.new(1, 1, 0), Color3.new(1, 1, 1))
+Trail1.Lifetime = 2
+Trail1.Transparency = NumberSequence.new(0, 1)
+
 Safe_Pad = Instance.new("Part")
 Safe_Pad.Size = Vector3.new(5, 0.2, 5)
 Safe_Pad.Color = Color3.fromRGB(0, 255, 0)
@@ -136,7 +179,7 @@ Safe_Pad.Position = Vector3.new(_Him.Position.X, _Him.Position.Y + 10000, _Him.P
 Safe_Pad.Anchored = true
 Safe_Pad.Transparency = 0.95
 Safe_Pad.Parent = _WS
-print("[New Update]: Safe PAD Created!")
+print("[Script]: Safe PAD Created!")
 
 -- End --
 
@@ -225,11 +268,17 @@ function _updatepart(l_player, on_part)
         if _hrp then on_part.Position = Vector3.new(_hrp.Position.X, on_part.Position.Y, _hrp.Position.Z)
             if _SpecialVariables.Is_LowHealth and _hrp.Position.Y < on_part.Position.Y then
                 _SpecialVariables.On_SafePAD = true
+                _SpecialVariables.Distance_Between_SPnPLR = (_hrp.Position - on_part.Position).magnitude or 4500
                 _hrp.CFrame = CFrame.new(_hrp.Position.X, on_part.Position.Y + 2, _hrp.Position.Z)
             else
                 if not _SpecialVariables.Is_LowHealth and _SpecialVariables.On_SafePAD then
                     _SpecialVariables.On_SafePAD = false
-                    _hrp.CFrame = CFrame.new(_hrp.Position.X, _hrp.Position.Y - 10000, _hrp.Position.Z)
+                    _hrp.CFrame = CFrame.new(_hrp.Position.X, _hrp.Position.Y - _SpecialVariables.Distance_Between_SPnPLR, _hrp.Position.Z)
+                else
+                    if _SpecialVariables.Is_LowHealth then
+                        RaphaelORB.CFrame = CFrame.new(_hrp.Position + Vector3.new(0, -_SpecialVariables.Distance_Between_SPnPLR, 0))
+                        ImageLB.Text = "[HP: " .. math.floor(_PLR.Character.Humanoid.Health) .. "]"
+                    end
                 end
             end
         end
@@ -284,6 +333,12 @@ function _Spectating(players_camera)
     else
         print("Not found Humanoid of: " .. players_camera.DisplayName)
     end
+end
+
+function _spectatepath(_path)
+    local cam = _WS.CurrentCamera
+    cam.CameraSubject = _path
+    cam.CFrame = _path.CFrame
 end
 
 function _TwPos(_p)
@@ -591,7 +646,7 @@ function EveryCommands()
         _RlS.Modules.Net:FindFirstChild("RF/JobsRemoteFunction"):InvokeServer("FishingNPC", "SellCorruptedFish")
         _Notice("Commands", "ALL Corrupted Fish has been Converted to Oni Token!", 1, "SendNotification")
     elseif table.find(EveryCmds_nAlliase["togglesafemode"], Scripts_Cmds[1]) then
-        _ReverseBOOLEAN(_SpecialVariables.Safemode_Enabled)
+        _SpecialVariables.Safemode_Enabled = _ReverseBOOLEAN(_SpecialVariables.Safemode_Enabled)
         if _SpecialVariables.Safemode_Enabled then
             _Notice("Commands", "Health safety mode is enabled!", 1, "SendNotification")
         else
@@ -1406,12 +1461,16 @@ _RS.RenderStepped:Connect(function(deltaTime)
         local _updatedhealth = _PLR.Character.Humanoid.Health
         if _updatedhealth <= _HalfHealth then
             if not _SpecialVariables.Is_LowHealth then
+                RaphaelORB.CFrame = CFrame.new(_PLR.Character.HumanoidRootPart.Position)
+                _spectatepath(RaphaelORB)
                 _SpecialVariables.Is_LowHealth = true
                 print("[SAFE MODE]: You're Getting Low Health!\nCurrent HP: " .. _updatedhealth)
                 _Notice("Safety Mode", "Low Health Detected, Goto SAFE ZONE!\nCurrent HP: " .. _updatedhealth, 1, "SendNotification")
             end
         else
             if _SpecialVariables.Is_LowHealth then
+                RaphaelORB.CFrame = CFrame.new(0, 99999, 0)
+                _spectatepath(_PLR.Character.HumanoidRootPart)
                 _SpecialVariables.Is_LowHealth = false
                 print("[SAFE MODE]: That Better!\nCurrent HP: " .. _updatedhealth)
                 _Notice("Safety Mode", "Health Restored, Back to Surface!\nCurrent HP: " .. _updatedhealth, 1, "SendNotification")
