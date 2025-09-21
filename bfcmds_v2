@@ -14,6 +14,7 @@ local _SpecialVariables = {
     Is_LowHealth = false,
     On_SafePAD = false,
     Safemode_Enabled = true,
+    LoadedATF_LvlFunc = false,
     Reset_Seconds = 0,
     Distance_Between_SPnPLR = 0
 }
@@ -560,7 +561,7 @@ function _PasteScripts(url, scripts)
     end
 end
 
-local _InvokeText = {
+local _InvokeText, _DFCost = {
     ["Haki"] = {
         "Geppo", "Buso", "Soru"
     },
@@ -569,6 +570,8 @@ local _InvokeText = {
         "BuyDeathStep", "BuyElectricClaw", "BuySharkmanKarate", "BuyDragonTalon", "BuyGodhuman",
         "BuySaguineArt"
     }
+}, {
+    ["Rocket-Rocket"] = 5000
 }
 
 local EveryCmds_nAlliase, TestTable = {
@@ -592,6 +595,7 @@ local EveryCmds_nAlliase, TestTable = {
     ["upstat"] = {"upstat", "autostat", "as"},
     ["jobid"] = {"jobid", "saveserverjobid"},
     ["autofarmnearby"] = {"autofarmnearby", "afn"},
+    ["autofarmlevels"] = {"autofarmlevels", "afl"},
     ["bringboat"] = {"bringboat", "brboat"},
     ["island"] = {"island", "il"},
     ["refunds"] = {"refunds", "rf"},
@@ -602,12 +606,15 @@ local EveryCmds_nAlliase, TestTable = {
     ["attackmode"] = {"attackmode", "am"},
     ["setfarmevent"] = {"setfarmevent", "sfe"},
     ["autofarmbosses"] = {"autofarmbosses", "afb"},
+    ["buyfruit"] = {"buyfruit", "bf"},
     ["pvp"] = {"pvp", "autoenablepvp"},
     ["allhaki"] = {"allhaki", "ah"},
     ["setheight"] = {"setheight", "sh"},
     ["removehrpbodyvelocity"] = {"removehrpbodyvelocity", "rhrpbv"},
     ["iyedited"] = {"iyedited", "iy"},
     ["remotespy"] = {"remotespy", "rspy"},
+    ["titles"] = {"titles", "ts"},
+    ["awakening"] = {"awakening", "awk"},
     ["explorer"] = {"explorer", "dex"},
     ["travelingsea"] = {"travelingsea", "sea", "worlds"},
     ["suggestiontextcolor"] = {"suggestiontextcolor", "stc"},
@@ -620,9 +627,9 @@ local EveryCmds_nAlliase, TestTable = {
 }
 
 local _OrderedCommands = {
-    "reset", "randomfruit", "test", "tobosses", "serverhop", "maxvision", "autofarmchest", "tweeningspeed", "cmds", "console", "speed", "dash", "spectate", "followto", "loadscript", "melee", "savingdump", "upstat", "jobid", "autofarmnearby", "bringboat",
-    "island", "refunds", "race", "raid", "fastattack", "superfastattack", "attackmode", "setfarmevent", "autofarmbosses",
-    "pvp", "allhaki", "setheight", "removehrpbodyvelocity", "iyedited", "remotespy",
+    "reset", "randomfruit", "test", "tobosses", "serverhop", "maxvision", "autofarmchest", "tweeningspeed", "cmds", "console", "speed", "dash", "spectate", "followto", "loadscript", "melee", "savingdump", "upstat", "jobid", "autofarmnearby", "autofarmlevels", "bringboat",
+    "island", "refunds", "race", "raid", "fastattack", "superfastattack", "attackmode", "setfarmevent", "autofarmbosses", "buyfruit",
+    "pvp", "allhaki", "setheight", "removehrpbodyvelocity", "iyedited", "remotespy", "titles", "awakening",
     "explorer", "travelingsea", "suggestiontextcolor", "settings", "onirealm", "sellfish", "togglesafemode"
 }
 
@@ -645,6 +652,15 @@ function EveryCommands()
     elseif table.find(EveryCmds_nAlliase["sellfish"], Scripts_Cmds[1]) then
         _RlS.Modules.Net:FindFirstChild("RF/JobsRemoteFunction"):InvokeServer("FishingNPC", "SellCorruptedFish")
         _Notice("Commands", "ALL Corrupted Fish has been Converted to Oni Token!", 1, "SendNotification")
+    elseif table.find(EveryCmds_nAlliase["buyfruit"], Scripts_Cmds[1]) then
+        local current_mn, money_lost = _PLR.Data.Beli.Value or 0
+        if Scripts_Cmds[2] then
+            _RlS.Remotes.CommF_:InvokeServer("PurchaseRawFruit", Scripts_Cmds[2], false)
+            money_lost = current_mn - _PLR.Data.Beli.Value or 0
+            _Notice("Commands", "Purchased " .. Scripts_Cmds[2] .. " for " .. money_lost, 1, "SendNotification")
+        else
+            _Notice("Commands", "What fruit do u wanna buy? writing name...", 1, "SendNotification")
+        end
     elseif table.find(EveryCmds_nAlliase["togglesafemode"], Scripts_Cmds[1]) then
         _SpecialVariables.Safemode_Enabled = _ReverseBOOLEAN(_SpecialVariables.Safemode_Enabled)
         if _SpecialVariables.Safemode_Enabled then
@@ -787,6 +803,13 @@ function EveryCommands()
         _GetFightingStyle("CommF_", "Learned Geppo", "BuyHaki", _InvokeText["Haki"][1])
         _GetFightingStyle("CommF_", "Learned Buso", "BuyHaki", _InvokeText["Haki"][2])
         _GetFightingStyle("CommF_", "Learned FlashStep", "BuyHaki", _InvokeText["Haki"][3])
+    elseif table.find(EveryCmds_nAlliase["titles"], Scripts_Cmds[1]) then
+        if not _PLR.PlayerGui.Main.Titles.Visible then _PLR.PlayerGui.Main.Titles.Visible = true else _PLR.PlayerGui.Main.Titles.Visible = false end
+        _Notice("Commands", "Titles UI is now: " .. _PLR.PlayerGui.Main.Titles.Visible, 1, "SendNotification")
+    elseif table.find(EveryCmds_nAlliase["awakening"], Scripts_Cmds[1]) then
+        local awkui = _PLR.PlayerGui.Main.AwakeningToggler
+        if not awkui.Visible then awkui.Visible = true else awkui.Visible = false end
+        _Notice("Commands", "Awakening UI is now: " .. awkui.Visible, 1, "SendNotification")
     elseif table.find(EveryCmds_nAlliase["upstat"], Scripts_Cmds[1]) then
         if Scripts_Cmds[2] == "melee" then
             _AutoStatus += 1
@@ -1030,6 +1053,17 @@ function EveryCommands()
             _BV("true")
             _Noclip(true)
             _Notice("Commands", "Auto Follow Nearby Mobs is Activated!", 1, "SendNotification")
+        end
+    elseif table.find(EveryCmds_nAlliase["autofarmlevels"], Scripts_Cmds[1]) then
+        if not _G._FarmActivated then _G._FarmActivated = true
+            if not _SpecialVariables.LoadedATF_LvlFunc then _SpecialVariables.LoadedATF_LvlFunc = true
+                _PasteScripts("https://raw.githubusercontent.com/Ancient2k3/NewProject/refs/heads/data/atf.luau", function()
+                    _Notice("Commands", "Loaded AutoFarmingLevels Function!", 1, "SendNotification")
+                end)
+            end
+            _Notice("Commands", "Auto Farming Levels is now ON/Activated!", 1, "SendNotification")
+        else _G._FarmActivated = false
+            _Notice("Commands", "Auto Farming Levels is now OFF/Deactivated!", 1, "SendNotification")
         end
     elseif table.find(EveryCmds_nAlliase["autofarmbosses"], Scripts_Cmds[1]) then
         _CT_Cancel()
