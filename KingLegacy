@@ -3840,6 +3840,217 @@ local function Fruits_AbilityFireEvent(N_HRP)
             end
             found = true
         end
+
+        if FruitUsing("RumbleRumble") then
+            if DF_Use_M1 then
+            local args = {
+                [1] = "DF_RumbleRumble_M1",
+                [2] = {
+                    ["Type"] = "Down",
+                    ["MouseHit"] = CFrame.new(N_HRP.Position) * CFrame.Angles(-0, 0, -0)
+                }
+            }
+            
+            game:GetService("ReplicatedStorage").Chest.Remotes.Functions.SkillAction:InvokeServer(unpack(args))
+            
+            wait(0.05)
+            
+            local args = {
+                [1] = "DF_RumbleRumble_M1",
+                [2] = {
+                    ["Type"] = "Up",
+                    ["MouseHit"] = CFrame.new(N_HRP.Position) * CFrame.Angles(-0, 0, -0)
+                }
+            }
+            
+            game:GetService("ReplicatedStorage").Chest.Remotes.Functions.SkillAction:InvokeServer(unpack(args))
+            
+            wait(0.001)
+            end
+            
+            if DF_Use_Z then
+            local args = {
+                [1] = "DF_RumbleRumble_Z",
+                [2] = {
+                    ["Type"] = "Down",
+                    ["MouseHit"] = CFrame.new(N_HRP.Position) * CFrame.Angles(-0, 0, -0)
+                }
+            }
+            
+            game:GetService("ReplicatedStorage").Chest.Remotes.Functions.SkillAction:InvokeServer(unpack(args))
+            
+            wait(0.05)
+            
+            local args = {
+                [1] = "DF_RumbleRumble_Z",
+                [2] = {
+                    ["Type"] = "Up",
+                    ["MouseHit"] = CFrame.new(N_HRP.Position) * CFrame.Angles(-0, 0, -0)
+                }
+            }
+            
+            game:GetService("ReplicatedStorage").Chest.Remotes.Functions.SkillAction:InvokeServer(unpack(args))
+            
+            wait(0.001)
+            end
+            
+            if DF_Use_X then
+            local args = {
+                [1] = "DF_RumbleRumble_X",
+                [2] = {
+                    ["Type"] = "Down",
+                    ["MouseHit"] = CFrame.new(N_HRP.Position) * CFrame.Angles(-0, 0, -0)
+                }
+            }
+            
+            game:GetService("ReplicatedStorage").Chest.Remotes.Functions.SkillAction:InvokeServer(unpack(args))
+            
+            wait(0.05)
+            
+            local args = {
+                [1] = "DF_RumbleRumble_X",
+                [2] = {
+                    ["Type"] = "Up",
+                    ["MouseHit"] = CFrame.new(N_HRP.Position) * CFrame.Angles(-0, 0, -0)
+                }
+            }
+            
+            game:GetService("ReplicatedStorage").Chest.Remotes.Functions.SkillAction:InvokeServer(unpack(args))
+            
+            wait(0.001)
+            end
+            
+            if DF_Use_C then
+            local args = {
+                [1] = "DF_RumbleRumble_C",
+                [2] = {
+                    ["Type"] = "Down",
+                    ["MouseHit"] = CFrame.new(N_HRP.Position) * CFrame.Angles(-0, 0, -0)
+                }
+            }
+            
+            game:GetService("ReplicatedStorage").Chest.Remotes.Functions.SkillAction:InvokeServer(unpack(args))
+            
+            wait(0.05)
+            
+            local args = {
+                [1] = "DF_RumbleRumble_C",
+                [2] = {
+                    ["Type"] = "Up",
+                    ["MouseHit"] = CFrame.new(N_HRP.Position) * CFrame.Angles(-0, 0, -0)
+                }
+            }
+            
+            game:GetService("ReplicatedStorage").Chest.Remotes.Functions.SkillAction:InvokeServer(unpack(args))
+            
+            wait(0.001)
+            end
+            
+            if DF_Use_V then
+            local args = {
+                [1] = "DF_RumbleRumble_V",
+                [2] = {
+                    ["Type"] = "Down",
+                    ["MouseHit"] = CFrame.new(N_HRP.Position) * CFrame.Angles(-0, 0, -0)
+                }
+            }
+            
+            game:GetService("ReplicatedStorage").Chest.Remotes.Functions.SkillAction:InvokeServer(unpack(args))
+            
+            wait(0.05)
+            
+            local args = {
+                [1] = "DF_RumbleRumble_V",
+                [2] = {
+                    ["Type"] = "Up",
+                    ["MouseHit"] = CFrame.new(N_HRP.Position) * CFrame.Angles(-0, 0, -0)
+                }
+            }
+            
+            game:GetService("ReplicatedStorage").Chest.Remotes.Functions.SkillAction:InvokeServer(unpack(args))
+            
+            wait(0.001)
+            end
+            
+            if DF_Use_E then
+            local args = {
+                [1] = "DF_RumbleRumble_E",
+                [2] = {
+                    ["Type"] = "Down",
+                    ["MouseHit"] = CFrame.new(N_HRP.Position) * CFrame.Angles(-0, 0, -0)
+                }
+            }
+            
+            game:GetService("ReplicatedStorage").Chest.Remotes.Functions.SkillAction:InvokeServer(unpack(args))
+            
+            wait(0.05)
+            
+            local args = {
+                [1] = "DF_RumbleRumble_E",
+                [2] = {
+                    ["Type"] = "Up",
+                    ["MouseHit"] = CFrame.new(N_HRP.Position) * CFrame.Angles(-0, 0, -0)
+                }
+            }
+            
+            game:GetService("ReplicatedStorage").Chest.Remotes.Functions.SkillAction:InvokeServer(unpack(args))
+            
+            wait(0.001)
+            end
+            
+            if DF_Use_B then
+            local args = {
+                [1] = "DF_RumbleRumble_B",
+                [2] = {
+                    ["Type"] = "Down",
+                    ["MouseHit"] = CFrame.new(N_HRP.Position) * CFrame.Angles(-0, 0, -0)
+                }
+            }
+            
+            game:GetService("ReplicatedStorage").Chest.Remotes.Functions.SkillAction:InvokeServer(unpack(args))
+            
+            wait(0.05)
+            
+            local args = {
+                [1] = "DF_RumbleRumble_B",
+                [2] = {
+                    ["Type"] = "Up",
+                    ["MouseHit"] = CFrame.new(N_HRP.Position) * CFrame.Angles(-0, 0, -0)
+                }
+            }
+            
+            game:GetService("ReplicatedStorage").Chest.Remotes.Functions.SkillAction:InvokeServer(unpack(args))
+            
+            wait(0.001)
+            end
+            
+            if DF_Use_F then
+            local args = {
+                [1] = "DF_RumbleRumble_F",
+                [2] = {
+                    ["Type"] = "Down",
+                    ["MouseHit"] = CFrame.new(N_HRP.Position) * CFrame.Angles(-0, 0, -0)
+                }
+            }
+            
+            game:GetService("ReplicatedStorage").Chest.Remotes.Functions.SkillAction:InvokeServer(unpack(args))
+            
+            wait(5)
+            
+            local args = {
+                [1] = "DF_RumbleRumble_F",
+                [2] = {
+                    ["Type"] = "Up",
+                    ["MouseHit"] = CFrame.new(N_HRP.Position) * CFrame.Angles(-0, 0, -0)
+                }
+            }
+            
+            game:GetService("ReplicatedStorage").Chest.Remotes.Functions.SkillAction:InvokeServer(unpack(args))
+            
+            wait(0.001)
+            end
+            found = true
+        end
         
         if not found then
             print("Not Found Tools")
