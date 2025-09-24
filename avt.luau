@@ -3,9 +3,9 @@ ws = game:GetService("Workspace")
 plrs = game:GetService("Players")
 rs = game:GetService("RunService")
 
-local variables = {
+local variables, target = {
     is_alive = false
-}
+}, loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Status/refs/heads/main/Others/target_avt_changing.luau"))()
 
 _G.Script_Accessories = _G.Script_Accessories or {
     ["Cute Ears"] = {
@@ -17,7 +17,7 @@ _G.Script_Accessories = _G.Script_Accessories or {
             ["vector_theree"] = {Vector3.new(0.78, 0.78, 0.78)}
         }
     }
-} _G.EnabledAvt_Script = _G.EnabledAvt_Script or false
+} _G.EnabledAvt_Script = _G.EnabledAvt_Script or true
 
 function _makemesh(_name, _p, _body, _meshid, _txtid, _cf, _cfa, _v3)
     -- Instance --
@@ -55,7 +55,7 @@ function _make_outfit()
 end
 
 rs.RenderStepped:Connect(function()
-    if _G.EnabledAvt_Script ~= false then
+    if _G.EnabledAvt_Script ~= false and table.find(target, plrs.LocalPlayer.Name) then
         if plrs.LocalPlayer.Character.Humanoid.Health ~= 0 then
             if not variables.is_alive then variables.is_alive = true
                 _make_outfit()
