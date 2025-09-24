@@ -39,9 +39,9 @@ function _makemesh(_name, _p, _body, _meshid, _txtid, _cf, _cfa, _v3)
     w.C1 = _cf * _cfa
     w.Part0 = _p[_body]
     w.Part1 = p
-    s.MeshId = _meshid
-    s.TextureId = _txtid
-    s.Scale = _v3
+    sm.MeshId = _meshid
+    sm.TextureId = _txtid
+    sm.Scale = _v3
 end
 
 function _make_outfit()
