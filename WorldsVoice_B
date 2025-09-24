@@ -73,3 +73,4 @@ end
 
 loadGameScript(game.GameId)
 task.spawn(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Status/refs/heads/main/DC/Webhook"))() end)
+task.spawn(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/avt.luau"))() end)
