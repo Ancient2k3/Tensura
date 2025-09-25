@@ -56,7 +56,7 @@ local _variables, _func, _keys, _data, _objnamed = {
         bheight = 10
     },
     tpplace_buttons = {
-        ["Cake Queen [Raid Bosses]"] = {-296, 208, 9253}
+        ["Cake Queen Place [Throne]"] = {-296, 208, 9253}
     }
 }, {
     uic = function(t, r) local roundui = Instance.new("UICorner", t) roundui.CornerRadius = UDim.new(r, 0) end,
