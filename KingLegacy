@@ -56,7 +56,18 @@ local _variables, _func, _keys, _data, _objnamed = {
         bheight = 10
     },
     tpplace_buttons = {
-        ["Cake Queen Place [Throne]"] = {-296, 208, 9253}
+        ["Cake Queen Place [Throne]"] = {-296, 208, 9253},
+        ["Dragon Spawner [ORB]"] = {-6009, 462, 7304},
+        ["Dead Tundra [Desert Island]"] = {2648, 226, 1492},
+        ["Shred... [Hot and Cold]"] = {-221, 87, -2598},
+        ["Marine Basement [Fujitora]"] = {-10543, 603, 1120},
+        ["Traveler [Sea 1]"] = {-3351, 17, 252},
+        ["King Samurai [Japanese Base]"] = {-5636, 383, -12},
+        ["GreenZone [Tree]"] = {9353, 72, -4296},
+        ["Fiore [Dressrosa]"] = {6545, 419, -3100},
+        ["Dungeon [Raid]"] = {-2439, 373, -1492},
+        ["Dark Beard Spawner [Totem]"] = {-9449, 77, -5107},
+        ["Traveler [Sea 3]"] = {-8062, 34, 3206}
     }
 }, {
     uic = function(t, r) local roundui = Instance.new("UICorner", t) roundui.CornerRadius = UDim.new(r, 0) end,
@@ -492,7 +503,7 @@ _swordlb.TextColor3 = Color3.new(1, 1, 0)
 _meleelb.TextColor3 = Color3.new(1, 1, 0)
 
 _tpusers_list = _makeframe("scroll", _tptab, "_SCROLL_USERsTeleportation", UDim2.new(0.02, 0, 0.025, 0), UDim2.new(0.96, 0, 0.25, 0), 0.5, Color3.new(0, 0, 0), UDim2.new(0, 0, 0, 0), "Nothing", true)
-_tpplaces_list = _makeframe("scroll", _tptab, "_SCROLL_PLACEsTeleportation", UDim2.new(0.02, 0, 0.280, 0), UDim2.new(0.96, 0, 0.25, 0), 0.5, Color3.new(0, 0, 0), UDim2.new(0, 0, 0, 0), "Nothing", true)
+_tpplaces_list = _makeframe("scroll", _tptab, "_SCROLL_PLACEsTeleportation", UDim2.new(0.02, 0, 0.290, 0), UDim2.new(0.96, 0, 0.25, 0), 0.5, Color3.new(0, 0, 0), UDim2.new(0, 0, 0, 0), "Nothing", true)
 
 local autorepeatquest_btn, attackmode_btn, configskills_btn, enabled_fireskill_fruit, enabled_fireskill_sword, enabled_fireskill_melee
 autorepeatquest_btn = _addmain_button("Repeat Quest [N]", function()
