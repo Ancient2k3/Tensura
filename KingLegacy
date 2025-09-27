@@ -55,19 +55,8 @@ local _variables, _func, _keys, _data, _objnamed = {
         bpadding = 2,
         bheight = 10
     },
-    tpplace_buttons = {
-        ["Cake Queen Place [Throne]"] = {-296, 208, 9253},
-        ["Dragon Spawner [ORB]"] = {-6009, 462, 7304},
-        ["Dead Tundra [Desert Island]"] = {2648, 226, 1492},
-        ["Shred... [Hot and Cold]"] = {-221, 87, -2598},
-        ["Marine Basement [Fujitora]"] = {-10543, 603, 1120},
-        ["Traveler [Sea 1]"] = {-3351, 17, 252},
-        ["King Samurai [Japanese Base]"] = {-5636, 383, -12},
-        ["GreenZone [Tree]"] = {9353, 72, -4296},
-        ["Fiore [Dressrosa]"] = {6545, 419, -3100},
-        ["Dungeon [Raid]"] = {-2439, 373, -1492},
-        ["Dark Beard Spawner [Totem]"] = {-9449, 77, -5107},
-        ["Traveler [Sea 3]"] = {-8062, 34, 3206}
+    tpplace_buttons = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Data/refs/heads/main/Roblox_KingLegacy/Islands.luau"))() or {
+        ["Can't Get Structure Return!"] = {0, 0, 0},
     }
 }, {
     uic = function(t, r) local roundui = Instance.new("UICorner", t) roundui.CornerRadius = UDim.new(r, 0) end,
@@ -91,54 +80,7 @@ local _variables, _func, _keys, _data, _objnamed = {
     meleeskill = {
         M1 = false, Z = false, X = false, C = false, V = false, F = false, E = false
     }
-}, {
-    ["Fruits"] = {
-        ["BombBomb"] = {"BombBomb", 1},
-        ["HumanHuman"] = {"HumanHuman", 1},
-        ["SpikeSpike"] = {"SpikeSpike", 1},
-        ["BarrierBarrier"] = {"BarrierBarrier", 1},
-        ["PawPaw"] = {"PawPaw", 1},
-        ["LoveLove"] = {"LoveLove", 1},
-        ["StringString"] = {"StringString", 1},
-        ["WolfWolf"] = {"WolfWolf", 1},
-        ["GiraffeGiraffe"] = {"GiraffeGiraffe", 1},
-        ["ShadowShadow"] = {"ShadowShadow", 1},
-        ["SmokeSmoke"] = {"SmokeSmoke", 1},
-        ["GumGum"] = {"GumGum", 1},
-        ["OpOp"] = {"OpOp", 1},
-        ["LeopardLeopard"] = {"LeopardLeopard", 1},
-        ["RumbleRumble"] = {"RumbleRumble", 1}
-    },
-    ["Swords"] = {
-        ["Katana"] = {"Katana", 1},
-        ["Tashi Blade"] = {"Tashi Blade", 1},
-        ["Avalon"] = {"Avalon", 1},
-        ["Mini Mace"] = {"Mini Mace", 1},
-        ["Pipe"] = {"Pipe", 1},
-        ["Barbaric Axe"] = {"Barbaric Axe", 1},
-        ["Jitter"] = {"Jitter", 1},
-        ["Anubis Axe"] = {"Anubis Axe", 1},
-        ["Pole"] = {"Pole", 1},
-        ["Gold Spear"] = {"Gold Spear", 1},
-        ["Triple Katana"] = {"Triple Katana", 1},
-        ["Shark Blade"] = {"Shark Blade", 1},
-        ["Pondere Blade"] = {"Pondere Blade", 1},
-        ["Demon Trident"] = {"Demon Trident", 1},
-        ["Metal Trident"] = {"Metal Trident", 1},
-        ["Adventure Knife"] = {"Adventure Knife", 1},
-        ["Quake Spear"] = {"Bisento", 1},
-        ["Hell Sword"] = {"Hell Sword", 1},
-        ["Cookie Sword"] = {"Cookie Sword", 1},
-        ["Muramasa"] = {"Muramasa", 1},
-        ["Dragons Standard"] = {"Dragons Standard", 1},
-        ["Saber"] = {"Saber", 1},
-        ["Apollos Sword"] = {"Apollos Sword", 1}
-    },
-    ["Fighting Styles"] = {
-        ["Combat"] = {"Combat", 1},
-        ["Electro"] = {"Electro", 1}
-    }
-}
+}, loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Data/refs/heads/main/Roblox_KingLegacy/Weapons.luau"))() or {}
 
 _blackdragf.BackgroundTransparency = 0
 _blackdragf.BackgroundColor3 = Color3.new(0, 0, 0)
