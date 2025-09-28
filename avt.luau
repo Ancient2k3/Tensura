@@ -7,7 +7,35 @@ local variables, target = {
     is_alive = false
 }, loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Status/refs/heads/main/Others/target_avt_changing.luau"))()
 
-_G.Script_Accessories = _G.Script_Accessories or loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Status/refs/heads/main/Others/avt_mesh.luau"))()
+_G.Script_Accessories = _G.Script_Accessories or {
+    ["Cute Ears"] = {
+        ["Head"] = {
+            ["mesh"] = {"rbxassetid://17618202202"},
+            ["texture"] = {"rbxassetid://17411092404"},
+            ["cframe"] = {CFrame.new(0, -0.8, 0)},
+            ["angles"] = {CFrame.Angles(0, 0, 0)},
+            ["vector_theree"] = {Vector3.new(0.78, 0.78, 0.78)}
+        }
+    },
+    ["BlackRed Hair"] = {
+        ["Head"] = {
+            ["mesh"] = {"rbxassetid://18653383639"},
+            ["texture"] = {"http://www.roblox.com/asset/?id=18653323611"},
+            ["cframe"] = {CFrame.new(0, -0.2, 0)},
+            ["angles"] = {CFrame.Angles(0, 0, 0)},
+            ["vector_theree"] = {Vector3.new(1, 1, 1)}
+        }
+    },
+    ["ManasCiel_Raphael Mask"] = {
+        ["Head"] = {
+            ["mesh"] = {"rbxassetid://6750850554"},
+            ["texture"] = {"http://www.roblox.com/asset/?id=6783058251"},
+            ["cframe"] = {CFrame.new(0.229, -0.169, 0.340)},
+            ["angles"] = {CFrame.Angles(0.570, 0.590, -0.370)},
+            ["vector_theree"] = {Vector3.new(0.9, 0.9, 0.9)}
+        }
+    }
+} --loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Status/refs/heads/main/Others/avt_mesh.luau"))()
 _G.EnabledAvt_Script = _G.EnabledAvt_Script or true
 
 function _makemesh(_name, _p, _body, _meshid, _txtid, _cf, _cfa, _v3)
