@@ -16,7 +16,8 @@ local _SpecialVariables = {
     Safemode_Enabled = true,
     LoadedATF_LvlFunc = false,
     Reset_Seconds = 0,
-    Distance_Between_SPnPLR = 0
+    Distance_Between_SPnPLR = 0,
+    UpStatTarget = "none"
 }
 
 _CurrentVersion = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Status/refs/heads/main/Games/BFCommands_UPD.luau"))()
@@ -57,7 +58,7 @@ _alreadyRunIYEdited = false
 _AutoEnablePvp = false
 _IsSpectatingSomeOne = false
 _CurrentTween = nil
-_AutoStatus = 0
+_AutoStatus = false
 _FAmode = 1 -- attacking mobs as default
 _EnablePvpOne = 0
 _TweeningSpeed = 250
@@ -641,6 +642,7 @@ local Commands_DataStorage, TestTable = {
     ["autofarmbosses"] = {"autofarmbosses", "afb"},
     ["buyfruit"] = {"buyfruit", "bf"},
     ["pvp"] = {"pvp", "autoenablepvp"},
+    ["exp"] = {"exp", "x2"},
     ["allhaki"] = {"allhaki", "ah"},
     ["setheight"] = {"setheight", "sh"},
     ["removehrpbodyvelocity"] = {"removehrpbodyvelocity", "rhrpbv"},
@@ -663,7 +665,7 @@ local Commands_DataStorage, TestTable = {
 local _OrderedCommands = {
     "reset", "randomfruit", "test", "tobosses", "serverhop", "maxvision", "autofarmchest", "tweeningspeed", "cmds", "console", "speed", "dash", "spectate", "followto", "loadscript", "melee", "savingdump", "upstat", "jobid", "autofarmnearby", "autofarmlevels", "bringboat",
     "island", "refunds", "race", "raid", "fastattack", "superfastattack", "attackmode", "setfarmevent", "autofarmbosses", "buyfruit",
-    "pvp", "allhaki", "setheight", "removehrpbodyvelocity", "iyedited", "remotespy", "titles", "awakening", "fakestat",
+    "pvp", "exp", "allhaki", "setheight", "removehrpbodyvelocity", "iyedited", "remotespy", "titles", "awakening", "fakestat",
     "explorer", "travelingsea", "suggestiontextcolor", "settings", "onirealm", "sellfish", "togglesafemode"
 }
 
@@ -683,6 +685,8 @@ function EveryCommands()
         _Notice("Commands", "Character Reseted!", 1, "SendNotification")
     elseif table.find(Commands_DataStorage["test"], DE_WorldVoice[1]) then
         loadstring(game:HttpGet(TestTable[1]))()
+    elseif table.find(Commands_DataStorage["exp"], DE_WorldVoice[1]) then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/HoangHienXScripts/Scripts/refs/heads/chocolate/BloxFruits/AutoRedeemCodes_BF.luau"))()
     elseif table.find(Commands_DataStorage["sellfish"], DE_WorldVoice[1]) then
         _RlS.Modules.Net:FindFirstChild("RF/JobsRemoteFunction"):InvokeServer("FishingNPC", "SellCorruptedFish")
         _Notice("Commands", "ALL Corrupted Fish has been Converted to Oni Token!", 1, "SendNotification")
@@ -851,21 +855,14 @@ function EveryCommands()
         if not awkui.Visible then awkui.Visible = true else awkui.Visible = false end
         _Notice("Commands", "Awakening UI is now: " .. awkui.Visible, 1, "SendNotification")
     elseif table.find(Commands_DataStorage["upstat"], DE_WorldVoice[1]) then
-        if DE_WorldVoice[2] == "melee" then
-            _AutoStatus += 1
-            print("_AutoStatus: " .. tonumber(_AutoStatus))
-            if _AutoStatus >= 6 then
-                _AutoStatus = 0
-                _Notice("First Check", "Automatically Upgrading Stat is Deactivated!", 1, "SendNotification")
-                if not _AutoStatus == 0 then
-                    _AutoStatus = 0
-                    _Notice("Seconds Check", "Deactivated Fixes...", 1, "SendNotification")
-                else
-                    _Notice("Seconds Check", "Completely Deactivated!", 1, "SendNotification")
-                end
-            elseif _AutoStatus == 1 then
-                _Notice("Commands", "Automatically Upgrading Status: Melee/Punch Plus 1.", 1, "SendNotification")
+        if DE_WorldVoice[2] and DE_WorldVoice[3] then
+            if DE_WorldVoice[2] == "fs" or DE_WorldVoice[2] == "ml" then
+                _AutoStatus = DE_WorldVoice[3] or false
+                _SpecialVariables.UpStatTarget = "Melee"
             end
+        else
+            print(DE_WorldVoice[1] .. " [fs, ml/df, sh/sw, bl/pt, de/df, bf] [boolean]")
+            _Notice("Commands", "Open Developer Console!", 1, "DevConsoleVisible")
         end
     elseif table.find(Commands_DataStorage["jobid"], DE_WorldVoice[1]) then
         _Clipboard(game.JobId)
@@ -1489,8 +1486,11 @@ _RS.RenderStepped:Connect(function(deltaTime)
 end)
 
 _RS.RenderStepped:Connect(function()
-    if _AutoStatus == 1 then
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint", "Melee", 1)
+    if _AutoStatus ~= false then
+        local current_points = tonumber(_PLR.Data.Points)
+        if current_points ~= 0 then
+            _RlS.Remotes.CommF_:InvokeServer("AddPoint", _SpecialVariables.UpStatTarget, current_points)
+        end
     end
 end)
 
