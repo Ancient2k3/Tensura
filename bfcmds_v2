@@ -562,8 +562,18 @@ function _PasteScripts(url, scripts)
 end
 
 local fakestat_table = {
-    level = {"level", "lvl", "lv"}
+    level = {"level", "lvl", "lv"},
+    beli = {"beli", "money", "cash", "beri"},
+    hidden = {"hidden", "getposition"}
 }
+
+function makeround_number(num, decimals)
+    if decimals <= 0 then
+        return math.floor(num)
+    end
+    local factor = 10 ^ decimals
+    return math.floor(num * factor) / factor
+end
 
 function _FakeStatus(stat_name, stat_value)
     if table.find(fakestat_table.level, stat_name:lower()) then
@@ -572,6 +582,14 @@ function _FakeStatus(stat_name, stat_value)
     elseif table.find(fakestat_table.beli, stat_name:lower()) then
         _PLR.Data.Beli.Value = tonumber(stat_value)
         _Notice("Commands", "Beli changed to: " .. tostring(stat_value) .. " (visual)", 1, "SendNotification")
+    elseif table.find(fakestat_table.hidden, stat_name:lower()) then
+        local pos_x, pos_y, pos_z, full_pos
+        pos_x = makeround_number(_PLR.Character.HumanoidRootPart.Position.X)
+        pos_y = makeround_number(_PLR.Character.HumanoidRootPart.Position.Y)
+        pos_z = makeround_number(_PLR.Character.HumanoidRootPart.Position.Z)
+        full_pos = pos_x .. ", " .. pos_y .. ", " .. pos_z
+        _Notice("Copied Position", "XYZ: " .. full_pos, 1, "SendNotification")
+        setclipboard(full_pos)
     else _Notice("Commands", "Invalidate status named!", 1, "SendNotification")
     end
 end
