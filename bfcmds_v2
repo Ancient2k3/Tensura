@@ -561,6 +561,20 @@ function _PasteScripts(url, scripts)
     end
 end
 
+local fakestat_table = {
+    level = {"level", "lvl", "lv"}
+}
+
+function _FakeStatus(stat_name, stat_value)
+    if table.find(fakestat_table.level, stat_name:lower()) then
+        if type(stat_value) == "number" then
+            _PLR.Data.Level.Value = tonumber(stat_value)
+            _Notice("Commands", "Level changed to: " .. tostring(stat_value) .. " (visual)")
+        else _Notice("Commands", "Invalid type, argument 3 not a number!", 1, "SendNotification")
+        end
+    end
+end
+
 local _InvokeText, _DFCost = {
     ["Haki"] = {
         "Geppo", "Buso", "Soru"
@@ -574,7 +588,7 @@ local _InvokeText, _DFCost = {
     ["Rocket-Rocket"] = 5000
 }
 
-local EveryCmds_nAlliase, TestTable = {
+local Commands_DataStorage, TestTable = {
     ["reset"] = {"reset", "re"},
     ["randomfruit"] = {"randomfruit", "fruit"},
     ["test"] = {"test", "te"},
@@ -615,6 +629,7 @@ local EveryCmds_nAlliase, TestTable = {
     ["remotespy"] = {"remotespy", "rspy"},
     ["titles"] = {"titles", "ts"},
     ["awakening"] = {"awakening", "awk"},
+    ["fakestat"] = {"fakestat", "fks"},
     ["explorer"] = {"explorer", "dex"},
     ["travelingsea"] = {"travelingsea", "sea", "worlds"},
     ["suggestiontextcolor"] = {"suggestiontextcolor", "stc"},
@@ -629,78 +644,84 @@ local EveryCmds_nAlliase, TestTable = {
 local _OrderedCommands = {
     "reset", "randomfruit", "test", "tobosses", "serverhop", "maxvision", "autofarmchest", "tweeningspeed", "cmds", "console", "speed", "dash", "spectate", "followto", "loadscript", "melee", "savingdump", "upstat", "jobid", "autofarmnearby", "autofarmlevels", "bringboat",
     "island", "refunds", "race", "raid", "fastattack", "superfastattack", "attackmode", "setfarmevent", "autofarmbosses", "buyfruit",
-    "pvp", "allhaki", "setheight", "removehrpbodyvelocity", "iyedited", "remotespy", "titles", "awakening",
+    "pvp", "allhaki", "setheight", "removehrpbodyvelocity", "iyedited", "remotespy", "titles", "awakening", "fakestat",
     "explorer", "travelingsea", "suggestiontextcolor", "settings", "onirealm", "sellfish", "togglesafemode"
 }
 
 function EveryCommands()
     local GetWords = _GetCommands.Text
-    local Scripts_Cmds = {}
+    local DE_WorldVoice = {}
     
     for wis in string.gmatch(GetWords, "%S+") do
-        table.insert(Scripts_Cmds, wis)
+        table.insert(DE_WorldVoice, wis)
     end
     
-    if table.find(EveryCmds_nAlliase["reset"], Scripts_Cmds[1]) then
+    if table.find(Commands_DataStorage["reset"], DE_WorldVoice[1]) then
         -- _He:ChangeState(Enum.HumanoidStateType.Dead)
         if _PLR.Character and _PLR.Character:FindFirstChild("Humanoid") then
             _PLR.Character.Humanoid.Health = 0
         end
         _Notice("Commands", "Character Reseted!", 1, "SendNotification")
-    elseif table.find(EveryCmds_nAlliase["test"], Scripts_Cmds[1]) then
+    elseif table.find(Commands_DataStorage["test"], DE_WorldVoice[1]) then
         loadstring(game:HttpGet(TestTable[1]))()
-    elseif table.find(EveryCmds_nAlliase["sellfish"], Scripts_Cmds[1]) then
+    elseif table.find(Commands_DataStorage["sellfish"], DE_WorldVoice[1]) then
         _RlS.Modules.Net:FindFirstChild("RF/JobsRemoteFunction"):InvokeServer("FishingNPC", "SellCorruptedFish")
         _Notice("Commands", "ALL Corrupted Fish has been Converted to Oni Token!", 1, "SendNotification")
-    elseif table.find(EveryCmds_nAlliase["buyfruit"], Scripts_Cmds[1]) then
+    elseif table.find(Commands_DataStorage["buyfruit"], DE_WorldVoice[1]) then
         local current_mn, money_lost = _PLR.Data.Beli.Value or 0
-        if Scripts_Cmds[2] then
-            _RlS.Remotes.CommF_:InvokeServer("PurchaseRawFruit", Scripts_Cmds[2], false)
+        if DE_WorldVoice[2] then
+            _RlS.Remotes.CommF_:InvokeServer("PurchaseRawFruit", DE_WorldVoice[2], false)
             money_lost = current_mn - _PLR.Data.Beli.Value or 0
-            _Notice("Commands", "Purchased " .. Scripts_Cmds[2] .. " for " .. money_lost, 1, "SendNotification")
+            _Notice("Commands", "Purchased " .. DE_WorldVoice[2] .. " for " .. money_lost, 1, "SendNotification")
         else
             _Notice("Commands", "What fruit do u wanna buy? writing name...", 1, "SendNotification")
         end
-    elseif table.find(EveryCmds_nAlliase["togglesafemode"], Scripts_Cmds[1]) then
+    elseif table.find(Commands_DataStorage["togglesafemode"], DE_WorldVoice[1]) then
         _SpecialVariables.Safemode_Enabled = _ReverseBOOLEAN(_SpecialVariables.Safemode_Enabled)
         if _SpecialVariables.Safemode_Enabled then
             _Notice("Commands", "Health safety mode is enabled!", 1, "SendNotification")
         else
             _Notice("Commands", "Health safety mode is disabled!", 1, "SendNotification")
         end
-    elseif table.find(EveryCmds_nAlliase["onirealm"], Scripts_Cmds[1]) then
+    elseif table.find(Commands_DataStorage["fakestat"], DE_WorldVoice[1]) then
+        if DE_WorldVoice[2] and DE_WorldVoice[3] then
+            _FakeStatus(DE_WorldVoice[2], DE_WorldVoice[3])
+        else
+            _Notice("Commands", "Missing Type or Value to do fake status!", 1, "SendNotification")
+        end
+    elseif table.find(Commands_DataStorage["onirealm"], DE_WorldVoice[1]) then
         _ToPart("MiddleTown_Island", Vector3.new(0, 9, 0))
         task.wait(0.05)
         _RlS.Modules.Net:FindFirstChild("RF/OniTempleTransportation"):InvokeServer("InitiateTeleportToTemple")
         _Notice("Commands", "Teleported to Oni Realm Dimension!", 1, "SendNotification")
-    elseif table.find(EveryCmds_nAlliase["randomfruit"], Scripts_Cmds[1]) then
+    elseif table.find(Commands_DataStorage["randomfruit"], DE_WorldVoice[1]) then
         _RlS.Remotes.CommF_:InvokeServer("Cousin", "BuyRedHead")
         _RlS.Remotes.CommF_:InvokeServer("Cousin", "BuySummer")
         _RlS.Remotes.CommF_:InvokeServer("Cousin", "Buy")
         _Notice("Commands", "Randomized Fruits\n >> Successfully Tried <<", 1, "SendNotification")
-    elseif table.find(EveryCmds_nAlliase["tweeningspeed"], Scripts_Cmds[1]) then
-        if Scripts_Cmds[2] ~= "" or Scripts_Cmds[2] ~= nil then
+    elseif table.find(Commands_DataStorage["tweeningspeed"], DE_WorldVoice[1]) then
+        if DE_WorldVoice[2] ~= "" or DE_WorldVoice[2] ~= nil then
             --_Notice("Commands", "Tweening Speed Unchanged!", 1, "SendNotification")
         --else
-            local new_TweeningSpeedValue = tonumber(Scripts_Cmds[2])
+            local new_TweeningSpeedValue = tonumber(DE_WorldVoice[2])
             _TweeningSpeed = new_TweeningSpeedValue
             _Notice("Commands", "Tweening Speed Changed to " .. _TweeningSpeed, 1, "SendNotification")
         end
-    elseif table.find(EveryCmds_nAlliase["spectate"], Scripts_Cmds[1]) then
+    elseif table.find(Commands_DataStorage["spectate"], DE_WorldVoice[1]) then
         if not _IsSpectatingSomeOne then
             _IsSpectatingSomeOne = true
-            if Scripts_Cmds[2] then _Spectating(_AutoCorrectName(Scripts_Cmds[2])) else _Notice("Commands", "argument 2 must be a player name!", 1, "SendNotification") end
+            if DE_WorldVoice[2] then _Spectating(_AutoCorrectName(DE_WorldVoice[2])) else _Notice("Commands", "argument 2 must be a player name!", 1, "SendNotification") end
         else
             _IsSpectatingSomeOne = false
             local _SpectatingBackToSelf = _PLRS.LocalPlayer.Name
             _Spectating(_SpectatingBackToSelf)
         end
-    elseif table.find(EveryCmds_nAlliase["followto"], Scripts_Cmds[1]) then
-        if Scripts_Cmds[2] then
-            _TwPos(_ReturnPlayerPos(_AutoCorrectName(Scripts_Cmds[2]).Name))
-            _Notice("Commands", "Currently Following to: " .. _AutoCorrectName(Scripts_Cmds[2]).Name, 1, "SendNotification")
+    elseif table.find(Commands_DataStorage["followto"], DE_WorldVoice[1]) then
+        if DE_WorldVoice[2] then
+            _TwPos(_ReturnPlayerPos(_AutoCorrectName(DE_WorldVoice[2]).Name))
+            _Notice("Commands", "Currently Following to: " .. _AutoCorrectName(DE_WorldVoice[2]).Name, 1, "SendNotification")
         end
-    elseif table.find(EveryCmds_nAlliase["iyedited"], Scripts_Cmds[1]) then
+    elseif table.find(Commands_DataStorage["iyedited"], DE_WorldVoice[1]) then
         if not _alreadyRunIYEdited then
             _alreadyRunIYEdited = true
             local success, result = pcall(function()
@@ -714,38 +735,38 @@ function EveryCommands()
         else
             _Notice("Commands", "This command should be only used one time...", 1, "SendNotification")
         end
-    elseif table.find(EveryCmds_nAlliase["cmds"], Scripts_Cmds[1]) then
+    elseif table.find(Commands_DataStorage["cmds"], DE_WorldVoice[1]) then
         for i, key in ipairs(_OrderedCommands) do
-            local aliases = EveryCmds_nAlliase[key]
+            local aliases = Commands_DataStorage[key]
             print("Command[" .. i .. "]: " .. key .. " <+> Aliases: " .. table.concat(aliases, ", "))
         end
         _Notice("nah", "nothing here", 1, "DevConsoleVisible")
-    elseif table.find(EveryCmds_nAlliase["remotespy"], Scripts_Cmds[1]) then
+    elseif table.find(Commands_DataStorage["remotespy"], DE_WorldVoice[1]) then
         _PasteScripts("https://raw.githubusercontent.com/NganHa2k3/RobloxScript/refs/heads/item/Remote_Spy_For_Mobile", function()
             _Notice("Commands", "Successfully loaded!", 1, "SendNotification")
         end)
         --print("Nothing for now!")
         --_Notice("Nah", "Nothing for now!", 1, "DevConsoleVisible")
-    elseif table.find(EveryCmds_nAlliase["explorer"], Scripts_Cmds[1]) then
+    elseif table.find(Commands_DataStorage["explorer"], DE_WorldVoice[1]) then
         _PasteScripts("https://raw.githubusercontent.com/NganHa2k3/RobloxScript/refs/heads/item/Dex_Explorer_For_Mobile", function()
             _Notice("Commands", "Successfully loaded!", 1, "SendNotification")
         end)
         --print("Nothing for now!")
         --_Notice("Nah", "Nothing for now!", 1, "DevConsoleVisible")
-    elseif table.find(EveryCmds_nAlliase["raid"], Scripts_Cmds[1]) then
+    elseif table.find(Commands_DataStorage["raid"], DE_WorldVoice[1]) then
         if _FirstSea then _Notice("Commands", "Can't doing RAID at first sea\nso let me just buy it for fun if u had enough money or level...", 1, "SendNotification")
-            _RlS.Remotes.CommF_:InvokeServer("RaidsNpc", "Select", Scripts_Cmds[2])
-        elseif _SecondsSea then _Notice("Commands", "Starting RAID: " .. Scripts_Cmds[2] .. "...", 1, "SendNotification")
-            _RlS.Remotes.CommF_:InvokeServer("RaidsNpc", "Select", Scripts_Cmds[2])
+            _RlS.Remotes.CommF_:InvokeServer("RaidsNpc", "Select", DE_WorldVoice[2])
+        elseif _SecondsSea then _Notice("Commands", "Starting RAID: " .. DE_WorldVoice[2] .. "...", 1, "SendNotification")
+            _RlS.Remotes.CommF_:InvokeServer("RaidsNpc", "Select", DE_WorldVoice[2])
             task.wait(0.05)
             fireclickdetector(_WS.Map.CircleIsland.RaidSummon2.Button.Main.ClickDetector)
-        elseif _ThirdSea then _Notice("Commands", "Starting RAID: " .. Scripts_Cmds[2] .. "...", 1, "SendNotification")
-            _RlS.Remotes.CommF_:InvokeServer("RaidsNpc", "Select", Scripts_Cmds[2])
+        elseif _ThirdSea then _Notice("Commands", "Starting RAID: " .. DE_WorldVoice[2] .. "...", 1, "SendNotification")
+            _RlS.Remotes.CommF_:InvokeServer("RaidsNpc", "Select", DE_WorldVoice[2])
             task.wait(0.05)
             warn("Current has nothing here...")
         end
-    elseif table.find(EveryCmds_nAlliase["setfarmevent"], Scripts_Cmds[1]) then
-        if Scripts_Cmds[2] == "lightning" and _SpecialVariables.Current_Event == "LightningEvents" then
+    elseif table.find(Commands_DataStorage["setfarmevent"], DE_WorldVoice[1]) then
+        if DE_WorldVoice[2] == "lightning" and _SpecialVariables.Current_Event == "LightningEvents" then
             if not _SpecialVariables.Farm_LightningEvent then
                 _SpecialVariables.Farm_LightningEvent = true
                 _Notice("Commands", "Auto Farm Lightning NPC, Activated/On", 1, "SendNotification")
@@ -753,19 +774,19 @@ function EveryCommands()
                 _SpecialVariables.Farm_LightningEvent = false
                 _Notice("Commands", "Auto Farm Lightning NPC, Deactivated/Off", 1, "SendNotification")
             end
-        elseif Scripts_Cmds[2] == nil or Scripts_Cmds[2] == "" and _SpecialVariables.Current_Event == "" then
+        elseif DE_WorldVoice[2] == nil or DE_WorldVoice[2] == "" and _SpecialVariables.Current_Event == "" then
             _Notice("Commands", "Currently has no event activited!", 1, "SendNotification")
         end
-    elseif table.find(EveryCmds_nAlliase["console"], Scripts_Cmds[1]) then
+    elseif table.find(Commands_DataStorage["console"], DE_WorldVoice[1]) then
         _Notice("nothing", "nothing", 1, "DevConsoleVisible")
         _Notice("Commands", "Developer Console Opened!", 1, "SendNotification")
-    elseif table.find(EveryCmds_nAlliase["maxvision"], Scripts_Cmds[1]) then
+    elseif table.find(Commands_DataStorage["maxvision"], DE_WorldVoice[1]) then
         _Notice("Commands", "Observation Haki Vision Radius Has Increase to MAX LEVEL", 1, "SendNotification")
         _PLRS.LocalPlayer.VisionRadius.Value = 90000
         if _PLRS.LocalPlayer:GetAttribute("KenHaki") ~= true then
             firesignal(_PLRS.LocalPlayer.PlayerGui.MobileContextButtons.ContextButtonFrame.BoundActionKen.Button.MouseButton1Down)
         end
-    elseif table.find(EveryCmds_nAlliase["savingdump"], Scripts_Cmds[1]) then
+    elseif table.find(Commands_DataStorage["savingdump"], DE_WorldVoice[1]) then
         function _checktable(t, time)
             time = time or 0
             local structure = string.rep(" ", time) .. "{\n"
@@ -797,21 +818,21 @@ function EveryCommands()
         --writefile(_PLRS.LocalPlayer.Name .. "_DATA_STRUCTURE.txt", structure)
         setclipboard(structure)
         _Notice("Commands", "File saved: " .. _PLRS.LocalPlayer.Name .. "_DATA_STRUCTURE.txt\nCheck your file on device!", 1, "SendNotification")
-    elseif table.find(EveryCmds_nAlliase["serverhop"], Scripts_Cmds[1]) then
+    elseif table.find(Commands_DataStorage["serverhop"], DE_WorldVoice[1]) then
         _PasteScripts("https://raw.githubusercontent.com/Ancient2k3/Ability/main/ServerHop_Https", function() _Notice("Commands", "SERVER HOPPING IN FEW SECONDS!", 1, "SendNotification") end)
-    elseif table.find(EveryCmds_nAlliase["allhaki"], Scripts_Cmds[1]) then
+    elseif table.find(Commands_DataStorage["allhaki"], DE_WorldVoice[1]) then
         _GetFightingStyle("CommF_", "Learned Geppo", "BuyHaki", _InvokeText["Haki"][1])
         _GetFightingStyle("CommF_", "Learned Buso", "BuyHaki", _InvokeText["Haki"][2])
         _GetFightingStyle("CommF_", "Learned FlashStep", "BuyHaki", _InvokeText["Haki"][3])
-    elseif table.find(EveryCmds_nAlliase["titles"], Scripts_Cmds[1]) then
+    elseif table.find(Commands_DataStorage["titles"], DE_WorldVoice[1]) then
         if not _PLR.PlayerGui.Main.Titles.Visible then _PLR.PlayerGui.Main.Titles.Visible = true else _PLR.PlayerGui.Main.Titles.Visible = false end
         _Notice("Commands", "Titles UI is now: " .. _PLR.PlayerGui.Main.Titles.Visible, 1, "SendNotification")
-    elseif table.find(EveryCmds_nAlliase["awakening"], Scripts_Cmds[1]) then
+    elseif table.find(Commands_DataStorage["awakening"], DE_WorldVoice[1]) then
         local awkui = _PLR.PlayerGui.Main.AwakeningToggler
         if not awkui.Visible then awkui.Visible = true else awkui.Visible = false end
         _Notice("Commands", "Awakening UI is now: " .. awkui.Visible, 1, "SendNotification")
-    elseif table.find(EveryCmds_nAlliase["upstat"], Scripts_Cmds[1]) then
-        if Scripts_Cmds[2] == "melee" then
+    elseif table.find(Commands_DataStorage["upstat"], DE_WorldVoice[1]) then
+        if DE_WorldVoice[2] == "melee" then
             _AutoStatus += 1
             print("_AutoStatus: " .. tonumber(_AutoStatus))
             if _AutoStatus >= 6 then
@@ -827,26 +848,26 @@ function EveryCommands()
                 _Notice("Commands", "Automatically Upgrading Status: Melee/Punch Plus 1.", 1, "SendNotification")
             end
         end
-    elseif table.find(EveryCmds_nAlliase["jobid"], Scripts_Cmds[1]) then
+    elseif table.find(Commands_DataStorage["jobid"], DE_WorldVoice[1]) then
         _Clipboard(game.JobId)
         _Notice("Commands", "JobId: " .. game.JobId .. "\n -- Server JobId Saved --", 1, "SendNotification")
-    elseif table.find(EveryCmds_nAlliase["autofarmchest"], Scripts_Cmds[1]) then
+    elseif table.find(Commands_DataStorage["autofarmchest"], DE_WorldVoice[1]) then
         _PasteScripts("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/BloxFruits_Update_Dragon_ChestFarm_V001", function() print("-- Running Auto Farming Chest --") end)
-    elseif table.find(EveryCmds_nAlliase["loadscript"], Scripts_Cmds[1]) then
-        if typeof(Scripts_Cmds[2]) == "string" or type(Scripts_Cmds[2]) == "string" then
-            if Scripts_Cmds[2] == "redz" then loadstring(game:HttpGet("https://raw.githubusercontent.com/tlredz/Scripts/refs/heads/main/main.luau"))() else _Notice("Commands", "Not Exist This Script Named " .. Scripts_Cmds[2], 1, "SendNotification") end
-        elseif typeof(Scripts_Cmds[2]) == "number" or type(Scripts_Cmds[2]) == "number" then _Notice("Commands", "I'm currently... dumb!", 1, "SendNotification")
+    elseif table.find(Commands_DataStorage["loadscript"], DE_WorldVoice[1]) then
+        if typeof(DE_WorldVoice[2]) == "string" or type(DE_WorldVoice[2]) == "string" then
+            if DE_WorldVoice[2] == "redz" then loadstring(game:HttpGet("https://raw.githubusercontent.com/tlredz/Scripts/refs/heads/main/main.luau"))() else _Notice("Commands", "Not Exist This Script Named " .. DE_WorldVoice[2], 1, "SendNotification") end
+        elseif typeof(DE_WorldVoice[2]) == "number" or type(DE_WorldVoice[2]) == "number" then _Notice("Commands", "I'm currently... dumb!", 1, "SendNotification")
         else _Notice("Commands", "Invalid ARGS_2, Type Name!", 1, "SendNotification") end
-    elseif table.find(EveryCmds_nAlliase["bringboat"], Scripts_Cmds[1]) then
+    elseif table.find(Commands_DataStorage["bringboat"], DE_WorldVoice[1]) then
         --local boat = _ReturnOwnerBoatIs(_StoredBoats)
         --if not boat then
         --    _Notice("Commands", "No boat found to teleport!", 1, "SendNotification")
         --    return
         --end
         print("-- Running 'bringboat' Command! --")
-        if Scripts_Cmds[2] == "?" then
+        if DE_WorldVoice[2] == "?" then
             _Notice("Commands", "Usage: bringboat self | bringboat <player> | bringboat x y z | bringboat seadanger5to6 (Third Sea only)", 1, "SendNotification")
-        elseif Scripts_Cmds[2] == "self" then
+        elseif DE_WorldVoice[2] == "self" then
             if _PLR.Character and _PLR.Character:FindFirstChild("HumanoidRootPart") then
                 local myPosition = _PLR.Character.HumanoidRootPart.Position
                 print(_PLR.DisplayName .. " Position at: " .. tostring(myPosition))
@@ -858,7 +879,7 @@ function EveryCommands()
             else
                 _Notice("Commands", "Your character is not loaded!", 1, "SendNotification")
             end
-        elseif Scripts_Cmds[2] == "danger_5" then
+        elseif DE_WorldVoice[2] == "danger_5" then
             if _ThirdSea then
                 local defaultPos = Vector3.new(-42611, 0, 510)
                 if _TpBoat_ToPos(defaultPos) then
@@ -869,8 +890,8 @@ function EveryCommands()
             else
                 _Notice("Commands", "The 'danger_5' option is only available in Third Sea!", 1, "SendNotification")
             end
-        elseif tonumber(Scripts_Cmds[2]) and tonumber(Scripts_Cmds[3]) and tonumber(Scripts_Cmds[4]) then
-            local x, y, z = tonumber(Scripts_Cmds[2]), tonumber(Scripts_Cmds[3]), tonumber(Scripts_Cmds[4])
+        elseif tonumber(DE_WorldVoice[2]) and tonumber(DE_WorldVoice[3]) and tonumber(DE_WorldVoice[4]) then
+            local x, y, z = tonumber(DE_WorldVoice[2]), tonumber(DE_WorldVoice[3]), tonumber(DE_WorldVoice[4])
             local targetPos = Vector3.new(x, y, z)
             if _TpBoat_ToPos(targetPos) then
                 _Notice("Commands", "Boat teleported to position: " .. x .. ", " .. y .. ", " .. z, 1, "SendNotification")
@@ -878,10 +899,10 @@ function EveryCommands()
                 _Notice("Commands", "Failed to teleport boat to position: " .. x .. ", " .. y .. ", " .. z, 1, "SendNotification")
             end
         else
-            -- Check if Scripts_Cmds[2] is a player name --
+            -- Check if DE_WorldVoice[2] is a player name --
             local targetPlayer = nil
             for _, player in pairs(_PLRS:GetPlayers()) do
-                if player.Name:lower():find(Scripts_Cmds[2]:lower()) or player.DisplayName:lower():find(Scripts_Cmds[2]:lower()) then
+                if player.Name:lower():find(DE_WorldVoice[2]:lower()) or player.DisplayName:lower():find(DE_WorldVoice[2]:lower()) then
                     targetPlayer = player
                     break
                 end
@@ -898,55 +919,55 @@ function EveryCommands()
                 _Notice("Commands", "Invalid arguments or player not found! Use 'bringboat self', 'bringboat <player>', 'bringboat x y z', or 'bringboat seadanger5to6'", 1, "SendNotification")
             end
         end
-    elseif table.find(EveryCmds_nAlliase["refunds"], Scripts_Cmds[1]) then
-        if Scripts_Cmds[2] == "code" or Scripts_Cmds[2] == "c" then
+    elseif table.find(Commands_DataStorage["refunds"], DE_WorldVoice[1]) then
+        if DE_WorldVoice[2] == "code" or DE_WorldVoice[2] == "c" then
             game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer("Sub2GamerRobot_Reset1")
             task.wait()
             game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer("Sub2UncleKizaru")
             task.wait()
             game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer("Kitt_reset")
-        elseif Scripts_Cmds[2] == "frags" or Scripts_Cmds[2] == "fragments" or Scripts_Cmds[2] == "f" then
+        elseif DE_WorldVoice[2] == "frags" or DE_WorldVoice[2] == "fragments" or DE_WorldVoice[2] == "f" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward", "Refund", "2")
             print("Used fragments!")
         end
-    elseif table.find(EveryCmds_nAlliase["race"], Scripts_Cmds[1]) then
+    elseif table.find(Commands_DataStorage["race"], DE_WorldVoice[1]) then
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward", "Reroll", "2")
         print("Used fragments!")
-    elseif table.find(EveryCmds_nAlliase["removehrpbodyvelocity"], Scripts_Cmds[1]) then
+    elseif table.find(Commands_DataStorage["removehrpbodyvelocity"], DE_WorldVoice[1]) then
         for i, v in pairs(_PLR.Character.HumanoidRootPart:GetChildren()) do
             if v:IsA("BodyVelocity") and v.Name == "Extra_Wings_IX" then
                 v:Destroy()
                 warn("Totaly destroyed " .. i .. " body velocity.")
             end
         end
-    elseif table.find(EveryCmds_nAlliase["melee"], Scripts_Cmds[1]) then
-        if Scripts_Cmds[2] == "darkstep" or Scripts_Cmds[2] == "dsv1" then
+    elseif table.find(Commands_DataStorage["melee"], DE_WorldVoice[1]) then
+        if DE_WorldVoice[2] == "darkstep" or DE_WorldVoice[2] == "dsv1" then
             _GetFightingStyle("CommF_", "Dark Step", _InvokeText["FightingStyle"][1])
-        elseif Scripts_Cmds[2] == "electro" or Scripts_Cmds[2] == "elv1" then
+        elseif DE_WorldVoice[2] == "electro" or DE_WorldVoice[2] == "elv1" then
             _GetFightingStyle("CommF_", "Electro", _InvokeText["FightingStyle"][2])
-        elseif Scripts_Cmds[2] == "fishman" or Scripts_Cmds[2] == "fm" then
+        elseif DE_WorldVoice[2] == "fishman" or DE_WorldVoice[2] == "fm" then
             _GetFightingStyle("CommF_", "Fishman Karate", _InvokeText["FightingStyle"][3])
-        elseif Scripts_Cmds[2] == "dragonbreath" or Scripts_Cmds[2] == "db" then
+        elseif DE_WorldVoice[2] == "dragonbreath" or DE_WorldVoice[2] == "db" then
             _GetFightingStyle("CommF_", "Dragon Breath", "BlackbeardReward", _InvokeText["FightingStyle"][4], "2")
-        elseif Scripts_Cmds[2] == "superhuman" or Scripts_Cmds[2] == "sphm" then
+        elseif DE_WorldVoice[2] == "superhuman" or DE_WorldVoice[2] == "sphm" then
             _GetFightingStyle("CommF_", "Super Human", _InvokeText["FightingStyle"][5])
-        elseif Scripts_Cmds[2] == "deathstep" or Scripts_Cmds[2] == "dsv2" then
+        elseif DE_WorldVoice[2] == "deathstep" or DE_WorldVoice[2] == "dsv2" then
             _GetFightingStyle("CommF_", "Death Step", _InvokeText["FightingStyle"][6])
-        elseif Scripts_Cmds[2] == "electric" or Scripts_Cmds[2] == "elv2" then
+        elseif DE_WorldVoice[2] == "electric" or DE_WorldVoice[2] == "elv2" then
             _GetFightingStyle("CommF_", "Electric Claw", _InvokeText["FightingStyle"][7])
-        elseif Scripts_Cmds[2] == "sharkman" or Scripts_Cmds[2] == "sm" then
+        elseif DE_WorldVoice[2] == "sharkman" or DE_WorldVoice[2] == "sm" then
             _GetFightingStyle("CommF_", "Sharkman Karate", _InvokeText["FightingStyle"][8])
-        elseif Scripts_Cmds[2] == "dragontalon" or Scripts_Cmds[2] == "dt" then
+        elseif DE_WorldVoice[2] == "dragontalon" or DE_WorldVoice[2] == "dt" then
             _GetFightingStyle("CommF_", "Dragon Talon", _InvokeText["FightingStyle"][9])
-        elseif Scripts_Cmds[2] == "godhuman" or Scripts_Cmds[2] == "gh" then
+        elseif DE_WorldVoice[2] == "godhuman" or DE_WorldVoice[2] == "gh" then
             _GetFightingStyle("CommF_", "God Human", _InvokeText["FightingStyle"][10])
-        elseif Scripts_Cmds[2] == "saguine" or Scripts_Cmds[2] == "sg" then
+        elseif DE_WorldVoice[2] == "saguine" or DE_WorldVoice[2] == "sg" then
             _GetFightingStyle("CommF_", "Saguine Art", _InvokeText["FightingStyle"][11])
-        elseif Scripts_Cmds[2] == "?" then
+        elseif DE_WorldVoice[2] == "?" then
             print("All FightingStyle Code:\n • Normal: darkstep, electro, fishman, dragonbreath, superhuman, deathstep, electric, sharkman, dragontalon, godhuman, saguine \n • Short: dsv1, elv1, fm, db, sphm, dsv2, elv2, sm, dt, gh, sg")
             _Notice("Nah", "Nothing Here!", 1, "DevConsoleVisible")
         end
-    elseif table.find(EveryCmds_nAlliase["pvp"], Scripts_Cmds[1]) then
+    elseif table.find(Commands_DataStorage["pvp"], DE_WorldVoice[1]) then
         if _AutoEnablePvp then
             _AutoEnablePvp = false
             _Notice("Commands", "Auto Enable Pvp is Deactivated!", 1, "SendNotification")
@@ -954,46 +975,46 @@ function EveryCommands()
             _AutoEnablePvp = true
             _Notice("Commands", "Auto Enable Pvp is Activated!", 1, "SendNotification")
         end
-    elseif table.find(EveryCmds_nAlliase["tobosses"], Scripts_Cmds[1]) then
+    elseif table.find(Commands_DataStorage["tobosses"], DE_WorldVoice[1]) then
         _ToNearbyBoss()
         _Notice("Commands", "Founded Bosses: " .. _GetNearbyBossesName(), 1, "SendNotification")
-    elseif table.find(EveryCmds_nAlliase["speed"], Scripts_Cmds[1]) then
+    elseif table.find(Commands_DataStorage["speed"], DE_WorldVoice[1]) then
         local myCharacterIn_WS = _WS.Characters[_PLR.Name]
         if myCharacterIn_WS then
-            if Scripts_Cmds[2] then
-                local new_SpeedValue = tonumber(Scripts_Cmds[2])
+            if DE_WorldVoice[2] then
+                local new_SpeedValue = tonumber(DE_WorldVoice[2])
                 if new_SpeedValue >= 0.01 then
                     myCharacterIn_WS:SetAttribute("SpeedMultiplier", new_SpeedValue)
                     _Notice("Commands", "Running & Walking speed changed/set to: " .. new_SpeedValue, 1, "SendNotification")
                 else
                     _Notice("Commands", "Running & Walking speed can't be set 0 or lower!", 1, "SendNotification")
                 end
-            elseif Scripts_Cmds[2] == "max" then
+            elseif DE_WorldVoice[2] == "max" then
                 myCharacterIn_WS:SetAttribute("SpeedMultiplier", 10)
                 _Notice("Commands", "Running & Walking speed set maxium!", 1, "SendNotification")
-            elseif Scripts_Cmds[2] ~= "" or Scripts_Cmds[2] == " " then
+            elseif DE_WorldVoice[2] ~= "" or DE_WorldVoice[2] == " " then
                 _Notice("Commands", "Running & Walking speed try typing in a value number!", 1, "SendNotification")
             end
         end
-    elseif table.find(EveryCmds_nAlliase["dash"], Scripts_Cmds[1]) then
+    elseif table.find(Commands_DataStorage["dash"], DE_WorldVoice[1]) then
         local myCharacterIn_WS = _WS.Characters[_PLR.Name]
         if myCharacterIn_WS then
-            if Scripts_Cmds[2] then
-                local new_DashDistanceValue = tonumber(Scripts_Cmds[2])
+            if DE_WorldVoice[2] then
+                local new_DashDistanceValue = tonumber(DE_WorldVoice[2])
                 if new_DashDistanceValue >= 0.01 then
                     myCharacterIn_WS:SetAttribute("DashLength", new_DashDistanceValue)
                     _Notice("Commands", "Dash Distance increase to: " .. new_DashDistanceValue, 1, "SendNotification")
                 else
                     _Notice("Commands", "Dash Distance can't be set 0 or lower!", 1, "SendNotification")
                 end
-            elseif Scripts_Cmds[2] == "max" then
+            elseif DE_WorldVoice[2] == "max" then
                 myCharacterIn_WS:SetAttribute("DashLength", 900)
                 _Notice("Commands", "Dash Distance set maxium!", 1, "SendNotification")
-            elseif Scripts_Cmds[2] ~= "" or Scripts_Cmds[2] == " " then
+            elseif DE_WorldVoice[2] ~= "" or DE_WorldVoice[2] == " " then
                 _Notice("Commands", "Dash Distance try typing in a dash value number!", 1, "SendNotification")
             end
         end
-    elseif table.find(EveryCmds_nAlliase["fastattack"], Scripts_Cmds[1]) then
+    elseif table.find(Commands_DataStorage["fastattack"], DE_WorldVoice[1]) then
         if not FA_VariableCheck_0 then
             FA_VariableCheck_0 = true
             _Notice("Commands", "Hold on a seconds, Loading Scripts...", 1, "SendNotification")
@@ -1008,7 +1029,7 @@ function EveryCommands()
             _Notice("Commands", "Already Loaded Scripts!", 1, "SendNotification")
             FastAttack_Status()
         end
-    elseif table.find(EveryCmds_nAlliase["superfastattack"], Scripts_Cmds[1]) then
+    elseif table.find(Commands_DataStorage["superfastattack"], DE_WorldVoice[1]) then
         if not FA_VariableCheck_0 then
             FA_VariableCheck_0 = true
             _Notice("Commands", "Hold on a seconds, Loading Scripts...", 1, "SendNotification")
@@ -1023,22 +1044,22 @@ function EveryCommands()
             _Notice("Commands", "Already Loaded Scripts!", 1, "SendNotification")
             SuperFastAttack_Status()
         end
-    elseif table.find(EveryCmds_nAlliase["attackmode"], Scripts_Cmds[1]) then
-        if Scripts_Cmds[2] == "mobs" then
+    elseif table.find(Commands_DataStorage["attackmode"], DE_WorldVoice[1]) then
+        if DE_WorldVoice[2] == "mobs" then
             _FAmode = 1
             _Notice("Fast Attacks", "MODE Attack: On MOBS!", 1, "SendNotification")
-        elseif Scripts_Cmds[2] == "players" then
+        elseif DE_WorldVoice[2] == "players" then
             _FAmode = 2
             _Notice("Fast Attacks", "MODE Attack: On PLAYERS!", 1, "SendNotification")
-        elseif Scripts_Cmds[2] == "?" then
+        elseif DE_WorldVoice[2] == "?" then
             _Notice("Fast Attacks", "MODE Attack: attackmode mobs or players\nmobs, players...", 1, "SendNotification")
         end
-    elseif table.find(EveryCmds_nAlliase["setheight"], Scripts_Cmds[1]) then
-        if _G._CurrentYAxis_XScript and Scripts_Cmds[2] then
-            _G._CurrentYAxis_XScript = Scripts_Cmds[2]
-            _Notice("Commands", "Follow Specific | Hunt Nearest (Players) \nY Axis has been changed to: " .. Scripts_Cmds[2], 1, "SendNotification")
+    elseif table.find(Commands_DataStorage["setheight"], DE_WorldVoice[1]) then
+        if _G._CurrentYAxis_XScript and DE_WorldVoice[2] then
+            _G._CurrentYAxis_XScript = DE_WorldVoice[2]
+            _Notice("Commands", "Follow Specific | Hunt Nearest (Players) \nY Axis has been changed to: " .. DE_WorldVoice[2], 1, "SendNotification")
         end
-    elseif table.find(EveryCmds_nAlliase["autofarmnearby"], Scripts_Cmds[1]) then
+    elseif table.find(Commands_DataStorage["autofarmnearby"], DE_WorldVoice[1]) then
         _CT_Cancel()
         if _SpecialVariables.Farm_NormalNPC then
             _SpecialVariables.Farm_NormalNPC = false
@@ -1054,7 +1075,7 @@ function EveryCommands()
             _Noclip(true)
             _Notice("Commands", "Auto Follow Nearby Mobs is Activated!", 1, "SendNotification")
         end
-    elseif table.find(EveryCmds_nAlliase["autofarmlevels"], Scripts_Cmds[1]) then
+    elseif table.find(Commands_DataStorage["autofarmlevels"], DE_WorldVoice[1]) then
         if not _G._FarmActivated then _G._FarmActivated = true
             if not _SpecialVariables.LoadedATF_LvlFunc then _SpecialVariables.LoadedATF_LvlFunc = true
                 _PasteScripts("https://raw.githubusercontent.com/Ancient2k3/NewProject/refs/heads/data/atf.luau", function()
@@ -1065,7 +1086,7 @@ function EveryCommands()
         else _G._FarmActivated = false
             _Notice("Commands", "Auto Farming Levels is now OFF/Deactivated!", 1, "SendNotification")
         end
-    elseif table.find(EveryCmds_nAlliase["autofarmbosses"], Scripts_Cmds[1]) then
+    elseif table.find(Commands_DataStorage["autofarmbosses"], DE_WorldVoice[1]) then
         _CT_Cancel()
         if _SpecialVariables.Farm_BossesNPC then
             _SpecialVariables.Farm_BossesNPC = false
@@ -1081,162 +1102,162 @@ function EveryCommands()
             _Noclip(true)
             _Notice("Commands", "Auto Follow Nearby Bosses is Activated!", 1, "SendNotification")
         end
-    elseif table.find(EveryCmds_nAlliase["travelingsea"], Scripts_Cmds[1]) then
-        if Scripts_Cmds[2] == "1" then
+    elseif table.find(Commands_DataStorage["travelingsea"], DE_WorldVoice[1]) then
+        if DE_WorldVoice[2] == "1" then
             _InvokeServer("CommF_", "First Sea", "TravelMain")
-        elseif Scripts_Cmds[2] == "2" then
+        elseif DE_WorldVoice[2] == "2" then
             _ToPos(CFrame.new(-4608, 873, -1668), 5)
             task.wait()
             _ToPart("Seconds_Sea_NPC", Vector3.new(0, 2.5, 0))
             _InvokeServer("CommF_", "Second Sea", "TravelDressrosa")
-        elseif Scripts_Cmds[2] == "3" then
+        elseif DE_WorldVoice[2] == "3" then
             _InvokeServer("CommF_", "Final Sea", "TravelZou")
         end
-    elseif table.find(EveryCmds_nAlliase["suggestiontextcolor"], Scripts_Cmds[1]) then
-        if #Scripts_Cmds < 4 then
+    elseif table.find(Commands_DataStorage["suggestiontextcolor"], DE_WorldVoice[1]) then
+        if #DE_WorldVoice < 4 then
             _Notice("Theme", "Missing value! Please do 3_RGB color values.", 1, "SendNotification")
         else
-            local _ArGs_II = tonumber(Scripts_Cmds[2])
-            local _ArGs_III = tonumber(Scripts_Cmds[3])
-            local _ArGs_IV = tonumber(Scripts_Cmds[4])
+            local _ArGs_II = tonumber(DE_WorldVoice[2])
+            local _ArGs_III = tonumber(DE_WorldVoice[3])
+            local _ArGs_IV = tonumber(DE_WorldVoice[4])
             
             if _ArGs_II and _ArGs_III and _ArGs_IV then
                 _GetCorrectedCommands.TextColor3 = Color3.fromRGB(_ArGs_II, _ArGs_III, _ArGs_IV)
-                _Notice("Theme", "Suggestion Text Theme Color Changed to: " .. Scripts_Cmds[2] .. " " .. Scripts_Cmds[3] .. " " .. Scripts_Cmds[4], 1, "SendNotification")
+                _Notice("Theme", "Suggestion Text Theme Color Changed to: " .. DE_WorldVoice[2] .. " " .. DE_WorldVoice[3] .. " " .. DE_WorldVoice[4], 1, "SendNotification")
             else
                 _Notice("Theme", "Please do a valid 3_RGB values.", 1, "SendNotification")
             end
         end
-    elseif table.find(EveryCmds_nAlliase["island"], Scripts_Cmds[1]) then
-        if #Scripts_Cmds == 2 then
-            if Scripts_Cmds[2] == "christmas" then
+    elseif table.find(Commands_DataStorage["island"], DE_WorldVoice[1]) then
+        if #DE_WorldVoice == 2 then
+            if DE_WorldVoice[2] == "christmas" then
                 _ToPart("ChristmasEvents_Island", Vector3.new(0, 9, 0))
-            elseif Scripts_Cmds[2] == "marinestarter" or Scripts_Cmds[2] == "ms" then
+            elseif DE_WorldVoice[2] == "marinestarter" or DE_WorldVoice[2] == "ms" then
                 _ToPart("MarineStarter_Island", Vector3.new(0, 9, 0))
-            elseif Scripts_Cmds[2] == "piratestarter" or Scripts_Cmds[2] == "ps" then
+            elseif DE_WorldVoice[2] == "piratestarter" or DE_WorldVoice[2] == "ps" then
                 _ToPart("PirateStarter_Island", Vector3.new(0, 9, 0))
-            elseif Scripts_Cmds[2] == "middletown" or Scripts_Cmds[2] == "mt" then
+            elseif DE_WorldVoice[2] == "middletown" or DE_WorldVoice[2] == "mt" then
                 _ToPart("MiddleTown_Island", Vector3.new(0, 9, 0))
-            elseif Scripts_Cmds[2] == "jungle" or Scripts_Cmds[2] == "j" then
+            elseif DE_WorldVoice[2] == "jungle" or DE_WorldVoice[2] == "j" then
                 _ToPart("Jungle_Island", Vector3.new(0, 9, 0))
-            elseif Scripts_Cmds[2] == "piratevillage" or Scripts_Cmds[2] == "pv" then
+            elseif DE_WorldVoice[2] == "piratevillage" or DE_WorldVoice[2] == "pv" then
                 _ToPart("PiratesVillage_Island", Vector3.new(0, 9, 0))
-            elseif Scripts_Cmds[2] == "desert" or Scripts_Cmds[2] == "d" then
+            elseif DE_WorldVoice[2] == "desert" or DE_WorldVoice[2] == "d" then
                 _ToPart("Desert_Island", Vector3.new(0, 9, 0))
-            elseif Scripts_Cmds[2] == "snowy" or Scripts_Cmds[2] == "s" then
+            elseif DE_WorldVoice[2] == "snowy" or DE_WorldVoice[2] == "s" then
                 _ToPart("Snowy_Island", Vector3.new(0, 9, 0))
-            elseif Scripts_Cmds[2] == "marineford" or Scripts_Cmds[2] == "mf" then
+            elseif DE_WorldVoice[2] == "marineford" or DE_WorldVoice[2] == "mf" then
                 _ToPart("MarineFord_Island", Vector3.new(0, 9, 0))
-            elseif Scripts_Cmds[2] == "arena1" or Scripts_Cmds[2] == "a1" then
+            elseif DE_WorldVoice[2] == "arena1" or DE_WorldVoice[2] == "a1" then
                 _CT_Cancel()
                 _ToPos(CFrame.new(-4608, 873, -1668), 5)
                 task.wait(1.5)
                 _ToPos(CFrame.new(-4608, 400, -1668), 5)
                 task.wait()
                 _ToPart("Arena_Island", Vector3.new(0, 9, 0))
-            elseif Scripts_Cmds[2] == "prison" or Scripts_Cmds[2] == "p" then
+            elseif DE_WorldVoice[2] == "prison" or DE_WorldVoice[2] == "p" then
                 _ToPart("Prison_Island", Vector3.new(0, 9, 0))
-            elseif Scripts_Cmds[2] == "magmavillage" or Scripts_Cmds[2] == "mv" then
+            elseif DE_WorldVoice[2] == "magmavillage" or DE_WorldVoice[2] == "mv" then
                 _ToPart("MagmaVillage_Island", Vector3.new(0, 9, 0))
-            elseif Scripts_Cmds[2] == "fountain" or Scripts_Cmds[2] == "f" then
+            elseif DE_WorldVoice[2] == "fountain" or DE_WorldVoice[2] == "f" then
                 _ToPart("Fountain_Island", Vector3.new(0, 9, 0))
-            elseif Scripts_Cmds[2] == "underwater" or Scripts_Cmds[2] == "uw" then
+            elseif DE_WorldVoice[2] == "underwater" or DE_WorldVoice[2] == "uw" then
                 _CT_Cancel()
                 _ToPos(CFrame.new(61164, 5, 1820), 5)
                 task.wait()
                 _ToPart("Underwater_Island", Vector3.new(0, 9, 0))
-            elseif Scripts_Cmds[2] == "lowersky" or Scripts_Cmds[2] == "ls" then
+            elseif DE_WorldVoice[2] == "lowersky" or DE_WorldVoice[2] == "ls" then
                 _CT_Cancel()
                 _ToPos(CFrame.new(-4608, 873, -1668), 5)
                 task.wait()
                 _ToPart("LowerSky_Island", Vector3.new(0, 9, 0))
-            elseif Scripts_Cmds[2] == "highersky" or Scripts_Cmds[2] == "hs" then
+            elseif DE_WorldVoice[2] == "highersky" or DE_WorldVoice[2] == "hs" then
                 _CT_Cancel()
                 _ToPos(CFrame.new(-7895, 5546, -383), 5)
                 task.wait()
                 _ToPart("HighestSky_Island", Vector3.new(0, 9, 0))
-            elseif Scripts_Cmds[2] == "dock2" or Scripts_Cmds[2] == "d2" then
+            elseif DE_WorldVoice[2] == "dock2" or DE_WorldVoice[2] == "d2" then
                 _CT_Cancel()
                 _ToPos(CFrame.new(-286.98901, 306.17145, 597.73639), 15)
                 task.wait(1.5)
                 _ToPos(CFrame.new(-286.98901, 100.17145, 597.73639), 5)
                 task.wait()
                 _ToPart("KingdomOfRose_Dock2", Vector3.new(0, 9, 0))
-            elseif Scripts_Cmds[2] == "arena2" or Scripts_Cmds[2] == "a2" then
+            elseif DE_WorldVoice[2] == "arena2" or DE_WorldVoice[2] == "a2" then
                 _CT_Cancel()
                 _ToPos(CFrame.new(-286.98901, 306.17145, 597.73639), 15)
                 task.wait(1.5)
                 _ToPos(CFrame.new(-286.98901, 800.17145, 597.73639), 5)
                 task.wait()
                 _ToPart("KingdomOfRose_Arena", Vector3.new(0, 9, 0))
-            elseif Scripts_Cmds[2] == "cafe" or Scripts_Cmds[2] == "c" then
+            elseif DE_WorldVoice[2] == "cafe" or DE_WorldVoice[2] == "c" then
                 _CT_Cancel()
                 _ToPos(CFrame.new(-286.98901, 306.17145, 597.73639), 15)
                 task.wait(1.5)
                 _ToPos(CFrame.new(-286.98901, 100.17145, 597.73639), 5)
                 task.wait()
                 _ToPart("KingdomOfRose_Cafe", Vector3.new(0, 9, 0))
-            elseif Scripts_Cmds[2] == "roomv3" or Scripts_Cmds[2] == "r3" then
+            elseif DE_WorldVoice[2] == "roomv3" or DE_WorldVoice[2] == "r3" then
                 _CT_Cancel()
                 _ToPos(CFrame.new(-286.98901, 306.17145, 597.73639), 15)
                 task.wait(1.5)
                 _ToPos(CFrame.new(-286.98901, 100.17145, 597.73639), 5)
                 task.wait()
                 _ToPart("KingdomOfRose_RaceV3", Vector3.new(0, 2.5, 0))
-            elseif Scripts_Cmds[2] == "kingdomofrosehighest" or Scripts_Cmds[2] == "hkor" then
+            elseif DE_WorldVoice[2] == "kingdomofrosehighest" or DE_WorldVoice[2] == "hkor" then
                 _CT_Cancel()
                 _ToPos(CFrame.new(-286.98901, 306.17145, 597.73639), 15)
                 task.wait(1.5)
                 _ToPos(CFrame.new(-286.98901, 500.17145, 597.73639), 5)
                 task.wait()
                 _ToPart("SecrectAreaII_Sea2", Vector3.new(0, 2.5, 0))
-            elseif Scripts_Cmds[2] == "greenzone" or Scripts_Cmds[2] == "gz" then
+            elseif DE_WorldVoice[2] == "greenzone" or DE_WorldVoice[2] == "gz" then
                 _ToPart("GreenZone_Island", Vector3.new(0, 2.5, 0))
-            elseif Scripts_Cmds[2] == "cursedship" or Scripts_Cmds[2] == "cs" then
+            elseif DE_WorldVoice[2] == "cursedship" or DE_WorldVoice[2] == "cs" then
                 _CT_Cancel()
                 _ToPos(CFrame.new(919, 125, 32869), 15)
                 task.wait()
                 _ToPart("CursedShip_Island", Vector3.new(0, 2.5, 0))
-            elseif Scripts_Cmds[2] == "forgotten" or Scripts_Cmds[2] == "f" then
+            elseif DE_WorldVoice[2] == "forgotten" or DE_WorldVoice[2] == "f" then
                 _ToPart("Forgotten_Island", Vector3.new(0, 2.5, 0))
-            elseif Scripts_Cmds[2] == "snowcastle" or Scripts_Cmds[2] == "sc" then
+            elseif DE_WorldVoice[2] == "snowcastle" or DE_WorldVoice[2] == "sc" then
                 _ToPart("SnowCastle_Island", Vector3.new(0, 2.5, 0))
-            elseif Scripts_Cmds[2] == "orderlab" or Scripts_Cmds[2] == "ol" then
+            elseif DE_WorldVoice[2] == "orderlab" or DE_WorldVoice[2] == "ol" then
                 _ToPart("Order_LAB", Vector3.new(0, 2.5, 0))
-            elseif Scripts_Cmds[2] == "raidlab" or Scripts_Cmds[2] == "rl" then
+            elseif DE_WorldVoice[2] == "raidlab" or DE_WorldVoice[2] == "rl" then
                 _ToPart("Raid_LAB", Vector3.new(0, 2.5, 0))
-            elseif Scripts_Cmds[2] == "hotandcold" or Scripts_Cmds[2] == "hac" then
+            elseif DE_WorldVoice[2] == "hotandcold" or DE_WorldVoice[2] == "hac" then
                 _ToPart("Girl_AND_Boy", Vector3.new(0, 2.5, 0))
-            elseif Scripts_Cmds[2] == "castle" or Scripts_Cmds[2] == "cots" then
+            elseif DE_WorldVoice[2] == "castle" or DE_WorldVoice[2] == "cots" then
                 _CT_Cancel()
                 _ToPos(CFrame.new(-5073, 315, -3153), 15)
                 task.wait(2.5)
                 _ToPart("CastleOnTheSea_Island", Vector3.new(0, 2.5, 0))
-            elseif Scripts_Cmds[2] == "hydra" or Scripts_Cmds[2] == "hyd" then
+            elseif DE_WorldVoice[2] == "hydra" or DE_WorldVoice[2] == "hyd" then
                 _CT_Cancel()
                 _ToPos(CFrame.new(5666, 1013, -310), 15)
                 task.wait(2.5)
                 _ToPart("Hydra_Island", Vector3.new(0, 2.5, 0))
-            elseif Scripts_Cmds[2] == "mansion" or Scripts_Cmds[2] == "m" then
+            elseif DE_WorldVoice[2] == "mansion" or DE_WorldVoice[2] == "m" then
                 _CT_Cancel()
                 _ToPos(CFrame.new(-12471, 375, -7551), 15)
                 task.wait(2.5)
                 _ToPart("Base_SafeZone_Mansion", Vector3.new(0, 2.5, 0))
-            elseif Scripts_Cmds[2] == "greattree" or Scripts_Cmds[2] == "gt" then
+            elseif DE_WorldVoice[2] == "greattree" or DE_WorldVoice[2] == "gt" then
                 _CT_Cancel()
                 _ToPos(CFrame.new(3031, 2281, -7326), 15)
                 task.wait(2.5)
                 _ToPart("GreatTree_Highest", Vector3.new(0, 2.5, 0))
-            elseif Scripts_Cmds[2] == "roomv4" or Scripts_Cmds[2] == "r4" then
+            elseif DE_WorldVoice[2] == "roomv4" or DE_WorldVoice[2] == "r4" then
                 _CT_Cancel()
                 _ToPos(CFrame.new(28286, 14897, 103), 15)
                 task.wait(2.5)
                 _ToPart("V4_TempleOfTime", Vector3.new(0, 2.5, 0))
-            elseif Scripts_Cmds[2] == "tikioutpost" or Scripts_Cmds[2] == "t" then
+            elseif DE_WorldVoice[2] == "tikioutpost" or DE_WorldVoice[2] == "t" then
                 _ToPart("TikiOutpost_Portal", Vector3.new(0, 2.5, 0))
-            elseif Scripts_Cmds[2] == "submarine" or Scripts_Cmds[2] == "sm" then
+            elseif DE_WorldVoice[2] == "submarine" or DE_WorldVoice[2] == "sm" then
                 _ToPart("TikiOutpost_Submarine", Vector3.new(0, 2.5, 0))
-            elseif Scripts_Cmds[2] == "?" then
+            elseif DE_WorldVoice[2] == "?" then
                 if _FirstSea then
                     print("List of all island name, do 'island' with these name for teleportation: ms, ps, mt, j, pv, d, s, mf, a1, p, mv, f, uw, ls, hs or ? for shown command info...")
                     print("Others way or name of the island for teleportation: marinestarter, piratestarter, middletown, jungle, piratevillage, desert, snowy, marineford, arena1, prison, magmavillage, fountain, underwater, lowersky, highersky. That's all !")
@@ -1254,7 +1275,7 @@ function EveryCommands()
                 end
             end
         end
-    elseif table.find(EveryCmds_nAlliase["settings"], Scripts_Cmds[1]) then
+    elseif table.find(Commands_DataStorage["settings"], DE_WorldVoice[1]) then
         if not Its_SettingsUIEnable then
             Its_SettingsUIEnable = true
             _Notice("Settings", "Settings UI Opened!", 1, "SendNotification")
@@ -1353,7 +1374,7 @@ function CorrectedEveryCommands(boolean_ix)
     local Matching_Words, Matching_Words_I = nil, nil
 
     if GetCommands_Words ~= "" then
-        for command, aliases in pairs(EveryCmds_nAlliase) do
+        for command, aliases in pairs(Commands_DataStorage) do
             for _, alias in ipairs(aliases) do
                 if alias:lower():find(GetCommands_Words) then
                     Matching_Words = command
