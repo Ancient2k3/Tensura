@@ -1,7 +1,7 @@
 -- Blox Fruits: Commands Scripts Fixed + Changed, HoangHien --
 local _WS, _CG, _RlS, _RS, _TS, _TPS, _StGui, _SGui, _GetFocusedButton, _GetCommands, _GetCorrectedCommands, _SettingsFrame, _SettingsScroll
 local EndPoint, StartPoint, OnFocused_SlideOut, OnFocused_SlideIn, intBGC_All, col1, col2, col3, _IsSpectatingSomeOne, RaphaelORB, PlaceHolder, ImageLB, At1, At2, Trail1
-local _PLRS, _PLR, _Char, _Him, _He, _StoredBoats, _FirstSea, _SecondsSea, _ThirdSea, _ARandomPoint, _HHxScripts, _Worlds, Safe_Pad
+local _PLRS, _PLR, _Char, _Him, _He, _StoredBoats, _FirstSea, _SecondsSea, _ThirdSea, _ARandomPoint, _HHxScripts, _Worlds, Safe_Pad, _FlyIsLoaded
 local FA_VariableCheck_0, FA_Toggle, FA_Toggle_II, Cmdbar_ItsOnFocused, _SSCRL_Canvasmain, _ButtonHeight, _ButtonPadding, Its_SettingsUIEnable, numtest, thisisenable, intCLabel_Txc, _alreadyRunIYEdited, _AutoStatus, _CurrentTween, _AutoEnablePvp, _EnablePvpOne, _TweeningSpeed, _FAmode, _BaseHealth, _HalfHealth, _CurrentVersion, _SomeLetter
 local _SpecialVariables = {
     Current_Event = "LightningEvents",
@@ -15,6 +15,7 @@ local _SpecialVariables = {
     On_SafePAD = false,
     Safemode_Enabled = true,
     LoadedATF_LvlFunc = false,
+    Is_Flying = false,
     Reset_Seconds = 0,
     Distance_Between_SPnPLR = 0,
     UpStatTarget = "none"
@@ -57,6 +58,7 @@ Its_SettingsUIEnable = false
 _alreadyRunIYEdited = false
 _AutoEnablePvp = false
 _IsSpectatingSomeOne = false
+_FlyIsLoaded = false
 _CurrentTween = nil
 _AutoStatus = false
 _FAmode = 1 -- attacking mobs as default
@@ -642,6 +644,7 @@ local Commands_DataStorage, TestTable = {
     ["autofarmbosses"] = {"autofarmbosses", "afb"},
     ["buyfruit"] = {"buyfruit", "bf"},
     ["pvp"] = {"pvp", "autoenablepvp"},
+    ["togglefly"] = {"togglefly", "fly"},
     ["exp"] = {"exp", "x2"},
     ["allhaki"] = {"allhaki", "ah"},
     ["setheight"] = {"setheight", "sh"},
@@ -665,7 +668,7 @@ local Commands_DataStorage, TestTable = {
 local _OrderedCommands = {
     "reset", "randomfruit", "test", "tobosses", "serverhop", "maxvision", "autofarmchest", "tweeningspeed", "cmds", "console", "speed", "dash", "spectate", "followto", "loadscript", "melee", "savingdump", "upstat", "jobid", "autofarmnearby", "autofarmlevels", "bringboat",
     "island", "refunds", "race", "raid", "fastattack", "superfastattack", "attackmode", "setfarmevent", "autofarmbosses", "buyfruit",
-    "pvp", "exp", "allhaki", "setheight", "removehrpbodyvelocity", "iyedited", "remotespy", "titles", "awakening", "fakestat",
+    "pvp", "togglefly", "exp", "allhaki", "setheight", "removehrpbodyvelocity", "iyedited", "remotespy", "titles", "awakening", "fakestat",
     "explorer", "travelingsea", "suggestiontextcolor", "settings", "onirealm", "sellfish", "togglesafemode"
 }
 
@@ -685,6 +688,16 @@ function EveryCommands()
         _Notice("Commands", "Character Reseted!", 1, "SendNotification")
     elseif table.find(Commands_DataStorage["test"], DE_WorldVoice[1]) then
         loadstring(game:HttpGet(TestTable[1]))()
+    elseif table.find(Commands_DataStorage["togglefly"], DE_WorldVoice[1]) then
+        if not _FlyIsLoaded then _FlyIsLoaded = true
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/FLY.luau"))()
+        end
+        if not _SpecialVariables.Is_Flying then _SpecialVariables.Is_Flying = true
+            _Notice("Commands", "Fly Activated, Speed: " .. DE_WorldVoice[2], 1, "SendNotification")
+        else _SpecialVariables.Is_Flying = false
+            _Notice("Commands", "Fly Deactivated!", 1, "SendNotification")
+        end _G.Script_FlyingEnabled = _SpecialVariables.Is_Flying or false
+        _G.Script_FlyingSpeed = DE_WorldVoice[2] or 1
     elseif table.find(Commands_DataStorage["exp"], DE_WorldVoice[1]) then
         loadstring(game:HttpGet("https://raw.githubusercontent.com/HoangHienXScripts/Scripts/refs/heads/chocolate/BloxFruits/AutoRedeemCodes_BF.luau"))()
         _Notice("Commands", "Used Codes x2 Expierence!", 1, "SendNotification")
