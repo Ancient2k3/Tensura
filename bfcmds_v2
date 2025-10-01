@@ -687,6 +687,7 @@ function EveryCommands()
         loadstring(game:HttpGet(TestTable[1]))()
     elseif table.find(Commands_DataStorage["exp"], DE_WorldVoice[1]) then
         loadstring(game:HttpGet("https://raw.githubusercontent.com/HoangHienXScripts/Scripts/refs/heads/chocolate/BloxFruits/AutoRedeemCodes_BF.luau"))()
+        _Notice("Commands", "Used Codes x2 Expierence!", 1, "SendNotification")
     elseif table.find(Commands_DataStorage["sellfish"], DE_WorldVoice[1]) then
         _RlS.Modules.Net:FindFirstChild("RF/JobsRemoteFunction"):InvokeServer("FishingNPC", "SellCorruptedFish")
         _Notice("Commands", "ALL Corrupted Fish has been Converted to Oni Token!", 1, "SendNotification")
@@ -855,12 +856,21 @@ function EveryCommands()
         if not awkui.Visible then awkui.Visible = true else awkui.Visible = false end
         _Notice("Commands", "Awakening UI is now: " .. awkui.Visible, 1, "SendNotification")
     elseif table.find(Commands_DataStorage["upstat"], DE_WorldVoice[1]) then
+        local upstat_statement
         if DE_WorldVoice[2] and DE_WorldVoice[3] then
+            if DE_WorldVoice[3] == "true" then
+                upstat_statement = true
+            else
+                upstat_statement = false
+            end
             if DE_WorldVoice[2] == "fs" or DE_WorldVoice[2] == "ml" then
-                _AutoStatus = DE_WorldVoice[3] or false
+                _AutoStatus = upstat_statement or false
                 _SpecialVariables.UpStatTarget = "Melee"
             end
         else
+            upstat_statement = false
+            _AutoStatus = upstat_statement or false
+            print("Disabled auto stat!")
             print(DE_WorldVoice[1] .. " [fs, ml/df, sh/sw, bl/pt, de/df, bf] [boolean]")
             _Notice("Commands", "Open Developer Console!", 1, "DevConsoleVisible")
         end
@@ -1487,7 +1497,7 @@ end)
 
 _RS.RenderStepped:Connect(function()
     if _AutoStatus ~= false then
-        local current_points = tonumber(_PLR.Data.Points)
+        local current_points = tonumber(_PLR.Data.Points.Value) or 0
         if current_points ~= 0 then
             _RlS.Remotes.CommF_:InvokeServer("AddPoint", _SpecialVariables.UpStatTarget, current_points)
         end
