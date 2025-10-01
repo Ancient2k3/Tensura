@@ -9,6 +9,10 @@ local scriptdata_func, i_respawn, i_loop = {
     flyspeed = 1, is_flying = false,
     alr_cancel = false
 } _G.Script_FlyingEnabled = _G.Script_FlyingEnabled or false
+-- Extra change --
+_G.Script_FlyingSpeed = _G.Script_FlyingSpeed or 1
+scriptdata_func.flyspeed = _G.Script_FlyingSpeed
+-- Close Extra --
 
 function _main_body(c)
     local bone = c:FindFirstChild("HumanoidRootPart") or c:FindFirstChild("Torso") or c:FindFirstChild("UpperTorso")
