@@ -143,7 +143,7 @@ RaphaelORB.Name = _PLR.DisplayName .. " Pet"
 RaphaelORB.Material = Enum.Material.Neon
 RaphaelORB.Shape = Enum.PartType.Ball
 RaphaelORB.CanCollide = false
-RaphaelORB.Transparency = 0.85
+RaphaelORB.Transparency = 0.25
 print("[Script]: " .. _PLR.DisplayName .. " Pet, has been Created!")
 
 PlaceHolder = Instance.new("BillboardGui", RaphaelORB)
@@ -160,7 +160,7 @@ ImageLB.Size = UDim2.new(0, 200, 0, 50)
 ImageLB.TextScaled = false
 ImageLB.TextSize = 12
 ImageLB.TextColor3 = Color3.new(1, 0, 1)
-ImageLB.Font = Enum.Font.Arcade
+ImageLB.Font = Enum.Font.Code
 ImageLB.Text = "[Hi " .. _PLR.DisplayName .. " (Master)]"
 ImageLB.Visible = true
 
@@ -576,6 +576,7 @@ end
 local fakestat_table = {
     level = {"level", "lvl", "lv"},
     beli = {"beli", "money", "cash", "beri"},
+    health = {"hp", "health"},
     hidden = {"hidden", "getposition"}
 }
 
@@ -594,6 +595,9 @@ function _FakeStatus(stat_name, stat_value)
     elseif table.find(fakestat_table.beli, stat_name:lower()) then
         _PLR.Data.Beli.Value = tonumber(stat_value)
         _Notice("Commands", "Beli changed to: " .. tostring(stat_value) .. " (visual)", 1, "SendNotification")
+    elseif table.find(fakestat_table.health, stat_name:lower()) then
+        _PLR.Character.Humanoid.Health = tonumber(stat_value)
+        _Notice("Commands", "Health changed to: " .. tostring(stat_value) .. " (visual)", 1, "SendNotification")
     elseif table.find(fakestat_table.hidden, stat_name:lower()) then
         local pos_x, pos_y, pos_z, full_pos
         pos_x = makeround_number(_PLR.Character.HumanoidRootPart.Position.X)
@@ -1588,7 +1592,7 @@ _RS.RenderStepped:Connect(function(deltaTime)
         else
             if _SpecialVariables.Is_LowHealth then
                 RaphaelORB.CFrame = CFrame.new(0, 99999, 0)
-                _spectatepath(_PLR.Character.HumanoidRootPart)
+                _spectatepath(_PLR.Character.Humanoid)
                 _SpecialVariables.Is_LowHealth = false
                 print("[SAFE MODE]: That Better!\nCurrent HP: " .. _updatedhealth)
                 _Notice("Safety Mode", "Health Restored, Back to Surface!\nCurrent HP: " .. _updatedhealth, 1, "SendNotification")
