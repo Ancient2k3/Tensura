@@ -1597,7 +1597,8 @@ _RS.RenderStepped:Connect(function(deltaTime)
         else
             if _SpecialVariables.Is_LowHealth then
                 RaphaelORB.CFrame = CFrame.new(0, 99999, 0)
-                _spectatepath(_PLR.Character.Humanoid)
+                --_spectatepath(_PLR.Character.HumanoidRootPart)
+                _WS.CurrentCamera.CameraSubject = _PLR.Character.Humanoid
                 _SpecialVariables.Is_LowHealth = false
                 print("[SAFE MODE]: That Better!\nCurrent HP: " .. _updatedhealth)
                 _Notice("Safety Mode", "Health Restored, Back to Surface!\nCurrent HP: " .. _updatedhealth, 1, "SendNotification")
