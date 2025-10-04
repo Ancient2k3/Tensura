@@ -136,7 +136,7 @@ _SettingsScroll.Visible = true
 
 RaphaelORB = Instance.new("Part", _WS)
 RaphaelORB.Size = Vector3.new(1.25, 1.25, 1.25)
-RaphaelORB.Color = Color3.fromRGB(255, 255, 0)
+RaphaelORB.Color = Color3.fromRGB(255, 255, 255)
 RaphaelORB.Position = Vector3.new(0, 0, 0)
 RaphaelORB.Anchored = true
 RaphaelORB.Name = _PLR.DisplayName .. " Pet"
@@ -172,14 +172,14 @@ At2.Position = Vector3.new(0, -0.5, 0)
 Trail1 = Instance.new("Trail", RaphaelORB)
 Trail1.Attachment0 = At1
 Trail1.Attachment1 = At2
-Trail1.Color = ColorSequence.new(Color3.new(1, 1, 0), Color3.new(1, 1, 1))
+Trail1.Color = ColorSequence.new(Color3.new(0, 1, 1), Color3.new(1, 1, 1))
 Trail1.Lifetime = 2
 Trail1.Transparency = NumberSequence.new(0, 1)
 
 Safe_Pad = Instance.new("Part")
 Safe_Pad.Size = Vector3.new(5, 0.2, 5)
 Safe_Pad.Color = Color3.fromRGB(0, 255, 0)
-Safe_Pad.Position = Vector3.new(_Him.Position.X, _Him.Position.Y + 10000, _Him.Position.Z)
+Safe_Pad.Position = Vector3.new(_Him.Position.X, _Him.Position.Y + 1000000, _Him.Position.Z)
 Safe_Pad.Anchored = true
 Safe_Pad.Transparency = 0.95
 Safe_Pad.Parent = _WS
@@ -1296,6 +1296,18 @@ function EveryCommands()
                 _ToPart("TikiOutpost_Portal", Vector3.new(0, 2.5, 0))
             elseif DE_WorldVoice[2] == "submarine" or DE_WorldVoice[2] == "sm" then
                 _ToPart("TikiOutpost_Submarine", Vector3.new(0, 2.5, 0))
+            elseif DE_WorldVoice[2] == "icecream" or DE_WorldVoice[2] == "ic" or DE_WorldVoice[2] == "bigmom" then
+                _CT_Cancel()
+                _ToPos(CFrame.new(3031, 2281, -7326), 25)
+                task.wait(2.5)
+                _ToPart("Bigmom_Land", Vector3.new(0, 2.5, 0))
+            elseif DE_WorldVoice[2] == "cakeland" or DE_WorldVoice[2] == "cl" or DE_WorldVoice[2] == "katakuri" then
+                _CT_Cancel()
+                _ToPos(CFrame.new(3031, 2281, -7326), 25)
+                task.wait(2.5)
+                _ToPart("Cake_Land", Vector3.new(0, 2.5, 0))
+            elseif DE_WorldVoice[2] == "hauntedcastle" or DE_WorldVoice[2] == "hc" then
+                _ToPart("ZombieCastle_Island", Vector3.new(0, 2.5, 0))
             elseif DE_WorldVoice[2] == "?" then
                 if _FirstSea then
                     print("List of all island name, do 'island' with these name for teleportation: ms, ps, mt, j, pv, d, s, mf, a1, p, mv, f, uw, ls, hs or ? for shown command info...")
@@ -1695,6 +1707,9 @@ elseif _ThirdSea then
     _Part(CFrame.new(28286, 14897, 103), "V4_TempleOfTime")
     _Part(CFrame.new(-16813, 58, 305), "TikiOutpost_Portal")
     _Part(CFrame.new(-16279, 25, 1377), "TikiOutpost_Submarine")
+    _Part(CFrame.new(-717, 382, -11006), "Bigmom_Land")
+    _Part(CFrame.new(-2096, 70, -12138), "Cake_Land")
+    _Part(CFrame.new(-9500, 3457, 6707), "ZombieCastle_Island")
 else
     _Notice("📑 Nơi ở hiện tại 📑", "Vùng biển: Lỗi không thể biết!", 1, "SendNotification")
 end
