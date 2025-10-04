@@ -175,15 +175,20 @@ Trail1.Attachment1 = At2
 Trail1.Color = ColorSequence.new(Color3.new(0, 1, 1), Color3.new(1, 1, 1))
 Trail1.Lifetime = 2
 Trail1.LightEmission = 1
-Trail1.TextureId = "rbxassetid://15706683841"
+Trail1.Texture = "rbxassetid://15706683841"
 Trail1.Transparency = NumberSequence.new(0, 1)
 
 Emitter1 = Instance.new("ParticleEmitter", RaphaelORB)
 Emitter1.Color = ColorSequence.new(Color3.new(0, 1, 1), Color3.new(1, 1, 1))
-Emitter1.Lifetime = 0.3
+Emitter1.Lifetime = NumberSequence.new(0.3, 0.3)
 Emitter1.LightEmission = 1
-Emitter1.TextureId = "rbxassetid://15706683841"
+Emitter1.Texture = "rbxassetid://15706683841"
 Emitter1.Transparency = NumberSequence.new(0, 1)
+Emitter1.Size = NumberSequence.new(1)
+Emitter1.Rate = 50
+Emitter1.VelocityInheritance = 0
+Emitter1.Speed = NumberRange.new(0)
+Emitter1.SpreadAngle = Vector2.new(0, 0)
 
 Safe_Pad = Instance.new("Part")
 Safe_Pad.Size = Vector3.new(5, 0.2, 5)
