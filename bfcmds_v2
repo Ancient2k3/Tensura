@@ -1,6 +1,6 @@
 -- Blox Fruits: Commands Scripts Fixed + Changed, HoangHien --
 local _WS, _CG, _RlS, _RS, _TS, _TPS, _StGui, _SGui, _GetFocusedButton, _GetCommands, _GetCorrectedCommands, _SettingsFrame, _SettingsScroll
-local EndPoint, StartPoint, OnFocused_SlideOut, OnFocused_SlideIn, intBGC_All, col1, col2, col3, _IsSpectatingSomeOne, RaphaelORB, PlaceHolder, ImageLB, At1, At2, Trail1
+local EndPoint, StartPoint, OnFocused_SlideOut, OnFocused_SlideIn, intBGC_All, col1, col2, col3, _IsSpectatingSomeOne, RaphaelORB, PlaceHolder, ImageLB, At1, At2, Trail1, Emitter1
 local _PLRS, _PLR, _Char, _Him, _He, _StoredBoats, _FirstSea, _SecondsSea, _ThirdSea, _ARandomPoint, _HHxScripts, _Worlds, Safe_Pad, _FlyIsLoaded
 local FA_VariableCheck_0, FA_Toggle, FA_Toggle_II, Cmdbar_ItsOnFocused, _SSCRL_Canvasmain, _ButtonHeight, _ButtonPadding, Its_SettingsUIEnable, numtest, thisisenable, intCLabel_Txc, _alreadyRunIYEdited, _AutoStatus, _CurrentTween, _AutoEnablePvp, _EnablePvpOne, _TweeningSpeed, _FAmode, _BaseHealth, _HalfHealth, _CurrentVersion, _SomeLetter
 local _SpecialVariables = {
@@ -174,7 +174,16 @@ Trail1.Attachment0 = At1
 Trail1.Attachment1 = At2
 Trail1.Color = ColorSequence.new(Color3.new(0, 1, 1), Color3.new(1, 1, 1))
 Trail1.Lifetime = 2
+Trail1.LightEmission = 1
+Trail1.TextureId = "rbxassetid://15706683841"
 Trail1.Transparency = NumberSequence.new(0, 1)
+
+Emitter1 = Instance.new("ParticleEmitter", RaphaelORB)
+Emitter1.Color = ColorSequence.new(Color3.new(0, 1, 1), Color3.new(1, 1, 1))
+Emitter1.Lifetime = 0.3
+Emitter1.LightEmission = 1
+Emitter1.TextureId = "rbxassetid://15706683841"
+Emitter1.Transparency = NumberSequence.new(0, 1)
 
 Safe_Pad = Instance.new("Part")
 Safe_Pad.Size = Vector3.new(5, 0.2, 5)
