@@ -180,7 +180,7 @@ Trail1.Transparency = NumberSequence.new(0, 1)
 
 Emitter1 = Instance.new("ParticleEmitter", RaphaelORB)
 Emitter1.Color = ColorSequence.new(Color3.new(0, 1, 1), Color3.new(1, 1, 1))
-Emitter1.Lifetime = NumberSequence.new(0.3, 0.3)
+Emitter1.Lifetime = NumberRange.new(0.3)
 Emitter1.LightEmission = 1
 Emitter1.Texture = "rbxassetid://15706683841"
 Emitter1.Transparency = NumberSequence.new(0, 1)
