@@ -18,6 +18,7 @@ local _SpecialVariables = {
     Is_Flying = false,
     Reset_Seconds = 0,
     Distance_Between_SPnPLR = 0,
+    DefaultWS = 0,
     UpStatTarget = "none"
 }
 
@@ -46,7 +47,9 @@ _ThirdSea = _WS.Map:FindFirstChild("TikiOutpost")
 _HalfHealth = _BaseHealth / 2
 _ARandomPoint = _SomeLetter[math.random(1, #_SomeLetter)]
 _HHxScripts = "RunningScript_" .. _ARandomPoint
-print("Calculating Your Currently Full Health: " .. _BaseHealth .. "\n• Half Health Result: " .. _HalfHealth)
+print("[Đầy đủ máu: " .. _BaseHealth .. " ]\n[Kết quả thu được, một nữa máu là: " .. _HalfHealth .. " ]")
+_SpecialVariables.DefaultWS = _WS.Characters[_PLR.Name]:GetAttribute("SpeedMultiplier")
+print("[Tốc độ di chuyển mặc định: " .. _SpecialVariables.DefaultWS .. " ]")
 
 _G.Commands_Script_Language_Test = {}
 numtest, thisisenable, intCLabel_Txc = 1, false, Color3.fromRGB(255, 255, 255)
@@ -144,7 +147,7 @@ RaphaelORB.Material = Enum.Material.Neon
 RaphaelORB.Shape = Enum.PartType.Ball
 RaphaelORB.CanCollide = false
 RaphaelORB.Transparency = 0.249
-print("[Script]: " .. _PLR.DisplayName .. " Pet, has been Created!")
+print("[Thú cưng ảo của " .. _PLR.DisplayName .. ", đã được tạo ra!]")
 
 PlaceHolder = Instance.new("BillboardGui", RaphaelORB)
 PlaceHolder.Adornee = RaphaelORB
@@ -199,7 +202,7 @@ Safe_Pad.Position = Vector3.new(_Him.Position.X, _Him.Position.Y + 1000000, _Him
 Safe_Pad.Anchored = true
 Safe_Pad.Transparency = 0.95
 Safe_Pad.Parent = _WS
-print("[Script]: Safe PAD Created!")
+print("[Khu vực an toàn đã hoàn tất sắp đặt!]")
 
 -- End --
 
@@ -266,9 +269,9 @@ function _Part(_cframe, _name)
     if not _WS:FindFirstChild(_HHxScripts) then
         local instancefolder_x = Instance.new("Folder", _WS)
         instancefolder_x.Name = _HHxScripts
-        print("Creating: Folder")
+        print("[Đang tạo thư mục: " .. _HHxScripts .. " ]")
     else
-        print("Loaded instance to: Storage")
+        print("[Đã lưu trữ " .. _name .. " đến thư mục: " .. _HHxScripts .. " ]")
     end
     
     local epoint = Instance.new("Part")
@@ -334,13 +337,13 @@ function _ToPart(_name, _h)
                 _BV("false")
                 _Noclip(false)
                 -- _RunningCheck:Disconnect()
-                warn("Check if it work!")
+                warn("[Kiểm tra nếu nó có đang hoạt động!?]")
             else
-                warn("Not in range, it not work :(")
+                warn("[Không trong phạm vi, không hoạt động!]")
             end
         -- end)
     else
-        _Notice("Commands", "Error not found Islands named: " .. _name, 1, "SendNotification")
+        _Notice("NGHE LỆNH", "[Không tìm thấy hòn đảo nào tên: " .. _name .. " ]", 1, "SendNotification")
     end
 end
 
@@ -349,9 +352,9 @@ function _Spectating(players_camera)
         local dcamera = game:GetService("Workspace").CurrentCamera
         dcamera.CameraSubject = players_camera.Character.HumanoidRootPart
         dcamera.CFrame = players_camera.Character.HumanoidRootPart.CFrame
-        print("Successfully spectating: " .. players_camera.DisplayName)
+        print("[Hiện đang quan sát: " .. players_camera.DisplayName .. " ]")
     else
-        print("Not found Humanoid of: " .. players_camera.DisplayName)
+        print("[Không tìm thấy đối tượng cần thiết cho hành vi quan sát trên người chơi tên " .. players_camera.DisplayName .. " ]")
     end
 end
 
@@ -374,7 +377,7 @@ function _ToPos(_Pos, _Number)
     local _Totals_Tries = 0
     for i = 1, _TryTimes do
         _Totals_Tries += 1
-        print("Trying: " .. _Totals_Tries)
+        print("[Đang thử lần: " .. _Totals_Tries .. " ]")
         _PLR.Character.HumanoidRootPart.CFrame = _Pos
     end
 end
@@ -523,12 +526,12 @@ end
 function _TpBoat_ToPos(pos)
     local _owner_boat = _ReturnOwnerBoatIs(_StoredBoats)
     local _IsBoatName = _owner_boat.Name or "N/A"
-    print("Boat founded: " .. _IsBoatName)
-    print("Owner Name: " .. _owner_boat:FindFirstChild("Owner").Value.Name)
+    print("[Tìm thấy thuyền tên: " .. _IsBoatName .. " ]")
+    print("[Chủ sỡ hữu là: " .. _owner_boat:FindFirstChild("Owner").Value.Name .. " ]")
     if _IsBoatName ~= "N/A" then
         _owner_boat.PrimaryPart.Position = pos
     else
-        print("No boat to teleported!")
+        print("[Không tìm thấy thuyền để dịch chuyển về!]")
     end
 end
 
@@ -548,9 +551,9 @@ function _Clipboard(_m)
     local _someTypeOfClipboard = setclipboard or toclipboard or set_clipboard or (Clipboard and Clipboard.set)
     if _someTypeOfClipboard then
         _someTypeOfClipboard(tostring(_m))
-        _Notice("Clipboard", "Saved to clipboard!\nText: " .. _m, 1, "SendNotification")
+        _Notice("SAO CHÉP", "[Đã lưu vào trang nhớ đệm!]\n[Nội dung: " .. _m .. " ]", 1, "SendNotification")
     else
-        _Notice("Clipboard", "Your exploit does not supported, saving clipboard!", 1, "SendNotification")
+        _Notice("SAO CHÉP", "[Ứng dụng thực thi mã không hỗ trợ chức năng này của script!]", 1, "SendNotification")
     end
 end
 
@@ -558,14 +561,14 @@ function _InvokeServer(Name, Worlds, ...)
     local _ArGs_Text = {...}
     _RlS.Remotes[Name]:InvokeServer(unpack(_ArGs_Text))
     task.spawn(function()
-        _Notice("World Commands", "Teleportation to " .. Worlds .. ". !", 1, "SendNotification")
+        _Notice("ĐIỀU KHIỂN THẾ GIỚI", "[Đang dịch chuyển tức thời đến: " .. Worlds .. ". !]", 1, "SendNotification")
     end)
 end
 
 function _GetFightingStyle(Name, FSName, ...)
     local _ArGs_Text = {...}
     _RlS.Remotes[Name]:InvokeServer(unpack(_ArGs_Text))
-    task.spawn(_Notice, "Fighting Style [Switched to]", "Current FS: " .. FSName, 1, "SendNotification")
+    task.spawn(_Notice, "ĐÃ THAY ĐỔI VÕ", "[Võ hiện tại: " .. FSName .. " ]", 1, "SendNotification")
 end
 
 function _PasteScripts(url, scripts)
@@ -576,7 +579,7 @@ function _PasteScripts(url, scripts)
     if success then
         scripts()
     else
-        print(result .. " <failed>!")
+        print("[thực thi mã " .. result .. " thất bại!]")
     end
 end
 
@@ -598,22 +601,22 @@ end
 function _FakeStatus(stat_name, stat_value)
     if table.find(fakestat_table.level, stat_name:lower()) then
         _PLR.Data.Level.Value = tonumber(stat_value)
-        _Notice("Commands", "Level changed to: " .. tostring(stat_value) .. " (visual)", 1, "SendNotification")
+        _Notice("NGHE LỆNH", "[Cấp độ đã thay đổi: " .. tostring(stat_value) .. " (hiệu ứng)]", 1, "SendNotification")
     elseif table.find(fakestat_table.beli, stat_name:lower()) then
         _PLR.Data.Beli.Value = tonumber(stat_value)
-        _Notice("Commands", "Beli changed to: " .. tostring(stat_value) .. " (visual)", 1, "SendNotification")
+        _Notice("NGHE LỆNH", "[Tiền ảo đã thay đổi: " .. tostring(stat_value) .. " (hiệu ứng)]", 1, "SendNotification")
     elseif table.find(fakestat_table.health, stat_name:lower()) then
         _PLR.Character.Humanoid.Health = tonumber(stat_value)
-        _Notice("Commands", "Health changed to: " .. tostring(stat_value) .. " (visual)", 1, "SendNotification")
+        _Notice("NGHE LỆNH", "[Máu ảo đã thay đổi: " .. tostring(stat_value) .. " (hiệu ứng)]", 1, "SendNotification")
     elseif table.find(fakestat_table.hidden, stat_name:lower()) then
         local pos_x, pos_y, pos_z, full_pos
         pos_x = makeround_number(_PLR.Character.HumanoidRootPart.Position.X)
         pos_y = makeround_number(_PLR.Character.HumanoidRootPart.Position.Y)
         pos_z = makeround_number(_PLR.Character.HumanoidRootPart.Position.Z)
         full_pos = pos_x .. ", " .. pos_y .. ", " .. pos_z
-        _Notice("Copied Position", "XYZ: " .. full_pos, 1, "SendNotification")
+        _Notice("LƯU VỊ TRÍ", "[XYZ: " .. full_pos .. " ]", 1, "SendNotification")
         setclipboard(full_pos)
-    else _Notice("Commands", "Invalidate status named!", 1, "SendNotification")
+    else _Notice("NGHE LỆNH", "[Tên nghe có vẻ không hợp lệ!?]", 1, "SendNotification")
     end
 end
 
@@ -706,7 +709,7 @@ function EveryCommands()
         if _PLR.Character and _PLR.Character:FindFirstChild("Humanoid") then
             _PLR.Character.Humanoid.Health = 0
         end
-        _Notice("Commands", "Character Reseted!", 1, "SendNotification")
+        _Notice("NGHE LỆNH", "Character Reseted!", 1, "SendNotification")
     elseif table.find(Commands_DataStorage["test"], DE_WorldVoice[1]) then
         loadstring(game:HttpGet(TestTable[1]))()
     elseif table.find(Commands_DataStorage["togglefly"], DE_WorldVoice[1]) then
@@ -714,38 +717,38 @@ function EveryCommands()
             loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/FLY.luau"))()
         end
         if not _SpecialVariables.Is_Flying then _SpecialVariables.Is_Flying = true
-            _Notice("Commands", "Fly Activated, Speed: " .. DE_WorldVoice[2], 1, "SendNotification")
+            _Notice("NGHE LỆNH", "Fly Activated, Speed: " .. DE_WorldVoice[2], 1, "SendNotification")
         else _SpecialVariables.Is_Flying = false
-            _Notice("Commands", "Fly Deactivated!", 1, "SendNotification")
+            _Notice("NGHE LỆNH", "Fly Deactivated!", 1, "SendNotification")
         end _G.Script_FlyingEnabled = _SpecialVariables.Is_Flying or false
         _G.Script_FlyingSpeed = DE_WorldVoice[2] or 1
     elseif table.find(Commands_DataStorage["exp"], DE_WorldVoice[1]) then
         loadstring(game:HttpGet("https://raw.githubusercontent.com/HoangHienXScripts/Scripts/refs/heads/chocolate/BloxFruits/AutoRedeemCodes_BF.luau"))()
-        _Notice("Commands", "Used Codes x2 Expierence!", 1, "SendNotification")
+        _Notice("NGHE LỆNH", "Used Codes x2 Expierence!", 1, "SendNotification")
     elseif table.find(Commands_DataStorage["sellfish"], DE_WorldVoice[1]) then
         _RlS.Modules.Net:FindFirstChild("RF/JobsRemoteFunction"):InvokeServer("FishingNPC", "SellCorruptedFish")
-        _Notice("Commands", "ALL Corrupted Fish has been Converted to Oni Token!", 1, "SendNotification")
+        _Notice("NGHE LỆNH", "ALL Corrupted Fish has been Converted to Oni Token!", 1, "SendNotification")
     elseif table.find(Commands_DataStorage["buyfruit"], DE_WorldVoice[1]) then
         local current_mn, money_lost = _PLR.Data.Beli.Value or 0
         if DE_WorldVoice[2] then
             _RlS.Remotes.CommF_:InvokeServer("PurchaseRawFruit", DE_WorldVoice[2], false)
             money_lost = current_mn - _PLR.Data.Beli.Value or 0
-            _Notice("Commands", "Purchased " .. DE_WorldVoice[2] .. " for " .. money_lost, 1, "SendNotification")
+            _Notice("NGHE LỆNH", "Purchased " .. DE_WorldVoice[2] .. " for " .. money_lost, 1, "SendNotification")
         else
-            _Notice("Commands", "What fruit do u wanna buy? writing name...", 1, "SendNotification")
+            _Notice("NGHE LỆNH", "What fruit do u wanna buy? writing name...", 1, "SendNotification")
         end
     elseif table.find(Commands_DataStorage["togglesafemode"], DE_WorldVoice[1]) then
         _SpecialVariables.Safemode_Enabled = _ReverseBOOLEAN(_SpecialVariables.Safemode_Enabled)
         if _SpecialVariables.Safemode_Enabled then
-            _Notice("Commands", "Health safety mode is enabled!", 1, "SendNotification")
+            _Notice("NGHE LỆNH", "Health safety mode is enabled!", 1, "SendNotification")
         else
-            _Notice("Commands", "Health safety mode is disabled!", 1, "SendNotification")
+            _Notice("NGHE LỆNH", "Health safety mode is disabled!", 1, "SendNotification")
         end
     elseif table.find(Commands_DataStorage["fakestat"], DE_WorldVoice[1]) then
         if DE_WorldVoice[2] and DE_WorldVoice[3] then
             _FakeStatus(DE_WorldVoice[2], DE_WorldVoice[3])
         else
-            _Notice("Commands", "Missing Type or Value to do fake status!", 1, "SendNotification")
+            _Notice("NGHE LỆNH", "Missing Type or Value to do fake status!", 1, "SendNotification")
         end
     elseif table.find(Commands_DataStorage["storefruits"], DE_WorldVoice[1]) then
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/DetectTool/refs/heads/main/CheckNStoreFruits"))()
@@ -753,24 +756,24 @@ function EveryCommands()
         _ToPart("MiddleTown_Island", Vector3.new(0, 9, 0))
         task.wait(0.05)
         _RlS.Modules.Net:FindFirstChild("RF/OniTempleTransportation"):InvokeServer("InitiateTeleportToTemple")
-        _Notice("Commands", "Teleported to Oni Realm Dimension!", 1, "SendNotification")
+        _Notice("NGHE LỆNH", "Teleported to Oni Realm Dimension!", 1, "SendNotification")
     elseif table.find(Commands_DataStorage["randomfruit"], DE_WorldVoice[1]) then
         _RlS.Remotes.CommF_:InvokeServer("Cousin", "BuyRedHead")
         _RlS.Remotes.CommF_:InvokeServer("Cousin", "BuySummer")
         _RlS.Remotes.CommF_:InvokeServer("Cousin", "Buy")
-        _Notice("Commands", "Randomized Fruits\n >> Successfully Tried <<", 1, "SendNotification")
+        _Notice("NGHE LỆNH", "Randomized Fruits\n >> Successfully Tried <<", 1, "SendNotification")
     elseif table.find(Commands_DataStorage["tweeningspeed"], DE_WorldVoice[1]) then
         if DE_WorldVoice[2] ~= "" or DE_WorldVoice[2] ~= nil then
-            --_Notice("Commands", "Tweening Speed Unchanged!", 1, "SendNotification")
+            --_Notice("NGHE LỆNH", "Tweening Speed Unchanged!", 1, "SendNotification")
         --else
             local new_TweeningSpeedValue = tonumber(DE_WorldVoice[2])
             _TweeningSpeed = new_TweeningSpeedValue
-            _Notice("Commands", "Tweening Speed Changed to " .. _TweeningSpeed, 1, "SendNotification")
+            _Notice("NGHE LỆNH", "Tweening Speed Changed to " .. _TweeningSpeed, 1, "SendNotification")
         end
     elseif table.find(Commands_DataStorage["spectate"], DE_WorldVoice[1]) then
         if not _IsSpectatingSomeOne then
             _IsSpectatingSomeOne = true
-            if DE_WorldVoice[2] then _Spectating(_AutoCorrectName(DE_WorldVoice[2])) else _Notice("Commands", "argument 2 must be a player name!", 1, "SendNotification") end
+            if DE_WorldVoice[2] then _Spectating(_AutoCorrectName(DE_WorldVoice[2])) else _Notice("NGHE LỆNH", "argument 2 must be a player name!", 1, "SendNotification") end
         else
             _IsSpectatingSomeOne = false
             local _SpectatingBackToSelf = _PLRS.LocalPlayer.Name
@@ -779,7 +782,7 @@ function EveryCommands()
     elseif table.find(Commands_DataStorage["followto"], DE_WorldVoice[1]) then
         if DE_WorldVoice[2] then
             _TwPos(_ReturnPlayerPos(_AutoCorrectName(DE_WorldVoice[2]).Name))
-            _Notice("Commands", "Currently Following to: " .. _AutoCorrectName(DE_WorldVoice[2]).Name, 1, "SendNotification")
+            _Notice("NGHE LỆNH", "Currently Following to: " .. _AutoCorrectName(DE_WorldVoice[2]).Name, 1, "SendNotification")
         end
     elseif table.find(Commands_DataStorage["iyedited"], DE_WorldVoice[1]) then
         if not _alreadyRunIYEdited then
@@ -793,7 +796,7 @@ function EveryCommands()
                 _Notice("IY-Edited", "Failed load, error: " .. result, 1, "SendNotification")
             end
         else
-            _Notice("Commands", "This command should be only used one time...", 1, "SendNotification")
+            _Notice("NGHE LỆNH", "This command should be only used one time...", 1, "SendNotification")
         end
     elseif table.find(Commands_DataStorage["cmds"], DE_WorldVoice[1]) then
         for i, key in ipairs(_OrderedCommands) do
@@ -803,24 +806,24 @@ function EveryCommands()
         _Notice("nah", "nothing here", 1, "DevConsoleVisible")
     elseif table.find(Commands_DataStorage["remotespy"], DE_WorldVoice[1]) then
         _PasteScripts("https://raw.githubusercontent.com/NganHa2k3/RobloxScript/refs/heads/item/Remote_Spy_For_Mobile", function()
-            _Notice("Commands", "Successfully loaded!", 1, "SendNotification")
+            _Notice("NGHE LỆNH", "Successfully loaded!", 1, "SendNotification")
         end)
         --print("Nothing for now!")
         --_Notice("Nah", "Nothing for now!", 1, "DevConsoleVisible")
     elseif table.find(Commands_DataStorage["explorer"], DE_WorldVoice[1]) then
         _PasteScripts("https://raw.githubusercontent.com/NganHa2k3/RobloxScript/refs/heads/item/Dex_Explorer_For_Mobile", function()
-            _Notice("Commands", "Successfully loaded!", 1, "SendNotification")
+            _Notice("NGHE LỆNH", "Successfully loaded!", 1, "SendNotification")
         end)
         --print("Nothing for now!")
         --_Notice("Nah", "Nothing for now!", 1, "DevConsoleVisible")
     elseif table.find(Commands_DataStorage["raid"], DE_WorldVoice[1]) then
-        if _FirstSea then _Notice("Commands", "Can't doing RAID at first sea\nso let me just buy it for fun if u had enough money or level...", 1, "SendNotification")
+        if _FirstSea then _Notice("NGHE LỆNH", "Can't doing RAID at first sea\nso let me just buy it for fun if u had enough money or level...", 1, "SendNotification")
             _RlS.Remotes.CommF_:InvokeServer("RaidsNpc", "Select", DE_WorldVoice[2])
-        elseif _SecondsSea then _Notice("Commands", "Starting RAID: " .. DE_WorldVoice[2] .. "...", 1, "SendNotification")
+        elseif _SecondsSea then _Notice("NGHE LỆNH", "Starting RAID: " .. DE_WorldVoice[2] .. "...", 1, "SendNotification")
             _RlS.Remotes.CommF_:InvokeServer("RaidsNpc", "Select", DE_WorldVoice[2])
             task.wait(0.05)
             fireclickdetector(_WS.Map.CircleIsland.RaidSummon2.Button.Main.ClickDetector)
-        elseif _ThirdSea then _Notice("Commands", "Starting RAID: " .. DE_WorldVoice[2] .. "...", 1, "SendNotification")
+        elseif _ThirdSea then _Notice("NGHE LỆNH", "Starting RAID: " .. DE_WorldVoice[2] .. "...", 1, "SendNotification")
             _RlS.Remotes.CommF_:InvokeServer("RaidsNpc", "Select", DE_WorldVoice[2])
             task.wait(0.05)
             warn("Current has nothing here...")
@@ -829,19 +832,19 @@ function EveryCommands()
         if DE_WorldVoice[2] == "lightning" and _SpecialVariables.Current_Event == "LightningEvents" then
             if not _SpecialVariables.Farm_LightningEvent then
                 _SpecialVariables.Farm_LightningEvent = true
-                _Notice("Commands", "Auto Farm Lightning NPC, Activated/On", 1, "SendNotification")
+                _Notice("NGHE LỆNH", "Auto Farm Lightning NPC, Activated/On", 1, "SendNotification")
             else
                 _SpecialVariables.Farm_LightningEvent = false
-                _Notice("Commands", "Auto Farm Lightning NPC, Deactivated/Off", 1, "SendNotification")
+                _Notice("NGHE LỆNH", "Auto Farm Lightning NPC, Deactivated/Off", 1, "SendNotification")
             end
         elseif DE_WorldVoice[2] == nil or DE_WorldVoice[2] == "" and _SpecialVariables.Current_Event == "" then
-            _Notice("Commands", "Currently has no event activited!", 1, "SendNotification")
+            _Notice("NGHE LỆNH", "Currently has no event activited!", 1, "SendNotification")
         end
     elseif table.find(Commands_DataStorage["console"], DE_WorldVoice[1]) then
         _Notice("nothing", "nothing", 1, "DevConsoleVisible")
-        _Notice("Commands", "Developer Console Opened!", 1, "SendNotification")
+        _Notice("NGHE LỆNH", "Developer Console Opened!", 1, "SendNotification")
     elseif table.find(Commands_DataStorage["maxvision"], DE_WorldVoice[1]) then
-        _Notice("Commands", "Observation Haki Vision Radius Has Increase to MAX LEVEL", 1, "SendNotification")
+        _Notice("NGHE LỆNH", "Observation Haki Vision Radius Has Increase to MAX LEVEL", 1, "SendNotification")
         _PLRS.LocalPlayer.VisionRadius.Value = 90000
         if _PLRS.LocalPlayer:GetAttribute("KenHaki") ~= true then
             firesignal(_PLRS.LocalPlayer.PlayerGui.MobileContextButtons.ContextButtonFrame.BoundActionKen.Button.MouseButton1Down)
@@ -877,20 +880,20 @@ function EveryCommands()
         local structure = _checktable(target, 0)
         --writefile(_PLRS.LocalPlayer.Name .. "_DATA_STRUCTURE.txt", structure)
         setclipboard(structure)
-        _Notice("Commands", "File saved: " .. _PLRS.LocalPlayer.Name .. "_DATA_STRUCTURE.txt\nCheck your file on device!", 1, "SendNotification")
+        _Notice("NGHE LỆNH", "File saved: " .. _PLRS.LocalPlayer.Name .. "_DATA_STRUCTURE.txt\nCheck your file on device!", 1, "SendNotification")
     elseif table.find(Commands_DataStorage["serverhop"], DE_WorldVoice[1]) then
-        _PasteScripts("https://raw.githubusercontent.com/Ancient2k3/Ability/main/ServerHop_Https", function() _Notice("Commands", "SERVER HOPPING IN FEW SECONDS!", 1, "SendNotification") end)
+        _PasteScripts("https://raw.githubusercontent.com/Ancient2k3/Ability/main/ServerHop_Https", function() _Notice("NGHE LỆNH", "SERVER HOPPING IN FEW SECONDS!", 1, "SendNotification") end)
     elseif table.find(Commands_DataStorage["allhaki"], DE_WorldVoice[1]) then
         _GetFightingStyle("CommF_", "Learned Geppo", "BuyHaki", _InvokeText["Haki"][1])
         _GetFightingStyle("CommF_", "Learned Buso", "BuyHaki", _InvokeText["Haki"][2])
         _GetFightingStyle("CommF_", "Learned FlashStep", "BuyHaki", _InvokeText["Haki"][3])
     elseif table.find(Commands_DataStorage["titles"], DE_WorldVoice[1]) then
         if not _PLR.PlayerGui.Main.Titles.Visible then _PLR.PlayerGui.Main.Titles.Visible = true else _PLR.PlayerGui.Main.Titles.Visible = false end
-        _Notice("Commands", "Titles UI is now: " .. _PLR.PlayerGui.Main.Titles.Visible, 1, "SendNotification")
+        _Notice("NGHE LỆNH", "Titles UI is now: " .. _PLR.PlayerGui.Main.Titles.Visible, 1, "SendNotification")
     elseif table.find(Commands_DataStorage["awakening"], DE_WorldVoice[1]) then
         local awkui = _PLR.PlayerGui.Main.AwakeningToggler
         if not awkui.Visible then awkui.Visible = true else awkui.Visible = false end
-        _Notice("Commands", "Awakening UI is now: " .. awkui.Visible, 1, "SendNotification")
+        _Notice("NGHE LỆNH", "Awakening UI is now: " .. awkui.Visible, 1, "SendNotification")
     elseif table.find(Commands_DataStorage["upstat"], DE_WorldVoice[1]) then
         local upstat_statement
         if DE_WorldVoice[2] and DE_WorldVoice[3] then
@@ -908,57 +911,57 @@ function EveryCommands()
             _AutoStatus = upstat_statement or false
             print("Disabled auto stat!")
             print(DE_WorldVoice[1] .. " [fs, ml/df, sh/sw, bl/pt, de/df, bf] [boolean]")
-            _Notice("Commands", "Open Developer Console!", 1, "DevConsoleVisible")
+            _Notice("NGHE LỆNH", "Open Developer Console!", 1, "DevConsoleVisible")
         end
     elseif table.find(Commands_DataStorage["jobid"], DE_WorldVoice[1]) then
         _Clipboard(game.JobId)
-        _Notice("Commands", "JobId: " .. game.JobId .. "\n -- Server JobId Saved --", 1, "SendNotification")
+        _Notice("NGHE LỆNH", "JobId: " .. game.JobId .. "\n -- Server JobId Saved --", 1, "SendNotification")
     elseif table.find(Commands_DataStorage["autofarmchest"], DE_WorldVoice[1]) then
         _PasteScripts("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/BloxFruits_Update_Dragon_ChestFarm_V001", function() print("-- Running Auto Farming Chest --") end)
     elseif table.find(Commands_DataStorage["loadscript"], DE_WorldVoice[1]) then
         if typeof(DE_WorldVoice[2]) == "string" or type(DE_WorldVoice[2]) == "string" then
-            if DE_WorldVoice[2] == "redz" then loadstring(game:HttpGet("https://raw.githubusercontent.com/tlredz/Scripts/refs/heads/main/main.luau"))() else _Notice("Commands", "Not Exist This Script Named " .. DE_WorldVoice[2], 1, "SendNotification") end
-        elseif typeof(DE_WorldVoice[2]) == "number" or type(DE_WorldVoice[2]) == "number" then _Notice("Commands", "I'm currently... dumb!", 1, "SendNotification")
-        else _Notice("Commands", "Invalid ARGS_2, Type Name!", 1, "SendNotification") end
+            if DE_WorldVoice[2] == "redz" then loadstring(game:HttpGet("https://raw.githubusercontent.com/tlredz/Scripts/refs/heads/main/main.luau"))() else _Notice("NGHE LỆNH", "Not Exist This Script Named " .. DE_WorldVoice[2], 1, "SendNotification") end
+        elseif typeof(DE_WorldVoice[2]) == "number" or type(DE_WorldVoice[2]) == "number" then _Notice("NGHE LỆNH", "I'm currently... dumb!", 1, "SendNotification")
+        else _Notice("NGHE LỆNH", "Invalid ARGS_2, Type Name!", 1, "SendNotification") end
     elseif table.find(Commands_DataStorage["bringboat"], DE_WorldVoice[1]) then
         --local boat = _ReturnOwnerBoatIs(_StoredBoats)
         --if not boat then
-        --    _Notice("Commands", "No boat found to teleport!", 1, "SendNotification")
+        --    _Notice("NGHE LỆNH", "No boat found to teleport!", 1, "SendNotification")
         --    return
         --end
         print("-- Running 'bringboat' Command! --")
         if DE_WorldVoice[2] == "?" then
-            _Notice("Commands", "Usage: bringboat self | bringboat <player> | bringboat x y z | bringboat seadanger5to6 (Third Sea only)", 1, "SendNotification")
+            _Notice("NGHE LỆNH", "Usage: bringboat self | bringboat <player> | bringboat x y z | bringboat seadanger5to6 (Third Sea only)", 1, "SendNotification")
         elseif DE_WorldVoice[2] == "self" then
             if _PLR.Character and _PLR.Character:FindFirstChild("HumanoidRootPart") then
                 local myPosition = _PLR.Character.HumanoidRootPart.Position
                 print(_PLR.DisplayName .. " Position at: " .. tostring(myPosition))
                 if _TpBoat_ToPos(myPosition) then
-                    _Notice("Commands", "Boat teleported to your position!", 1, "SendNotification")
+                    _Notice("NGHE LỆNH", "Boat teleported to your position!", 1, "SendNotification")
                 else
-                    _Notice("Commands", "Failed to teleport boat to your position!", 1, "SendNotification")
+                    _Notice("NGHE LỆNH", "Failed to teleport boat to your position!", 1, "SendNotification")
                 end
             else
-                _Notice("Commands", "Your character is not loaded!", 1, "SendNotification")
+                _Notice("NGHE LỆNH", "Your character is not loaded!", 1, "SendNotification")
             end
         elseif DE_WorldVoice[2] == "danger_5" then
             if _ThirdSea then
                 local defaultPos = Vector3.new(-42611, 0, 510)
                 if _TpBoat_ToPos(defaultPos) then
-                    _Notice("Commands", "Boat teleported to SEA Danger 5 nearby 6!", 1, "SendNotification")
+                    _Notice("NGHE LỆNH", "Boat teleported to SEA Danger 5 nearby 6!", 1, "SendNotification")
                 else
-                    _Notice("Commands", "Failed to teleport boat to SEA Danger 5 nearby 6!", 1, "SendNotification")
+                    _Notice("NGHE LỆNH", "Failed to teleport boat to SEA Danger 5 nearby 6!", 1, "SendNotification")
                 end
             else
-                _Notice("Commands", "The 'danger_5' option is only available in Third Sea!", 1, "SendNotification")
+                _Notice("NGHE LỆNH", "The 'danger_5' option is only available in Third Sea!", 1, "SendNotification")
             end
         elseif tonumber(DE_WorldVoice[2]) and tonumber(DE_WorldVoice[3]) and tonumber(DE_WorldVoice[4]) then
             local x, y, z = tonumber(DE_WorldVoice[2]), tonumber(DE_WorldVoice[3]), tonumber(DE_WorldVoice[4])
             local targetPos = Vector3.new(x, y, z)
             if _TpBoat_ToPos(targetPos) then
-                _Notice("Commands", "Boat teleported to position: " .. x .. ", " .. y .. ", " .. z, 1, "SendNotification")
+                _Notice("NGHE LỆNH", "Boat teleported to position: " .. x .. ", " .. y .. ", " .. z, 1, "SendNotification")
             else
-                _Notice("Commands", "Failed to teleport boat to position: " .. x .. ", " .. y .. ", " .. z, 1, "SendNotification")
+                _Notice("NGHE LỆNH", "Failed to teleport boat to position: " .. x .. ", " .. y .. ", " .. z, 1, "SendNotification")
             end
         else
             -- Check if DE_WorldVoice[2] is a player name --
@@ -973,12 +976,12 @@ function EveryCommands()
                 local targetPos = targetPlayer.Character.HumanoidRootPart.Position
                 print(targetPlayer.DisplayName .. " Position at: " .. tostring(targetPos))
                 if _TpBoat_ToPos(targetPos) then
-                    _Notice("Commands", "Boat teleported to " .. targetPlayer.DisplayName .. "'s position!", 1, "SendNotification")
+                    _Notice("NGHE LỆNH", "Boat teleported to " .. targetPlayer.DisplayName .. "'s position!", 1, "SendNotification")
                 else
-                    _Notice("Commands", "Failed to teleport boat to " .. targetPlayer.DisplayName .. "'s position!", 1, "SendNotification")
+                    _Notice("NGHE LỆNH", "Failed to teleport boat to " .. targetPlayer.DisplayName .. "'s position!", 1, "SendNotification")
                 end
             else
-                _Notice("Commands", "Invalid arguments or player not found! Use 'bringboat self', 'bringboat <player>', 'bringboat x y z', or 'bringboat seadanger5to6'", 1, "SendNotification")
+                _Notice("NGHE LỆNH", "Invalid arguments or player not found! Use 'bringboat self', 'bringboat <player>', 'bringboat x y z', or 'bringboat seadanger5to6'", 1, "SendNotification")
             end
         end
     elseif table.find(Commands_DataStorage["refunds"], DE_WorldVoice[1]) then
@@ -1026,20 +1029,20 @@ function EveryCommands()
         elseif DE_WorldVoice[2] == "saguine" or DE_WorldVoice[2] == "sg" then
             _GetFightingStyle("CommF_", "Saguine Art", _InvokeText["FightingStyle"][11])
         elseif DE_WorldVoice[2] == "?" then
-            print("All FightingStyle Code:\n • Normal: darkstep, electro, fishman, dragonbreath, superhuman, deathstep, electric, sharkman, dragontalon, godhuman, saguine \n • Short: dsv1, elv1, fm, db, sphm, dsv2, elv2, sm, dt, gh, sg")
+            print("Danh sách tất cả các tên gọi mã lệnh:\n • Tên đầy đủ: darkstep, electro, fishman, dragonbreath, superhuman, deathstep, electric, sharkman, dragontalon, godhuman, saguine \n • Tên viết tắt: dsv1, elv1, fm, db, sphm, dsv2, elv2, sm, dt, gh, sg")
             _Notice("Nah", "Nothing Here!", 1, "DevConsoleVisible")
         end
     elseif table.find(Commands_DataStorage["pvp"], DE_WorldVoice[1]) then
         if _AutoEnablePvp then
             _AutoEnablePvp = false
-            _Notice("Commands", "Auto Enable Pvp is Deactivated!", 1, "SendNotification")
+            _Notice("NGHE LỆNH", "Auto Enable Pvp is Deactivated!", 1, "SendNotification")
         else
             _AutoEnablePvp = true
-            _Notice("Commands", "Auto Enable Pvp is Activated!", 1, "SendNotification")
+            _Notice("NGHE LỆNH", "Auto Enable Pvp is Activated!", 1, "SendNotification")
         end
     elseif table.find(Commands_DataStorage["tobosses"], DE_WorldVoice[1]) then
         _ToNearbyBoss()
-        _Notice("Commands", "Founded Bosses: " .. _GetNearbyBossesName(), 1, "SendNotification")
+        _Notice("NGHE LỆNH", "Founded Bosses: " .. _GetNearbyBossesName(), 1, "SendNotification")
     elseif table.find(Commands_DataStorage["speed"], DE_WorldVoice[1]) then
         local myCharacterIn_WS = _WS.Characters[_PLR.Name]
         if myCharacterIn_WS then
@@ -1047,15 +1050,15 @@ function EveryCommands()
                 local new_SpeedValue = tonumber(DE_WorldVoice[2])
                 if new_SpeedValue >= 0.01 then
                     myCharacterIn_WS:SetAttribute("SpeedMultiplier", new_SpeedValue)
-                    _Notice("Commands", "Running & Walking speed changed/set to: " .. new_SpeedValue, 1, "SendNotification")
+                    _Notice("NGHE LỆNH", "Running & Walking speed changed/set to: " .. new_SpeedValue, 1, "SendNotification")
                 else
-                    _Notice("Commands", "Running & Walking speed can't be set 0 or lower!", 1, "SendNotification")
+                    _Notice("NGHE LỆNH", "Running & Walking speed can't be set 0 or lower!", 1, "SendNotification")
                 end
             elseif DE_WorldVoice[2] == "max" then
                 myCharacterIn_WS:SetAttribute("SpeedMultiplier", 10)
-                _Notice("Commands", "Running & Walking speed set maxium!", 1, "SendNotification")
+                _Notice("NGHE LỆNH", "Running & Walking speed set maxium!", 1, "SendNotification")
             elseif DE_WorldVoice[2] ~= "" or DE_WorldVoice[2] == " " then
-                _Notice("Commands", "Running & Walking speed try typing in a value number!", 1, "SendNotification")
+                _Notice("NGHE LỆNH", "Running & Walking speed try typing in a value number!", 1, "SendNotification")
             end
         end
     elseif table.find(Commands_DataStorage["dash"], DE_WorldVoice[1]) then
@@ -1065,45 +1068,45 @@ function EveryCommands()
                 local new_DashDistanceValue = tonumber(DE_WorldVoice[2])
                 if new_DashDistanceValue >= 0.01 then
                     myCharacterIn_WS:SetAttribute("DashLength", new_DashDistanceValue)
-                    _Notice("Commands", "Dash Distance increase to: " .. new_DashDistanceValue, 1, "SendNotification")
+                    _Notice("NGHE LỆNH", "Dash Distance increase to: " .. new_DashDistanceValue, 1, "SendNotification")
                 else
-                    _Notice("Commands", "Dash Distance can't be set 0 or lower!", 1, "SendNotification")
+                    _Notice("NGHE LỆNH", "Dash Distance can't be set 0 or lower!", 1, "SendNotification")
                 end
             elseif DE_WorldVoice[2] == "max" then
                 myCharacterIn_WS:SetAttribute("DashLength", 900)
-                _Notice("Commands", "Dash Distance set maxium!", 1, "SendNotification")
+                _Notice("NGHE LỆNH", "Dash Distance set maxium!", 1, "SendNotification")
             elseif DE_WorldVoice[2] ~= "" or DE_WorldVoice[2] == " " then
-                _Notice("Commands", "Dash Distance try typing in a dash value number!", 1, "SendNotification")
+                _Notice("NGHE LỆNH", "Dash Distance try typing in a dash value number!", 1, "SendNotification")
             end
         end
     elseif table.find(Commands_DataStorage["fastattack"], DE_WorldVoice[1]) then
         if not FA_VariableCheck_0 then
             FA_VariableCheck_0 = true
-            _Notice("Commands", "Hold on a seconds, Loading Scripts...", 1, "SendNotification")
+            _Notice("NGHE LỆNH", "Hold on a seconds, Loading Scripts...", 1, "SendNotification")
             _PasteScripts("https://raw.githubusercontent.com/NganHa2k3/Tensura/refs/heads/powerful/FA_QuickAttacks_OnEnemies", function()
-                _Notice("Commands", "Successfully Loaded Scripts: I!", 1, "SendNotification")
+                _Notice("NGHE LỆNH", "Successfully Loaded Scripts: I!", 1, "SendNotification")
             end)
             _PasteScripts("https://raw.githubusercontent.com/NganHa2k3/Tensura/refs/heads/powerful/FA_QuickAttacks_OnCharacters", function()
-                _Notice("Commands", "Successfully Loaded Scripts: II!", 1, "SendNotification")
+                _Notice("NGHE LỆNH", "Successfully Loaded Scripts: II!", 1, "SendNotification")
             end)
             FastAttack_Status()
         else
-            _Notice("Commands", "Already Loaded Scripts!", 1, "SendNotification")
+            _Notice("NGHE LỆNH", "Already Loaded Scripts!", 1, "SendNotification")
             FastAttack_Status()
         end
     elseif table.find(Commands_DataStorage["superfastattack"], DE_WorldVoice[1]) then
         if not FA_VariableCheck_0 then
             FA_VariableCheck_0 = true
-            _Notice("Commands", "Hold on a seconds, Loading Scripts...", 1, "SendNotification")
+            _Notice("NGHE LỆNH", "Hold on a seconds, Loading Scripts...", 1, "SendNotification")
             _PasteScripts("https://raw.githubusercontent.com/NganHa2k3/Tensura/refs/heads/powerful/FA_QuickAttacks_OnEnemies", function()
-                _Notice("Commands", "Successfully Loaded Scripts: I!", 1, "SendNotification")
+                _Notice("NGHE LỆNH", "Successfully Loaded Scripts: I!", 1, "SendNotification")
             end)
             _PasteScripts("https://raw.githubusercontent.com/NganHa2k3/Tensura/refs/heads/powerful/FA_QuickAttacks_OnCharacters", function()
-                _Notice("Commands", "Successfully Loaded Scripts: II!", 1, "SendNotification")
+                _Notice("NGHE LỆNH", "Successfully Loaded Scripts: II!", 1, "SendNotification")
             end)
             SuperFastAttack_Status()
         else
-            _Notice("Commands", "Already Loaded Scripts!", 1, "SendNotification")
+            _Notice("NGHE LỆNH", "Already Loaded Scripts!", 1, "SendNotification")
             SuperFastAttack_Status()
         end
     elseif table.find(Commands_DataStorage["attackmode"], DE_WorldVoice[1]) then
@@ -1119,7 +1122,7 @@ function EveryCommands()
     elseif table.find(Commands_DataStorage["setheight"], DE_WorldVoice[1]) then
         if _G._CurrentYAxis_XScript and DE_WorldVoice[2] then
             _G._CurrentYAxis_XScript = DE_WorldVoice[2]
-            _Notice("Commands", "Follow Specific | Hunt Nearest (Players) \nY Axis has been changed to: " .. DE_WorldVoice[2], 1, "SendNotification")
+            _Notice("NGHE LỆNH", "Follow Specific | Hunt Nearest (Players) \nY Axis has been changed to: " .. DE_WorldVoice[2], 1, "SendNotification")
         end
     elseif table.find(Commands_DataStorage["autofarmnearby"], DE_WorldVoice[1]) then
         _CT_Cancel()
@@ -1127,7 +1130,7 @@ function EveryCommands()
             _SpecialVariables.Farm_NormalNPC = false
             _BV("false")
             _Noclip(false)
-            _Notice("Commands", "Auto Follow Nearby Mobs is Deactivated!", 1, "SendNotification")
+            _Notice("NGHE LỆNH", "Auto Follow Nearby Mobs is Deactivated!", 1, "SendNotification")
         else
             _SpecialVariables.Farm_BossesNPC = false
             _SpecialVariables.Farm_NormalNPC = true
@@ -1135,18 +1138,18 @@ function EveryCommands()
             task.wait(0.5)
             _BV("true")
             _Noclip(true)
-            _Notice("Commands", "Auto Follow Nearby Mobs is Activated!", 1, "SendNotification")
+            _Notice("NGHE LỆNH", "Auto Follow Nearby Mobs is Activated!", 1, "SendNotification")
         end
     elseif table.find(Commands_DataStorage["autofarmlevels"], DE_WorldVoice[1]) then
         if not _G._FarmActivated then _G._FarmActivated = true
             if not _SpecialVariables.LoadedATF_LvlFunc then _SpecialVariables.LoadedATF_LvlFunc = true
                 _PasteScripts("https://raw.githubusercontent.com/Ancient2k3/NewProject/refs/heads/data/atf.luau", function()
-                    _Notice("Commands", "Loaded AutoFarmingLevels Function!", 1, "SendNotification")
+                    _Notice("NGHE LỆNH", "Loaded AutoFarmingLevels Function!", 1, "SendNotification")
                 end)
             end
-            _Notice("Commands", "Auto Farming Levels is now ON/Activated!", 1, "SendNotification")
+            _Notice("NGHE LỆNH", "Auto Farming Levels is now ON/Activated!", 1, "SendNotification")
         else _G._FarmActivated = false
-            _Notice("Commands", "Auto Farming Levels is now OFF/Deactivated!", 1, "SendNotification")
+            _Notice("NGHE LỆNH", "Auto Farming Levels is now OFF/Deactivated!", 1, "SendNotification")
         end
     elseif table.find(Commands_DataStorage["autofarmbosses"], DE_WorldVoice[1]) then
         _CT_Cancel()
@@ -1154,7 +1157,7 @@ function EveryCommands()
             _SpecialVariables.Farm_BossesNPC = false
             _BV("false")
             _Noclip(false)
-            _Notice("Commands", "Auto Follow Nearby Bosses is Deactivated!", 1, "SendNotification")
+            _Notice("NGHE LỆNH", "Auto Follow Nearby Bosses is Deactivated!", 1, "SendNotification")
         else
             _SpecialVariables.Farm_NormalNPC = false
             _SpecialVariables.Farm_BossesNPC = true
@@ -1162,7 +1165,7 @@ function EveryCommands()
             task.wait(0.5)
             _BV("true")
             _Noclip(true)
-            _Notice("Commands", "Auto Follow Nearby Bosses is Activated!", 1, "SendNotification")
+            _Notice("NGHE LỆNH", "Auto Follow Nearby Bosses is Activated!", 1, "SendNotification")
         end
     elseif table.find(Commands_DataStorage["travelingsea"], DE_WorldVoice[1]) then
         if DE_WorldVoice[2] == "1" then
@@ -1377,7 +1380,7 @@ function FastAttack_Status()
             end
             _G.EnableFastAttack_Players = true
         end
-        _Notice("Commands", "Fast Attacking Normal is On/Activated!", 1, "SendNotification")
+        _Notice("NGHE LỆNH", "[Tự động đánh nhanh hiện đang (BẬT)]", 1, "SendNotification")
     else
         FA_Toggle = false
         if _FAmode == 1 then
@@ -1391,7 +1394,7 @@ function FastAttack_Status()
             end
             _G.EnableFastAttack_Players = false
         end
-        _Notice("Commands", "Fast Attacking Normal is Off/Deactivated!", 1, "SendNotification")
+        _Notice("NGHE LỆNH", "[Tự động đánh nhanh hiện đang (TẮT)]", 1, "SendNotification")
     end
 end
 
@@ -1417,7 +1420,7 @@ function SuperFastAttack_Status()
             _G.EnableFastAttack_Players = true
             _G.SuperFastAttack_Players = true
         end
-        _Notice("Commands", "Fast Attacking Overpower is On/Activated!", 1, "SendNotification")
+        _Notice("NGHE LỆNH", "Fast Attacking Overpower is On/Activated!", 1, "SendNotification")
     else
         FA_Toggle_II = false
         if _FAmode == 1 then
@@ -1439,7 +1442,7 @@ function SuperFastAttack_Status()
             _G.EnableFastAttack_Players = false
             _G.SuperFastAttack_Players = false
         end
-        _Notice("Commands", "Fast Attacking Overpower is Off/Deactivated!", 1, "SendNotification")
+        _Notice("NGHE LỆNH", "Fast Attacking Overpower is Off/Deactivated!", 1, "SendNotification")
     end
 end
 
@@ -1514,7 +1517,7 @@ end
 _MouseButton1Click(_GetFocusedButton, function()
     if _GetFocusedButton.Text == "<" and _GetCommands.Position == EndPoint then
         _GetFocusedButton.Text = ">"
-        print("You're used button to closed activated cmdbar =))")
+        print("[Bạn đã sử dụng nút ấn '<' để đóng bảng lệnh!?]")
         OnFocused_SlideIn:Play()
     else
         _GetCommands:CaptureFocus()
@@ -1522,7 +1525,7 @@ _MouseButton1Click(_GetFocusedButton, function()
 end)
 
 _FocusLost(_GetCommands, enterPressed, function()
-    print("You're leave activated cmdbar... and have done something!")
+    print("[Đã rời bỏ bảng lệnh... có lẽ đã thực hiện điều gì đó!?]")
     Cmdbar_ItsOnFocused = false
     OnFocused_SlideIn:Play()
     _GetFocusedButton.Text = _G.Commands_Script_Language_Test[2] or ">"
@@ -1531,7 +1534,7 @@ _FocusLost(_GetCommands, enterPressed, function()
 end)
 
 _GetCommands.Focused:Connect(function()
-    print("You're on activated cmdbar, now waiting...")
+    print("[Đang kích hoạt bảng lệnh!]")
     Cmdbar_ItsOnFocused = true
     OnFocused_SlideOut:Play()
     _GetFocusedButton.Text = _G.Commands_Script_Language_Test[3] or "<"
@@ -1567,7 +1570,7 @@ _RS.RenderStepped:Connect(function()
         _SpecialVariables.Reset_Seconds += 1
         if _SpecialVariables.Reset_Seconds >= 2400 then _SpecialVariables.Reset_Seconds = 0
             local _NewestVersion = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Status/refs/heads/main/Games/BFCommands_UPD.luau"))()
-            print(" [This is Important!] \n [Checking Update]: " .. _NewestVersion)
+            print(" [CẦN THIẾT] \n [KIỂM TRA PHIÊN BẢN: " .. _NewestVersion .. " ]")
             if _CurrentVersion < _NewestVersion then
                 _TPS:Teleport(game.PlaceId, _PLR)
                 task.spawn(function() _PLR:Kick("ĐANG UPDATE BẢN CẬP NHẬP SCRIPT MỚI!") end)
@@ -1596,8 +1599,9 @@ _RS.RenderStepped:Connect(function(deltaTime)
                 RaphaelORB.CFrame = CFrame.new(_PLR.Character.HumanoidRootPart.Position)
                 _spectatepath(RaphaelORB)
                 _SpecialVariables.Is_LowHealth = true
-                print("[SAFE MODE]: You're Getting Low Health!\nCurrent HP: " .. _updatedhealth)
-                _Notice("Safety Mode", "Low Health Detected, Goto SAFE ZONE!\nCurrent HP: " .. _updatedhealth, 1, "SendNotification")
+                _WS.Characters[_PLR.Name]:SetAttribute("SpeedMultiplier", 9)
+                print("[CHẾ ĐỘ AN TOÀN]: Lượng máu hiện tại đang thấp!\n[Máu hiện tại: " .. _updatedhealth .. " ]")
+                _Notice("CHẾ ĐỘ AN TOÀN", "[Lượng máu hiện tại đang thấp, vào chế độ an toàn ngay lập tức kích hoạt!]", 1, "SendNotification")
             end
         else
             if _SpecialVariables.Is_LowHealth then
@@ -1605,8 +1609,9 @@ _RS.RenderStepped:Connect(function(deltaTime)
                 --_spectatepath(_PLR.Character.HumanoidRootPart)
                 _WS.CurrentCamera.CameraSubject = _PLR.Character.Humanoid
                 _SpecialVariables.Is_LowHealth = false
-                print("[SAFE MODE]: That Better!\nCurrent HP: " .. _updatedhealth)
-                _Notice("Safety Mode", "Health Restored, Back to Surface!\nCurrent HP: " .. _updatedhealth, 1, "SendNotification")
+                _WS.Characters[_PLR.Name]:SetAttribute("SpeedMultiplier", _SpecialVariables.DefaultWS)
+                print("[CHẾ ĐỘ AN TOÀN]: Đã tốt hơn rồi!\n[Máu hiện tại: " .. _updatedhealth .. " ]")
+                _Notice("CHẾ ĐỘ AN TOÀN", "[Đã hồi phục đầy đủ... trong mức độ an toàn, trở về vị trí!]", 1, "SendNotification")
             end
         end
     end _updatepart(_PLR, Safe_Pad)
