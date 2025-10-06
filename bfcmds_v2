@@ -137,7 +137,7 @@ _SettingsScroll.Visible = true
 RaphaelORB = Instance.new("Part", _WS)
 RaphaelORB.Size = Vector3.new(1.25, 1.25, 1.25)
 RaphaelORB.Color = Color3.fromRGB(255, 255, 255)
-RaphaelORB.Position = Vector3.new(0, 0, 0)
+RaphaelORB.Position = Vector3.new(0, 100000, 0)
 RaphaelORB.Anchored = true
 RaphaelORB.Name = _PLR.DisplayName .. " Pet"
 RaphaelORB.Material = Enum.Material.Neon
@@ -159,8 +159,8 @@ ImageLB.Position = UDim2.new(0, 0, 0, 0)
 ImageLB.Size = UDim2.new(0, 200, 0, 50)
 ImageLB.TextScaled = false
 ImageLB.TextSize = 12
-ImageLB.TextColor3 = Color3.new(1, 0, 1)
-ImageLB.Font = Enum.Font.Code
+ImageLB.TextColor3 = Color3.new(0, 1, 0)
+ImageLB.Font = Enum.Font.PatrickHand
 ImageLB.Text = "[Hi " .. _PLR.DisplayName .. " (Master)]"
 ImageLB.Visible = true
 
@@ -183,7 +183,7 @@ Emitter1.Lifetime = NumberRange.new(0.3)
 Emitter1.LightEmission = 1
 Emitter1.Texture = "rbxassetid://107520133786551"
 Emitter1.Transparency = NumberSequence.new(0, 1)
-Emitter1.Size = NumberSequence.new(1)
+Emitter1.Size = NumberSequence.new(0.45)
 Emitter1.Rate = 50
 Emitter1.VelocityInheritance = 0
 Emitter1.Speed = NumberRange.new(1)
@@ -654,6 +654,7 @@ local Commands_DataStorage, TestTable = {
     ["refunds"] = {"refunds", "rf"},
     ["race"] = {"race", "reroll"},
     ["raid"] = {"raid", "chip"},
+    ["storefruits"] = {"storefruits", "sf"},
     ["fastattack"] = {"fastattack", "fa"},
     ["superfastattack"] = {"superfastattack", "sfa"},
     ["attackmode"] = {"attackmode", "am"},
@@ -684,7 +685,7 @@ local Commands_DataStorage, TestTable = {
 
 local _OrderedCommands = {
     "reset", "randomfruit", "test", "tobosses", "serverhop", "maxvision", "autofarmchest", "tweeningspeed", "cmds", "console", "speed", "dash", "spectate", "followto", "loadscript", "melee", "savingdump", "upstat", "jobid", "autofarmnearby", "autofarmlevels", "bringboat",
-    "island", "refunds", "race", "raid", "fastattack", "superfastattack", "attackmode", "setfarmevent", "autofarmbosses", "buyfruit",
+    "island", "refunds", "race", "raid", "storefruits", "fastattack", "superfastattack", "attackmode", "setfarmevent", "autofarmbosses", "buyfruit",
     "pvp", "togglefly", "exp", "allhaki", "setheight", "removehrpbodyvelocity", "iyedited", "remotespy", "titles", "awakening", "fakestat",
     "explorer", "travelingsea", "suggestiontextcolor", "settings", "onirealm", "sellfish", "togglesafemode"
 }
@@ -743,6 +744,8 @@ function EveryCommands()
         else
             _Notice("Commands", "Missing Type or Value to do fake status!", 1, "SendNotification")
         end
+    elseif table.find(Commands_DataStorage["storefruits"], DE_WorldVoice[1]) then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/DetectTool/refs/heads/main/CheckNStoreFruits"))()
     elseif table.find(Commands_DataStorage["onirealm"], DE_WorldVoice[1]) then
         _ToPart("MiddleTown_Island", Vector3.new(0, 9, 0))
         task.wait(0.05)
