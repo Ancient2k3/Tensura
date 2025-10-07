@@ -1050,12 +1050,14 @@ function EveryCommands()
                 local new_SpeedValue = tonumber(DE_WorldVoice[2])
                 if new_SpeedValue >= 0.01 then
                     myCharacterIn_WS:SetAttribute("SpeedMultiplier", new_SpeedValue)
+                    _SpecialVariables.DefaultWS = new_SpeedValue
                     _Notice("NGHE LỆNH", "Running & Walking speed changed/set to: " .. new_SpeedValue, 1, "SendNotification")
                 else
                     _Notice("NGHE LỆNH", "Running & Walking speed can't be set 0 or lower!", 1, "SendNotification")
                 end
             elseif DE_WorldVoice[2] == "max" then
                 myCharacterIn_WS:SetAttribute("SpeedMultiplier", 10)
+                _SpecialVariables.DefaultWS = 10
                 _Notice("NGHE LỆNH", "Running & Walking speed set maxium!", 1, "SendNotification")
             elseif DE_WorldVoice[2] ~= "" or DE_WorldVoice[2] == " " then
                 _Notice("NGHE LỆNH", "Running & Walking speed try typing in a value number!", 1, "SendNotification")
