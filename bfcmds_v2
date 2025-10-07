@@ -19,6 +19,7 @@ local _SpecialVariables = {
     Reset_Seconds = 0,
     Distance_Between_SPnPLR = 0,
     DefaultWS = 0,
+    DelayOnORB = 0.2,
     UpStatTarget = "none"
 } _G.SafetyHP_RANGE = _G.SafetyHP_RANGE or 2
 
@@ -1598,7 +1599,7 @@ _RS.RenderStepped:Connect(function(deltaTime)
         local _updatedhealth = _PLR.Character.Humanoid.Health
         if _updatedhealth <= _HalfHealth then
             if not _SpecialVariables.Is_LowHealth then
-                RaphaelORB.CFrame = CFrame.new(_PLR.Character.HumanoidRootPart.Position)
+                RaphaelORB.CFrame = CFrame.new(_PLR.Character.HumanoidRootPart.Position) wait(_SpecialVariables.DelayOnORB)
                 _spectatepath(RaphaelORB)
                 _SpecialVariables.Is_LowHealth = true
                 _WS.Characters[_PLR.Name]:SetAttribute("SpeedMultiplier", 9)
@@ -1607,7 +1608,7 @@ _RS.RenderStepped:Connect(function(deltaTime)
             end
         else
             if _SpecialVariables.Is_LowHealth then
-                RaphaelORB.CFrame = CFrame.new(0, 99999, 0)
+                RaphaelORB.CFrame = CFrame.new(0, 99999, 0) wait(_SpecialVariables.DelayOnORB)
                 --_spectatepath(_PLR.Character.HumanoidRootPart)
                 _WS.CurrentCamera.CameraSubject = _PLR.Character.Humanoid
                 _SpecialVariables.Is_LowHealth = false
