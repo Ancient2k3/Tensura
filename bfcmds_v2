@@ -566,6 +566,17 @@ function _InvokeServer(Name, Worlds, ...)
     end)
 end
 
+function _GetFruitSpawned()
+    local base_fruit = _WS:FindFirstChild("Fruit ")
+    if base_fruit and base_fruit:FindFirstChild("Handle") then _CT_Cancel()
+        if _PLR.Character and _PLR.Character:FindFirstChild("HumanoidRootPart") and _PLR.Character:FindFirstChild("Humanoid").Health > 0 then
+            local hrp = _PLR.Character.HumanoidRootPart
+            local handle = base_fruit.Handle
+            hrp.CFrame = CFrame.new(handle.Position + Vector3.new(0, 0.5, 0))
+        end
+    end
+end
+
 function _GetFightingStyle(Name, FSName, ...)
     local _ArGs_Text = {...}
     _RlS.Remotes[Name]:InvokeServer(unpack(_ArGs_Text))
@@ -1651,6 +1662,8 @@ _RS.RenderStepped:Connect(function()
         end
     end
 end)
+
+_RS.RenderStepped:Connect(_GetFruitSpawned)
 
 _AddCornerUI(_GetCommands, 0.2)
 _AddCornerUI(_GetFocusedButton, 0.2)
