@@ -20,7 +20,7 @@ local _SpecialVariables = {
     Distance_Between_SPnPLR = 0,
     DefaultWS = 0,
     UpStatTarget = "none"
-}
+} _G.SafetyHP_RANGE = _G.SafetyHP_RANGE or 2
 
 _CurrentVersion = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Status/refs/heads/main/Games/BFCommands_UPD.luau"))()
 _SomeLetter = {"H", "O", "A", "N", "G", "H", "I", "E", "N", "X", "S", "C", "R", "I", "P", "T", "S"}
@@ -44,7 +44,7 @@ _Worlds = _WS:WaitForChild("_WorldOrigin")
 _FirstSea = _WS.Map:FindFirstChild("MobBoss") -- I hate Github for this slow update
 _SecondsSea = _WS.Map:FindFirstChild("GreenBit")
 _ThirdSea = _WS.Map:FindFirstChild("TikiOutpost")
-_HalfHealth = _BaseHealth / 2
+_HalfHealth = _BaseHealth / _G.SafetyHP_RANGE
 _ARandomPoint = _SomeLetter[math.random(1, #_SomeLetter)]
 _HHxScripts = "RunningScript_" .. _ARandomPoint
 print("[Đầy đủ máu: " .. _BaseHealth .. " ]\n[Kết quả thu được, một nữa máu là: " .. _HalfHealth .. " ]")
