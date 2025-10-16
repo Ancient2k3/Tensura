@@ -53,8 +53,8 @@ _button.Visible = _somedata.button.visibility
 _uic.CornerRadius = UDim.new(unpack(_somedata.button.corner))
 
 function mb1c(t, s) t.MouseButton1Click:Connect(s) end
-function nearest_user_character(r_ranGe)
-    local t, mh, ir = nil, math.huge, r_ranGe or 50
+function nearest_user_character()
+    local t, mh, ir = nil, math.huge, 1000
     for i, v in ipairs(_plrs:GetPlayers()) do
         if v ~= _plr and v.Character:FindFirstChild("HumanoidRootPart") then
             local rG = (_plr.Character.HumanoidRootPart.Position - v.Character.HumanoidRootPart.Position).magnitude
@@ -68,7 +68,7 @@ end
 
 function tboolean(b) return not b end
 function lookat_nearest_character(t_data)
-    local target = nearest_user_character(1000)
+    local target = nearest_user_character()
     local position_data = t_data or {0, 0, 0}
     if type(position_data) == "table" and target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") then
         local hrp = target.Character.HumanoidRootPart
