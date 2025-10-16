@@ -7,7 +7,7 @@ _core = game:GetService("CoreGui")
 
 local _plr, _camera
 _plr = _plrs.LocalPlayer
-_camera = _ws:WaitForChild("CurrentCamera")
+_camera = _ws.CurrentCamera
 
 _G.AimingBodyPart = _G.AimingBodyPart or "HumanoidRootPart"
 local _somedata = {
