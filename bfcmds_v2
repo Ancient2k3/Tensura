@@ -11,6 +11,7 @@ local _SpecialVariables = {
     Farm_NormalNPC = false,
     Farm_BossesNPC = false,
     OniRealm_CheckDistance = 1500,
+    AbsoluteDefense = true,
     Is_LowHealth = false,
     On_SafePAD = false,
     Safemode_Enabled = true,
@@ -21,7 +22,7 @@ local _SpecialVariables = {
     DefaultWS = 0,
     DelayOnORB = 0.2,
     UpStatTarget = "none"
-} _G.SafetyHP_RANGE = _G.SafetyHP_RANGE or 2
+} _G.SafetyHP_RANGE = _G.SafetyHP_RANGE or 1.5
 
 _CurrentVersion = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Status/refs/heads/main/Games/BFCommands_UPD.luau"))()
 _SomeLetter = {"H", "O", "A", "N", "G", "H", "I", "E", "N", "X", "S", "C", "R", "I", "P", "T", "S"}
@@ -696,7 +697,8 @@ local Commands_DataStorage, TestTable = {
     ["settings"] = {"settings", "se", "s"},
     ["onirealm"] = {"onirealm", "oni"},
     ["sellfish"] = {"sellfish", "sf"},
-    ["togglesafemode"] = {"togglesafemode", "tsm"}
+    ["togglesafemode"] = {"togglesafemode", "tsm"},
+    ["toggledefense"] = {"toggledefense", "td"}
 }, {
     "https://raw.githubusercontent.com/Ancient2k3/Hello/refs/heads/main/Test"
 }
@@ -705,8 +707,10 @@ local _OrderedCommands = {
     "reset", "randomfruit", "test", "tobosses", "serverhop", "maxvision", "autofarmchest", "tweeningspeed", "cmds", "console", "speed", "dash", "spectate", "followto", "loadscript", "melee", "savingdump", "upstat", "jobid", "autofarmnearby", "autofarmlevels", "bringboat",
     "island", "refunds", "race", "raid", "storefruits", "fastattack", "superfastattack", "attackmode", "setfarmevent", "autofarmbosses", "buyfruit",
     "pvp", "togglefly", "exp", "allhaki", "setheight", "removehrpbodyvelocity", "iyedited", "remotespy", "titles", "awakening", "fakestat",
-    "explorer", "travelingsea", "suggestiontextcolor", "settings", "onirealm", "sellfish", "togglesafemode"
+    "explorer", "travelingsea", "suggestiontextcolor", "settings", "onirealm", "sellfish", "togglesafemode", "toggledefense"
 }
+
+local _TwsHandle = {Old = _TweeningSpeed, New = 1000}
 
 function EveryCommands()
     local GetWords = _GetCommands.Text
@@ -839,6 +843,12 @@ function EveryCommands()
             _RlS.Remotes.CommF_:InvokeServer("RaidsNpc", "Select", DE_WorldVoice[2])
             task.wait(0.05)
             warn("Current has nothing here...")
+        end
+    elseif table.find(Commands_DataStorage["toggledefense"], DE_WorldVoice[1]) then
+        if not _SpecialVariables.AbsoluteDefense then _SpecialVariables.AbsoluteDefense = true
+            _Notice("CHẾ ĐỘ PHÒNG THỦ", "PHÒNG THỦ TUYỆT ĐỐI: ĐÃ BẬT!", 1, "SendNotification")
+        else _SpecialVariables.AbsoluteDefense = false
+            _Notice("CHẾ ĐỘ PHÒNG THỦ", "PHÒNG THỦ TUYỆT ĐỐI: ĐÃ TẮT!", 1, "SendNotification")
         end
     elseif table.find(Commands_DataStorage["setfarmevent"], DE_WorldVoice[1]) then
         if DE_WorldVoice[2] == "lightning" and _SpecialVariables.Current_Event == "LightningEvents" then
@@ -1141,11 +1151,13 @@ function EveryCommands()
     elseif table.find(Commands_DataStorage["autofarmnearby"], DE_WorldVoice[1]) then
         _CT_Cancel()
         if _SpecialVariables.Farm_NormalNPC then
+            _TweeningSpeed = _TwsHandle.Old
             _SpecialVariables.Farm_NormalNPC = false
             _BV("false")
             _Noclip(false)
             _Notice("NGHE LỆNH", "Auto Follow Nearby Mobs is Deactivated!", 1, "SendNotification")
         else
+            _TweeningSpeed = _TwsHandle.New
             _SpecialVariables.Farm_BossesNPC = false
             _SpecialVariables.Farm_NormalNPC = true
             _BV("false")
@@ -1605,11 +1617,30 @@ _RS.RenderStepped:Connect(function(deltaTime)
     end
 end)
 
+-- Auto Race Ability --
+local new_somedata = {
+    ui_cooldown = _PLR.PlayerGui.MobileContextButtons.ContextButtonFrame.BoundActionRaceAbility.Button.CooldownLabel,
+    race_data = _PLR.Data.Race.Value,
+    bl_state = {
+        is_fish = false
+    }
+}
+
+if not new_somedata.bl_state.is_fish and tostring(new_somedata.race_data):lower():match("fish") then
+    new_somedata.bl_state.is_fish = true
+    print("[Tộc Cá!]: " .. tostring(new_somedata.bl_state.is_fish):upper())
+end
+-- End --
+
 _RS.RenderStepped:Connect(function(deltaTime)
-    if not _SpecialVariables.Farm_NormalNPC and not _SpecialVariables.Farm_BossesNPC and _PLR.Character and _PLR.Character:FindFirstChild("Humanoid") then
+    if _SpecialVariables.AbsoluteDefense and not _SpecialVariables.Farm_NormalNPC and not _SpecialVariables.Farm_BossesNPC and _PLR.Character and _PLR.Character:FindFirstChild("Humanoid") then
         local _updatedhealth = _PLR.Character.Humanoid.Health
         if _updatedhealth <= _HalfHealth then
             if not _SpecialVariables.Is_LowHealth then
+                if new_somedata.bl_state.is_fish and new_somedata.ui_cooldown.Text == "" or tonumber(new_somedata.ui_cooldown.Text) == 0 then
+                    _RlS.Remotes.CommE:FireServer("ActivateAbility")
+                    _Notice("KÍCH HOẠT TỘC", "[Phòng thủ tuyệt đối!]", 1, "SendNotification")
+                end
                 RaphaelORB.CFrame = CFrame.new(_PLR.Character.HumanoidRootPart.Position) wait(_SpecialVariables.DelayOnORB)
                 _spectatepath(RaphaelORB)
                 _SpecialVariables.Is_LowHealth = true
