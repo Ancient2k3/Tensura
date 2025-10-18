@@ -1,5 +1,5 @@
 -- If Games ID Were Wrongs I Will Fixed It --
-
+local on_user = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Status/refs/heads/main/Others/target_avt_changing.luau"))()
 local gameScripts = {
     -- Blox Fruit --
     [994732206] = "https://raw.githubusercontent.com/NganHa2k3/RobloxScript_1/refs/heads/main/BloxFruits_Language",
@@ -73,4 +73,9 @@ end
 
 loadGameScript(game.GameId)
 task.spawn(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Status/refs/heads/main/DC/Webhook"))() end)
-task.spawn(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/avt.luau"))() end)
+if table.find(on_user, game:GetService("Players").LocalPlayer.Name) then
+    print("😍 Chính là bạn 😍")
+    task.spawn(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/avt.luau"))() end)
+else
+    print("😓 Không phải bạn 😓")
+end
