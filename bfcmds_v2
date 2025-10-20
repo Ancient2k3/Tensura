@@ -584,6 +584,16 @@ function _GetFightingStyle(Name, FSName, ...)
     task.spawn(_Notice, "ĐÃ THAY ĐỔI VÕ", "[Võ hiện tại: " .. FSName .. " ]", 1, "SendNotification")
 end
 
+function _active_race_ability()
+    local ui_check_boundaction = _PLR.PlayerGui.MobileContextButtons.ContextButtonFrame:FindFirstChild("BoundActionRaceAbility")
+    if ui_check_boundaction then
+        local ui_check_cooldown = ui_check_boundaction:FindFirstChild("Button").CooldownLabel
+        if ui_check_cooldown and ui_check_cooldown.Text == "" or tonumber(ui_check_cooldown.Text) == 0 then
+            _RlS.Remotes.CommE:FireServer("ActivateAbility")
+        end
+    end 
+end
+
 function _PasteScripts(url, scripts)
     local success, result = pcall(function()
         loadstring(game:HttpGet(url))()
@@ -1617,30 +1627,15 @@ _RS.RenderStepped:Connect(function(deltaTime)
     end
 end)
 
--- Auto Race Ability --
-local new_somedata = {
-    ui_cooldown = _PLR.PlayerGui.MobileContextButtons.ContextButtonFrame.BoundActionRaceAbility.Button.CooldownLabel,
-    race_data = _PLR.Data.Race.Value,
-    bl_state = {
-        is_fish = false
-    }
-}
-
-if not new_somedata.bl_state.is_fish and tostring(new_somedata.race_data):lower():match("fish") then
-    new_somedata.bl_state.is_fish = true
-    print("[Tộc Cá!]: " .. tostring(new_somedata.bl_state.is_fish):upper())
-end
--- End --
-
 _RS.RenderStepped:Connect(function(deltaTime)
     if _SpecialVariables.AbsoluteDefense and not _SpecialVariables.Farm_NormalNPC and not _SpecialVariables.Farm_BossesNPC and _PLR.Character and _PLR.Character:FindFirstChild("Humanoid") then
         local _updatedhealth = _PLR.Character.Humanoid.Health
         if _updatedhealth <= _HalfHealth then
             if not _SpecialVariables.Is_LowHealth then
-                if new_somedata.bl_state.is_fish and new_somedata.ui_cooldown.Text == "" or tonumber(new_somedata.ui_cooldown.Text) == 0 then
-                    _RlS.Remotes.CommE:FireServer("ActivateAbility")
-                    _Notice("KÍCH HOẠT TỘC", "[Phòng thủ tuyệt đối!]", 1, "SendNotification")
-                end
+                -- New Defense --
+                _active_race_ability()
+                _Notice("KÍCH HOẠT TỘC", "[Phòng thủ tuyệt đối!]", 1, "SendNotification")
+                -- Requires Shark Race V3 or V4 --
                 RaphaelORB.CFrame = CFrame.new(_PLR.Character.HumanoidRootPart.Position) wait(_SpecialVariables.DelayOnORB)
                 _spectatepath(RaphaelORB)
                 _SpecialVariables.Is_LowHealth = true
