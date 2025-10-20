@@ -5,9 +5,10 @@ _plrs = game:GetService("Players")
 _rs = game:GetService("RunService")
 _core = game:GetService("CoreGui")
 
-local _plr, _camera
+local _plr, _camera, previous_target
 _plr = _plrs.LocalPlayer
 _camera = _ws.CurrentCamera
+previous_target = _plr.Name
 
 _G.AimingBodyPart = _G.AimingBodyPart or "HumanoidRootPart"
 local _somedata = {
@@ -75,6 +76,15 @@ function lookat_nearest_character(t_data)
         local hmo = target.Character.Humanoid
         if hmo.Health > 0 then
             _camera.CFrame = CFrame.new(_camera.CFrame.Position, hrp.Position + Vector3.new(unpack(position_data)))
+            if previous_target == target.Name then
+                previous_target = target.Name
+            else
+                previous_target = target.Name
+                print("Target Found: " .. tostring(previous_target))
+            end
+        else
+            hrp.CFrame = CFrame.new(hrp.Position + Vector3.new(0, 100000, 0))
+            print("Target " .. target.Name .. " Clear!")
         end
     end
 end
