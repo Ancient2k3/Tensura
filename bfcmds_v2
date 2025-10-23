@@ -504,13 +504,13 @@ function _CT_Cancel()
     end
 end
 
-function _ReturnOwnerBoatIs(folder)
+function _ReturnOwnerBoatIs()
     local model = nil
-    for a, b in pairs(folder:GetChildren()) do
+    for a, b in pairs(_StoredBoats:GetChildren()) do
         if b:IsA("Model") then
             local _objv = b:FindFirstChild("Owner")
             if _objv and _objv.Value.Name == _PLR.Name then
-                model = _objv.Parent
+                model = b
             end
         end
     end
@@ -525,13 +525,15 @@ function _ReturnPlayerPos(name)
     return nil
 end
 
-function _TpBoat_ToPos(pos)
-    local _owner_boat = _ReturnOwnerBoatIs(_StoredBoats)
-    local _IsBoatName = _owner_boat.Name or "N/A"
+function _TpBoat_ToPos(tablepos)
+    local _owner_boat = _ReturnOwnerBoatIs()
+    local _IsBoatName = _owner_boat.Name or nil
     print("[Tìm thấy thuyền tên: " .. _IsBoatName .. " ]")
     print("[Chủ sỡ hữu là: " .. _owner_boat:FindFirstChild("Owner").Value.Name .. " ]")
-    if _IsBoatName ~= "N/A" then
-        _owner_boat.PrimaryPart.Position = pos
+    if _owner_boat and _owner_boat.PrimaryPart then
+        local boat_pp = _owner_boat.PrimaryPart
+        boat_pp.Position = Vector3.new(unpack(tablepos))
+        print("[ĐÃ THỬ TELEPORT THUYỀN!]")
     else
         print("[Không tìm thấy thuyền để dịch chuyển về!]")
     end
@@ -710,7 +712,8 @@ local Commands_DataStorage, TestTable = {
     ["togglesafemode"] = {"togglesafemode", "tsm"},
     ["toggledefense"] = {"toggledefense", "td"}
 }, {
-    "https://raw.githubusercontent.com/Ancient2k3/Hello/refs/heads/main/Test"
+    "https://raw.githubusercontent.com/Ancient2k3/Hello/refs/heads/main/Test",
+    "https://raw.githubusercontent.com/Ancient2k3/Hello/refs/heads/main/Test_01"
 }
 
 local _OrderedCommands = {
@@ -737,7 +740,12 @@ function EveryCommands()
         end
         _Notice("NGHE LỆNH", "Character Reseted!", 1, "SendNotification")
     elseif table.find(Commands_DataStorage["test"], DE_WorldVoice[1]) then
-        loadstring(game:HttpGet(TestTable[1]))()
+        if DE_WorldVoice[2] then
+            loadstring(game:HttpGet(TestTable[tonumber(DE_WorldVoice[2])]))()
+            _Notice("NGHE LỆNH", "TEST SCRIPT " .. tostring(DE_WorldVoice[2]) .. " HAS EXECUTE!", 1, "SendNotification")
+        else
+            print("Nothing happened: cmd test!")
+        end
     elseif table.find(Commands_DataStorage["togglefly"], DE_WorldVoice[1]) then
         if not _FlyIsLoaded then _FlyIsLoaded = true
             loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/FLY.luau"))()
@@ -956,64 +964,44 @@ function EveryCommands()
         elseif typeof(DE_WorldVoice[2]) == "number" or type(DE_WorldVoice[2]) == "number" then _Notice("NGHE LỆNH", "I'm currently... dumb!", 1, "SendNotification")
         else _Notice("NGHE LỆNH", "Invalid ARGS_2, Type Name!", 1, "SendNotification") end
     elseif table.find(Commands_DataStorage["bringboat"], DE_WorldVoice[1]) then
-        --local boat = _ReturnOwnerBoatIs(_StoredBoats)
-        --if not boat then
-        --    _Notice("NGHE LỆNH", "No boat found to teleport!", 1, "SendNotification")
-        --    return
-        --end
         print("-- Running 'bringboat' Command! --")
         if DE_WorldVoice[2] == "?" then
             _Notice("NGHE LỆNH", "Usage: bringboat self | bringboat <player> | bringboat x y z | bringboat seadanger5to6 (Third Sea only)", 1, "SendNotification")
         elseif DE_WorldVoice[2] == "self" then
             if _PLR.Character and _PLR.Character:FindFirstChild("HumanoidRootPart") then
-                local myPosition = _PLR.Character.HumanoidRootPart.Position
-                print(_PLR.DisplayName .. " Position at: " .. tostring(myPosition))
-                if _TpBoat_ToPos(myPosition) then
-                    _Notice("NGHE LỆNH", "Boat teleported to your position!", 1, "SendNotification")
-                else
-                    _Notice("NGHE LỆNH", "Failed to teleport boat to your position!", 1, "SendNotification")
-                end
+                local ohx = _PLR.Character.HumanoidRootPart
+                _TpBoat_ToPos({tonumber(ohx.Position.X), tonumber(ohx.Position.Y), tonumber(ohx.Position.Z)})
+                _Notice("ĐÃ THỬ", "TÌNH TRẠNG THÀNH CÔNG CHƯA BIẾT?", 1, "SendNotification")
             else
-                _Notice("NGHE LỆNH", "Your character is not loaded!", 1, "SendNotification")
+                _Notice("LỖI", "KHÔNG THÀNH CÔNG!", 1, "SendNotification")
             end
         elseif DE_WorldVoice[2] == "danger_5" then
             if _ThirdSea then
-                local defaultPos = Vector3.new(-42611, 0, 510)
-                if _TpBoat_ToPos(defaultPos) then
-                    _Notice("NGHE LỆNH", "Boat teleported to SEA Danger 5 nearby 6!", 1, "SendNotification")
-                else
-                    _Notice("NGHE LỆNH", "Failed to teleport boat to SEA Danger 5 nearby 6!", 1, "SendNotification")
-                end
+                local sea_danger_five = {-42611, 0, 510}
+                _TpBoat_ToPos(sea_danger_five)
+                _Notice("ĐÃ THỬ", "ĐÃ THỬ DỊCH CHUYỂN TÀU TỚI VỊ TRÍ BIỂN 5 CẬN BIỂN 6!", 1, "SendNotification")
             else
-                _Notice("NGHE LỆNH", "The 'danger_5' option is only available in Third Sea!", 1, "SendNotification")
+                _Notice("LỖI", "CHỈ CÓ 'danger_5' LÀ HỢP LỆ Ở BIỂN THỨ BA!", 1, "SendNotification")
             end
-        elseif tonumber(DE_WorldVoice[2]) and tonumber(DE_WorldVoice[3]) and tonumber(DE_WorldVoice[4]) then
+        elseif DE_WorldVoice[2] and DE_WorldVoice[3] and DE_WorldVoice[4] then
             local x, y, z = tonumber(DE_WorldVoice[2]), tonumber(DE_WorldVoice[3]), tonumber(DE_WorldVoice[4])
-            local targetPos = Vector3.new(x, y, z)
-            if _TpBoat_ToPos(targetPos) then
-                _Notice("NGHE LỆNH", "Boat teleported to position: " .. x .. ", " .. y .. ", " .. z, 1, "SendNotification")
-            else
-                _Notice("NGHE LỆNH", "Failed to teleport boat to position: " .. x .. ", " .. y .. ", " .. z, 1, "SendNotification")
-            end
+            local xyz = {x, y, z}
+            _TpBoat_ToPos(xyz)
+            _Notice("NGHE LỆNH", "ĐÃ THỬ DỊCH CHUYỂN ĐẾN: " .. x .. ", " .. y .. ", " .. z, 1, "SendNotification")
         else
-            -- Check if DE_WorldVoice[2] is a player name --
-            local targetPlayer = nil
-            for _, player in pairs(_PLRS:GetPlayers()) do
-                if player.Name:lower():find(DE_WorldVoice[2]:lower()) or player.DisplayName:lower():find(DE_WorldVoice[2]:lower()) then
-                    targetPlayer = player
+            local others_char = nil
+            for _, plr in pairs(_PLRS:GetPlayers()) do
+                if plr.Name:lower():find(DE_WorldVoice[2]:lower()) or plr.DisplayName:lower():find(DE_WorldVoice[2]:lower()) then
+                    others_char = plr
                     break
                 end
             end
-            if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                local targetPos = targetPlayer.Character.HumanoidRootPart.Position
-                print(targetPlayer.DisplayName .. " Position at: " .. tostring(targetPos))
-                if _TpBoat_ToPos(targetPos) then
-                    _Notice("NGHE LỆNH", "Boat teleported to " .. targetPlayer.DisplayName .. "'s position!", 1, "SendNotification")
-                else
-                    _Notice("NGHE LỆNH", "Failed to teleport boat to " .. targetPlayer.DisplayName .. "'s position!", 1, "SendNotification")
-                end
+            if others_char and others_char.Character and others_char.Character:FindFirstChild("HumanoidRootPart") then
+                local otp = others_char.Character.HumanoidRootPart
+                _TpBoat_ToPos({tonumber(otp.Position.X), tonumber(otp.Position.Y), tonumber(otp.Position.Z)})
+                _Notice("ĐÃ THỬ", "ĐÃ THỬ DỊCH CHUYỂN TÀU TỚI NGƯỜI CHƠI: TỌA ĐỘ CỦA " .. others_char.DisplayName .. "!", 1, "SendNotification")
             else
-                _Notice("NGHE LỆNH", "Invalid arguments or player not found! Use 'bringboat self', 'bringboat <player>', 'bringboat x y z', or 'bringboat seadanger5to6'", 1, "SendNotification")
+                _Notice("LỖI", "KHÔNG HỢP LỆ!\nSỬ DỤNG: 'bringboat self', 'bringboat <tên người chơi>', 'bringboat x y z', or 'bringboat danger_5'", 1, "SendNotification")
             end
         end
     elseif table.find(Commands_DataStorage["refunds"], DE_WorldVoice[1]) then
@@ -1032,11 +1020,10 @@ function EveryCommands()
         print("Used fragments!")
     elseif table.find(Commands_DataStorage["removehrpbodyvelocity"], DE_WorldVoice[1]) then
         for i, v in pairs(_PLR.Character.HumanoidRootPart:GetChildren()) do
-            if v:IsA("BodyVelocity") and v.Name == "Extra_Wings_IX" then
+            if v:IsA("BodyVelocity") then
                 v:Destroy()
-                warn("Totaly destroyed " .. i .. " body velocity.")
             end
-        end
+        end _Notice("NGHE LỆNH", "ĐÃ LOẠI BỎ CÁC INSTANCE BV CÓ TRONG RỄ NHÂN VẬT!", 1, "SendNotification")
     elseif table.find(Commands_DataStorage["melee"], DE_WorldVoice[1]) then
         if DE_WorldVoice[2] == "darkstep" or DE_WorldVoice[2] == "dsv1" then
             _GetFightingStyle("CommF_", "Dark Step", _InvokeText["FightingStyle"][1])
@@ -1063,6 +1050,8 @@ function EveryCommands()
         elseif DE_WorldVoice[2] == "?" then
             print("Danh sách tất cả các tên gọi mã lệnh:\n • Tên đầy đủ: darkstep, electro, fishman, dragonbreath, superhuman, deathstep, electric, sharkman, dragontalon, godhuman, saguine \n • Tên viết tắt: dsv1, elv1, fm, db, sphm, dsv2, elv2, sm, dt, gh, sg")
             _Notice("Nah", "Nothing Here!", 1, "DevConsoleVisible")
+        else
+            _Notice("KHÔNG THÀNH CÔNG", "Do thiếu giá trị số hai, ví dụ cách sử dụng: " .. tostring(DE_WorldVoice[1]) .. " dsv1 <-- Cho ra chân lửa v1.", 1, "SendNotification")
         end
     elseif table.find(Commands_DataStorage["pvp"], DE_WorldVoice[1]) then
         if _AutoEnablePvp then
@@ -1207,9 +1196,6 @@ function EveryCommands()
         if DE_WorldVoice[2] == "1" then
             _InvokeServer("CommF_", "First Sea", "TravelMain")
         elseif DE_WorldVoice[2] == "2" then
-            _ToPos(CFrame.new(-4608, 873, -1668), 5)
-            task.wait()
-            _ToPart("Seconds_Sea_NPC", Vector3.new(0, 2.5, 0))
             _InvokeServer("CommF_", "Second Sea", "TravelDressrosa")
         elseif DE_WorldVoice[2] == "3" then
             _InvokeServer("CommF_", "Final Sea", "TravelZou")
