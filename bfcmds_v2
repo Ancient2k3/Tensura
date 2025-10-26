@@ -710,7 +710,8 @@ local Commands_DataStorage, TestTable = {
     ["onirealm"] = {"onirealm", "oni"},
     ["sellfish"] = {"sellfish", "sf"},
     ["togglesafemode"] = {"togglesafemode", "tsm"},
-    ["toggledefense"] = {"toggledefense", "td"}
+    ["toggledefense"] = {"toggledefense", "td"},
+    ["customexecutor"] = {"customexecutor", "exec"}
 }, {
     "https://raw.githubusercontent.com/Ancient2k3/Hello/refs/heads/main/Test",
     "https://raw.githubusercontent.com/Ancient2k3/Hello/refs/heads/main/Test_01"
@@ -720,7 +721,7 @@ local _OrderedCommands = {
     "reset", "randomfruit", "test", "tobosses", "serverhop", "maxvision", "autofarmchest", "tweeningspeed", "cmds", "console", "speed", "dash", "spectate", "followto", "loadscript", "melee", "savingdump", "upstat", "jobid", "autofarmnearby", "autofarmlevels", "bringboat",
     "island", "refunds", "race", "raid", "storefruits", "fastattack", "superfastattack", "attackmode", "setfarmevent", "autofarmbosses", "buyfruit",
     "pvp", "togglefly", "exp", "allhaki", "setheight", "removehrpbodyvelocity", "iyedited", "remotespy", "titles", "awakening", "fakestat",
-    "explorer", "travelingsea", "suggestiontextcolor", "settings", "onirealm", "sellfish", "togglesafemode", "toggledefense"
+    "explorer", "travelingsea", "suggestiontextcolor", "settings", "onirealm", "sellfish", "togglesafemode", "toggledefense", "customexecutor"
 }
 
 local _TwsHandle = {Old = _TweeningSpeed, New = 1000}
@@ -746,6 +747,10 @@ function EveryCommands()
         else
             print("Nothing happened: cmd test!")
         end
+    elseif table.find(Commands_DataStorage["customexecutor"], DE_WorldVoice[1]) then
+        pcall(function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/RobloxScript_0/refs/heads/main/Executor_V2"))()
+        end)
     elseif table.find(Commands_DataStorage["togglefly"], DE_WorldVoice[1]) then
         if not _FlyIsLoaded then _FlyIsLoaded = true
             loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/FLY.luau"))()
