@@ -53,12 +53,17 @@ _button.Text = _somedata.button.deftxt
 _button.Visible = _somedata.button.visibility
 _uic.CornerRadius = UDim.new(unpack(_somedata.button.corner))
 
+function check_hrp(t) if t.Character and t.Character:FindFirstChild("HumanoidRootPart") then return true end return false end
+function is_alive(t) if t.Character and t.Character:FindFirstChildOfClass("Humanoid") and t.Character.Humanoid.Health > 0 then return true end return false end
+function get_pos(t) return t.Character and t.Character:FindFirstChild("HumanoidRootPart").Position or t:FindFirstChild("HumanoidRootPart").Position end
+function get_hrp(t) return t.Character and t.Character:FindFirstChild("HumanoidRootPart") or t:FindFirstChild("HumanoidRootPart") end
+function check_enemy(t) if t.Team ~= _plr.Team then return true end return false end
 function mb1c(t, s) t.MouseButton1Click:Connect(s) end
 function nearest_user_character()
     local t, mh, ir = nil, math.huge, 1000
     for i, v in ipairs(_plrs:GetPlayers()) do
-        if v ~= _plr and v.Character:FindFirstChild("HumanoidRootPart") then
-            local rG = (_plr.Character.HumanoidRootPart.Position - v.Character.HumanoidRootPart.Position).magnitude
+        if v ~= _plr and check_enemy(v) and check_hrp(_plr) and check_hrp(v) then
+            local rG = (get_pos(_plr) - get_pos(v)).magnitude
             if rG < mh and rG <= ir then
                 mh = rG
                 t = v
@@ -72,9 +77,8 @@ function lookat_nearest_character(t_data)
     local target = nearest_user_character()
     local position_data = t_data or {0, 0, 0}
     if type(position_data) == "table" and target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") then
-        local hrp = target.Character.HumanoidRootPart
-        local hmo = target.Character.Humanoid
-        if hmo.Health > 0 then
+        local hrp = get_hrp(target)
+        if is_alive(target) then
             _camera.CFrame = CFrame.new(_camera.CFrame.Position, hrp.Position + Vector3.new(unpack(position_data)))
             if previous_target == target.Name then
                 previous_target = target.Name
@@ -103,3 +107,6 @@ _rs.RenderStepped:Connect(function(deltaTime)
         lookat_nearest_character(_somedata.axis[_G.AimingBodyPart])
     end
 end)
+
+-- Update 29/10/2025 : 01:03 AM --
+-- Script by HoangHien --
