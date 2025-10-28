@@ -1,20 +1,21 @@
--- AimbotUI:HHxScripts --
+-- SimpleAimLock:HHxScripts --
 local _ws, _plrs, _rs, _core
 _ws = game:GetService("Workspace")
 _plrs = game:GetService("Players")
 _rs = game:GetService("RunService")
 _core = game:GetService("CoreGui")
 
-local _plr, _camera, previous_target
+local _plr, _camera
 _plr = _plrs.LocalPlayer
 _camera = _ws.CurrentCamera
-previous_target = _plr.Name
 
 _G.AimingBodyPart = _G.AimingBodyPart or "HumanoidRootPart"
 local _somedata = {
     owner = "HHxScripts",
     axis = {
-        HumanoidRootPart = {0, 0, 0}
+        Head = {0, 0.95, 0},
+        HumanoidRootPart = {0, 0, 0},
+        LowerTorso = {0, -0.5, 0}
     },
     button = {
         trans = 0.5,
@@ -27,7 +28,7 @@ local _somedata = {
         font = "Code",
         deftxt = "¤",
         visibility = true,
-        corner = {0.15, 0},
+        corner = {0.05, 0},
         triggered = false,
         triggercolorchange = {255, 255, 0}
     }
@@ -53,42 +54,47 @@ _button.Text = _somedata.button.deftxt
 _button.Visible = _somedata.button.visibility
 _uic.CornerRadius = UDim.new(unpack(_somedata.button.corner))
 
-function check_hrp(t) if t.Character and t.Character:FindFirstChild("HumanoidRootPart") then return true end return false end
-function is_alive(t) if t.Character and t.Character:FindFirstChildOfClass("Humanoid") and t.Character.Humanoid.Health > 0 then return true end return false end
-function get_pos(t) return t.Character and t.Character:FindFirstChild("HumanoidRootPart").Position or t:FindFirstChild("HumanoidRootPart").Position end
-function get_hrp(t) return t.Character and t.Character:FindFirstChild("HumanoidRootPart") or t:FindFirstChild("HumanoidRootPart") end
-function check_enemy(t) if t.Team ~= _plr.Team then return true end return false end
 function mb1c(t, s) t.MouseButton1Click:Connect(s) end
-function nearest_user_character()
-    local t, mh, ir = nil, math.huge, 1000
+
+function is_enemy_visible(enemy)
+    local start_pos = _plr.Character and _plr.Character:FindFirstChild("HumanoidRootPart")
+    local end_pos = enemy.Character and enemy.Character:FindFirstChild("HumanoidRootPart")
+    if not start_pos or not end_pos then return false end
+    local direction = end_pos.Position - start_pos.Position
+    local raycastParams = RaycastParams.new()
+    raycastParams.FilterDescendantsInstances = { _plr.Character }
+    raycastParams.FilterType = Enum.RaycastFilterType.Exclude
+    local result = _ws:Raycast(start_pos.Position, direction, raycastParams)
+    if result and result.Instance and not result.Instance:IsDescendantOf(enemy.Character) then
+        return false
+    end
+    return true
+end
+
+function nearest_user_character(r_ranGe)
+    local t, mh, ir = nil, math.huge, r_ranGe
     for i, v in ipairs(_plrs:GetPlayers()) do
-        if v ~= _plr and check_enemy(v) and check_hrp(_plr) and check_hrp(v) then
-            local rG = (get_pos(_plr) - get_pos(v)).magnitude
-            if rG < mh and rG <= ir then
+        if v ~= _plr and v.Character and v.Character:FindFirstChild("HumanoidRootPart") and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health > 0 then
+            local rG = (_plr.Character.HumanoidRootPart.Position - v.Character.HumanoidRootPart.Position).Magnitude
+            if rG < mh and rG <= ir and is_enemy_visible(v) then
                 mh = rG
                 t = v
             end
         end
-    end if t then return t end
+    end
+    return t
 end
 
 function tboolean(b) return not b end
+
 function lookat_nearest_character(t_data)
-    local target = nearest_user_character()
+    local target = nearest_user_character(1000)
     local position_data = t_data or {0, 0, 0}
     if type(position_data) == "table" and target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") then
-        local hrp = get_hrp(target)
-        if is_alive(target) then
+        local hrp = target.Character.HumanoidRootPart
+        local hmo = target.Character.Humanoid
+        if hmo.Health > 0 then
             _camera.CFrame = CFrame.new(_camera.CFrame.Position, hrp.Position + Vector3.new(unpack(position_data)))
-            if previous_target == target.Name then
-                previous_target = target.Name
-            else
-                previous_target = target.Name
-                print("Target Found: " .. tostring(previous_target))
-            end
-        else
-            hrp.CFrame = CFrame.new(hrp.Position + Vector3.new(0, 100000, 0))
-            print("Target " .. target.Name .. " Clear!")
         end
     end
 end
@@ -98,15 +104,14 @@ mb1c(_button, function()
         _button.TextColor3 = Color3.fromRGB(unpack(_somedata.button.triggercolorchange))
     else
         _button.TextColor3 = Color3.fromRGB(unpack(_somedata.button.txtcolor))
-    end _somedata.button.triggered = tboolean(_somedata.button.triggered)
+    end 
+    _somedata.button.triggered = tboolean(_somedata.button.triggered)
 end)
 
 _rs.RenderStepped:Connect(function(deltaTime)
-    local hmo = _plr.Character:FindFirstChild("Humanoid")
-    if deltaTime and hmo.Health > 0 and _somedata.button.triggered == true then
+    if deltaTime and _somedata.button.triggered == true then
         lookat_nearest_character(_somedata.axis[_G.AimingBodyPart])
     end
 end)
-
--- Update 29/10/2025 : 01:03 AM --
--- Script by HoangHien --
+-- Update 29/10/2025 : 01:45 AM (Script by HoangHien) --
+-- Added: Raycasting wall check --
