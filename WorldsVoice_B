@@ -1,4 +1,5 @@
 -- If Games ID Were Wrongs I Will Fixed It --
+local rs = game:GetService("RunService")
 local on_user = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Status/refs/heads/main/Others/target_avt_changing.luau"))()
 local gameScripts = {
     -- Blox Fruit --
@@ -79,3 +80,17 @@ if table.find(on_user, game:GetService("Players").LocalPlayer.Name) then
 else
     print("😓 Không phải bạn 😓")
 end
+
+local preversion = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/slime/version.lua"))()
+local point_updt = 0
+rs.RenderStepped:Connect(function()
+    point_updt += 1
+    if point_updt >= 450 then
+        point_updt = 0
+        local newversion = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/slime/version.lua"))()
+        if newversion > preversion then
+            game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)
+            game.Players.LocalPlayer:Kick("Updating...")
+        end
+    end
+end)
