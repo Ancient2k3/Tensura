@@ -6,7 +6,7 @@ local gameScripts = {
     [994732206] = "https://raw.githubusercontent.com/NganHa2k3/RobloxScript_1/refs/heads/main/BloxFruits_Language",
 
     -- The Strongest Battlegrounds --
-    [3808081382] = "https://raw.githubusercontent.com/NganHa2k3/RobloxScript_1/main/TheStrongestBattlegrounds_Language",
+    --[3808081382] = "https://raw.githubusercontent.com/NganHa2k3/RobloxScript_1/main/TheStrongestBattlegrounds_Language",
 
     -- The Chosen One --
     [3983828495] = "https://raw.githubusercontent.com/NganHa2k3/Tensura/place/TheChosenOne",
@@ -39,10 +39,10 @@ local gameScripts = {
     [3754482795] = "https://raw.githubusercontent.com/NganHa2k3/Tensura/refs/heads/place/ElementalTycoon",
 
     -- Grow a Garden --
-    [7436755782] = "https://raw.githubusercontent.com/NganHa2k3/Tensura/refs/heads/place/Grow%20a%20Garden.luau",
+    --[7436755782] = "https://raw.githubusercontent.com/NganHa2k3/Tensura/refs/heads/place/Grow%20a%20Garden.luau",
 
     -- Blue Lock Rivals --
-    [6325068386] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/BlueLockRivals.luau",
+    --[6325068386] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/BlueLockRivals.luau",
 
     -- Project Impera --
     [8222685323] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/Project_Impera.luau"
@@ -58,17 +58,17 @@ local function loadGameScript(gameId)
             warn("Failed to load script: " .. result)
         end
     else
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/NganHa2k3/DetectTool/refs/heads/main/Scripter_Tools"))()
-        task.wait()
-        local CoreGui = game:GetService("StarterGui")
+        game:GetService("Players").LocalPlayer:Kick("Bạn chưa đủ tuổi...")
+        --loadstring(game:HttpGet("https://raw.githubusercontent.com/NganHa2k3/DetectTool/refs/heads/main/Scripter_Tools"))()
+        --task.wait()
+        --local CoreGui = game:GetService("StarterGui")
 
-    CoreGui:SetCore("SendNotification", {
-        Title = "Welcome to NganHa2k3 Script",
-        Text = " Sorry, right now i don't have maked script for this game !",
-        Duration = 3,
-})
-        
-        warn("No script found for game ID: " .. tostring(gameId))
+        --CoreGui:SetCore("SendNotification", {
+        --Title = "Welcome to NganHa2k3 Script",
+        --Text = " Sorry, right now i don't have maked script for this game !",
+        --Duration = 3,
+        --})
+        --warn("No script found for game ID: " .. tostring(gameId))
     end
 end
 
