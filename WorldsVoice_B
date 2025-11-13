@@ -1,12 +1,11 @@
--- If Games ID Were Wrongs I Will Fixed It --
-local rs = game:GetService("RunService")
+-- if something wrong, i will fixing it ! --
 local on_user = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Status/refs/heads/main/Others/target_avt_changing.luau"))()
 local gameScripts = {
     -- Blox Fruit --
     [994732206] = "https://raw.githubusercontent.com/NganHa2k3/RobloxScript_1/refs/heads/main/BloxFruits_Language",
 
     -- The Strongest Battlegrounds --
-    --[3808081382] = "https://raw.githubusercontent.com/NganHa2k3/RobloxScript_1/main/TheStrongestBattlegrounds_Language",
+    [3808081382] = "https://raw.githubusercontent.com/NganHa2k3/RobloxScript_1/main/TheStrongestBattlegrounds_Language",
 
     -- The Chosen One --
     [3983828495] = "https://raw.githubusercontent.com/NganHa2k3/Tensura/place/TheChosenOne",
@@ -39,10 +38,10 @@ local gameScripts = {
     [3754482795] = "https://raw.githubusercontent.com/NganHa2k3/Tensura/refs/heads/place/ElementalTycoon",
 
     -- Grow a Garden --
-    --[7436755782] = "https://raw.githubusercontent.com/NganHa2k3/Tensura/refs/heads/place/Grow%20a%20Garden.luau",
+    [7436755782] = "https://raw.githubusercontent.com/NganHa2k3/Tensura/refs/heads/place/Grow%20a%20Garden.luau",
 
     -- Blue Lock Rivals --
-    --[6325068386] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/BlueLockRivals.luau",
+    [6325068386] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/BlueLockRivals.luau",
 
     -- Project Impera --
     [8222685323] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/Project_Impera.luau"
@@ -58,17 +57,17 @@ local function loadGameScript(gameId)
             warn("Failed to load script: " .. result)
         end
     else
-        game:GetService("Players").LocalPlayer:Kick("Bạn chưa đủ tuổi...")
-        --loadstring(game:HttpGet("https://raw.githubusercontent.com/NganHa2k3/DetectTool/refs/heads/main/Scripter_Tools"))()
-        --task.wait()
-        --local CoreGui = game:GetService("StarterGui")
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/NganHa2k3/DetectTool/refs/heads/main/Scripter_Tools"))()
+        task.wait()
+        local CoreGui = game:GetService("StarterGui")
 
-        --CoreGui:SetCore("SendNotification", {
-        --Title = "Welcome to NganHa2k3 Script",
-        --Text = " Sorry, right now i don't have maked script for this game !",
-        --Duration = 3,
-        --})
-        --warn("No script found for game ID: " .. tostring(gameId))
+    CoreGui:SetCore("SendNotification", {
+        Title = "Welcome to NganHa2k3 Script",
+        Text = " Sorry, right now i don't have maked script for this game !",
+        Duration = 3,
+})
+        
+        warn("No script found for game ID: " .. tostring(gameId))
     end
 end
 
@@ -80,17 +79,4 @@ if table.find(on_user, game:GetService("Players").LocalPlayer.Name) then
 else
     print("😓 Không phải bạn 😓")
 end
-
-local preversion = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/slime/version.lua"))()
-local point_updt = 0
-rs.RenderStepped:Connect(function()
-    point_updt += 1
-    if point_updt >= 450 then
-        point_updt = 0
-        local newversion = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/slime/version.lua"))()
-        if newversion > preversion then
-            game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)
-            game.Players.LocalPlayer:Kick("Updating...")
-        end
-    end
-end)
+-- back to normal --
