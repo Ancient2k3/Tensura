@@ -1173,7 +1173,7 @@ function EveryCommands()
     elseif table.find(Commands_DataStorage["autofarmlevels"], DE_WorldVoice[1]) then
         if not _G._FarmActivated then _G._FarmActivated = true
             if not _SpecialVariables.LoadedATF_LvlFunc then _SpecialVariables.LoadedATF_LvlFunc = true
-                _PasteScripts("https://raw.githubusercontent.com/Ancient2k3/NewProject/refs/heads/data/atf.luau", function()
+                _PasteScripts("https://raw.githubusercontent.com/HoangHienXScripts/W/refs/heads/garbage/c/who/atfls", function()
                     _Notice("NGHE LỆNH", "Loaded AutoFarmingLevels Function!", 1, "SendNotification")
                 end)
             end
