@@ -1171,14 +1171,14 @@ function EveryCommands()
             _Notice("NGHE LỆNH", "Auto Follow Nearby Mobs is Activated!", 1, "SendNotification")
         end
     elseif table.find(Commands_DataStorage["autofarmlevels"], DE_WorldVoice[1]) then
-        if not _G._FarmActivated then _G._FarmActivated = true
+        if not getgenv()._autofarmlevels then getgenv()._autofarmlevels = true
             if not _SpecialVariables.LoadedATF_LvlFunc then _SpecialVariables.LoadedATF_LvlFunc = true
                 _PasteScripts("https://raw.githubusercontent.com/HoangHienXScripts/W/refs/heads/garbage/c/who/atfls", function()
                     _Notice("NGHE LỆNH", "Loaded AutoFarmingLevels Function!", 1, "SendNotification")
                 end)
             end
             _Notice("NGHE LỆNH", "Auto Farming Levels is now ON/Activated!", 1, "SendNotification")
-        else _G._FarmActivated = false
+        else getgenv()._autofarmlevels = false
             _Notice("NGHE LỆNH", "Auto Farming Levels is now OFF/Deactivated!", 1, "SendNotification")
         end
     elseif table.find(Commands_DataStorage["autofarmbosses"], DE_WorldVoice[1]) then
@@ -1622,24 +1622,22 @@ _RS.RenderStepped:Connect(function(deltaTime)
     if _SpecialVariables.AbsoluteDefense and not _SpecialVariables.Farm_NormalNPC and not _SpecialVariables.Farm_BossesNPC and _PLR.Character and _PLR.Character:FindFirstChild("Humanoid") then
         local _updatedhealth = _PLR.Character.Humanoid.Health
         if _updatedhealth <= _HalfHealth then
-            if not _SpecialVariables.Is_LowHealth then
+            if not _SpecialVariables.Is_LowHealth then _SpecialVariables.Is_LowHealth = true
                 -- New Defense --
                 _active_race_ability()
                 _Notice("KÍCH HOẠT TỘC", "[Phòng thủ tuyệt đối!]", 1, "SendNotification")
                 -- Requires Shark Race V3 or V4 --
                 RaphaelORB.CFrame = CFrame.new(_PLR.Character.HumanoidRootPart.Position) wait(_SpecialVariables.DelayOnORB)
                 _spectatepath(RaphaelORB)
-                _SpecialVariables.Is_LowHealth = true
                 _WS.Characters[_PLR.Name]:SetAttribute("SpeedMultiplier", 9)
                 print("[CHẾ ĐỘ AN TOÀN]: Lượng máu hiện tại đang thấp!\n[Máu hiện tại: " .. _updatedhealth .. " ]")
                 _Notice("CHẾ ĐỘ AN TOÀN", "[Lượng máu hiện tại đang thấp, vào chế độ an toàn ngay lập tức kích hoạt!]", 1, "SendNotification")
             end
         else
-            if _SpecialVariables.Is_LowHealth then
+            if _SpecialVariables.Is_LowHealth then _SpecialVariables.Is_LowHealth = false
                 RaphaelORB.CFrame = CFrame.new(0, 99999, 0) wait(_SpecialVariables.DelayOnORB)
                 --_spectatepath(_PLR.Character.HumanoidRootPart)
                 _WS.CurrentCamera.CameraSubject = _PLR.Character.Humanoid
-                _SpecialVariables.Is_LowHealth = false
                 _WS.Characters[_PLR.Name]:SetAttribute("SpeedMultiplier", _SpecialVariables.DefaultWS)
                 print("[CHẾ ĐỘ AN TOÀN]: Đã tốt hơn rồi!\n[Máu hiện tại: " .. _updatedhealth .. " ]")
                 _Notice("CHẾ ĐỘ AN TOÀN", "[Đã hồi phục đầy đủ... trong mức độ an toàn, trở về vị trí!]", 1, "SendNotification")
