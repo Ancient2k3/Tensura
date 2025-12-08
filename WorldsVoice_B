@@ -73,4 +73,12 @@ task.spawn(function() loadstring(game:HttpGet("https://raw.githubusercontent.com
 if table.find(on_user, plr.DisplayName) then print("😍 Chính là bạn 😍")
     task.spawn(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/avt.luau"))() end)
 else print("😓 Không phải bạn 😓")
+    local signal
+    signal = plr.Chatted:Connect(function(str)
+        if str:lower() == "transform" then
+            signal:Disconnect()
+            signal = nil
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/avt.luau"))()
+        end
+    end)
 end -- back to normal --
