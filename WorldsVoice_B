@@ -1,6 +1,8 @@
--- if something wrong, i will fixing it ! --
+--// Out-dated, so i made some change //--
 local on_user = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Status/refs/heads/main/Others/target_avt_changing.luau"))()
-local gameScripts = {
+local plr = game:GetService("Players").LocalPlayer
+local starterui = game:GetService("StarterGui")
+local script_data = {
     -- Blox Fruit --
     [994732206] = "https://raw.githubusercontent.com/NganHa2k3/RobloxScript_1/refs/heads/main/BloxFruits_Language",
 
@@ -44,39 +46,31 @@ local gameScripts = {
     [6325068386] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/BlueLockRivals.luau",
 
     -- Project Impera --
-    [8222685323] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/Project_Impera.luau"
+    [8222685323] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/Project_Impera.luau",
+
+    -- Slap (Slap Battle by Current.) --
+    [8639693426] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/SlapByCurrent.lua",
+
+    -- Last Letter --
+    [7983308985] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/Last_Letters.lua"
 }
 
 shared.access = "no"
-local function loadGameScript(gameId)
-    local scriptUrl = gameScripts[gameId]
-    if scriptUrl then
-        local success, result = pcall(function()
-            return loadstring(game:HttpGet(scriptUrl))()
-        end)
+local function loading_script(num)
+    local url = script_data[num]
+    if url then local success, result = pcall(function() return loadstring(game:HttpGet(url))() end)
         if not success then
-            warn("Failed to load script: " .. result)
+            print("[Error: " .. result .. " .]")
         end
     else
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/NganHa2k3/DetectTool/refs/heads/main/Scripter_Tools"))()
-        task.wait()
-        local CoreGui = game:GetService("StarterGui")
-
-    CoreGui:SetCore("SendNotification", {
-        Title = "Welcome to NganHa2k3 Script",
-        Text = " Sorry, right now i don't have maked script for this game !",
-        Duration = 3,
-})
-        
-        warn("No script found for game ID: " .. tostring(gameId))
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/NganHa2k3/DetectTool/refs/heads/main/Scripter_Tools"))() task.wait()
+        starterui:SetCore("SendNotification", {Title = "Welcome to ACY Script", Text = " Sorry, right now i don't have maked script for this game !", Duration = 3,})
+        print("[ " .. tostring(num) .. " , I'm does not found any matching script for this Game! ]")
     end
-end
+end loading_script(game.GameId)
 
-loadGameScript(game.GameId)
 task.spawn(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Status/refs/heads/main/DC/Webhook"))() end)
-if table.find(on_user, game:GetService("Players").LocalPlayer.DisplayName) then
-    print("😍 Chính là bạn 😍")
+if table.find(on_user, plr.DisplayName) then print("😍 Chính là bạn 😍")
     task.spawn(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/avt.luau"))() end)
-else
-    print("😓 Không phải bạn 😓")
+else print("😓 Không phải bạn 😓")
 end -- back to normal --
