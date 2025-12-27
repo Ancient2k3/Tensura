@@ -569,7 +569,9 @@ function _InvokeServer(Name, Worlds, ...)
     end)
 end
 
+local auto_ct_fruits = false
 function _GetFruitSpawned()
+    if not auto_ct_fruits then return end
     local base_fruit = _WS:FindFirstChild("Fruit ") or _WS:FindFirstChildOfClass("Tool")
     if base_fruit and base_fruit:FindFirstChild("Handle") then _CT_Cancel()
         if _PLR.Character and _PLR.Character:FindFirstChild("HumanoidRootPart") and _PLR.Character:FindFirstChild("Humanoid").Health > 0 then
@@ -714,7 +716,8 @@ local Commands_DataStorage, TestTable = {
     ["sellfish"] = {"sellfish", "sf"},
     ["togglesafemode"] = {"togglesafemode", "tsm"},
     ["toggledefense"] = {"toggledefense", "td"},
-    ["customexecutor"] = {"customexecutor", "exec"}
+    ["customexecutor"] = {"customexecutor", "exec"},
+    ["autocollectfruits"] = {"autocollectfruits", "acfs"}
 }, {
     "https://raw.githubusercontent.com/Ancient2k3/Hello/refs/heads/main/Test",
     "https://raw.githubusercontent.com/Ancient2k3/Hello/refs/heads/main/Test_01"
@@ -724,7 +727,7 @@ local _OrderedCommands = {
     "reset", "randomfruit", "test", "tobosses", "serverhop", "maxvision", "autofarmchest", "tweeningspeed", "cmds", "console", "speed", "dash", "spectate", "followto", "loadscript", "melee", "savingdump", "upstat", "jobid", "autofarmnearby", "autofarmlevels", "bringboat",
     "island", "refunds", "race", "raid", "storefruits", "fastattack", "superfastattack", "attackmode", "setfarmevent", "autofarmbosses", "buyfruit",
     "pvp", "togglefly", "exp", "allhaki", "setheight", "removehrpbodyvelocity", "iyedited", "remotespy", "titles", "awakening", "fakestat",
-    "explorer", "travelingsea", "suggestiontextcolor", "settings", "onirealm", "sellfish", "togglesafemode", "toggledefense", "customexecutor"
+    "explorer", "travelingsea", "suggestiontextcolor", "settings", "onirealm", "sellfish", "togglesafemode", "toggledefense", "customexecutor", "autocollectfruits"
 }
 
 local _TwsHandle = {Old = _TweeningSpeed, New = 1000}
@@ -820,6 +823,14 @@ function EveryCommands()
             _IsSpectatingSomeOne = false
             local _SpectatingBackToSelf = _PLRS.LocalPlayer.Name
             _Spectating(_SpectatingBackToSelf)
+        end
+    elseif table.find(Commands_DataStorage["autocollectfruits"], DE_WorldVoice[1]) then
+        if not auto_ct_fruits then
+           auto_ct_fruits = true
+           _Notice("NGHE LỆNH", "TỰ ĐỘNG NHẶT FRUITS ĐÃ BẬT", 1, "SendNotification")
+        else
+           auto_ct_fruits = false
+           _Notice("NGHE LỆNH", "TỰ ĐỘNG NHẶT FRUITS ĐÃ TẮT", 1, "SendNotification")
         end
     elseif table.find(Commands_DataStorage["followto"], DE_WorldVoice[1]) then
         if DE_WorldVoice[2] then
