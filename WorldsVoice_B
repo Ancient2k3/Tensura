@@ -52,7 +52,10 @@ local script_data = {
     [8639693426] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/SlapByCurrent.lua",
 
     -- Last Letter --
-    [7983308985] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/Last_Letters.lua"
+    [7983308985] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/Last_Letters.lua",
+
+    -- Build Anything --
+    [8752324161] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/Build_Anything.lua"
 }
 
 shared.access = "no"
