@@ -112,16 +112,6 @@ function randomstring()
   end return _output
 end
 
-function createfoldersave(url)
-    if not isfolder("HHxScripts") then
-        makefolder("HHxScripts")
-        if not isfolder("HHxScripts/Build-Anything") then
-            makefolder("HHxScripts/Build-Anything")
-            writefile("HHxScripts/Build-Anything/This is my build.json", game:HttpGet(url))
-        end
-    end
-end createfoldersave("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/Data/Build_Anything/Rune.json")
-
 function readsize_file(str)
   local bytes = #str
   local units, unit_index = {"B", "kB", "MB", "GB", "TB"}, 1
@@ -136,7 +126,7 @@ function updatesize_visualizer(user_save)
     if btn:IsA("TextButton") and btn.Text == user_save:upper() .. "_CUBES_DATA" then
       local label = btn:FindFirstChildOfClass("TextLabel")
       if label then
-        label.Text = readsize_file(readfile("HHxScripts/Build-Anything/" .. user_save:upper() .. "_CUBES_DATA.json"))
+        label.Text = readsize_file(readfile("HHxScripts/" .. user_save:upper() .. "_CUBES_DATA.json"))
       else
         ntf("Somehow!? It's failed to update the size of file content... ")
       end
@@ -177,32 +167,29 @@ function savefile(user_inputed)
   local content = htps:JSONEncode(cubes_data)
   if not isfolder("HHxScripts") then
     makefolder("HHxScripts")
-    if not isfolder("HHxScripts/Build-Anything") then
-        makefolder("HHxScripts/Build-Anything")
-    end
-  end writefile("HHxScripts/Build-Anything/" .. user_inputed:upper() .. "_CUBES_DATA.json", content)
+  end writefile("HHxScripts/" .. user_inputed:upper() .. "_CUBES_DATA.json", content)
   --print("Check content: " .. content)
 end
 
 function delete_file(file_name)
-  local all_files = listfiles("HHxScripts/Build-Anything")
+  local all_files = listfiles("HHxScripts")
   for _, file in ipairs(all_files) do
-    local extract_name = string.gsub(string.gsub(file, "HHxScripts/Build-Anything/", ""), ".json", "")
+    local extract_name = string.gsub(string.gsub(file, "HHxScripts/", ""), ".json", "")
     if extract_name == file_name then
-      delfile("HHxScripts/Build-Anything/" .. file_name .. ".json")
+      delfile("HHxScripts/" .. file_name .. ".json")
     end
   end print("File deleted: " .. file_name)
 end
 
 function renaming_file(original_name, new_name)
-  local all_files = listfiles("HHxScripts/Build-Anything")
+  local all_files = listfiles("HHxScripts")
   local file_content = ""
   for _, file in ipairs(all_files) do
-    if isfile("HHxScripts/Build-Anything/" .. original_name .. ".json") then
-      file_content = readfile("HHxScripts/Build-Anything/" .. original_name .. ".json")
+    if isfile("HHxScripts/" .. original_name .. ".json") then
+      file_content = readfile("HHxScripts/" .. original_name .. ".json")
       if type(file_content) ~= "string" and file_content == "" then print("Failed to receiving file data... ") return end
-      writefile("HHxScripts/Build-Anything/" .. new_name .. ".json", file_content) task.wait(0.05)
-      delfile("HHxScripts/Build-Anything/" .. original_name .. ".json") task.wait(0.05)
+      writefile("HHxScripts/" .. new_name .. ".json", file_content) task.wait(0.05)
+      delfile("HHxScripts/" .. original_name .. ".json") task.wait(0.05)
       ntf("File named: " .. original_name .. " has changed to " .. new_name .. ", successfully!")
     end
   end
@@ -378,7 +365,7 @@ function savebuilt(user_inputed)
 end
 
 function reloadbuilt()
-  cubes_data = htps:JSONDecode(readfile("HHxScripts/Build-Anything/" .. plr.Name:upper() .. "_CUBES_DATA.json"))
+  cubes_data = htps:JSONDecode(readfile("HHxScripts/" .. plr.Name:upper() .. "_CUBES_DATA.json"))
   pbar_background.Visible = true
   local total_objects = getcount()
   for i = 1, total_objects do
@@ -394,7 +381,7 @@ local is_reloading_built_2 = false
 function reloadbuilt_2(name)
   if not is_reloading_built_2 then
     is_reloading_built_2 = true
-    cubes_data = htps:JSONDecode(readfile("HHxScripts/Build-Anything/" .. name .. ".json"))
+    cubes_data = htps:JSONDecode(readfile("HHxScripts/" .. name .. ".json"))
     pbar_background.Visible = true
     local total_objects = getcount()
     for i = 1, total_objects do
@@ -418,12 +405,12 @@ _G.file_actions = {
 }
 
 function getfiles_and_update_list()
-  if isfolder("HHxScripts") and isfolder("HHxScripts/Build-Anything") then
-    local data_files = listfiles("HHxScripts/Build-Anything")
+  if isfolder("HHxScripts") then
+    local data_files = listfiles("HHxScripts")
     if #data_files == 0 then ntf("There is no saving files is found!") return end
     for index, value in ipairs(data_files) do
       local resulting_name = ""
-      resulting_name = string.gsub(string.gsub(value, "HHxScripts/Build-Anything/", ""), ".json", "")
+      resulting_name = string.gsub(string.gsub(value, "HHxScripts/", ""), ".json", "")
       add_loader_button(resulting_name, readfile(value), function()
         if _G.file_actions.renaming_action then ntf("File named: " .. actions.file_selected .. " (already been choose)") return end
         if actions.deleting_save == true then
@@ -611,4 +598,4 @@ accpect_change.MouseButton1Click:Connect(function()
   end getfiles_and_update_list()
 end)
 
-ntf("Script developed by HHxScripts")
+ntf("Script developed by HHxScripts!")
