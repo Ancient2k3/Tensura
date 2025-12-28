@@ -119,8 +119,14 @@ end
 function create_foldersave()
   if not isfolder("HHxScripts") then
     makefolder("HHxScripts")
-  end for build_name, build_url in pairs(custom_structures) do
-    writefile("HHxScripts/" .. build_name .. ".json", game:HttpGet(build_url))
+  end print("[Checked Files!]")
+  if not isfile("HHxScripts/UsedCheck.txt") then
+    writefile("HHxScripts/UsedCheck.txt", "Hello it's this your first time uses this script... right?") task.wait(0.05)
+    for build_name, build_url in pairs(custom_structures) do
+      writefile("HHxScripts/" .. build_name .. ".json", game:HttpGet(build_url))
+    end
+  else
+    ntf("Welcome back " .. plr.Name .. ", :D!")
   end
 end create_foldersave()
 
