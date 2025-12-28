@@ -12,6 +12,10 @@ htps = game:GetService("HttpService")
 local plr
 plr = plrs.LocalPlayer
 
+local custom_structures = {
+  ["Mossy Structure"] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/Data/Build_Anything/Rune.json"
+}
+
 local cubes_data = {}
 local actions = {
   delcubes = "none",
@@ -111,6 +115,14 @@ function randomstring()
     _output = _output .. str:sub(point, point)
   end return _output
 end
+
+function create_foldersave()
+  if not isfolder("HHxScripts") then
+    makefolder("HHxScripts")
+  end for build_name, build_url in pairs(custom_structures) do
+    writefile("HHxScripts/" .. build_name .. ".json", game:HttpGet(build_url))
+  end
+end create_foldersave()
 
 function readsize_file(str)
   local bytes = #str
