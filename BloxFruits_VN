@@ -1105,6 +1105,9 @@ local function CollectFruitandChest()
 end
 
 -- CFrame Mob TP --
+local list_holiday = {
+    [2512] = "Elf"
+}
 
 local Im = game:GetService("Players")
 local ILocalPlayer = Im.LocalPlayer
@@ -1113,14 +1116,21 @@ local function trackNearestEnemy()
     local nearestEnemy = nil
     local nearestDistance = math.huge
     local maxDistance = 1000
-
+    local distance = nil
     for _, enemy in pairs(game.Workspace.Enemies:GetChildren()) do
         if enemy:IsA("Model") and enemy:FindFirstChild("HumanoidRootPart") then
-            local distance = (ILocalPlayer.Character.HumanoidRootPart.Position - enemy.HumanoidRootPart.Position).magnitude
-            
-            if distance < nearestDistance and distance <= maxDistance then
-                nearestDistance = distance
-                nearestEnemy = enemy
+            if enemy:GetAttribute("Elf") == true then
+                distance = (enemy.HumanoidRootPart.Position - ILocalPlayer.Character.HumanoidRootPart.Position).magnitude
+                if distance < nearestDistance and distance <= maxDistance then
+                    nearestDistance = distance
+                    nearestEnemy = enemy
+                end
+            else
+                distance = (enemy.HumanoidRootPart.Position - ILocalPlayer.Character.HumanoidRootPart.Position).magnitude
+                if distance < nearestDistance and distance <= maxDistance then
+                    nearestDistance = distance
+                    nearestEnemy = enemy
+                end
             end
         end
     end
