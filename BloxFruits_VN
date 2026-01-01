@@ -1,12 +1,16 @@
 -- Remove Existed One --
-local player = game.Players.LocalPlayer
-local screenGuiName = "BloxFruitsMyUIVN"
+local ws, player, screenGuiName = game.Workspace, game.Players.LocalPlayer, "BloxFruitsMyUIVN"
 
 for _, gui in ipairs(player:WaitForChild("PlayerGui"):GetChildren()) do
     if gui:IsA("ScreenGui") and gui.Name == screenGuiName then
         gui:Destroy()
     end
 end
+
+local sfx_assets = {
+  afl_on = ws.HHxScripts.Assets.Audios.AutoFarmLevel_Enabled,
+  afl_off = ws.HHxScripts.Assets.Audios.AutoFarmLevel_Disabled
+}
 
 -- Blox Fruits UI V4 VN --
 _G._CurrentYAxis_XScript = _G._CurrentYAxis_XScript or 2
@@ -2256,15 +2260,19 @@ VAFarmUICorner.Parent = VAFarm
 VAFarmUICorner.CornerRadius = UDim.new(0.1, 0)
 
 local VFarmA = false
+sfx_assets.afl_off.Volume = 5
+sfx_assets.afl_on.Volume = 5
 VAFarm.MouseButton1Click:Connect(function()
     if VFarmA then
         VAFarm.Text = "Tự động Farm[Tắt]"
         VAFarm.TextColor3 = Color3.new(1, 1, 1)
+        sfx_assets.afl_off:Play()
         AbsoluteRemove()
         VFarmA = false
     else
         VAFarm.Text = "Tự động Farm[Bật]"
         VAFarm.TextColor3 = Color3.new(0, 1, 1)
+        sfx_assets.afl_on:Play()
         AbsoluteSmooth()
         VFarmA = true
 
