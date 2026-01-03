@@ -627,6 +627,20 @@ end)
 local Ix = game:GetService("Players")
 local IoLocalPlayer = Ix.LocalPlayer
 
+function change_size(character, size)
+    character:FindFirstChild("Head").Size = Vector3.new(unpack(size))
+    character:FindFirstChild("UpperTorso").Size = Vector3.new(unpack(size))
+    character:FindFirstChild("LowerTorso").Size = Vector3.new(unpack(size))
+    character:FindFirstChild("LeftLeg").Size = Vector3.new(unpack(size))
+    character:FindFirstChild("RightLeg").Size = Vector3.new(unpack(size))
+    character:FindFirstChild("LeftUpperArm").Size = Vector3.new(unpack(size))
+    character:FindFirstChild("RightUpperArm").Size = Vector3.new(unpack(size))
+    character:FindFirstChild("LeftLowerArm").Size = Vector3.new(unpack(size))
+    character:FindFirstChild("RightLowerArm").Size = Vector3.new(unpack(size))
+    character:FindFirstChild("LeftHand").Size = Vector3.new(unpack(size))
+    character:FindFirstChild("RightHand").Size = Vector3.new(unpack(size))
+end
+
 local function HitBoxNearestEnemy()
     local nearestEnemy = nil
     local nearestDistance = math.huge
@@ -643,8 +657,8 @@ local function HitBoxNearestEnemy()
         end
     end
     
-    if nearestEnemy then
-        nearestEnemy.HumanoidRootPart.Size = Vector3.new(120, 120, 120)
+    if nearestEnemy and nearestEnemy:FindFirstChild("HumanoidRootPart").Size ~= Vector3.new(120, 120, 120) then
+        change_size(nearestEnemy, {120, 120, 120})
         nearestEnemy.HumanoidRootPart.CanCollide = false
         nearestEnemy.Humanoid.WalkSpeed = 0
         nearestEnemy.Humanoid.PlatformStand = false
