@@ -175,30 +175,35 @@ local TweenService = game:GetService("TweenService")
 local tweenSpeedd = 1  -- Duration in seconds
 local tweenInfo = TweenInfo.new(tweenSpeedd, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut)
 
--- Define tween goals
+local objs = {
+  gp_1 = UDim2.new(0.6, 0, 0.28, 0),
+  gp_2 = UDim2.new(1.2, 0, 0.28, 0),
+  vars = {
+    ui_opened = false,
+    hunt_nearest = false,
+    ctn_ly = false,
+    kill_aura = false,
+    change_npcs_hitbox = false,
+    on_side = false
+  }
+}
 
-local goalPosition1 = UDim2.new(0.6, 0, 0.28, 0)  -- Move ScrollingFrame down
-local goalPosition2 = UDim2.new(1.2, 0, 0.28, 0)  -- Original position
+local twzx = {
+  t1 = TweenService:Create(ScrollingFrame, tweenInfo, {Position = objs.gp_1}),
+  t2 = TweenService:Create(ScrollingFrame, tweenInfo, {Position = objs.gp_2})
+}
 
--- Create tweens
-
-local tween1 = TweenService:Create(ScrollingFrame, tweenInfo, {Position = goalPosition1})
-local tween2 = TweenService:Create(ScrollingFrame, tweenInfo, {Position = goalPosition2})
-
--- Toggle button behavior
-
-local isToggled = false
 OpenClose.MouseButton1Click:Connect(function()
-    if isToggled then
-        tween2:Play()
+    if objs.vars.ui_opened then
+        twzx.t2:Play()
         OpenClose.Text = "ⓧ"
         OpenClose.TextColor3 = Color3.new(0, 1, 0)
     else
-        tween1:Play()
+        twzx.t1:Play()
         OpenClose.Text = "Ⓗ"
         OpenClose.TextColor3 = Color3.new(1, 1, 1)
     end
-    isToggled = not isToggled
+    objs.vars.ui_opened = not objs.vars.ui_opened
 end)
 
 -- Done --
@@ -444,18 +449,17 @@ GetQuestHunter.TextColor3 = Color3.fromRGB(255, 255, 255)
 GetQuestHunter.Font = Enum.Font.PatrickHand
 GetQuestHunter.Text = "Săn mục tiêu (Gần nhất)"
 
-local _loop2nearestenemies = false
 GetQuestHunter.MouseButton1Click:Connect(function()
-    if _loop2nearestenemies then
-        _loop2nearestenemies = false
+    if objs.vars.hunt_nearest then
+        objs.vars.hunt_nearest = false
         AbsoluteRemove()
         GetQuestHunter.TextColor3 = Color3.fromRGB(255, 255, 255)
     else
-        _loop2nearestenemies = true
+        objs.vars.hunt_nearest = true
         AbsoluteSmooth()
         GetQuestHunter.TextColor3 = Color3.fromRGB(0, 255, 0)
         LoopActivated_AllF.RenderStepped:Connect(function()
-            if _loop2nearestenemies then
+            if objs.vars.hunt_nearest then
                 LoopsTPP_NearestPlayer()
             end
         end)
@@ -544,20 +548,19 @@ LoopsPlayers.TextColor3 = Color3.fromRGB(255, 255, 255)
 LoopsPlayers.Font = Enum.Font.PatrickHand
 LoopsPlayers.Text = "Liên tục dịch chuyển"
 
-local LPlayers = false
 LoopsPlayers.MouseButton1Click:Connect(function()
-    if LPlayers then
+    if objs.vars.ctn_ly then
         LoopsPlayers.TextColor3 = Color3.fromRGB(255, 255, 255)
         AbsoluteRemove()
-        LPlayers = false
+        objs.vars.ctn_ly = false
     else
         LoopsPlayers.TextColor3 = Color3.fromRGB(0, 255, 0)
         
-        LPlayers = true
+        objs.vars.ctn_ly = true
 
         AbsoluteSmooth()
         LoopActivated_AllF.RenderStepped:Connect(function(deltaTime)
-            if LPlayers then
+            if objs.vars.ctn_ly then
                 LoopsTPP()
             end
         end)
@@ -603,19 +606,18 @@ EnemiesHealthZero.TextColor3 = Color3.fromRGB(255, 255, 255)
 EnemiesHealthZero.Font = Enum.Font.PatrickHand
 EnemiesHealthZero.Text = "Giết Quái"
 
-local EnemiesHP = false
 EnemiesHealthZero.MouseButton1Click:Connect(function()
-    if EnemiesHP then
+    if objs.vars.kill_aura then
         EnemiesHealthZero.TextColor3 = Color3.fromRGB(255, 255, 255)
         
-        EnemiesHP = false
+        objs.vars.kill_aura = false
     else
         EnemiesHealthZero.TextColor3 = Color3.fromRGB(0, 255, 0)
         
-        EnemiesHP = true
+        objs.vars.kill_aura = true
         
         LoopActivated_AllF.RenderStepped:Connect(function(deltaTime)
-            if EnemiesHP then
+            if objs.vars.kill_aura then
                 findNearestEnemy()
             end
         end)
@@ -660,19 +662,18 @@ EnemiesHitBoxChanged.TextColor3 = Color3.fromRGB(255, 255, 255)
 EnemiesHitBoxChanged.Font = Enum.Font.PatrickHand
 EnemiesHitBoxChanged.Text = "Tầm đánh rộng (Gần nhất)"
 
-local EnemiesHBox = false
 EnemiesHitBoxChanged.MouseButton1Click:Connect(function()
-    if EnemiesHBox then
+    if objs.vars.change_npcs_hitbox then
         EnemiesHitBoxChanged.TextColor3 = Color3.fromRGB(255, 255, 255)
         
-        EnemiesHBox = false
+        objs.vars.change_npcs_hitbox = false
     else
         EnemiesHitBoxChanged.TextColor3 = Color3.fromRGB(255, 255, 0)
         
-        EnemiesHBox = true
+        objs.vars.change_npcs_hitbox = true
         
         LoopActivated_AllF.RenderStepped:Connect(function(deltaTime)
-            if EnemiesHBox then
+            if objs.vars.change_npcs_hitbox then
                 HitBoxNearestEnemy()
             end
         end)
@@ -690,13 +691,12 @@ SwitchedTeams.TextColor3 = Color3.fromRGB(0, 255, 255)
 SwitchedTeams.Font = Enum.Font.PatrickHand
 SwitchedTeams.Text = "Hải Quân"
 
-local SwitchedT = false
 SwitchedTeams.MouseButton1Click:Connect(function()
-    if SwitchedT then
+    if objs.vars.on_side then
         SwitchedTeams.TextColor3 = Color3.fromRGB(0, 255, 255)
         SwitchedTeams.Text = "Hải Quân"
         
-        SwitchedT = false
+        objs.vars.on_side = false
         
         local args = {
     [1] = "SetTeam",
@@ -708,7 +708,7 @@ game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
         SwitchedTeams.TextColor3 = Color3.fromRGB(240, 190, 0)
         SwitchedTeams.Text = "Hải Tặc"
         
-        SwitchedT = true
+        objs.vars.on_side = true
         
         local args = {
     [1] = "SetTeam",
