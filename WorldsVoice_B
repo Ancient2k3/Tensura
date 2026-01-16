@@ -1,3 +1,6 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Assets/refs/heads/main/Scripts/AddInstance.lua"))()
+repeat wait() until workspace:FindFirstChild("HHxScripts")
+
 --// Out-dated, so i made some change //--
 local on_user = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Status/refs/heads/main/Others/target_avt_changing.luau"))()
 local plr = game:GetService("Players").LocalPlayer
@@ -66,13 +69,12 @@ local function loading_script(num)
             print("[Error: " .. result .. " .]")
         end
     else
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/NganHa2k3/DetectTool/refs/heads/main/Scripter_Tools"))() task.wait()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/NganHa2k3/DetectTool/refs/heads/main/Scripter_Tools.lua"))() task.wait()
         starterui:SetCore("SendNotification", {Title = "Welcome to ACY Script", Text = " Sorry, right now i don't have maked script for this game !", Duration = 3,})
         print("[ " .. tostring(num) .. " , I'm does not found any matching script for this Game! ]")
     end
 end loading_script(game.GameId)
 
-task.spawn(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Assets/refs/heads/main/Scripts/AddInstance.lua"))() end)
 if table.find(on_user, plr.DisplayName) then print("😍 Chính là bạn 😍")
     task.spawn(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/avt.luau"))() end)
 else print("😓 Không phải bạn 😓")
