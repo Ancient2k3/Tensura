@@ -15,6 +15,7 @@ _G._Shootmode = _G._Shootmode or {
     Moveset = {"X"}
 } print("How to change configs?")
 print("Use: _G._Shootmode = { \n  Mode = <string: Multiple or Single>, \n  Delay = <number: 0.002>, \n  Moveset = <table: {"Z", "X", "C", ...}> \n }")
+print("Also for a reason: only work on melee. !")
 
 function _get_character()
     local _char = _plr.Character
@@ -44,9 +45,10 @@ end
 function _firingskill()
     local _target_enemies = _return_nearest_plr()
     local _finalhrp = _target_enemies and _target_enemies.Character:FindFirstChild("HumanoidRootPart") or _plr.Character:FindFirstChild("HumanoidRootPart")
-    if _finalhrp then
+    local _tool_on = _plr.Character:FindFirstChildOfClass("Tool")
+    if _finalhrp and _tool_on and _tool_on.ToolTip == "Melee" then
         local _finalpos = _finalhrp.Position
-        _plr.Character:FindFirstChildOfClass("Tool").RemoteFunction:InvokeServer(_G._Shootmode.Moveset[math.random(1, #_G._Shootmode.Moveset)], _finalpos)
+        _tool_on.RemoteFunction:InvokeServer(_G._Shootmode.Moveset[math.random(1, #_G._Shootmode.Moveset)], _finalpos)
     end
 end
 
