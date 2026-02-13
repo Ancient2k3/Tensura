@@ -50,10 +50,10 @@ function find_enm()
   end return data.n
 end
 
-function AutoAttack()
-  local enm_founded = Get_Enemy()
+function auto_attack()
+  local enm_founded = find_enm()
   local tool_equip = plr.Character:FindFirstChildOfClass("Tool")
-  if #Enms:GetChildren() > 0 and enm_founded ~= nil then
+  if #enms:GetChildren() > 0 and enm_founded ~= nil then
     if tool and table.find(valid_wp, tool.ToolTip) then
       cd:FireServer(0.5)
       rh:FireServer(enm_founded[valid_body_parts[math.random(1, #valid_body_parts)]], {}, uid)
@@ -63,6 +63,6 @@ end
 
 rs.RenderStepped:Connect(function()
   if _G.AutoATK_ENMS_Enabled and plr_alive() then
-    AutoAttack()
+    auto_attack()
   end
 end)
