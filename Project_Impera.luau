@@ -11,8 +11,10 @@ _airbullet.Name = "__Loop " .. _smk[math.random(1, #_smk)]
 
 _G._Shootmode = _G._Shootmode or {
     Mode = "Multiple",
-    Delay = 0.002
-}
+    Delay = 0.002,
+    Moveset = {"X"}
+} print("How to change configs?")
+print("Use: _G._Shootmode = { \n  Mode = <string: Multiple or Single>, \n  Delay = <number: 0.002>, \n  Moveset = <table: {"Z", "X", "C", ...}> \n }")
 
 function _get_character()
     local _char = _plr.Character
@@ -44,7 +46,7 @@ function _firingskill()
     local _finalhrp = _target_enemies and _target_enemies.Character:FindFirstChild("HumanoidRootPart") or _plr.Character:FindFirstChild("HumanoidRootPart")
     if _finalhrp then
         local _finalpos = _finalhrp.Position
-        _plr.Character:FindFirstChild("Death Step").RemoteFunction:InvokeServer("X", _finalpos)
+        _plr.Character:FindFirstChildOfClass("Tool").RemoteFunction:InvokeServer(_G._Shootmode.Moveset[math.random(1, #_G._Shootmode.Moveset)], _finalpos)
     end
 end
 
