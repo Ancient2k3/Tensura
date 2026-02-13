@@ -62,7 +62,7 @@ function AutoAttack()
 end
 
 RunService.RenderStepped:Connect(function()
-  if _G.AutoATK_Enabled and plr_alive() then
+  if _G.AutoATK_ENMS_Enabled and plr_alive() then
     AutoAttack()
   end
 end)
