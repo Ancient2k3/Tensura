@@ -427,24 +427,26 @@ function getfiles_and_update_list()
     local data_files = listfiles("HHxScripts")
     if #data_files == 0 then ntf("There is no saving files is found!") return end
     for index, value in ipairs(data_files) do
-      local resulting_name = ""
-      resulting_name = string.gsub(string.gsub(value, "HHxScripts/", ""), ".json", "")
-      add_loader_button(resulting_name, readfile(value), function()
-        if _G.file_actions.renaming_action then ntf("File named: " .. actions.file_selected .. " (already been choose)") return end
-        if actions.deleting_save == true then
-          delete_file(resulting_name)
-          remove_loader_button(resulting_name)
-          ntf("Deleted File Name: " .. resulting_name:upper() .. " from Save Files.")
-          return
-        elseif actions.re_name == true then
-          _G.file_actions.renaming_action = true
-          change_btn_color(resulting_name, {0, 1, 0})
-          actions.file_selected = resulting_name
-          rename_textholder.Visible = true
-          accpect_change.Visible = true
-        end
-        reloadbuilt_2(resulting_name)
-      end)
+      if value:match("%.json$") then
+        local resulting_name = ""
+        resulting_name = string.gsub(string.gsub(value, "HHxScripts/", ""), ".json", "")
+        add_loader_button(resulting_name, readfile(value), function()
+          if _G.file_actions.renaming_action then ntf("File named: " .. actions.file_selected .. " (already been choose)") return end
+          if actions.deleting_save == true then
+            delete_file(resulting_name)
+            remove_loader_button(resulting_name)
+            ntf("Deleted File Name: " .. resulting_name:upper() .. " from Save Files.")
+            return
+          elseif actions.re_name == true then
+            _G.file_actions.renaming_action = true
+            change_btn_color(resulting_name, {0, 1, 0})
+            actions.file_selected = resulting_name
+            rename_textholder.Visible = true
+            accpect_change.Visible = true
+          end
+          reloadbuilt_2(resulting_name)
+        end)
+      end
     end
   else
     print("Error: missing data folder!")
