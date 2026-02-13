@@ -1,113 +1,61 @@
--- Main Script --
-local P1L = game:GetService("Players").LocalPlayer
-local R1S = game:GetService("RunService")
-local RP1 = game:GetService("ReplicatedStorage")
-local PLRS = P1L:WaitForChild("PlayerScripts")
-local M1D = RP1:WaitForChild("Modules")
-local N1 = M1D:WaitForChild("Net")
-local RE_1 = N1:WaitForChild("RE/RegisterAttack")
-local RE_2 = N1:WaitForChild("RE/RegisterHit")
-local LSC = PLRS:FindFirstChildOfClass("LocalScript")
-local CHARs1 = workspace:WaitForChild("Characters")
-local H1T
+-- Auto Attack: Blox Fruits (Fixed) --
+local ws = game:GetService("Workspace")
+local plrs = game:GetService("Players")
+local rs = game:GetService("RunService")
+local rls = game:GetService("ReplicatedStorage")
+local mdls = rls:WaitForChild("Modules")
+local net = mdls:WaitForChild("Net")
+local cd = net:WaitForChild("RE/RegisterAttack")
+local rh = net:WaitForChild("RE/RegisterHit")
 
-task.spawn(function()
-    while not LSC do
-        P1L.PlayerScripts.ChildAdded:Wait()
-        LSC = PLRS:FindFirstChildOfClass("LocalScript")
-    end
-end)
+local plr = plrs.LocalPlayer
+local valid_wp = {"Melee", "Sword", "Blox Fruit"}
+local valid_body_parts = {"HumanoidRootPart", "LeftUpperArm", "LeftLowerArm", "LeftHand", "RightUpperArm", "RightLowerArm", "RightHand", "LeftUpperLeg", "LeftLowerLeg", "LeftFoot", "RightUpperLeg", "RightLowerLeg", "RightFoot"}
 
-_G.EnableFastAttack_Players = false
-_G.SuperFastAttack_Players = false
-_G.Method = 2
-local Its_Disable_ATKPlayers, _WaitTime_Players
-
-Its_Disable_ATKPlayers = false
-_WaitTime_Players = 0.05
-
--- Function --
-function AreYouAlive(C1H)
-    local Hmoid = C1H:FindFirstChild("Humanoid")
-    return Hmoid and Hmoid.Health > 0
+function random_str()
+  local str = "qwertyuiopasdfghjklzxcvbnm1234567890"
+  local result = ""
+  for index = 1, 4 do
+    local random_index = math.random(1, #str)
+    result = result .. str:sub(random_index, random_index)
+  end return result
 end
 
-function CreateProcess(Pz1, Distance)
-    local BLADE1 = {}
-    local YLP = CHARs1:GetChildren()
+local uid = tostring(plr.UserId):sub(2, 5) .. random_str()
 
-    for i = 1, #YLP do
-        local ELT = YLP[i]
-        local BzP = ELT.PrimaryPart
-
-        if BzP and AreYouAlive(ELT) and (Pz1 - BzP.Position).Magnitude <= Distance then
-            table.insert(BLADE1, {ELT, BzP})
-        end
-    end
-
-    return BLADE1
+function target_alive(t)
+  local hmoid = t and t.Character and t:FindFirstChildOfClass("Humanoid")
+  if hmoid and hmoid.Health > 0 then
+    return true
+  end return false
 end
 
-function VLP4BLADE1(C1H, Distance)
-    local Pz1 = C1H:GetPivot().Position
-    Distance = Distance or 50
-
-    return CreateProcess(Pz1, Distance)
+function find_enm()
+  local data = {n = nil, m = math.huge, r = 60}
+  for _, enm in pairs(plrs:GetPlayers()) do
+    if enm ~= plr and enm.Character and enm.Character:FindFirstChild("HumanoidRootPart") then
+      local dist = (enm.Character.HumanoidRootPart.Position - plr.Character.HumanoidRootPart.Position).magnitude
+      if dist < data.m and dist <= data.r and target_alive(enm) then
+        data.m = dist
+        data.n = enm
+      end
+    end
+  end return data.n
 end
 
-function Run_NormalAttacking(C1H, CDF)
-    local ERP1 = nil
-    local BLADE1 = VLP4BLADE1(C1H)
-
-    if #BLADE1 > 0 then
-        ERP1 = BLADE1[1][2]
-
-        RE_1:FireServer(CDF)
-        if _G.Method == 1 then
-            RE_2:FireServer(ERP1, BLADE1)
-        elseif _G.Method == 2 then
-            H1T(ERP1, BLADE1)
-        end
+function AutoAttack()
+  local enm_founded = Get_Enemy()
+  local tool_equip = plr.Character:FindFirstChildOfClass("Tool")
+  if #plrs:GetPlayers() > 0 and enm_founded ~= nil then
+    if tool and table.find(valid_wp, tool.ToolTip) then
+      cd:FireServer(0.5)
+      rh:InvokeServer(enm_founded.Character[valid_body_parts[math.random(1, #valid_body_parts)]], {}, uid)
     end
+  end
 end
 
-function RunSpecialFunction(CDF)
-    if not AreYouAlive(P1L.Character) then return end
-    
-    local C1H = P1L.Character
-    local EP1 = C1H:FindFirstChildOfClass("Tool")
-    local ToolTip = EP1 and EP1.ToolTip
-    
-    if not EP1 or (ToolTip ~= "Gun" and ToolTip ~= "Melee" and ToolTip ~= "Blox Fruit" and ToolTip ~= "Sword") then
-        return
-    end
-    
-    local CDF = EP1:FindFirstChild("Cooldown") and EP1.Cooldown.Value or CDF
-
-    Run_NormalAttacking(C1H, CDF)
-end
-
-local P1 = 0
-R1S.RenderStepped:Connect(function()
-    P1 += 1
-    if P1 >= 2 then
-        if getsenv then
-            local S1, E2 = pcall(getsenv, LSC)
-            if S1 and E2 then
-                H1T = E2._G.SendHitsToServer
-            end
-        end
-        P1 = 0
-    end
-end)
-
-R1S.RenderStepped:Connect(function()
-    if _G.EnableFastAttack_Players and not Its_Disable_ATKPlayers then
-        if not _G.SuperFastAttack_Players then
-            RunSpecialFunction(0.3)
-        else
-            RunSpecialFunction(0.0002)
-        end
-        wait(_WaitTime_Players)
-    end
+RunService.RenderStepped:Connect(function()
+  if _G.AutoATK_PLRS_Enabled and target_alive(plr) then
+    AutoAttack()
+  end
 end)
