@@ -1411,29 +1411,29 @@ function FastAttack_Status()
     if not FA_Toggle and not FA_Toggle_II then
         FA_Toggle = true
         if _FAmode == 1 then
-            if _G.EnableFastAttack_Players == true then
-                _G.EnableFastAttack_Players = false
+            if _G.AutoATK_PLRS_Enabled == true then
+                _G.AutoATK_PLRS_Enabled = false
             end
-            _G.EnableFastAttack_Enemies = true
+            _G.AutoATK_ENMS_Enabled = true
         elseif _FAmode == 2 then
-            if _G.EnableFastAttack_Enemies == true then
-                _G.EnableFastAttack_Enemies = false
+            if _G.AutoATK_ENMS_Enabled == true then
+                _G.AutoATK_ENMS_Enabled = false
             end
-            _G.EnableFastAttack_Players = true
+            _G.AutoATK_PLRS_Enabled = true
         end
         _Notice("NGHE LỆNH", "[Tự động đánh nhanh hiện đang (BẬT)]", 1, "SendNotification")
     else
         FA_Toggle = false
         if _FAmode == 1 then
-            if _G.EnableFastAttack_Players == true then
-                _G.EnableFastAttack_Players = false
+            if _G.AutoATK_PLRS_Enabled == true then
+                _G.AutoATK_PLRS_Enabled = false
             end
-            _G.EnableFastAttack_Enemies = false
+            _G.AutoATK_ENMS_Enabled = false
         elseif _FAmode == 2 then
-            if _G.EnableFastAttack_Enemies == true then
-                _G.EnableFastAttack_Enemies = false
+            if _G.AutoATK_ENMS_Enabled == true then
+                _G.AutoATK_ENMS_Enabled = false
             end
-            _G.EnableFastAttack_Players = false
+            _G.AutoATK_PLRS_Enabled = false
         end
         _Notice("NGHE LỆNH", "[Tự động đánh nhanh hiện đang (TẮT)]", 1, "SendNotification")
     end
