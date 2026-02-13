@@ -1,115 +1,68 @@
--- Main Script --
-local Player = game:GetService("Players").LocalPlayer
-local RunService = game:GetService("RunService")
-local Repli = game:GetService("ReplicatedStorage")
-local PlayerScripts = Player:WaitForChild("PlayerScripts")
-local Modules = Repli:WaitForChild("Modules")
-local Net = Modules:WaitForChild("Net")
-local RE_RegisterAttack = Net:WaitForChild("RE/RegisterAttack")
-local RE_RegisterHit = Net:WaitForChild("RE/RegisterHit")
-local LocalScript = PlayerScripts:FindFirstChildOfClass("LocalScript")
-local Enemies = workspace:WaitForChild("Enemies")
-local LSHits
+-- Auto Attack: Blox Fruits (Fixed) --
+local ws = game:GetService("Workspace")
+local plr = game:GetService("Players").LocalPlayer
+local rs = game:GetService("RunService")
+local rls = game:GetService("ReplicatedStorage")
+local mdls = rls:WaitForChild("Modules")
+local net = mdls:WaitForChild("Net")
+local cd = net:WaitForChild("RE/RegisterAttack")
+local rh = net:WaitForChild("RE/RegisterHit")
+local enms = ws:WaitForChild("Enemies")
 
-task.spawn(function()
-    while not LocalScript do
-        Player.PlayerScripts.ChildAdded:Wait()
-        LocalScript = PlayerScripts:FindFirstChildOfClass("LocalScript")
-    end
-end)
+local valid_wp = {"Melee", "Sword", "Blox Fruit"}
+local valid_body_parts = {"HumanoidRootPart", "LeftUpperArm", "LeftLowerArm", "LeftHand", "RightUpperArm", "RightLowerArm", "RightHand", "LeftUpperLeg", "LeftLowerLeg", "LeftFoot", "RightUpperLeg", "RightLowerLeg", "RightFoot"}
 
-_G.EnableFastAttack_Enemies = false
-_G.SuperFastAttack_Enemies = false
-_G.Method = 2
-local Its_Disable_ATKEnemies, _WaitTime_Enemies
-
-Its_Disable_ATKEnemies = false
-_WaitTime_Enemies = 0.0001
-
--- Function --
-function IsAlive(Character)
-    local humanoid = Character:FindFirstChild("Humanoid")
-    return humanoid and humanoid.Health > 0
+function random_str()
+  local str = "qwertyuiopasdfghjklzxcvbnm1234567890"
+  local result = ""
+  for index = 1, 4 do
+    local random_index = math.random(1, #str)
+    result = result .. str:sub(random_index, random_index)
+  end return result
 end
 
-function DoProcessHits(Position, Distance)
-    local BladeHits = {}
-    local Mobs = Enemies:GetChildren()
-    
-    for i = 1, #Mobs do
-        local Enemy = Mobs[i]
-        local BasePart = Enemy.PrimaryPart
-        
-        if BasePart and IsAlive(Enemy) and (Position - BasePart.Position).Magnitude <= Distance then
-            table.insert(BladeHits, {Enemy, BasePart})
-        end
-    end
+local uid = tostring(plr.UserId):sub(2, 5) .. random_str()
 
-    return BladeHits
+function target_alive(t)
+  local hmoid = t and t:FindFirstChildOfClass("Humanoid")
+  if hmoid and hmoid.Health > 0 then
+    return true
+  end return false
 end
 
-function ValidPartFor_Bladehits(Character, Distance)
-    local Position = Character:GetPivot().Position
-    Distance = Distance or 50
-    
-    return DoProcessHits(Position, Distance)
+function plr_alive()
+  local hmoid = plr and plr.Character and plr.Character:FindFirstChildOfClass("Humanoid")
+  if hmoid and hmoid.Health > 0 then
+    return true
+  end return false
 end
 
-function NormalAttacking(Character, Cooldown)
-    local EnemyRootPart = nil
-    local BladeHits = ValidPartFor_Bladehits(Character)
-    
-    if #BladeHits > 0 then
-        EnemyRootPart = BladeHits[1][2]
-        
-        RE_RegisterAttack:FireServer(Cooldown)
-        if _G.Method == 1 then
-            RE_RegisterHit:FireServer(EnemyRootPart, BladeHits)
-        elseif _G.Method == 2 then
-            LSHits(EnemyRootPart, BladeHits)
-        end
+function find_enm()
+  local data = {n = nil, m = math.huge, r = 60}
+  for _, enm in pairs(enms:GetChildren()) do
+    if enm:IsA("Model") and enm:FindFirstChild("HumanoidRootPart") then
+      local dist = (enm.HumanoidRootPart.Position - plr.Character.HumanoidRootPart.Position).magnitude
+      if dist < data.m and dist <= data.r and target_alive(enm) then
+        data.m = dist
+        data.n = enm
+      end
     end
+  end return data.n
 end
 
-function AttackNoCD(Cooldown_I)
-    if not IsAlive(Player.Character) then return end
-    
-    local Character = Player.Character
-    local Equipped = Character:FindFirstChildOfClass("Tool")
-    local ToolTip = Equipped and Equipped.ToolTip
-    
-    if not Equipped or (ToolTip ~= "Gun" and ToolTip ~= "Melee" and ToolTip ~= "Blox Fruit" and ToolTip ~= "Sword") then
-        return
+function AutoAttack()
+  local enm_founded = Get_Enemy()
+  local tool_equip = plr.Character:FindFirstChildOfClass("Tool")
+  if #Enms:GetChildren() > 0 and enm_founded ~= nil then
+    if tool and table.find(valid_wp, tool.ToolTip) then
+      cd:FireServer(0.5)
+      rh:InvokeServer(enm_founded[valid_body_parts[math.random(1, #valid_body_parts)]], {}, uid)
     end
-    
-    local Cooldown = Equipped:FindFirstChild("Cooldown") and Equipped.Cooldown.Value or Cooldown_I
-    
-    NormalAttacking(Character, Cooldown)
+  end
 end
-
-local Point = 0
-RunService.RenderStepped:Connect(function()
-    Point += 1
-    if Point >= 2 then
-        if getsenv then
-            local scc, env = pcall(getsenv, LocalScript)
-            if scc and env then
-                LSHits = env._G.SendHitsToServer
-            end
-        end
-        Point = 0
-    end
-end)
 
 RunService.RenderStepped:Connect(function()
-    if _G.EnableFastAttack_Enemies and not Its_Disable_ATKEnemies then
-        if not _G.SuperFastAttack_Enemies then
-            AttackNoCD(0.3)
-        else
-            for x = 1, 5 do
-                task.spawn(AttackNoCD, 0.3)
-            end
-        end
-        wait(_WaitTime_Enemies)
-    end
+  if _G.AutoATK_Enabled and plr_alive() then
+    AutoAttack()
+  end
 end)
