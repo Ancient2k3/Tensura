@@ -43,8 +43,8 @@ function find_enm()
   end return data.n
 end
 
-function AutoAttack()
-  local enm_founded = Get_Enemy()
+function auto_fight()
+  local enm_founded = find_enm()
   local tool_equip = plr.Character:FindFirstChildOfClass("Tool")
   if #plrs:GetPlayers() > 0 and enm_founded ~= nil then
     if tool and table.find(valid_wp, tool.ToolTip) then
@@ -56,6 +56,6 @@ end
 
 rs.RenderStepped:Connect(function()
   if _G.AutoATK_PLRS_Enabled and target_alive(plr) then
-    AutoAttack()
+    auto_fight()
   end
 end)
