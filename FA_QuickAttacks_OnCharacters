@@ -47,7 +47,7 @@ function auto_fight()
   local enm_founded = find_enm()
   local tool_equip = plr.Character:FindFirstChildOfClass("Tool")
   if #plrs:GetPlayers() > 0 and enm_founded ~= nil then
-    if tool and table.find(valid_wp, tool.ToolTip) then
+    if tool_equip and table.find(valid_wp, tool_equip.ToolTip) then
       cd:FireServer(0.5)
       rh:FireServer(enm_founded.Character[valid_body_parts[math.random(1, #valid_body_parts)]], {}, uid)
     end
