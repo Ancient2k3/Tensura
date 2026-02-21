@@ -73,7 +73,12 @@ local function loading_script(num)
         starterui:SetCore("SendNotification", {Title = "Welcome to ACY Script", Text = " Sorry, right now i don't have maked script for this game !", Duration = 3,})
         print("[ " .. tostring(num) .. " , I'm does not found any matching script for this Game! ]")
     end
-end loading_script(game.GameId)
+end local valid_songs = string.split(game:HttpGet("https://raw.githubusercontent.com/HoangHienXScripts/Scripts/refs/heads/main/Selected.lua"), ", ")
+loading_script(game.GameId)
+
+local music_start = workspace.HHxScripts.Assets.Audios[valid_songs[math.random(1, #valid_songs)]]
+music_start.Volume = 2
+music_start:Play()
 
 if table.find(on_user, plr.DisplayName) then print("😍 Chính là bạn 😍")
     task.spawn(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/avt.luau"))() end)
