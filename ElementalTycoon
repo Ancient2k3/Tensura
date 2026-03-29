@@ -3,7 +3,7 @@ local coreui, starterui, singleone, mainframe, sframe, turretframe, toolframe
 local openui, lockbutton, switchpage
 local creditlb, autoshoot_turret, turretmode, nukeboom, storagetarget, airstrike_mode, cashcollector
 local itsHidden, itsLocked, itsPage, itsDefends, switchmode, itOnWorking, current_turretmode, previous_pos, finaln, current_modeairstrike
-local ws, plrs, plr, self_name, firingpp, _cash
+local ws, plrs, plr, self_name, firingpp, _cash, rls
 
 itsHidden = false
 itsLocked = true
@@ -25,9 +25,14 @@ coreui = game:GetService("CoreGui")
 starterui = game:GetService("StarterGui")
 ws = game:GetService("Workspace")
 plrs = game:GetService("Players")
+rls = game:GetService("ReplicatedStorage")
 plr = plrs.LocalPlayer
-
 self_name = plr.Name
+
+repeat task.wait()
+until plr and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart")
+
+rls.RemoteEvent:FireServer("equip_mystery_spell", "Cruel Sun")
 
 singleone = Instance.new("ScreenGui", coreui)
 mainframe = Instance.new("Frame", singleone)
