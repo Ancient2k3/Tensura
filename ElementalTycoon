@@ -1,7 +1,7 @@
 -- HoangHien_Script: Elementals Tycoon --
 local coreui, starterui, singleone, mainframe, sframe, turretframe, toolframe
 local openui, lockbutton, switchpage
-local creditlb, autoshoot_turret, turretmode, nukeboom, storagetarget, airstrike_mode, cashcollector
+local creditlb, autoshoot_turret, turretmode, nukeboom, storagetarget, airstrike_mode, cashcollector, copy_moveset
 local itsHidden, itsLocked, itsPage, itsDefends, switchmode, itOnWorking, current_turretmode, previous_pos, finaln, current_modeairstrike
 local ws, plrs, plr, self_name, firingpp, _cash, rls
 
@@ -46,6 +46,7 @@ switchpage = Instance.new("TextButton", mainframe)
 
 creditlb = Instance.new("TextLabel", sframe)
 autoshoot_turret = Instance.new("TextButton", turretframe)
+copy_moveset = Instance.new("TextButton", toolframe)
 turretmode = Instance.new("TextButton", turretframe)
 nukeboom = Instance.new("TextButton", turretframe)
 storagetarget = Instance.new("TextBox", singleone)
@@ -139,6 +140,16 @@ autoshoot_turret.TextColor3 = Color3.new(1, 1, 1)
 autoshoot_turret.Font = Enum.Font.Code
 autoshoot_turret.Text = "Auto Defends: OFF"
 autoshoot_turret.Visible = true
+
+copy_moveset.BackgroundTransparency = 0.8
+copy_moveset.BackgroundColor3 = Color3.new(0, 0, 0)
+copy_moveset.Position = UDim2.new(0.02, 0, 0.05, 0)
+copy_moveset.Size = UDim2.new(0.96, 0, 0.2, 0)
+copy_moveset.TextScaled = true
+copy_moveset.TextColor3 = Color3.new(1, 1, 1)
+copy_moveset.Font = Enum.Font.Code
+copy_moveset.Text = "Copy Moveset [NEARBY]"
+copy_moveset.Visible = true
 
 turretmode.BackgroundTransparency = 0.8
 turretmode.BackgroundColor3 = Color3.new(0, 0, 0)
@@ -674,6 +685,30 @@ music_mb1c(autoshoot_turret, function()
         end
     else
         normal_ntf("《Doesnt Exist!》", "You does not have upgrades and build the tower defends yet already... can't use this button, Come back later :> !")
+    end
+end)
+
+local original_text = copy_moveset.Text
+music_mb1c(copy_moveset, function()
+    if copy_moveset.Text == original_text then
+        local movesets = {}
+        local target = findneareatENEMY()
+        if target ~= nil then
+            copy_moveset.Text = "Checking: " .. target.DisplayName .. " Moveset."
+            for _, item in next, target.Backpack:GetChildren() do
+                if item:IsA("Tool") then
+                    table.insert(movesets, item.Name)
+                    copy_moveset.Text = "Got Moveset: " .. item.Name .. "."
+                    task.wait(0.5)
+                end
+            end copy_moveset.Text = "I Got It ALL from " .. target.DisplayName .. "."
+        end task.wait(0.5)
+        for index = 1, #movesets do
+            rls.RemoteEvent:FireServer("equip_mystery_spell", movesets[index])
+            copy_moveset.Text = "Added: " .. movesets[index] .. " into inventory."
+            task.wait(4)
+        end copy_moveset.Text = "Doneeee..." task.wait(1.25)
+        copy_moveset.Text = original_text
     end
 end)
 
