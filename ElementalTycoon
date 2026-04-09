@@ -761,6 +761,7 @@ music_mb1c(airstrike_mode, function()
 end)
 
 uic0_2(autoshoot_turret)
+uic0_2(copy_moveset)
 uic0_2(turretmode)
 uic0_2(nukeboom)
 uic0_2(storagetarget)
