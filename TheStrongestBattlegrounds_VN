@@ -1,6 +1,8 @@
 -- Remove Existed One --
 local player = game.Players.LocalPlayer
 local screenGuiName = "TSBMyUIVN"
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/TSB_SETUP.lua"))()
+repeat task.wait() until workspace:FindFirstChild("xSafe")
 
 for _, gui in ipairs(player:WaitForChild("PlayerGui"):GetChildren()) do
     if gui:IsA("ScreenGui") and gui.Name == screenGuiName then
@@ -1465,7 +1467,7 @@ location2.Text = "Chỗ chiêu 1 thức tỉnh của saitama"
 
 location2.MouseButton1Click:Connect(function()
     local player = game.Players.LocalPlayer
-    player.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Cutscenes["Death Cutscene"].Camm.CFrame
+    player.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").xSafe.xPoint.CFrame
 end)
 
 -- Spawn Part --
