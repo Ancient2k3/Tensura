@@ -280,6 +280,13 @@ end
 
 function placing(name, pos)
   if not type(pos) == "table" then ntf("It's not table, script errored!") return end
+  local hrp = plr and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart")
+  if hrp then
+    local distance
+    repeat distance = (pos - hrp.Position).magnitude
+    hrp.Velocity = (pos - hrp.Position).Unit * -100
+    until distance <= 5
+  end task.wait()
   rls.Events.Place:InvokeServer(name, CFrame.new(unpack(pos)) * CFrame.Angles(0, 0, 0), workspace.Baseplate)
 end
 
