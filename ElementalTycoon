@@ -29,10 +29,16 @@ rls = game:GetService("ReplicatedStorage")
 plr = plrs.LocalPlayer
 self_name = plr.Name
 
-repeat task.wait()
-until plr and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart")
+local original_team, new_team
+original_team = plr.Team.Name
+new_team = original_team
 
-rls.RemoteEvent:FireServer("equip_mystery_spell", "Cruel Sun")
+repeat task.wait()
+new_team = plr.Team.Name
+until plr and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart") and original_team ~= new_team
+
+rls.RemoteEvent:FireServer("equip_mystery_spell", "Cruel Sun") task.wait(4)
+rls.RemoteEvent:FireServer("equip_mystery_spell", "Sonar")
 
 singleone = Instance.new("ScreenGui", coreui)
 mainframe = Instance.new("Frame", singleone)
