@@ -283,8 +283,9 @@ function placing(name, pos)
   local hrp = plr and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart")
   if hrp then
     local distance
-    repeat distance = (pos - hrp.Position).magnitude
-    hrp.Velocity = (pos - hrp.Position).Unit * -100
+    local target_pos = Vector3.new(unpack(pos))
+    repeat distance = (target_pos - hrp.Position).magnitude
+    hrp.Velocity = (target_pos - hrp.Position).Unit * -100
     until distance <= 5
   end task.wait()
   rls.Events.Place:InvokeServer(name, CFrame.new(unpack(pos)) * CFrame.Angles(0, 0, 0), workspace.Baseplate)
