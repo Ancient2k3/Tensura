@@ -48,7 +48,7 @@ mdl.collect_money = function()
         end
       end
     else
-      local dlr = ws:FindFirstChild("Dollar") or ignore_items:FindFirstChild("Dollar")
+      local dlr = ws:FindFirstChild("Dollar") --or ignore_items:FindFirstChild("Dollar")
       if dlr and dlr.Position.Y > 5 then
         dlr.CanCollide = false
         dlr.Transparency = 1
