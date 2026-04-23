@@ -1,13 +1,16 @@
 function svr(name) return game:GetService(name) end
-local ws, plrs
+local ws, plrs, rls
 ws = svr("Workspace")
 plrs = svr("Players")
+rls = svr("ReplicatedStorage")
 
-local plr, chests, ignore_items, tycoons
+local plr, chests, ignore_items, tycoons, slap, mobs
 plr = plrs.LocalPlayer
 chests = ws.Treasure.Chests
 ignore_items = ws.Ignore
 tycoons = ws.Tycoons
+slap = rls.Slap.RemoteEvent
+mobs = ws.Characters.Enemies
 
 local mdl = {}
 
@@ -48,6 +51,9 @@ mdl.collect_money = function()
         end
       end
     else
+      if #mobs:GetChildren() > 0 then
+        slap:FireServer(mobs:GetChildren()[1], 5000, 0, 0, "Jay")
+      end
       local dlr = ws:FindFirstChild("Dollar") --or ignore_items:FindFirstChild("Dollar")
       if dlr and dlr.Position.Y > 5 then
         dlr.CanCollide = false
