@@ -107,7 +107,7 @@ function star(name_1, name_2, point, script)
     if check_object(name_2) and check_money(point) then
       to_button(name_2)
     else
-      collect_money()
+      mdl.collect_money()
     end
   end
 end
