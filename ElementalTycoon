@@ -1,7 +1,7 @@
 -- HoangHien_Script: Elementals Tycoon --
 local coreui, starterui, singleone, mainframe, sframe, turretframe, toolframe
 local openui, lockbutton, switchpage
-local creditlb, autoshoot_turret, turretmode, nukeboom, storagetarget, airstrike_mode, cashcollector, copy_moveset
+local creditlb, autoshoot_turret, turretmode, nukeboom, storagetarget, airstrike_mode, cashcollector, copy_moveset, at_base
 local itsHidden, itsLocked, itsPage, itsDefends, switchmode, itOnWorking, current_turretmode, previous_pos, finaln, current_modeairstrike
 local ws, plrs, plr, self_name, firingpp, _cash, rls
 
@@ -54,6 +54,7 @@ switchpage = Instance.new("TextButton", mainframe)
 creditlb = Instance.new("TextLabel", sframe)
 autoshoot_turret = Instance.new("TextButton", turretframe)
 copy_moveset = Instance.new("TextButton", toolframe)
+at_base = Instance.new("TextButton", toolframe)
 turretmode = Instance.new("TextButton", turretframe)
 nukeboom = Instance.new("TextButton", turretframe)
 storagetarget = Instance.new("TextBox", singleone)
@@ -177,6 +178,16 @@ nukeboom.TextColor3 = Color3.new(1, 1, 1)
 nukeboom.Font = Enum.Font.Code
 nukeboom.Text = "Air Strike"
 nukeboom.Visible = true
+
+at_base.BackgroundTransparency = 0.8
+at_base.BackgroundColor3 = Color3.new(0, 0, 0)
+at_base.Position = UDim2.new(0.02, 0, 0.275, 0)
+at_base.Size = UDim2.new(0.96, 0, 0.2, 0)
+at_base.TextScaled = true
+at_base.TextColor3 = Color3.new(1, 1, 1)
+at_base.Font = Enum.Font.Code
+at_base.Text = "Auto Base"
+at_base.Visible = true
 
 storagetarget.BackgroundTransparency = 0.5
 storagetarget.BackgroundColor3 = Color3.new(0, 0, 0)
@@ -751,6 +762,18 @@ music_mb1c(cashcollector, function()
     end while _cash do wait(0.05) et_module.collect_money() end
 end)
 
+local auto_upgrading_basement = false
+music_mb1c(at_base, function()
+  if not auto_upgrading_basement then auto_upgrading_basement = true
+    at_base.TextColor3 = Color3.new(0, 1, 0)
+  else auto_upgrading_basement = false
+    at_base.TextColor3 = Color3.new(1, 1, 1)
+  end while auto_upgrading_basement do
+  task.wait(0.05)
+  et_module.do_progress()
+  end
+end)
+
 music_fl(storagetarget, enterPressed, function()
     local inputn = storagetarget.Text
     finaln = correct_username(inputn)
@@ -771,5 +794,6 @@ uic0_2(autoshoot_turret)
 uic0_2(copy_moveset)
 uic0_2(turretmode)
 uic0_2(nukeboom)
+uic0_2(at_base)
 uic0_2(storagetarget)
 uic0_2(airstrike_mode)
