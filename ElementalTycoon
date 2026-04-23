@@ -32,6 +32,7 @@ self_name = plr.Name
 local original_team, new_team
 original_team = plr.Team.Name
 new_team = original_team
+local et_module = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/Scripts/ElementalTycoons_MODULE.lua"))()
 
 repeat task.wait()
 new_team = plr.Team.Name
@@ -747,7 +748,7 @@ music_mb1c(cashcollector, function()
     else _cash = false
         cashcollector.TextColor3 = Color3.new(1, 1, 1) task.wait(0.1)
         cashcollector.Text = "Collect CASH"
-    end while _cash do wait(0.05) _getmoney(cashcollector) end
+    end while _cash do wait(0.05) et_module.collect_money() end
 end)
 
 music_fl(storagetarget, enterPressed, function()
