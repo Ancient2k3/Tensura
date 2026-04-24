@@ -41,6 +41,14 @@ until plr and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart")
 rls.RemoteEvent:FireServer("equip_mystery_spell", "Cruel Sun") task.wait(4)
 rls.RemoteEvent:FireServer("equip_mystery_spell", "Sonar")
 
+local last_stand = Instance.new("Part", ws)
+last_stand.Name = "Last-S"
+last_stand.Anchored = true
+last_stand.CanCollide = false
+last_stand.Transparency = 1
+last_stand.Size = Vector3.new(2, 2, 2)
+last_stand.Position = Vector3.new(0, 999999, 0)
+
 singleone = Instance.new("ScreenGui", coreui)
 mainframe = Instance.new("Frame", singleone)
 sframe = Instance.new("Frame", mainframe)
