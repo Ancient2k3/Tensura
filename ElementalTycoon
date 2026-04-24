@@ -49,6 +49,8 @@ last_stand.Transparency = 1
 last_stand.Size = Vector3.new(2, 2, 2)
 last_stand.Position = Vector3.new(0, 999999, 0)
 
+local last_stand_original_pos = last_stand.Position
+
 singleone = Instance.new("ScreenGui", coreui)
 mainframe = Instance.new("Frame", singleone)
 sframe = Instance.new("Frame", mainframe)
@@ -771,10 +773,17 @@ music_mb1c(cashcollector, function()
 end)
 
 local auto_upgrading_basement = false
+local original_subject = ws.Camera.CameraSubject
 music_mb1c(at_base, function()
+  local hrp = plr and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart")
   if not auto_upgrading_basement then auto_upgrading_basement = true
+    ws.Camera.CameraSubject = last_stand
+    last_stand.Position = hrp.Position
     at_base.TextColor3 = Color3.new(0, 1, 0)
   else auto_upgrading_basement = false
+    hrp.CFrame = CFrame.new(last_stand.Position) task.wait(0.5)
+    ws.Camera.CameraSubject = original_subject
+    last_stand.Position = last_stand_original_pos
     at_base.TextColor3 = Color3.new(1, 1, 1)
   end while auto_upgrading_basement do
   task.wait(0.05)
