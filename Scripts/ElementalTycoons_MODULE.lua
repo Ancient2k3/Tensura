@@ -17,6 +17,7 @@ local mdl = {}
 local vars = {
   in_progress = false,
   current_object = "",
+  blacklist_weapons = {"Poison Serpent", "Sonar"},
   hand_weapons = {
     ["Lava"] = "Lava Katana",
     ["Darkness"] = "Shadow Sword",
