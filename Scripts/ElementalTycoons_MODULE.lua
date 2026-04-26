@@ -19,23 +19,23 @@ local vars = {
   current_object = "",
   blacklist_weapons = {"Poison Serpent", "Sonar"},
   hand_weapons = {
-    ["Lava"] = "Lava Katana",
-    ["Darkness"] = "Shadow Sword",
-    ["Bone"] = "Bone Scythe",
-    ["Space"] = "Space Gun",
-    ["Devil"] = "Devil Sword",
-    ["Venom"] = "Venom Blade",
-    ["Crystal"] = "Crystal Cleaver",
-    ["Time"] = "Time Scepter",
-    ["Gravity"] = "Gravity Katana",
-    ["Technology"] = "Hyper Sword",
-    ["Fire"] = "Fire Sword",
-    ["Earth"] = "Tectonic Hammer",
-    ["Thunder"] = "Thunder Staff",
-    ["Ice"] = "Frost Staff",
-    ["Nature"] = "Christmas Tree Sword",
-    ["Light"] = "Light Saber",
-    ["Super Sonic"] = "Sonic Blaster"
+    ["Lava"] = {"Lava Katana"},
+    ["Darkness"] = {"Shadow Sword"},
+    ["Bone"] = {"Bone Scythe"},
+    ["Space"] = {"Space Gun"},
+    ["Devil"] = {"Devil Sword"},
+    ["Venom"] = {"Venom Blade"},
+    ["Crystal"] = {"Crystal Cleaver"},
+    ["Time"] = {"Time Scepter"},
+    ["Gravity"] = {"Gravity Katana"},
+    ["Technology"] = {"Hyper Sword"},
+    ["Fire"] = {"Fire Sword"},
+    ["Earth"] = {"Tectonic Hammer"},
+    ["Thunder"] = {"Thunder Staff"},
+    ["Ice"] = {"Frost Staff"},
+    ["Nature"] = {"Christmas Tree Sword"},
+    ["Light"] = {"Light Saber"},
+    ["Super Sonic"] = {"Sonic Blaster"}
   }
 }
 
@@ -159,7 +159,7 @@ mdl.do_progress = function()
     star("Ability6","Ability6Ability 5",125000,function()
     star("Ability7","Ability7Ability 6",150000,function()
     star("PowerPad","PowerPadAbility Pad",250,function()
-    star("Ability1","Ability1" .. vars.hand_weapons[plr.Team.Name],550,function()
+    star("Ability1","Ability1" .. vars.hand_weapons[plr.Team.Name][1],550,function()
     star("Ability2","Ability2Ability 1",1500,function()
     star("Ability3","Ability3Ability 2",5000,function()
     star("Lasers","LasersDoor Lasers",550,function()
