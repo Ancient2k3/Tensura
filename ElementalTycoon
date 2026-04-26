@@ -240,7 +240,7 @@ magnetic.Size = UDim2.new(0.96, 0, 0.2, 0)
 magnetic.TextScaled = true
 magnetic.TextColor3 = Color3.new(1, 1, 1)
 magnetic.Font = Enum.Font.Code
-magnetic.Text = "Auto Base"
+magnetic.Text = "Bring Others"
 magnetic.Visible = true
 
 -- Connected function --
@@ -808,7 +808,7 @@ music_mb1c(magnetic, function()
     magnetic.TextColor3 = Color3.new(0, 1, 0)
   else magnet_enabled = false
     magnetic.TextColor3 = Color3.new(1, 1, 1)
-  end while magnet_enabled do task.wait(0.05)
+  end while magnet_enabled do task.wait(0.01)
     et_module.magnet("pull")
   end
 end)
