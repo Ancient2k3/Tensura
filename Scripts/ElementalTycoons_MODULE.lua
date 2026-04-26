@@ -175,4 +175,21 @@ mdl.do_progress = function()
   end
 end
 
+mdl.magnet = function(mode)
+  local target = plrs:GetPlayers()[math.random(1, #plrs:GetPlayers())]
+  local magnet_mode = mode or nil
+  if target ~= plr and target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") then
+    if magnet_mode == "push" then
+      slap:FireServer(target.Character, 0, 0, 999999, "Jay")
+    elseif magnet_mode == "pull" then
+      local distance = (target.Character.HumanoidRootPart.Position - plr.Character.HumanoidRootPart.Position).magnitude > 80
+      if distance then
+        slap:FireServer(target.Character, 0, 0, -99, "Jay")
+      end
+    else
+      return magnet_mode
+    end
+  end
+end
+
 return mdl
