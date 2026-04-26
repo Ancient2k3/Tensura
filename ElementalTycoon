@@ -1,7 +1,7 @@
 -- HoangHien_Script: Elementals Tycoon --
 local coreui, starterui, singleone, mainframe, sframe, turretframe, toolframe
 local openui, lockbutton, switchpage
-local creditlb, autoshoot_turret, turretmode, nukeboom, storagetarget, airstrike_mode, cashcollector, copy_moveset, at_base
+local creditlb, autoshoot_turret, turretmode, nukeboom, storagetarget, airstrike_mode, cashcollector, copy_moveset, at_base, magnetic
 local itsHidden, itsLocked, itsPage, itsDefends, switchmode, itOnWorking, current_turretmode, previous_pos, finaln, current_modeairstrike
 local ws, plrs, plr, self_name, firingpp, _cash, rls
 
@@ -70,6 +70,7 @@ nukeboom = Instance.new("TextButton", turretframe)
 storagetarget = Instance.new("TextBox", singleone)
 airstrike_mode = Instance.new("TextButton", turretframe)
 cashcollector = Instance.new("TextButton", turretframe)
+magnetic = Instance.new("TextButton", toolframe)
 
 singleone.Name = "Elementals_Script"
 
@@ -231,6 +232,16 @@ cashcollector.TextColor3 = Color3.new(1, 1, 1)
 cashcollector.Font = Enum.Font.Code
 cashcollector.Text = "Collect CASH"
 cashcollector.Visible = true
+
+magnetic.BackgroundTransparency = 0.8
+magnetic.BackgroundColor3 = Color3.new(0, 0, 0)
+magnetic.Position = UDim2.new(0.02, 0, 0.5, 0)
+magnetic.Size = UDim2.new(0.96, 0, 0.2, 0)
+magnetic.TextScaled = true
+magnetic.TextColor3 = Color3.new(1, 1, 1)
+magnetic.Font = Enum.Font.Code
+magnetic.Text = "Auto Base"
+magnetic.Visible = true
 
 -- Connected function --
 function correct_username(plrs_name)
@@ -791,6 +802,17 @@ music_mb1c(at_base, function()
   end
 end)
 
+local magnet_enabled = false
+music_mb1c(magnetic, function()
+  if not magnet_enabled then magnet_enabled = true
+    magnetic.TextColor3 = Color3.new(0, 1, 0)
+  else magnet_enabled = false
+    magnetic.TextColor3 = Color3.new(1, 1, 1)
+  end while magnet_enabled do task.wait(0.05)
+    et_module.magnet("pull")
+  end
+end)
+
 music_fl(storagetarget, enterPressed, function()
     local inputn = storagetarget.Text
     finaln = correct_username(inputn)
@@ -814,3 +836,5 @@ uic0_2(nukeboom)
 uic0_2(at_base)
 uic0_2(storagetarget)
 uic0_2(airstrike_mode)
+uic0_2(magnetic)
+uic0_2(cashcollector)
