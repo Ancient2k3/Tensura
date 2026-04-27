@@ -180,13 +180,13 @@ mdl.magnet = function(mode)
   local target = plrs:GetPlayers()[math.random(1, #plrs:GetPlayers())]
   local magnet_mode = mode or nil
   if target ~= plr and target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") then
-    local equipped_tool = target.Character:FindFirstChildOfClass("Tool")
+    local equipped_tool = target and target.Character and target.Character:FindFirstChildOfClass("Tool")
     if magnet_mode == "push" then
       slap:FireServer(target.Character, 0, 0, 999999, "Jay")
     elseif magnet_mode == "pull" then
       local distance = (target.Character.HumanoidRootPart.Position - plr.Character.HumanoidRootPart.Position).magnitude > 80
       if distance then
-        if equipped_tool and table.find(vars.blacklist_weapons, equipped_tool.Name) then
+        if equipped_tool then
           slap:FireServer(target.Character, 5000, 0, 9999999, "Jay")
         else
           slap:FireServer(target.Character, 0, 0, -99, "Jay")
