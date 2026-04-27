@@ -1,9 +1,10 @@
 -- SimpleAimLock:HHxScripts --
-local _ws, _plrs, _rs, _core
+local _ws, _plrs, _rs, _core, _tws
 _ws = game:GetService("Workspace")
 _plrs = game:GetService("Players")
 _rs = game:GetService("RunService")
 _core = game:GetService("CoreGui")
+_tws = game:GetService("TweenService")
 
 local _plr, _camera
 _plr = _plrs.LocalPlayer
@@ -94,7 +95,7 @@ function lookat_nearest_character(t_data)
         local hrp = target.Character.HumanoidRootPart
         local hmo = target.Character.Humanoid
         if hmo.Health > 0 then
-            _camera.CFrame = CFrame.new(_camera.CFrame.Position, hrp.Position + Vector3.new(unpack(position_data)))
+            _tws:Create(_camera, TweenInfo.new(0.01, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut), {CFrame = CFrame.new(_camera.CFrame.Position, hrp.Position + Vector3.new(unpack(position_data)))}):Play()
         end
     end
 end
