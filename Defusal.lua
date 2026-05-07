@@ -36,6 +36,15 @@ local _somedata = {
     }
 }
 
+local folders = {"HHxScripts", "Assets", "Images"}
+for i = 1, #folders do
+  if not isfolder(folders[i]) then
+    makefolder(folders[i])
+  end
+end if not isfile("HHxScripts/Assets/Images/lock_in.png") then
+  writefile("HHxScripts/Assets/Images/lock_in.png", game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Endfield_Projects/refs/heads/main/ASSETS/lock_in.png"))
+end
+
 local _screenui, _button, _uic
 _screenui = Instance.new("ScreenGui", _core)
 _button = Instance.new("TextButton", _screenui)
