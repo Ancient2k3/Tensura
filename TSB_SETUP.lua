@@ -14,10 +14,10 @@ local s = Instance.new("Part", workspace)
 s.Name = "xSafe"
 s.Anchored = true
 s.CanCollide = true
-s.Material = "Grass"
+s.Material = "Plastic"
 s.Position = Vector3.new(-80, 25.7, 20347.7)
-s.Size = Vector3.new(223, 1.2, 212)
-s.Color = Color3.fromRGB(0, 100, 0)
+s.Size = Vector3.new(1000, 1.2, 1000)
+s.Color = Color3.fromRGB(0, 0, 0)
 
 local p = s:Clone()
 p.Parent = s
