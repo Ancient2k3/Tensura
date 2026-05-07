@@ -58,7 +58,13 @@ local script_data = {
     [7983308985] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/Last_Letters.lua",
 
     -- Build Anything --
-    [8752324161] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/Build_Anything.lua"
+    [8752324161] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/Build_Anything.lua",
+
+    -- Defusal --
+    [1] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/Defusal.lua",
+
+    -- Fly Hide And Seek --
+    [2] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/FlyHideAndSeek.lua"
 }
 
 shared.access = "no"
