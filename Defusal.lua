@@ -158,9 +158,11 @@ function lockon_nearest()
         end
     end if _team ~= nil and t and t.Character and t.Character:FindFirstChildOfClass("Humanoid") then
         if hp_check(t) then
+            _Crh.ImageTransparency = 0.25
             _billboard.Adornee = t.Character.Head
         else
-          _billboard.Adornee = nil
+            _Crh.ImageTransparency = 1
+            _billboard.Adornee = nil
         end
     end
 end
