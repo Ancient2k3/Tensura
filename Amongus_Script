@@ -1,0 +1,174 @@
+local ws, plrs, starterui, rls
+ws = game:GetService("Workspace")
+plrs = game:GetService("Players")
+starterui = game:GetService("StarterGui")
+rls = game:GetService("ReplicatedStorage")
+
+local ui = loadstring(game:HttpGet("https://raw.githubusercontent.com/HoangHienXScripts/Scripts/main/modules/quickbuttons.lua"))()
+ui.set_configs({saving_state = false})
+
+local plr, cs, evts, ftsk, sqem
+plr = plrs.LocalPlayer
+cs = ws.CurrentCamera
+evts = rls.RemoteEvents
+ftsk = evts.FinishTask
+sqem = evts.SendGameQuickMessage
+
+local script_data = {
+  imposters = {},
+  roles = {},
+  can_chat = plr:GetAttribute("CanChatWithPlayer") or false,
+  _pressed = false,
+  fired_evt = false,
+  fake_vent = false
+}
+
+local folder_1 = Instance.new("Folder", ws)
+folder_1.Name = "FakeVent_Camera"
+
+local anim_vent = Instance.new("Animation", folder_1)
+anim_vent.AnimationId = "rbxassetid://6263696668"
+
+function notify(str)
+  starterui:SetCore("SendNotification", {
+    Title = "Amongus Script",
+    Text = str,
+    Duration = 1.25,
+  })
+end
+
+function list_plrs_roles()
+  script_data.imposters = {}
+  script_data.roles = {}
+  for _, user in next, plrs:GetPlayers() do
+    if user and user.Character then
+      local states_folder = user:FindFirstChild("PublicStates")
+      if states_folder and states_folder:FindFirstChild("SubRole") then
+        table.insert(script_data.roles, user.Name .. " => " .. states_folder.SubRole.Value)
+      end
+      if states_folder and states_folder.Role.Value == "Imposter" then
+        table.insert(script_data.imposters, user.Name)
+      end
+    end
+  end
+end
+
+function find_chatbox()
+  list_plrs_roles()
+  if #script_data.imposters >= 1 then
+    local discuss_ui = plr.PlayerGui.Temp:FindFirstChild("DiscussGui")
+    if discuss_ui then
+      return discuss_ui.MeetingFrame.ChatLabel.ChatFrame.TextScroll.TextBox
+    else notify("Not in discussion, can't uses this button.")
+      return nil
+    end
+  end
+end
+
+function expose_imposters()
+  if script_data.can_chat then
+    local box = find_chatbox()
+    local str = "Imposter: "
+    if not box then return end
+    for index = 1, #script_data.imposters do
+      str = str .. " [" .. tostring(index) .. ": " .. string.sub(script_data.imposters[index], 1, 3) .. "]. "
+    end box.Text = str .. " End!"
+  else
+    list_plrs_roles()
+    for index = 1, #script_data.imposters do
+      print("Imposter: " .. script_data.imposters[index])
+      sqem:FireServer(2, 1, {script_data.imposters[index], "Imposter"})
+      task.wait(3)
+    end
+  end
+end
+
+function expose_roles()
+  if script_data.can_chat then
+    local box = find_chatbox()
+    if not box then return end
+    for index = 1, #script_data.roles do
+      box.Text = tostring(index) .. ": " .. script_data.roles[index]
+      task.wait(2)
+    end
+  else
+    list_plrs_roles()
+    for index = 1, #script_data.roles do
+      local usr_role = script_data.roles[index]
+      print(usr_role)
+      local words = string.split(usr_role, " => ")
+      sqem:FireServer(2, 1, {words[1], words[2]})
+      task.wait(3)
+    end
+  end
+end
+
+function view_cam(pos)
+  local part = Instance.new("Part", folder_1)
+  part.Name = "Subject_X"
+  part.Anchored = true
+  part.CanCollide = false
+  part.Material = Enum.Material.Neon
+  part.Size = Vector3.new(0.1, 0.1, 0.1)
+  part.Position = pos
+  part.Transparency = 0.65
+  cs.CameraSubject = part
+end
+
+function reset_cam()
+  cs.CameraSubject = plr.Character.Humanoid
+  for _, cam in pairs(folder_1:GetChildren()) do
+    if cam:IsA("Part") then
+      cam:Destroy()
+    end
+  end
+end
+
+local vent_pos = nil
+function do_fake_vent()
+  local hrp = plr.Character.HumanoidRootPart
+  if not script_data.fake_vent then
+    vent_pos = hrp.Position
+    hrp.Parent:FindFirstChildOfClass("Humanoid"):LoadAnimation(anim_vent):Play()
+    view_cam(vent_pos) task.wait(2)
+    hrp.CFrame = CFrame.new(0, 999999, 0)
+  else
+    reset_cam()
+    hrp.CFrame = CFrame.new(vent_pos)
+  end script_data.fake_vent = not script_data.fake_vent
+end
+
+function collect_hearts_event(t)
+  if #ws.GameEvents:GetChildren() < 1 then
+    notify("No hearts left to be found!")
+    return
+  end
+  for _, h in pairs(ws.GameEvents:GetChildren()) do
+    if h:IsA("MeshPart") then
+      t.CFrame = CFrame.new(h.Position)
+      task.wait(0.02)
+    end
+  end
+end
+
+ui.add_button("Imposter?", "Code", {255, 255, 255}, {0.4, 0, 0, 0}, 0.2, expose_imposters)
+ui.add_button("Fake Vent", "Code", {255, 255, 255}, {0.645, 0, 0, 0}, 0.2, do_fake_vent)
+ui.add_button("Role?", "Code", {255, 255, 255}, {0.465, 0, 0, 0}, 0.2, expose_roles)
+ui.add_toggle("Task!", "Code", {255, 255, 255}, {0.585, 0, 0, 0}, 0.2, function()
+  if #plr.Events.SetMovement.MovementTags:GetChildren() > 0 and not script_data.fired_evt then
+    script_data.fired_evt = true
+    task.wait(0.02)
+    ftsk:FireServer()
+    script_data.fired_evt = false
+  end
+end, "AutoTask_Enabled")
+ui.add_button("Hearts", "Code", {255, 255, 255}, {0.525, 0, 0, 0}, 0.2, function()
+  if not script_data._pressed then
+    script_data._pressed = true
+    local hrp = plr.Character.HumanoidRootPart
+    local original_pos = hrp.Position
+    collect_hearts_event(hrp)
+    hrp.CFrame = CFrame.new(original_pos)
+    script_data._pressed = false
+  end
+end)
