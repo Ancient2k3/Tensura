@@ -64,10 +64,16 @@ local script_data = {
     [6993600665] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/Defusal.lua",
 
     -- Sailor Piece --
-    [1] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/SailorPiece.lua",
+    [9186719164] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/SailorPiece.lua",
+
+    -- Amongus --
+    [1] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/Amongus.lua",
     
     -- Fly Hide And Seek --
-    [2] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/FlyHideAndSeek.lua"
+    [2] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/FlyHideAndSeek.lua",
+
+    -- Idk Tycoons --
+    [3] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/"
 }
 
 shared.access = "no"
