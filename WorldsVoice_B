@@ -61,8 +61,11 @@ local script_data = {
     [8752324161] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/Build_Anything.lua",
 
     -- Defusal --
-    [1] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/Defusal.lua",
+    [6993600665] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/Defusal.lua",
 
+    -- Sailor Piece --
+    [1] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/SailorPiece.lua",
+    
     -- Fly Hide And Seek --
     [2] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/FlyHideAndSeek.lua"
 }
