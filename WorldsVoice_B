@@ -72,8 +72,8 @@ local script_data = {
     -- Fly Hide And Seek --
     [9142917248] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/FlyHideAndSeek.lua",
 
-    -- Idk Tycoons --
-    [3] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/"
+    -- Psychics Power Tycoons --
+    [5370307676] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/Psychics_Power_Tycoons.lua"
 }
 
 shared.access = "no"
