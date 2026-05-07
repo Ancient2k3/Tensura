@@ -159,6 +159,8 @@ function lockon_nearest()
     end if _team ~= nil and t and t.Character and t.Character:FindFirstChildOfClass("Humanoid") then
         if hp_check(t) then
             _billboard.Adornee = t.Character.Head
+        else
+          _billboard.Adornee = nil
         end
     end
 end
