@@ -121,6 +121,18 @@ function team_check(t)
     return true
 end
 
+function hp_check(t)
+  local int_folder = t.Character.HitBy:GetChildren()
+  if #int_folder > 0 then
+    local int = 100 - int_folder[1].Value
+    if int > 0 then
+      return true
+    end
+  else
+    return true
+  end return false
+end
+
 function nearest_user_character(r_ranGe)
     local t, mh, ir = nil, math.huge, r_ranGe
     for i, v in ipairs(_plrs:GetPlayers()) do
@@ -145,7 +157,7 @@ function lockon_nearest()
             end
         end
     end if _team ~= nil and t and t.Character and t.Character:FindFirstChildOfClass("Humanoid") then
-        if t.Character.Humanoid.Health > 0 then
+        if hp_check(t) then
             _billboard.Adornee = t.Character.Head
         end
     end
@@ -159,7 +171,7 @@ function lookat_nearest_character(t_data)
     if type(position_data) == "table" and target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") then
         local hrp = target.Character.Head
         local hmo = target.Character.Humanoid
-        if hmo.Health > 0 then
+        if hp_check(target) then
             _camera.CFrame = CFrame.new(_camera.CFrame.Position, hrp.Position + Vector3.new(unpack(position_data)))
         end
     end
