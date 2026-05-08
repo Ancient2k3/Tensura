@@ -36,7 +36,7 @@ local _somedata = {
     }
 }
 
-local folders = {"HHxScripts", "Assets", "Images"}
+local folders = {"HHxScripts", "HHxScripts/Assets", "HHxScripts/Assets/Images"}
 for i = 1, #folders do
   if not isfolder(folders[i]) then
     makefolder(folders[i])
