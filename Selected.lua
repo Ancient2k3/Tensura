@@ -1,1 +1,1 @@
-Endfield_42, Arknights_OST
+Arknights_OST, Endfield_42
