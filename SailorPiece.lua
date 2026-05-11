@@ -3,7 +3,7 @@ ui.set_configs({
   saving_state = false
 })
 
-local atk_distance = to number(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/SailorPiece_MODULES/DISTANCE.lua")) or 1
+local atk_distance = tonumber(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/SailorPiece_MODULES/DISTANCE.lua")) or 1
 
 local ws, plrs, reps
 ws = game:GetService("Workspace")
