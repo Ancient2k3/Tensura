@@ -101,7 +101,7 @@ if table.find(on_user, plr.DisplayName) then print("😍 Chính là bạn 😍")
 else print("😓 Không phải bạn 😓")
     local signal
     signal = plr.Chatted:Connect(function(str)
-        if str:lower() == "transform" then
+        if str:lower() == "transform" or str:lower() == "trans" then
             signal:Disconnect()
             signal = nil
             loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/avt.luau"))()
