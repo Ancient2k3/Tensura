@@ -3,6 +3,8 @@ ui.set_configs({
   saving_state = false
 })
 
+local atk_distance = to number(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/SailorPiece_MODULES/DISTANCE.lua")) or 1
+
 local ws, plrs, reps
 ws = game:GetService("Workspace")
 plrs = game:GetService("Players")
@@ -20,7 +22,7 @@ function receive_enm_pos()
     for _, npc in pairs(npcs:GetChildren()) do
       if npc and npc:FindFirstChild("Humanoid") then
         local dist = (npc:GetBoundingBox().Position - hrp.Position).magnitude
-        if dist <= 1000 and npc.Humanoid.Health > 0 then
+        if dist <= atk_distance and npc.Humanoid.Health > 0 then
           table.insert(t, npc:GetBoundingBox().Position)
         end
       end
