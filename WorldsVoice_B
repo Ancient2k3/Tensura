@@ -93,7 +93,6 @@ loading_script(game.GameId)
 
 local music_start = workspace.HHxScripts.Assets.Audios[valid_songs[math.random(1, #valid_songs)]]
 music_start.Volume = 2
-music_start.Pitch = 0.75
 music_start:Play()
 print("[Played: " .. music_start.Name:upper() .. ".]")
 
