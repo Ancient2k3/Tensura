@@ -1,12 +1,11 @@
-local ui = loadstring(game:HttpGet("https://raw.githubusercontent.com/HoangHienXScripts/Scripts/refs/heads/main/modules/quickbuttons.lua"))()
-ui.set_configs({saving_state = false})
-
 local ws, plrs
 ws = game:GetService("Workspace")
 plrs = game:GetService("Players")
 
 local plr 
 plr = plrs.LocalPlayer
+
+local module = {}
 
 local vars = {
   retreat_dist = 35
@@ -85,7 +84,7 @@ function _dash()
   end
 end
 
-function _main_init()
+function module._main_init()
   local target = ws.Live:FindFirstChild(_find_plr().Name)
   if target then
     local target_hrp = target:FindFirstChild("HumanoidRootPart")
@@ -114,4 +113,4 @@ function _main_init()
   end
 end
 
-ui.add_toggle("AI FIGHT", "Code", {255, 255, 255}, {0.35, 0, 0, 0}, 0.2, _main_init, "AI_Enabled")
+return module
