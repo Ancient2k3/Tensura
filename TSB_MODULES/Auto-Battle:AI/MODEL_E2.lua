@@ -11,7 +11,7 @@ plr = plrs.LocalPlayer
 
 local vars, ignore_anims = {
   retreat_dist = 35
-}, {"http://www.roblox.com/asset/?id=180436148", "rbxassetid://7807831448", "rbxassetid://14516273501", "http://www.roblox.com/asset/?id=125750702", "rbxassetid://7815618175"}
+}, {"http://www.roblox.com/asset/?id=180436148", "rbxassetid://13376962659", "rbxassetid://12684185971", "rbxassetid://13501296372", "rbxassetid://13083332742", "rbxassetid://14516273501", "rbxassetid://13633468484", "rbxassetid://13876406148", "rbxassetid://12618271998", "rbxassetid://13643152947", "rbxassetid://13146710762", "rbxassetid://13881335713", "rbxassetid://7815618175", "rbxassetid://13723174078", "http://www.roblox.com/asset/?id=125750702", "rbxassetid://13639700348", "rbxassetid://13379404053", "rbxassetid://12832505612", "rbxassetid://13376869471", "rbxassetid://7807831448", "rbxassetid://13365849295", "rbxassetid://12684390285", "rbxassetid://13377153603", "rbxassetid://13499771836", "rbxassetid://13497875049"}
 
 local characters = {
   ["Ninja"] = {"Flash Strike", "Whirlwind Kick", "Scatter", "Explosive Shuriken", "Twinblade Rush", "Straight On", "Carnage", "Fourfold Flashstrike"},
