@@ -1,0 +1,148 @@
+local ui = loadstring(game:HttpGet("https://raw.githubusercontent.com/HoangHienXScripts/Scripts/refs/heads/main/modules/quickbuttons.lua"))()
+ui.set_configs({saving_state = false})
+
+local ws, plrs
+ws = game:GetService("Workspace")
+plrs = game:GetService("Players")
+
+local plr 
+plr = plrs.LocalPlayer
+
+local vars, ignore_anims = {
+  retreat_dist = 35
+}, {"http://www.roblox.com/asset/?id=180436148", "rbxassetid://13376962659", "rbxassetid://12684185971", "rbxassetid://13501296372", "rbxassetid://13083332742", "rbxassetid://14516273501", "rbxassetid://13633468484", "rbxassetid://13876406148", "rbxassetid://12618271998", "rbxassetid://13643152947", "rbxassetid://13146710762", "rbxassetid://13881335713", "rbxassetid://7815618175", "rbxassetid://13723174078", "http://www.roblox.com/asset/?id=125750702", "rbxassetid://13639700348", "rbxassetid://13379404053", "rbxassetid://12832505612", "rbxassetid://13376869471", "rbxassetid://7807831448", "rbxassetid://13365849295", "rbxassetid://12684390285", "rbxassetid://13377153603", "rbxassetid://13499771836", "rbxassetid://13497875049"}
+
+local characters, skill_check = {
+  ["Cyborg"] = {"Machine Gun Blows", "Ignition Burst", "Blitz Shot", "Jet Dive", "Incinerate", "Speedblitz Dropkick", "Thunder Kick", "Flamewave Cannon"}
+}, {
+  ["Machine Gun Blows"] = true, ["Ignition Burst"] = false, ["Blitz Shot"] = false, ["Jet Dive"] = false, ["Incinerate"] = true, ["Speedblitz Dropkick"] = false, ["Thunder Kick"] = false, ["Flamewave Cannon"] = false
+}
+
+function _find_plr()
+  local t = {n = nil, m = math.huge}
+  for _, usr in pairs(plrs:GetPlayers()) do
+    if usr ~= plr and usr and usr.Character then
+      local dist = (usr.Character:GetBoundingBox().Position - plr.Character:GetBoundingBox().Position).magnitude
+      if dist < t.m then
+        t.m = dist
+        t.n = usr
+      end
+    end
+  end if t.n ~= nil then return t.n
+  else return ws.Live["Weakest Dummy"]
+  end
+end
+
+function _look_at(t)
+  local target_hrp = t:FindFirstChild("HumanoidRootPart")
+  local hrp = plr and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart")
+  if hrp and target_hrp then
+    plr.Character:SetPrimaryPartCFrame(CFrame.new(hrp.Position, Vector3.new(target_hrp.Position.X, hrp.Position.Y, target_hrp.Position.Z)))
+  end
+end
+
+function _tpto(pos)
+  local hrp = plr and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart")
+  local hmoid = plr and plr.Character and plr.Character:FindFirstChild("Humanoid")
+  if hrp and hmoid and hmoid.Health > 0 then
+    local _old_health = hmoid.Health
+    task.wait(0.2)
+    if _old_health > hmoid.Health then
+      hrp.CFrame = CFrame.new(pos)
+    end
+  end
+end
+
+function _normal_tpto(pos)
+  local char = plr and plr.Character
+  local hrp = plr and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart")
+  local hmoid = plr and plr.Character and plr.Character:FindFirstChild("Humanoid")
+  if char and hrp and hmoid and hmoid.Health > 0 then
+    char:PivotTo(CFrame.new(pos) * hrp.CFrame.Rotation)
+  end
+end
+
+function _walkto(pos)
+  local hmoid = plr and plr.Character and plr.Character:FindFirstChild("Humanoid")
+  if hmoid and hmoid.Health > 0 then
+    hmoid.WalkSpeed = 99
+    hmoid.WalkToPoint = pos
+  end
+end
+
+function _use_ability(target_pos, name, num, is_tp_behind)
+  local comm = plr and plr.Character and plr.Character:FindFirstChild("Communicate")
+  local hotbar = plr.PlayerGui.Hotbar.Backpack.Hotbar
+  local _bar = nil
+  local _dotp = is_tp_behind or false
+  vars.retreat_dist = num
+  for i = 1, 13 do
+    if hotbar[tostring(i)].Base.ToolName.Text == name then
+      _bar = hotbar[tostring(i)].Base
+      break
+    end
+  end if _bar and not _bar:FindFirstChild("Cooldown") then
+    if plr and plr.Backpack and plr.Backpack:FindFirstChild(name) then
+      if _dotp then _normal_tpto(target_pos) task.wait(0.02) end
+      comm:FireServer({Goal = "Console Move", Tool = plr.Backpack[name]})
+    end return "OK"
+  else return "IN-CD"
+  end vars.retreat_dist = 35
+end
+
+function _use_ult()
+  local comm = plr and plr.Character and plr.Character:FindFirstChild("Communicate")
+  local ult = tonumber(plr:GetAttribute("Ultimate")) == 100
+  if comm and ult then
+    comm:FireServer({Goal = "KeyPress", Key = Enum.KeyCode.G})
+  end
+end
+
+function _dash()
+  local comm = plr and plr.Character and plr.Character:FindFirstChild("Communicate")
+  if comm then
+    comm:FireServer({Dash = Enum.KeyCode.W, Key = Enum.KeyCode.Q, Goal = "KeyPress"})
+  end
+end
+
+function _main_init()
+  local target = ws.Live:FindFirstChild(_find_plr().Name)
+  local hmoid = plr and plr.Character and plr.Character:FindFirstChild("Humanoid")
+  if plr and plr.Character and target and hmoid then
+    local target_hrp = target:FindFirstChild("HumanoidRootPart")
+    local hrp = plr and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart")
+    local anim_inst = hmoid:GetPlayingAnimationTracks()[1]
+    local anim = ""
+    if anim_inst ~= nil then
+      anim = anim_inst.Animation.AnimationId
+    end
+    if target_hrp and hrp then _look_at(target)
+      local distance = (target_hrp.Position - hrp.Position).magnitude
+      local retreat_pos = hrp.Position + (hrp.CFrame.LookVector * -10)
+      local behind_target = target_hrp.Position + (target_hrp.CFrame.LookVector * -5)
+      local selected_char = tostring(plr:GetAttribute("Character"))
+      if distance > 40 then _walkto(target_hrp.Position)
+      else
+        if distance < vars.retreat_dist and table.find(ignore_anims, anim) then
+          _walkto(retreat_pos)
+        end
+        if distance < 20 then
+          _tpto(target_hrp.Position + (target_hrp.CFrame.LookVector * -60))
+        end _use_ult()
+        if plr.Backpack:FindFirstChild(characters[selected_char][5]) then
+          _use_ability(behind_target, characters[selected_char][5], 35, skill_check[characters[selected_char][5]])
+          _use_ability(behind_target, characters[selected_char][6], 2, skill_check[characters[selected_char][6]])
+          _use_ability(behind_target, characters[selected_char][7], 2, skill_check[characters[selected_char][7]])
+          _use_ability(behind_target, characters[selected_char][8], 35, skill_check[characters[selected_char][8]])
+        else
+          _use_ability(behind_target, characters[selected_char][1], 2, skill_check[characters[selected_char][1]])
+          _use_ability(behind_target, characters[selected_char][2], 2, skill_check[characters[selected_char][2]])
+          _use_ability(behind_target, characters[selected_char][3], 35, skill_check[characters[selected_char][3]])
+          _use_ability(behind_target, characters[selected_char][4], 35, skill_check[characters[selected_char][4]])
+        end
+      end
+    end
+  end
+end
+
+ui.add_toggle("AI FIGHT", "Code", {255, 255, 255}, {0.35, 0, 0, 0}, 0.2, _main_init, "AI_Enabled")
