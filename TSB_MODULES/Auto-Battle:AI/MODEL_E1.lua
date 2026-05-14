@@ -1,3 +1,4 @@
+-- Test: 1 --
 local ws, plrs
 ws = game:GetService("Workspace")
 plrs = game:GetService("Players")
