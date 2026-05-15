@@ -1,0 +1,222 @@
+local ui = loadstring(game:HttpGet("https://raw.githubusercontent.com/HoangHienXScripts/Scripts/refs/heads/main/modules/quickbuttons.lua"))()
+ui.set_configs({saving_state = false})
+
+local ws, plrs, txcs, reps
+ws = game:GetService("Workspace")
+plrs = game:GetService("Players")
+txcs = game:GetService("TextChatService")
+reps = game:GetService("ReplicatedStorage")
+
+local plr, anim_inst_object
+plr = plrs.LocalPlayer
+
+anim_inst_object = Instance.new("Animation", ws)
+anim_inst_object.Name = "CoolTP:Animation"
+anim_inst_object.AnimationId = "rbxassetid://15957361339"
+
+local vars, ignore_anims = {
+  retreat_dist = 35,
+  oldest_str = "",
+  oldest_char = "",
+  oldest_position = Vector3.new(0, 9999, 0),
+  is_low_health = false,
+  is_legacy_chat = txcs.ChatVersion == Enum.ChatVersion.LegacyChatService
+}, {"rbxassetid://18435303746", "rbxassetid://13376962659", "rbxassetid://12684185971", "rbxassetid://13501296372", "rbxassetid://15983615423", "rbxassetid://106755459092436", "http://www.roblox.com/asset/?id=14516273501", "rbxassetid://13723174078", "rbxassetid://14701242661", "rbxassetid://14900168720", "rbxassetid://13499771836", "rbxassetid://14004235777", "rbxassetid://14299135500", "rbxassetid://16708190748", "rbxassetid://14719290328", "rbxassetid://13633468484", "rbxassetid://14516273501", "rbxassetid://18435383478", "rbxassetid://16139708727", "rbxassetid://14048285180", "rbxassetid://14705929107", "rbxassetid://17278415853", "rbxassetid://14046756619", "rbxassetid://12832505612", "rbxassetid://14967219354", "rbxassetid://13881335713", "rbxassetid://13365849295", "rbxassetid://12684390285", "rbxassetid://15146348738", "rbxassetid://15290930205", "rbxassetid://13497875049", "http://www.roblox.com/asset/?id=180436148", "rbxassetid://16571909908", "rbxassetid://96865367566704", "rbxassetid://13639700348", "rbxassetid://15520132233", "rbxassetid://16737255386", "rbxassetid://15676072469", "rbxassetid://119325239112989", "rbxassetid://15391323441", "rbxassetid://120992533725535", "rbxassetid://13083332742", "rbxassetid://17838006839", "rbxassetid://15271263467", "rbxassetid://15295895753", "rbxassetid://14351441234", "rbxassetid://12618271998", "rbxassetid://13643152947", "rbxassetid://13146710762", "rbxassetid://17838619895", "rbxassetid://7815618175", "rbxassetid://14357943487", "http://www.roblox.com/asset/?id=125750702", "rbxassetid://16515850153", "rbxassetid://13379404053", "rbxassetid://16597322398", "rbxassetid://16597912086", "rbxassetid://7807831448", "rbxassetid://14003607057", "rbxassetid://13376869471", "rbxassetid://13377153603", "rbxassetid://14357997687", "rbxassetid://13876406148", "rbxassetid://15957361339"}
+
+local characters, skill_check = {
+  ["Ninja"] = {"Flash Strike", "Whirlwind Kick", "Scatter", "Explosive Shuriken", "Twinblade Rush", "Straight On", "Carnage", "Fourfold Flashstrike"},
+  ["Cyborg"] = {"Machine Gun Blows", "Ignition Burst", "Blitz Shot", "Jet Dive", "Incinerate", "Speedblitz Dropkick", "Thunder Kick", "Flamewave Cannon"},
+  ["Purple"] = {"Bullet Barrage", "Vanishing Kick", "Whirlwind Drop", "Head First", "Grand Fissure", "Twin Fangs", "Earth Splitting Strike", "Last Breath"},
+  ["Batter"] = {"Homerun", "Beatdown", "Grand Slam", "Foul Ball", "Savage Tornado", "Brutal Beatdown", "Strength Difference", "Death Blow"},
+  ["Esper"] = {"Crushing Pull", "Windstorm Fury", "Stone Coffin", "Expulsive Push", "Cosmic Strike", "Psychic Ricochet", "Terrible Tornado", "Sky Snatcher"},
+  ["Blade"] = {"Quick Slice", "Atmos Cleave", "Pinpoint Cut", "Split Second Counter", "Sunset", "Solar Cleave", "Sunrise", "Atomic Slash"}
+}, {
+  ["Flash Strike"] = false, ["Whirlwind Kick"] = false, ["Scatter"] = true, ["Explosive Shuriken"] = false, ["Twinblade Rush"] = true, ["Straight On"] = false, ["Carnage"] = false, ["Fourfold Flashstrike"] = true,
+  ["Machine Gun Blows"] = true, ["Ignition Burst"] = false, ["Blitz Shot"] = false, ["Jet Dive"] = false, ["Incinerate"] = true, ["Speedblitz Dropkick"] = true, ["Thunder Kick"] = true, ["Flamewave Cannon"] = false,
+  ["Bullet Barrage"] = true, ["Vanishing Kick"] = false, ["Whirlwind Drop"] = true, ["Head First"] = true, ["Grand Fissure"] = false, ["Twin Fangs"] = true, ["Earth Splitting Strike"] = false, ["Last Breath"] = false,
+  ["Homerun"] = true, ["Beatdown"] = false, ["Grand Slam"] = false, ["Foul Ball"] = true, ["Savage Tornado"] = true, ["Brutal Beatdown"] = false, ["Strength Difference"] = false, ["Death Blow"] = true,
+  ["Crushing Pull"] = false, ["Windstorm Fury"] = false, ["Stone Coffin"] = false, ["Expulsive Push"] = false, ["Cosmic Strike"] = true, ["Psychic Ricochet"] = true, ["Terrible Tornado"] = false, ["Sky Snatcher"] = false,
+  ["Quick Slice"] = false, ["Atmos Cleave"] = true, ["Pinpoint Cut"] = false, ["Split Second Counter"] = true, ["Sunset"] = false, ["Solar Cleave"] = false, ["Sunrise"] = false, ["Atomic Slash"] = true
+}
+
+function _find_plr()
+  local t = {n = nil, m = math.huge, r = nil, b = math.huge}
+  for _, usr in pairs(plrs:GetPlayers()) do
+    if usr ~= plr and usr and usr.Character then
+      local hmoid = usr and usr.Character and usr.Character:FindFirstChild("Humanoid")
+      local dist = (usr.Character:GetBoundingBox().Position - plr.Character:GetBoundingBox().Position).magnitude
+      if hmoid and hmoid.Health > 0 then
+        if dist < t.m then
+          t.m = dist
+          t.n = usr
+        end if hmoid.Health < t.b then
+          t.b = hmoid.Health
+          t.r = usr
+        end
+      end
+    end
+  end if t.r ~= nil or t.n ~= nil then return t.n
+  else
+    if ws.Live:FindFirstChild("Weakest Dummy") then return ws.Live["Weakest Dummy"]
+    else return plr
+    end
+  end
+end
+
+function _play_anim()
+  local hmoid = plr and plr.Character and plr.Character:FindFirstChild("Humanoid")
+  if hmoid and hmoid.Health > 0 then
+    hmoid:LoadAnimation(anim_inst_object):Play()
+  end
+end
+
+function _chat_str(str)
+  str = tostring(str)
+  if str ~= vars.oldest_str then
+    vars.oldest_str = str
+    if not vars.is_legacy_chat then
+      txcs.TextChannels.RBXGeneral:SendAsync(str)
+    else
+      reps.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(str, "All")
+    end
+  end
+end
+
+function _look_at(t)
+  local target_hrp = t:FindFirstChild("HumanoidRootPart")
+  local hrp = plr and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart")
+  if hrp and target_hrp then
+    plr.Character:SetPrimaryPartCFrame(CFrame.new(hrp.Position, Vector3.new(target_hrp.Position.X, hrp.Position.Y, target_hrp.Position.Z)))
+  end
+end
+
+function _tpto(usr, pos)
+  local hrp = plr and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart")
+  local hmoid = plr and plr.Character and plr.Character:FindFirstChild("Humanoid")
+  if hrp and hmoid and hmoid.Health > 0 then
+    local _old_health = hmoid.Health
+    task.wait(0.2)
+    if _old_health > hmoid.Health then
+      hrp.CFrame = CFrame.new(pos)
+      _play_anim()
+      _chat_str("I'm behind you, " .. plrs[usr.Name].DisplayName:sub(1, 4) .. "... !")
+    end
+  end
+end
+
+function _normal_tpto(pos)
+  local hrp = plr and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart")
+  local hmoid = plr and plr.Character and plr.Character:FindFirstChild("Humanoid")
+  if hrp and hmoid and hmoid.Health > 0 then
+    hrp.CFrame = CFrame.new(pos.X, pos.Y, pos.Z, select(4, hrp.CFrame:components()))
+  end
+end
+
+function _walkto(pos)
+  local hmoid = plr and plr.Character and plr.Character:FindFirstChild("Humanoid")
+  if hmoid and hmoid.Health > 0 then
+    hmoid.WalkSpeed = 99
+    hmoid.WalkToPoint = pos
+  end
+end
+
+function _use_ability(target_pos, name, num, is_tp_behind)
+  local comm = plr and plr.Character and plr.Character:FindFirstChild("Communicate")
+  local hotbar = plr.PlayerGui.Hotbar.Backpack.Hotbar
+  local _bar = nil
+  local _dotp = is_tp_behind or false
+  vars.retreat_dist = num
+  for i = 1, 13 do
+    if hotbar[tostring(i)].Base.ToolName.Text == name then
+      _bar = hotbar[tostring(i)].Base
+      break
+    end
+  end if _bar and not _bar:FindFirstChild("Cooldown") then
+    if plr and plr.Backpack and plr.Backpack:FindFirstChild(name) then
+      if _dotp then _normal_tpto(target_pos) task.wait(0.02) end
+      comm:FireServer({Goal = "Console Move", Tool = plr.Backpack:FindFirstChild(name)})
+    end return "OK"
+  else return "IN-CD"
+  end vars.retreat_dist = 35
+end
+
+function _use_ult()
+  local comm = plr and plr.Character and plr.Character:FindFirstChild("Communicate")
+  local ult = tonumber(plr:GetAttribute("Ultimate")) == 100
+  if comm and ult then
+    comm:FireServer({Goal = "KeyPress", Key = Enum.KeyCode.G})
+    _chat_str(({"It's your death!"})[1])
+  end
+end
+
+function _dash(p1, p2)
+  local comm = plr and plr.Character and plr.Character:FindFirstChild("Communicate")
+  if comm then
+    comm:FireServer({Dash = Enum.KeyCode.W, Key = Enum.KeyCode.Q, Goal = "KeyPress"})
+    comm:FireServer({Key = Enum.KeyCode.Space, Goal = "KeyPress"})
+    if (p2.Position - p1.Position).magnitude < 6.5 then
+      comm:FireServer({Goal = "LeftClick", Mobile = true})
+    else
+      comm:FireServer({Goal = "LeftClickRelease", Mobile = true})
+    end
+  end
+end
+
+function _main_init()
+  local target = ws.Live:FindFirstChild(_find_plr().Name)
+  local hmoid = plr and plr.Character and plr.Character:FindFirstChild("Humanoid")
+  if plr and plr.Character and target and hmoid and hmoid.Health > 0 then
+  if hmoid and hmoid.Health < 10 and hmoid.Health > 0 then
+    local char = plr and plr.Character or nil
+    if not vars.is_low_health then vars.is_low_health = true
+      if char ~= nil then
+        vars.oldest_position = char:GetBoundingBox().Position
+      else
+        vars.oldest_position = target:GetBoundingBox().Position
+      end
+      _chat_str("Healing time... it's pretty low rn!")
+    end
+  else if vars.is_low_health then vars.is_low_health = false
+      _normal_tpto(vars.oldest_position)
+      _chat_str("Healing complete... now back to battlefield!")
+    end
+    local target_hrp = target:FindFirstChild("HumanoidRootPart")
+    local hrp = plr and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart")
+    local anim_inst = hmoid:GetPlayingAnimationTracks()[1]
+    local anim = ""
+    if anim_inst ~= nil then
+      anim = anim_inst.Animation.AnimationId
+    end
+    if target_hrp and hrp then _look_at(target)
+      local distance = (target_hrp.Position - hrp.Position).magnitude
+      local retreat_pos = hrp.Position + (hrp.CFrame.LookVector * -10)
+      local behind_target = target_hrp.Position + (target_hrp.CFrame.LookVector * -5)
+      local selected_char = tostring(plr:GetAttribute("Character"))
+      if distance > 40 then _walkto(target_hrp.Position)
+      else
+        if distance < vars.retreat_dist and table.find(ignore_anims, anim) then
+          _walkto(retreat_pos)
+        end
+        if distance < 20 then
+          _tpto(target, target_hrp.Position + (target_hrp.CFrame.LookVector * -60))
+        end _use_ult() _dash(hrp, target_hrp)
+        if plr.Backpack:FindFirstChild(characters[selected_char][5]) then
+          _use_ability(behind_target, characters[selected_char][5], 35, skill_check[characters[selected_char][5]])
+          _use_ability(behind_target, characters[selected_char][6], 2, skill_check[characters[selected_char][6]])
+          _use_ability(behind_target, characters[selected_char][7], 2, skill_check[characters[selected_char][7]])
+          _use_ability(behind_target, characters[selected_char][8], 35, skill_check[characters[selected_char][8]])
+        else
+          _use_ability(behind_target, characters[selected_char][1], 2, skill_check[characters[selected_char][1]])
+          _use_ability(behind_target, characters[selected_char][2], 2, skill_check[characters[selected_char][2]])
+          _use_ability(behind_target, characters[selected_char][3], 35, skill_check[characters[selected_char][3]])
+          _use_ability(behind_target, characters[selected_char][4], 35, skill_check[characters[selected_char][4]])
+        end
+      end
+    end
+  end
+  end
+end
+
+_chat_str("[MODEL_E7: AI Auto-Battle Started!]")
+_chat_str("[DEVELOPED BY: ???]")
+ui.add_toggle("AI FIGHT", "Code", {255, 255, 255}, {0.35, 0, 0, 0}, 0.2, _main_init, "AI_Enabled")
