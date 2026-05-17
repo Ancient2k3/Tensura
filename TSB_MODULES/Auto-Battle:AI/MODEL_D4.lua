@@ -1,3 +1,4 @@
+-- Test: 4 --
 local ui = loadstring(game:HttpGet("https://raw.githubusercontent.com/HoangHienXScripts/Scripts/refs/heads/main/modules/quickbuttons.lua"))()
 ui.set_configs({saving_state = false})
 
