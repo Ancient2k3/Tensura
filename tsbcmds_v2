@@ -158,7 +158,7 @@ local function RunCommands()
         for i = 2, #words do
           idk_1 ..= words[i] .. " "
         end idk_1 = idk_1:sub(1, #idk_1 - 1)
-        char.Communicate:FireServer({SkillName = idk_1, Goal = "Custom Character", Action = "GiveItToSelf"})
+        char.Communicate:FireServer({SkillName = idk_1, Goal = "Custom Character", Action = "GiveSkillToSelf"})
         Notice("Commands", "Giving Skill: " .. idk_1 .. ".", 1, "SendNotification")
       end
     elseif table.find(Aliases["infiniteyield"], words[1]) then
