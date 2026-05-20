@@ -135,7 +135,8 @@ local Aliases = {
     ["reset"] = {"reset", "re"},
     ["infiniteyield"] = {"infiniteyield", "iy"},
     ["trashcanman"] = {"trashcanman", "trashcan", "tc"},
-    ["gojo"] = {"gojo", "gj"}
+    ["gojo"] = {"gojo", "gj"},
+    ["skill"] = {"sk", "get"}
 }
 
 local function RunCommands()
@@ -150,6 +151,16 @@ local function RunCommands()
             char.Humanoid.Health = 0
         end
         Notice("Commands", "Character Reseted!", 1, "SendNotification")
+    elseif table.find(Aliases["skill"], words[1]) then
+      local char = LocalPlayer.Character
+      if char then
+        local idk_1 = ""
+        for i = 2, #words do
+          idk_1 ..= words[i] .. " "
+        end idk_1 = idk_1:sub(1, #idk_1 - 1)
+        char.Communicate:FireServer({SkillName = idk_1, Goal = "Custom Character", Action = "GiveItToSelf"})
+        Notice("Commands", "Giving Skill: " .. idk_1 .. ".", 1, "SendNotification")
+      end
     elseif table.find(Aliases["infiniteyield"], words[1]) then
         local ss, err = pcall(function()
             loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
