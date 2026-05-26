@@ -73,7 +73,10 @@ local script_data = {
     [9142917248] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/FlyHideAndSeek.lua",
 
     -- Psychics Power Tycoons --
-    [5370307676] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/Psychics_Power_Tycoons.lua"
+    [5370307676] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/Psychics_Power_Tycoons.lua",
+    
+    -- Gear Slap Tower --
+    [8365871374] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/GearSlapTower.lua"
 }
 
 shared.access = "no"
