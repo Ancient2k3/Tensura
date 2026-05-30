@@ -4,7 +4,7 @@ local plrs = game:GetService("Players")
 
 local plr = plrs.LocalPlayer
 local pid = game.PlaceId
-local url = "https://games.roblox.com/v1/games/" .. pid .. "/servers/Public?sortOrder=Asc&limit=10&excludeFullGames=true"
+local url = "https://games.roblox.com/v1/games/" .. pid .. "/servers/Public?sortOrder=Asc&limit=100&excludeFullGames=true"
 
 local json_map = game:HttpGet(url)
 local map = htps:JSONDecode(json_map)
