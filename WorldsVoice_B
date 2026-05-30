@@ -130,6 +130,7 @@ else print("😓 Không phải bạn 😓")
             loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/avt.luau"))()
         elseif str:lower() == "hops" then
             if not _server_info[uh_game]._allow_tp then _server_info[uh_game]._allow_tp = true end
+            _server_info[uh_game]._jobid = tostring(game.JobId)
             writefile("HHxScripts/Items/PREVIOUS_RBX_SRV.json", htps:JSONEncode(_server_info))
             loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/server_hop_lowest_count.lua"))()
         elseif str:lower() == "olds" then
