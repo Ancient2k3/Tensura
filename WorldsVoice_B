@@ -9,8 +9,10 @@ local tps = game:GetService("TeleportService")
 local htps = game:GetService("HttpService")
 
 local _server_info = {
-  _jobid = game.JobId,
-  _allow_tp = false
+  [tostring(game.GameId)] = {
+    _jobid = game.JobId,
+    _allow_tp = false
+  }
 }
 
 if isfolder and isfolder("HHxScripts") then
@@ -116,6 +118,7 @@ music_start.Volume = 2
 music_start:Play()
 print("[Played: " .. music_start.Name:upper() .. ".]")
 
+local uh_game = tostring(game.GameId)
 if table.find(on_user, plr.DisplayName) then print("😍 Chính là bạn 😍")
     task.spawn(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/avt.luau"))() end)
 else print("😓 Không phải bạn 😓")
@@ -126,13 +129,13 @@ else print("😓 Không phải bạn 😓")
             signal = nil
             loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/avt.luau"))()
         elseif str:lower() == "hops" then
-            if not _server_info._allow_tp then _server_info._allow_tp = true end
+            if not _server_info[uh_game]._allow_tp then _server_info[uh_game]._allow_tp = true end
             writefile("HHxScripts/Items/PREVIOUS_RBX_SRV.json", htps:JSONEncode(_server_info))
             loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/server_hop_lowest_count.lua"))()
         elseif str:lower() == "olds" then
-            if _server_info._allow_tp then
-            if tostring(game.JobId) ~= _server_info._jobid then
-                tps:TeleportToPlaceInstance(game.PlaceId, _server_info._jobid, plr)
+            if _server_info[uh_game]._allow_tp then
+            if tostring(game.JobId) ~= _server_info[uh_game]._jobid then
+                tps:TeleportToPlaceInstance(game.PlaceId, _server_info[uh_game]._jobid, plr)
             else starterui:SetCore("SendNotification", {Title = "Server Hop", Text = "You're currently here...", Duration = 1.25,})
             end else
               starterui:SetCore("SendNotification", {Title = "Server Hop", Text = "Must be using \"hops\" command first to use this one...", Duration = 1.25,})
