@@ -109,7 +109,7 @@ else print("😓 Không phải bạn 😓")
             signal = nil
             loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/avt.luau"))()
         elseif str:lower() == "hop" then
-          loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/server_hop_lowest_count.lua"))()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/server_hop_lowest_count.lua"))()
         end
     end)
 end -- back to normal --
