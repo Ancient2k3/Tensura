@@ -126,11 +126,16 @@ else print("😓 Không phải bạn 😓")
             signal = nil
             loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/avt.luau"))()
         elseif str:lower() == "hops" then
+            if not _server_info._allow_tp then _server_info._allow_tp = true end
+            writefile("HHxScripts/Items/PREVIOUS_RBX_SRV.json", htps:JSONEncode(_server_info))
             loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/server_hop_lowest_count.lua"))()
         elseif str:lower() == "olds" then
-            if tostring(game.JobId) ~= previous_server then
-                tps:TeleportToPlaceInstance(game.PlaceId, previous_server, plr)
-            else starterui:SetCore("SendNotification", {Title = "Server Hop", Text = "You're currently here...", Duration = 1.5,})
+            if _server_info._allow_tp then
+            if tostring(game.JobId) ~= _server_info._jobid then
+                tps:TeleportToPlaceInstance(game.PlaceId, _server_info._jobid, plr)
+            else starterui:SetCore("SendNotification", {Title = "Server Hop", Text = "You're currently here...", Duration = 1.25,})
+            end else
+              starterui:SetCore("SendNotification", {Title = "Server Hop", Text = "Must be using \"hops\" command first to use this one...", Duration = 1.25,})
             end
         end
     end)
