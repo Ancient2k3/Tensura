@@ -125,7 +125,7 @@ else print("😓 Không phải bạn 😓")
         elseif str:lower() == "olds" then
             if tostring(game.JobId) ~= previous_server then
                 tps:TeleportToPlaceInstance(game.PlaceId, previous_server, plr)
-            else
+            else starterui:SetCore("SendNotification", {Title = "Server Hop", Text = "You're currently here...", Duration = 1.5,})
             end
         end
     end)
