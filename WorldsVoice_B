@@ -5,6 +5,17 @@ repeat wait() until workspace:FindFirstChild("HHxScripts")
 local on_user = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Status/refs/heads/main/Others/target_avt_changing.luau"))()
 local plr = game:GetService("Players").LocalPlayer
 local starterui = game:GetService("StarterGui")
+
+local previous_server = nil
+if isfolder and isfolder("HHxScripts") then
+  if isfolder("HHxScripts/Items") then
+    if not isfile("HHxScripts/Items/PREVIOUS_RBX_SRV.txt") then
+      writefile("HHxScripts/Items/PREVIOUS_RBX_SRV.txt", tostring(game.JobId))
+    end
+  end
+end task.wait(0.5)
+previous_server = readfile("HHxScripts/Items/PREVIOUS_RBX_SRV.txt")
+
 local script_data = {
     -- Blox Fruit --
     [994732206] = "https://raw.githubusercontent.com/NganHa2k3/RobloxScript_1/refs/heads/main/BloxFruits_Language",
@@ -108,7 +119,7 @@ else print("😓 Không phải bạn 😓")
             signal:Disconnect()
             signal = nil
             loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/avt.luau"))()
-        elseif str:lower() == "hop" then
+        elseif str:lower() == "hops" then
             loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/server_hop_lowest_count.lua"))()
         end
     end)
