@@ -6,16 +6,21 @@ local on_user = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancie
 local plr = game:GetService("Players").LocalPlayer
 local starterui = game:GetService("StarterGui")
 local tps = game:GetService("TeleportService")
+local htps = game:GetService("HttpService")
 
-local previous_server = nil
+local _server_info = {
+  _jobid = game.JobId,
+  _allow_tp = false
+}
+
 if isfolder and isfolder("HHxScripts") then
   if isfolder("HHxScripts/Items") then
-    if not isfile("HHxScripts/Items/PREVIOUS_RBX_SRV.txt") then
-      writefile("HHxScripts/Items/PREVIOUS_RBX_SRV.txt", tostring(game.JobId))
+    if not isfile("HHxScripts/Items/PREVIOUS_RBX_SRV.json") then
+      writefile("HHxScripts/Items/PREVIOUS_RBX_SRV.json", htps:JSONEncode(_server_info))
     end
   end
 end task.wait(0.5)
-previous_server = readfile("HHxScripts/Items/PREVIOUS_RBX_SRV.txt")
+_server_info = htps:JSONDecode(readfile("HHxScripts/Items/PREVIOUS_RBX_SRV.json"))
 
 local script_data = {
     -- Blox Fruit --
