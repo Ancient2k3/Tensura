@@ -8,21 +8,14 @@ local starterui = game:GetService("StarterGui")
 local tps = game:GetService("TeleportService")
 local htps = game:GetService("HttpService")
 
-local _server_info = {
-  [tostring(game.GameId)] = {
-    _jobid = game.JobId,
-    _allow_tp = false
-  }
-}
-
 if isfolder and isfolder("HHxScripts") then
   if isfolder("HHxScripts/Items") then
     if not isfile("HHxScripts/Items/PREVIOUS_RBX_SRV.json") then
-      writefile("HHxScripts/Items/PREVIOUS_RBX_SRV.json", htps:JSONEncode(_server_info))
+      writefile("HHxScripts/Items/PREVIOUS_RBX_SRV.json", htps:JSONEncode({[tostring(game.GameId)] ={_jobid = game.JobId, _allow_tp = false}}))
     end
   end
 end task.wait(0.5)
-_server_info = htps:JSONDecode(readfile("HHxScripts/Items/PREVIOUS_RBX_SRV.json"))
+local _server_info = htps:JSONDecode(readfile("HHxScripts/Items/PREVIOUS_RBX_SRV.json"))
 
 local script_data = {
     -- Blox Fruit --
