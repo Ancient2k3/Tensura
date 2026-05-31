@@ -1,5 +1,6 @@
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Assets/refs/heads/main/Scripts/AddInstance.lua"))()
 repeat wait() until workspace:FindFirstChild("HHxScripts")
+print("[World Voice: HHxScripts folder Loaded.]")
 
 --// Out-dated, so i made some change //--
 local on_user = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Status/refs/heads/main/Others/target_avt_changing.luau"))()
@@ -12,11 +13,12 @@ if isfolder and isfolder("HHxScripts") then
   if isfolder("HHxScripts/Items") then
     if not isfile("HHxScripts/Items/PREVIOUS_RBX_SRV.json") then
       writefile("HHxScripts/Items/PREVIOUS_RBX_SRV.json", htps:JSONEncode({[tostring(game.GameId)]={_jobid=game.JobId,_allow_tp=false}}))
+      print("[World Voice: PREVIOUS_RBX_SRV file Created.]")
     end
   end
 end task.wait(0.5)
 local _server_info = htps:JSONDecode(readfile("HHxScripts/Items/PREVIOUS_RBX_SRV.json"))
-if not _server_info[tostring(game.GameId)] then _server_info[tostring(game.GameId)] = {_jobid=game.JobId,_allow_tp=false} end
+if not _server_info[tostring(game.GameId)] then _server_info[tostring(game.GameId)] = {_jobid=game.JobId,_allow_tp=false} print("[World Voice: New Game?]") end
 
 local script_data = {
     -- Blox Fruit --
@@ -131,7 +133,7 @@ else print("😓 Không phải bạn 😓")
             if _server_info[uh_game]._allow_tp then
             if tostring(game.JobId) ~= _server_info[uh_game]._jobid then
                 local success, err = pcall(function() tps:TeleportToPlaceInstance(game.PlaceId, _server_info[uh_game]._jobid, plr) end)
-                if not success then
+                if not success then print("[World Voice: Reset.]")
                     _server_info[uh_game]._allow_tp = false
                     _server_info[uh_game]._jobid = game.JobId
                     writefile("HHxScripts/Items/PREVIOUS_RBX_SRV.json", htps:JSONEncode(_server_info))
