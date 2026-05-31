@@ -11,11 +11,12 @@ local htps = game:GetService("HttpService")
 if isfolder and isfolder("HHxScripts") then
   if isfolder("HHxScripts/Items") then
     if not isfile("HHxScripts/Items/PREVIOUS_RBX_SRV.json") then
-      writefile("HHxScripts/Items/PREVIOUS_RBX_SRV.json", htps:JSONEncode({[tostring(game.GameId)] ={_jobid = game.JobId, _allow_tp = false}}))
+      writefile("HHxScripts/Items/PREVIOUS_RBX_SRV.json", htps:JSONEncode({[tostring(game.GameId)]={_jobid=game.JobId,_allow_tp=false}}))
     end
   end
 end task.wait(0.5)
 local _server_info = htps:JSONDecode(readfile("HHxScripts/Items/PREVIOUS_RBX_SRV.json"))
+_server_info[tostring(game.GameId)] = {_jobid=game.JobId,_allow_tp=false}
 
 local script_data = {
     -- Blox Fruit --
