@@ -130,7 +130,13 @@ else print("😓 Không phải bạn 😓")
         elseif str:lower() == "olds" then
             if _server_info[uh_game]._allow_tp then
             if tostring(game.JobId) ~= _server_info[uh_game]._jobid then
-                tps:TeleportToPlaceInstance(game.PlaceId, _server_info[uh_game]._jobid, plr)
+                local success, err = pcall(function() tps:TeleportToPlaceInstance(game.PlaceId, _server_info[uh_game]._jobid, plr) end)
+                if not success then
+                  _server_info[uh_game]._allow_tp = false
+_server_info[uh_game]._jobid = game.JobId
+                    writefile("HHxScripts/Items/PREVIOUS_RBX_SRV.json", htps:JSONEncode(_server_info))
+                    starterui:SetCore("SendNotification", {Title = "Server Hop", Text = "The server is no longer exist...", Duration = 1.25,})
+                end
             else starterui:SetCore("SendNotification", {Title = "Server Hop", Text = "You're currently here...", Duration = 1.25,})
             end else
               starterui:SetCore("SendNotification", {Title = "Server Hop", Text = "Must be using \"hops\" command first to use this one...", Duration = 1.25,})
