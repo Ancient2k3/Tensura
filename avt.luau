@@ -61,9 +61,9 @@ _CurrentOutfits, _Id, _Stuff = {
         ["LowerTorso"] = {
             ["MeshId"] = {"rbxassetid://11419041609"},
             ["TextureId"] = {"rbxassetid://11419041609"},
-            ["CF_1"] = {CFrame.new(0, 0.15, 0)},
+            ["CF_1"] = {CFrame.new(-0.1, 0.4, -1.95)},
             ["CF_2"] = {CFrame.Angles(0, 0, 0)},
-            ["V3"] = {Vector3.new(2.9, 2.9, 2.9)}
+            ["V3"] = {Vector3.new(1, 1, 1)}
         }
     }
 }
