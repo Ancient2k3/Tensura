@@ -56,6 +56,15 @@ _CurrentOutfits, _Id, _Stuff = {
             ["CF_2"] = {CFrame.Angles(0, 380, 0)},
             ["V3"] = {Vector3.new(0.8, 0.8, 0.8)}
         }
+    },
+    ["Kitsune_Tail"] = {
+        ["LowerTorso"] = {
+            ["MeshId"] = {"rbxassetid://11419041609"},
+            ["TextureId"] = {"rbxassetid://11419041609"},
+            ["CF_1"] = {CFrame.new(0, 0.15, 0)},
+            ["CF_2"] = {CFrame.Angles(0, 0, 0)},
+            ["V3"] = {Vector3.new(2.9, 2.9, 2.9)}
+        }
     }
 }
 
