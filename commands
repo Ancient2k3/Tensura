@@ -1,7 +1,0 @@
-local player = game:GetService("Players").LocalPlayer
-local beli = player:FindFirstChild("Data") and player.Data:FindFirstChild("Beli") and player.Data.Beli.Value or "N/A"
-local RS = game:GetService("RunService")
-
-RS.RenderStepped:Connect(function()
-    beli = 904591831
-end)
