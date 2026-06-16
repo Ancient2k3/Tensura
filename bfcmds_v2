@@ -24,6 +24,8 @@ local _SpecialVariables = {
     UpStatTarget = "none"
 } _G.SafetyHP_RANGE = _G.SafetyHP_RANGE or 1.5
 
+local fast_attack_module = loadstring(game:HttpGet("https://raw.githubusercontent.com/NganHa2k3/Tensura/refs/heads/powerful/FA_FIX.lua"))()
+local auto_enemy = false
 _CurrentVersion = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Status/refs/heads/main/Games/BFCommands_UPD.luau"))()
 _SomeLetter = {"H", "O", "A", "N", "G", "H", "I", "E", "N", "X", "S", "C", "R", "I", "P", "T", "S"}
 
@@ -1122,19 +1124,10 @@ function EveryCommands()
             end
         end
     elseif table.find(Commands_DataStorage["fastattack"], DE_WorldVoice[1]) then
-        if not FA_VariableCheck_0 then
-            FA_VariableCheck_0 = true
-            _Notice("NGHE LỆNH", "Hold on a seconds, Loading Scripts...", 1, "SendNotification")
-            _PasteScripts("https://raw.githubusercontent.com/NganHa2k3/Tensura/refs/heads/powerful/FA_QuickAttacks_OnEnemies", function()
-                _Notice("NGHE LỆNH", "Successfully Loaded Scripts: I!", 1, "SendNotification")
-            end)
-            _PasteScripts("https://raw.githubusercontent.com/NganHa2k3/Tensura/refs/heads/powerful/FA_QuickAttacks_OnCharacters", function()
-                _Notice("NGHE LỆNH", "Successfully Loaded Scripts: II!", 1, "SendNotification")
-            end)
-            FastAttack_Status()
-        else
-            _Notice("NGHE LỆNH", "Already Loaded Scripts!", 1, "SendNotification")
-            FastAttack_Status()
+        if not auto_enemy then auto_enemy = true
+          _Notice("NGHE LỆNH", "Auto Attack Enabled!", 1, "SendNotification")
+        else auto_enemy = false
+          _Notice("NGHE LỆNH", "Auto Attack Disabled!", 1, "SendNotification")
         end
     elseif table.find(Commands_DataStorage["superfastattack"], DE_WorldVoice[1]) then
         if not FA_VariableCheck_0 then
@@ -1693,6 +1686,11 @@ _RS.RenderStepped:Connect(function()
 end)
 
 _RS.RenderStepped:Connect(_GetFruitSpawned)
+_RS.RenderStepped:Connect(function(_dt)
+  if _dt and auto_enemy then
+    fast_attack_module.attack()
+  end
+end)
 
 _AddCornerUI(_GetCommands, 0.2)
 _AddCornerUI(_GetFocusedButton, 0.2)
