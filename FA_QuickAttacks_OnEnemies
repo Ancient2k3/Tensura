@@ -62,7 +62,8 @@ function auto_attack()
 end
 
 rs.RenderStepped:Connect(function()
-  if _G.AutoATK_ENMS_Enabled and plr_alive() then
+  if _G.AutoATK and plr_alive() then
     auto_attack()
+    print("Is_Attacking...")
   end
 end)
