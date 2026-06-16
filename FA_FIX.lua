@@ -11,6 +11,7 @@ local enms = ws:WaitForChild("Enemies")
 
 local valid_wp = {"Melee", "Sword", "Blox Fruit"}
 local valid_body_parts = {"HumanoidRootPart", "LeftUpperArm", "LeftLowerArm", "LeftHand", "RightUpperArm", "RightLowerArm", "RightHand", "LeftUpperLeg", "LeftLowerLeg", "LeftFoot", "RightUpperLeg", "RightLowerLeg", "RightFoot"}
+local module_x = {}
 
 function random_str()
   local str = "qwertyuiopasdfghjklzxcvbnm1234567890"
@@ -50,7 +51,7 @@ function find_enm()
   end return data.n
 end
 
-function auto_attack()
+module_x.attack = function()
   local enm_founded = find_enm()
   local tool_equip = plr.Character:FindFirstChildOfClass("Tool")
   if #enms:GetChildren() > 0 and enm_founded ~= nil then
@@ -61,9 +62,4 @@ function auto_attack()
   end
 end
 
-rs.RenderStepped:Connect(function()
-  if _G.AutoATK and plr_alive() then
-    auto_attack()
-    print("Is_Attacking...")
-  end
-end)
+return module_x
