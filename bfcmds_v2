@@ -755,7 +755,7 @@ function EveryCommands()
         end
     elseif table.find(Commands_DataStorage["customexecutor"], DE_WorldVoice[1]) then
         pcall(function()
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/RobloxScript_0/refs/heads/main/Executor_V2"))()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/RobloxScript_0/refs/heads/main/Executor_V2.lua"))()
         end)
     elseif table.find(Commands_DataStorage["togglefly"], DE_WorldVoice[1]) then
         if not _FlyIsLoaded then _FlyIsLoaded = true
