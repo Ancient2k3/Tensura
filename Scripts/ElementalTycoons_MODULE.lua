@@ -119,6 +119,20 @@ function star(name_1, name_2, point, script)
   end
 end
 
+function mdp(t) return t:GetBoundingBox().Position end
+
+function nearby_target()
+  local t = {n = nil, m = math.huge}
+  for _, enm in pairs(plrs:GetPlayers()) do
+    if enm ~= plr and enm and enm.Character then
+      local dis = (mdp(enm.Character) - mdp(plr.Character)).magnitude
+      if dis < t.m then t.m = dis
+        t.n = enm
+      end
+    end
+  end return t.n
+end
+
 mdl.do_progress = function()
   if not vars.in_progress then
     vars.in_progress = true
@@ -194,6 +208,22 @@ mdl.magnet = function(mode)
       end
     else
       return magnet_mode
+    end
+  end
+end
+
+mdl.shield = function()
+  local t = nearby_target()
+  local h_moid = plr and plr.Character and plr.Character:FindFirstChildOfClass("Humanoid")
+  if t and h_moid and h_moid.Health > 0 then
+    local sec_hmoid = t and t.Character and t.Character:FindFirstChildOfClass("Humanoid")
+    local hp_before = h_moid.Health
+    task.wait(0.4)
+    if sec_hmoid and sec_hmoid.Health > 0 then
+      local _damage = sec_hmoid.Health - 4
+      if sec_hmoid.Health > 4 and h_moid.Health < hp_before then
+        slap:FireServer(t.Character, _damage, 0, 0, "Time Slap")
+      end
     end
   end
 end
