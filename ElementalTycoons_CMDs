@@ -1,0 +1,164 @@
+local ws,pl,rs,_rs,sts=game:GetService("Workspace"),game:GetService("Players"),game:GetService("ReplicatedStorage"),game:GetService("RunService"),game:GetService("StarterGui")
+local lp=pl.LocalPlayer
+local ev=rs.Slap.RemoteEvent
+local spl=rs.RemoteEvent
+local adm={lp.Name}
+local name_a1 = "equip_mystery_spell"
+
+local powers, loop_kill, items_combo, kill_1 = {}, {}, {
+  "Dark Arc", "Time Trap", "Gravity Globe", "Super Sonic Wave", "Ultracold Aura", "Bubble Flail", "Elysian Beam", "Grand Clock", "Health Potion", "Temporal Gate",
+  "Jellyfish", "Red Saucer", "Space Saucer", "Speed Potion", "Cosmic Remote", "Fire Shower", "Light Beam", "Bubble Dash"
+}, false
+
+local function f(n)
+	for _,p in ipairs(pl:GetPlayers()) do
+		if p.Name:lower():sub(1,#n)==n:lower() or p.DisplayName:lower():sub(1,#n)==n:lower() then
+			return p
+		end
+	end
+end
+
+local function ntf(m)
+  sts:SetCore("SendNotification", {
+    Title = "[Admin Command Result:]", Text = m, Duration = 1.25,
+  })
+end
+
+local function set_hp(t, amount)
+  amount = amount or 0
+  if t and t.Character then
+    local hp = t.Character.Humanoid.Health
+    ntf("Target: " .. t.Name .. "\nFull HP: " .. tostring(hp))
+    local calculated = hp - amount
+    ev:FireServer(t.Character, calculated, 0, 0, "Jay")
+    ntf("Target: " .. t.Name .. "\nHP Set: " .. tostring(calculated))
+  end
+end
+
+local function hit(t,p,d)
+	if t then
+		ev:FireServer(t,d,p or 0,0,"Jay")
+	end
+end
+
+local function consume(t)
+  if t and t.Character then
+    local hp = t.Character.Humanoid.Health
+    local calculated = hp - 2
+    if hp > 4 then
+      ev:FireServer(t.Character, calculated, 0, 999999, "Time Slap")
+    end
+  end
+end
+
+local function l(u,s)
+	local c=string.split(s," ")
+	if not table.find(adm,u.Name) then return end
+	if c[1]=="/kill" or c[1]=="clear" then
+		if c[2]=="all" or c[2]=="everyone" then
+			for _,tag in ipairs(pl:GetPlayers()) do
+				if tag~=lp and tag.Character then
+					hit(tag.Character,0,5000)
+				end
+			end ntf("ALL PLAYERS, DEFEATED!")
+      elseif c[2]=="other" then
+         for _,tag in ipairs(pl:GetPlayers()) do
+            if tag~=lp and tag~=u and tag.Character then
+               hit(tag.Character,0,5000)
+            end
+         end ntf("OTHER PLAYERS, DEFEATED!")
+		elseif c[2]=="bosses" then
+			local e=ws.Characters.Enemies:GetChildren()
+			if #e>0 then hit(e[1],0,5000) end ntf(e[1].Name:upper() .. " BOSSES CLEARED!")
+		elseif c[2] then
+			local t=f(c[2])
+			if t and t~=lp and t.Character then
+				hit(t.Character,0,5000)
+			end ntf(t.Name:upper() .. " DEFEATED!")
+		end
+	elseif c[1]=="/fling" or c[1]=="trip" then
+		if c[2]=="all" or c[2]=="everyone" then
+			for _,tag in ipairs(pl:GetPlayers()) do
+				if tag~=lp and tag.Character then
+					hit(tag.Character,5000,0)
+				end
+			end ntf("ALL PLAYERS, FLINGED!")
+		elseif c[2] then
+			local t=f(c[2])
+			if t and t~=lp and t.Character then
+				hit(t.Character,5000,0)
+			end ntf(t.Name:upper() .. " FLINGED!")
+		end
+   elseif c[1]=="/kill1" then
+      if not kill_1 then kill_1 = true
+        ntf("Loop Kill Enabled!")
+      else kill_1 = false
+        ntf("Loop Kill Disabled!")
+      end
+   elseif c[1]=="/add" then
+      if #c > 1 then
+        local t=f(c[2])
+        if t and not table.find(loop_kill, t.Name) then
+          table.insert(loop_kill, t.Name)
+          ntf("Prisoner List: " .. t.Name .. " to list!")
+        end
+      end
+   elseif c[1]=="/pw" or c[1]=="please" or c[1]=="get" then
+      if #c > 1 then
+        local full_str = ""
+        for index = 2, #c do
+          full_str = full_str .. c[index]:sub(1, 1):upper() .. c[index]:sub(2, #c[index]):lower() .. " "
+        end spl:FireServer(name_a1, full_str:sub(1, #full_str - 1))
+      end
+   elseif c[1]=="/combo" or c[1]=="pvp" then
+      for i = 1, #items_combo do
+         spl:FireServer(name_a1, items_combo[i])
+         task.wait(4)
+      end
+	elseif c[1]=="/adm" then
+		if u.Name==lp.Name and c[2] then
+			local t=f(c[2])
+			if t and not table.find(adm,t.Name) then
+				table.insert(adm,t.Name)
+            ntf("Admin List: " .. t.Name .. " to list.")
+			end
+		end
+	elseif c[1]=="/unadm" then
+		if u.Name==lp.Name and c[2] then
+			local t=f(c[2])
+			if t then
+				local i=table.find(adm,t.Name)
+				if i then table.remove(adm,i) ntf("Removed Admin: " .. t.Name .. " from list.") end
+			end
+		end
+   elseif c[1]=="/hp" or c[1]=="hit" then
+      if #c > 1 then
+         local t=f(c[2])
+         if t then
+           local amount = c[3] or 0
+           set_hp(t, tonumber(amount))
+         end
+      end
+	end
+end
+
+for _,p in ipairs(pl:GetPlayers()) do
+	if lp:IsFriendsWith(p.UserId) and not table.find(adm,p.Name) then
+		table.insert(adm,p.Name)
+      ntf("Free Admin: " .. p.Name .. " as a new admin!")
+	end
+	p.Chatted:Connect(function(s) l(p,s) end)
+end
+
+pl.PlayerAdded:Connect(function(p)
+	if lp:IsFriendsWith(p.UserId) and not table.find(adm,p.Name) then
+		table.insert(adm,p.Name)
+	end
+	p.Chatted:Connect(function(s) l(p,s) end)
+end)
+
+_rs.RenderStepped:Connect(function()
+  if kill_1 and #loop_kill > 0 then
+    consume(pl[loop_kill[math.random(1, #loop_kill)]])
+  end
+end)
