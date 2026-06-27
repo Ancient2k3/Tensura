@@ -54,7 +54,7 @@ end
 local function l(u,s)
 	local c=string.split(s," ")
 	if not table.find(adm,u.Name) then return end
-	if c[1]=="/kill" or c[1]=="clear" then
+	if c[1]=="/kill" or c[1]=="clear" or c[1]=="eliminate" or c[1]=="uh" then
 		if c[2]=="all" or c[2]=="everyone" then
 			for _,tag in ipairs(pl:GetPlayers()) do
 				if tag~=lp and tag.Character then
@@ -76,7 +76,7 @@ local function l(u,s)
 				hit(t.Character,0,5000)
 			end ntf(t.Name:upper() .. " DEFEATED!")
 		end
-	elseif c[1]=="/fling" or c[1]=="trip" then
+	elseif c[1]=="/fling" or c[1]=="trip" or c[1]=="fly" then
 		if c[2]=="all" or c[2]=="everyone" then
 			for _,tag in ipairs(pl:GetPlayers()) do
 				if tag~=lp and tag.Character then
