@@ -6,7 +6,7 @@ plr = game:GetService("Players").LocalPlayer
 local scriptdata_func, i_respawn, i_loop = {
     V_handler_name = "Handler_V",
     G_handler_name = "Handler_G",
-    flyspeed = 1, is_flying = false,
+    flyspeed = 5, is_flying = false,
     alr_cancel = false
 } _G.Script_FlyingEnabled = _G.Script_FlyingEnabled or false
 -- Extra change --
