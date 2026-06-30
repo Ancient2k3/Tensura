@@ -1,6 +1,7 @@
 local htps = game:GetService("HttpService")
 local tps = game:GetService("TeleportService")
 local plrs = game:GetService("Players")
+local stri = game:GetService("StarterGui")
 
 local plr = plrs.LocalPlayer
 local pid = game.PlaceId
@@ -22,4 +23,6 @@ for _, body in next, map.data do
   end
 end
 
+stri:SetCore("SendNotification", {Title = "<Found " .. tostring(counts[1]) .. "Player Server>", Text = "Id: " .. target_hop[1] .. ".", Duration = 1.25})
+task.wait(2.5)
 tps:TeleportToPlaceInstance(pid, target_hop[1], plr)
