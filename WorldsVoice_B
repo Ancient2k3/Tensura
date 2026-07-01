@@ -146,3 +146,6 @@ else print("😓 Không phải bạn 😓")
         end
     end)
 end -- back to normal --
+
+-- Additional --
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Modules/refs/heads/main/Commands.lua"))()
