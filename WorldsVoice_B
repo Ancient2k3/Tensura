@@ -148,4 +148,7 @@ else print("😓 Không phải bạn 😓")
 end -- back to normal --
 
 -- Additional --
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Modules/refs/heads/main/Commands.lua"))()
+local additional_t = {3808081382}
+if not table.find(additional_t, game.GameId) then
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Modules/refs/heads/main/Commands.lua"))()
+end
