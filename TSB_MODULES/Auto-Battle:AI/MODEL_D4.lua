@@ -152,7 +152,7 @@ function _use_ult()
   local ult = tonumber(plr:GetAttribute("Ultimate")) == 100
   if comm and ult then
     comm:FireServer({Goal = "KeyPress", Key = Enum.KeyCode.G})
-    _chat_str(({"It's your death!"})[1])
+    _chat_str(({"It's your death!", "Sorry, i doesn't understand what ur saying...", "Err... or... ", "MuaHaHAHAHaha", "That hurt..."})[math.random(1, 5)]) -- fun chat when activated
   end
 end
 
