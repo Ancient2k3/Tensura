@@ -24,6 +24,7 @@ local vars, ignore_anims = {
   spawned_pos = Vector3.new(0, 450, 0),
   current_void_position = 350,
   can_spam_target_lock = true,
+  chat_func = false,
   is_low_health = false,
   is_legacy_chat = txcs.ChatVersion == Enum.ChatVersion.LegacyChatService
 }, {"rbxassetid://18435303746", "rbxassetid://13376962659", "rbxassetid://12684185971", "rbxassetid://13501296372", "rbxassetid://15983615423", "rbxassetid://106755459092436", "http://www.roblox.com/asset/?id=14516273501", "rbxassetid://13723174078", "rbxassetid://14701242661", "rbxassetid://14900168720", "rbxassetid://13499771836", "rbxassetid://14004235777", "rbxassetid://14299135500", "rbxassetid://16708190748", "rbxassetid://14719290328", "rbxassetid://13633468484", "rbxassetid://14516273501", "rbxassetid://18435383478", "rbxassetid://16139708727", "rbxassetid://14048285180", "rbxassetid://14705929107", "rbxassetid://17278415853", "rbxassetid://14046756619", "rbxassetid://12832505612", "rbxassetid://14967219354", "rbxassetid://13881335713", "rbxassetid://13365849295", "rbxassetid://12684390285", "rbxassetid://15146348738", "rbxassetid://15290930205", "rbxassetid://13497875049", "http://www.roblox.com/asset/?id=180436148", "rbxassetid://16571909908", "rbxassetid://96865367566704", "rbxassetid://13639700348", "rbxassetid://15520132233", "rbxassetid://16737255386", "rbxassetid://15676072469", "rbxassetid://119325239112989", "rbxassetid://15391323441", "rbxassetid://120992533725535", "rbxassetid://13083332742", "rbxassetid://17838006839", "rbxassetid://15271263467", "rbxassetid://15295895753", "rbxassetid://14351441234", "rbxassetid://12618271998", "rbxassetid://13643152947", "rbxassetid://13146710762", "rbxassetid://17838619895", "rbxassetid://7815618175", "rbxassetid://14357943487", "http://www.roblox.com/asset/?id=125750702", "rbxassetid://16515850153", "rbxassetid://13379404053", "rbxassetid://16597322398", "rbxassetid://16597912086", "rbxassetid://7807831448", "rbxassetid://14003607057", "rbxassetid://13376869471", "rbxassetid://13377153603", "rbxassetid://14357997687", "rbxassetid://13876406148", "rbxassetid://15957361339"}
@@ -78,7 +79,7 @@ end
 
 function _chat_str(str)
   str = tostring(str)
-  if str ~= vars.oldest_str then
+  if str ~= vars.oldest_str and vars.chat_func then
     vars.oldest_str = str
     if not vars.is_legacy_chat then
       txcs.TextChannels.RBXGeneral:SendAsync(str)
@@ -246,10 +247,10 @@ if hrp then
   vars.current_void_position = hrp.Position.Y - 200
 end
 
-_chat_str("[MODEL_D4: AI Auto-Battle Started!]")
-task.wait(1.25)
-_chat_str("[Developed by: Just_wasting_time]")
-_chat_str("[Version: " .. tostring(vars.current_void_position) .. " ]")
+vars.chat_func = true
+_chat_str("[AI: Auto Battle, DevBy: HHxScripts, Version: " .. tostring(vars.current_void_position):sub(1, 4) .. "]")
+_chat_str("[Purpose: For fun, annoying others...]")
+vars.chat_func = false
 
 runs.RenderStepped:Connect(function()
   local char = plr and plr.Character
