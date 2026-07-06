@@ -1,1 +1,1 @@
-Arknights_OST, Endfield_42
+Endfield_CC_OST
