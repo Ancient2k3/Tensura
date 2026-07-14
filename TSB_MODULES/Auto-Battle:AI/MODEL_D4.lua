@@ -153,7 +153,7 @@ function _use_ult()
   if comm and ult then
     comm:FireServer({Goal = "KeyPress", Key = Enum.KeyCode.G})
     vars.chat_func = true
-    _chat_str(({"It's your death!", "Sorry, i doesn't understand what ur saying...", "Err... or... ", "MuaHaHAHAHaha", "That hurt..."})[math.random(1, 5)]) -- fun chat when activated
+    _chat_str("IT'S ULT TIME...") -- fun chat when activated
     vars.chat_func = false
   end
 end
@@ -250,8 +250,8 @@ if hrp then
 end
 
 vars.chat_func = true
-_chat_str("[AI: Auto Battle, DevBy: HHxScripts, Version: " .. tostring(vars.current_void_position):sub(1, 4) .. "]")
-_chat_str("[Purpose: For fun, annoying others...]")
+_chat_str("==== AI auto battle ready to fight ====")
+_chat_str("=== Press Start ===")
 vars.chat_func = false
 
 runs.RenderStepped:Connect(function()
@@ -273,4 +273,4 @@ plr.Chatted:Connect(function(keywords)
   end
 end)
 
-ui.add_toggle("AI FIGHT", "Code", {255, 255, 255}, {0.35, 0, 0, 0}, 0.2, _main_init, "AI_Enabled")
+ui.add_toggle("Start", "Code", {255, 255, 255}, {0.35, 0, 0, 0}, 0.2, _main_init, "AI_Enabled")
