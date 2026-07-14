@@ -46,13 +46,18 @@ local characters, skill_check = {
   ["Quick Slice"] = false, ["Atmos Cleave"] = true, ["Pinpoint Cut"] = false, ["Split Second Counter"] = true, ["Sunset"] = false, ["Solar Cleave"] = false, ["Sunrise"] = false, ["Atomic Slash"] = true
 }
 
+function _has_dc(t)
+  local x = t.Backpack:FindFirstChild("Death Counter")
+  if x then return true end return false
+end
+
 function _find_plr()
   local t = {n = nil, m = math.huge, r = nil, b = math.huge}
   for _, usr in pairs(plrs:GetPlayers()) do
     if usr ~= plr and usr and usr.Character then
       local hmoid = usr and usr.Character and usr.Character:FindFirstChild("Humanoid")
       local dist = (usr.Character:GetBoundingBox().Position - plr.Character:GetBoundingBox().Position).magnitude
-      if hmoid and hmoid.Health > 0 then
+      if hmoid and hmoid.Health > 0 and not _has_dc(usr) then
         if dist < t.m then
           t.m = dist
           t.n = usr
