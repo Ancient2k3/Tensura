@@ -249,6 +249,12 @@ function _main_init()
   end
 end
 
+function _no_lags()
+  local dbrs = ws:FindFirstChild("Thrown")
+  local wout = nil
+  if dbrs then dbrs:Destroy() end
+end
+
 local hrp = plr and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart")
 if hrp then
   vars.spawned_pos = hrp.Position
