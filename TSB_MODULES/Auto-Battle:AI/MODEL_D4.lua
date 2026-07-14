@@ -57,7 +57,7 @@ function _find_plr()
     if usr ~= plr and usr and usr.Character then
       local hmoid = usr and usr.Character and usr.Character:FindFirstChild("Humanoid")
       local dist = (usr.Character:GetBoundingBox().Position - plr.Character:GetBoundingBox().Position).magnitude
-      if hmoid and hmoid.Health > 0 and not _has_dc(usr) then
+      if hmoid and hmoid.Health > 0 then
         if dist < t.m then
           t.m = dist
           t.n = usr
