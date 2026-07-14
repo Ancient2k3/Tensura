@@ -47,6 +47,7 @@ local characters, skill_check = {
 }
 
 function _has_dc(t)
+  if not t then return false end
   local x = t.Backpack:FindFirstChild("Death Counter")
   if x then return true end return false
 end
@@ -67,7 +68,7 @@ function _find_plr()
         end
       end
     end
-  end if t.r ~= nil or t.n ~= nil then return t.n
+  end if not _has_dc(t.n) and t.r ~= nil or t.n ~= nil then return t.n
   else
     if ws.Live:FindFirstChild("Weakest Dummy") then return ws.Live["Weakest Dummy"]
     else return plr
