@@ -2,12 +2,13 @@
 local ui = loadstring(game:HttpGet("https://raw.githubusercontent.com/HoangHienXScripts/Scripts/refs/heads/main/modules/quickbuttons.lua"))()
 ui.set_configs({saving_state = false})
 
-local ws, plrs, txcs, reps, runs
+local ws, plrs, txcs, reps, runs, bulls
 ws = game:GetService("Workspace")
 plrs = game:GetService("Players")
 txcs = game:GetService("TextChatService")
 reps = game:GetService("ReplicatedStorage")
 runs = game:GetService("RunService")
+bulls = game:GetService("Lighting")
 
 local plr, anim_inst_object
 plr = plrs.LocalPlayer
@@ -251,8 +252,14 @@ end
 
 function _no_lags()
   local dbrs = ws:FindFirstChild("Thrown")
-  local wout = nil
-  if dbrs then dbrs:Destroy() end
+  local wout = bulls:FindFirstChild("Whiteout")
+  if dbrs then
+    dbrs:Destroy()
+  else
+    if wout then
+      wout:Destroy()
+    end
+  end
 end
 
 local hrp = plr and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart")
@@ -273,7 +280,7 @@ runs.RenderStepped:Connect(function()
     if char:GetBoundingBox().Position.Y < vars.current_void_position then
       _normal_tpto(vars.spawned_pos)
       _chat_str("Somehow i'm was falling into the void... so i teleport back!")
-    end
+    end _no_lags()
   end
 end)
 
