@@ -113,7 +113,13 @@ function _tpto(usr, pos)
     if _old_health > hmoid.Health then
       hrp.CFrame = CFrame.new(pos)
       _play_anim()
-      _chat_str("I'm behind you, " .. plrs[usr.Name].DisplayName:sub(1, 4) .. "... !")
+      local bait = plrs[usr.Name].DisplayName:sub(1, 4)
+      local content = ({
+        "I'm behind you AX", "Not that way AX, I'm here...", "Hehehe...", "Tele-por-ted. AX", "Just kidding AX..."
+      })[math.random(1, 5)]:gsub("AX", bait)
+      vars.chat_func = true
+      _chat_str(content)
+      vars.chat_func = false
     end
   end
 end
