@@ -1,3 +1,5 @@
+local plrs = game:GetService("Players")
+local plr = plrs.LocalPlayer
 local cmds = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Modules/refs/heads/main/Commands.lua"))()
 
 cmds.addcmd("afk", {"afk", "ai"}, "load afk AI, automatically fight for u", function()
@@ -6,5 +8,8 @@ cmds.addcmd("afk", {"afk", "ai"}, "load afk AI, automatically fight for u", func
 end)
 
 cmds.addcmd("skill", {"skill", "gs"}, "get some skill, available ability... etc", function(...)
-  print(...)
+  local char = plr and plr.Character
+  if char and char:FindFirstChild("Communicate") then
+    char.Communicate:FireServer(SkillName = ..., Goal = "Custom Character", Action = "GiveSkillToSelf")
+  end
 end)
