@@ -10,6 +10,6 @@ end)
 cmds.addcmd("skill", {"skill", "gs"}, "get some skill, available ability... etc", function(...)
   local char = plr and plr.Character
   if char and char:FindFirstChild("Communicate") then
-    char.Communicate:FireServer(SkillName = ..., Goal = "Custom Character", Action = "GiveSkillToSelf")
+    char.Communicate:FireServer({SkillName = ..., Goal = "Custom Character", Action = "GiveSkillToSelf"})
   end
 end)
