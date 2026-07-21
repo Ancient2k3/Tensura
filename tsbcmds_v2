@@ -9,7 +9,12 @@ end)
 
 cmds.addcmd("skill", {"skill", "gs"}, "get some skill, available ability... etc", function(...)
   local char = plr and plr.Character
+  local str, name = ..., ""
+  str = str:split(" ")
+  for i = 1, #str do
+    name = name .. str[i]:sub(1, 1):upper() .. str[i]:sub(2, #str[i]) .. " "
+  end name = name:sub(1, #name - 1)
   if char and char:FindFirstChild("Communicate") then
-    char.Communicate:FireServer({SkillName = ..., Goal = "Custom Character", Action = "GiveSkillToSelf"})
+    char.Communicate:FireServer({SkillName = name, Goal = "Custom Character", Action = "GiveSkillToSelf"})
   end
 end)
