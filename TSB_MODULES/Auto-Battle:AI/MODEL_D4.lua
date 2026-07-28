@@ -19,6 +19,8 @@ anim_inst_object.AnimationId = "rbxassetid://15957361339"
 
 local vars, ignore_anims = {
   retreat_dist = 35,
+  escape_dist = 60,
+  ai_walkspeed = 99,
   oldest_str = "",
   oldest_char = "",
   oldest_position = Vector3.new(0, 9999, 0),
@@ -135,7 +137,7 @@ end
 function _walkto(pos)
   local hmoid = plr and plr.Character and plr.Character:FindFirstChild("Humanoid")
   if hmoid and hmoid.Health > 0 then
-    hmoid.WalkSpeed = 99
+    hmoid.WalkSpeed = vars.ai_walkspeed
     hmoid.WalkToPoint = pos
   end
 end
@@ -237,7 +239,7 @@ function _main_init()
           _walkto(retreat_pos)
         end
         if distance < 20 then
-          _tpto(target, target_hrp.Position + (target_hrp.CFrame.LookVector * -60))
+          _tpto(target, target_hrp.Position + (target_hrp.CFrame.LookVector * -vars.escape_dist))
         end _use_ult() _dash(hrp, target_hrp)
         if plr.Backpack:FindFirstChild(characters[selected_char][5]) then
           _use_ability(behind_target, characters[selected_char][5], 35, skill_check[characters[selected_char][5]])
@@ -295,6 +297,16 @@ plr.Chatted:Connect(function(keywords)
   if star[1] == "/disable" then
     vars.can_spam_target_lock = false
     _chat_str("[Can spam: Disabled]")
+  elseif star[1] == "ai_speed" then
+    if #star == 2 and star[2]:match("%d+") then
+      vars.ai_walkspeed = tonumber(star[2])
+    end
+  elseif star[1] == "esc_range" then
+    if #star == 2 and star[2]:match("%d+") then
+      vars.escape_dist = tonumber(star[2])
+    end
+  elseif star[1] == "?" then
+    print("cmds:\nai_speed <numbers>, esc_range <numbers>")
   end
 end)
 
