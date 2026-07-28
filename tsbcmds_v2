@@ -20,6 +20,15 @@ cmds.addcmd("skill", {"skill", "gs"}, "get some skill, available ability... etc"
   end
 end)
 
-cmds.addcmd("music", {"music", "m"}, "play some music", function(name)
-  local fldr = ws
+cmds.addcmd("music", {"music", "m"}, "play some music", function(name, looped)
+  local fldr, rslt = ws.HHxScripts.Assets.Audios, nil
+  for _, v in next, fldr:GetChildren() do
+    if v.Name:lower():match(name) then
+      rslt = v
+      break
+    end
+  end if rslt then
+    rslt:Play()
+    if looped then print(typeof(looped), looped) end
+  end
 end)
