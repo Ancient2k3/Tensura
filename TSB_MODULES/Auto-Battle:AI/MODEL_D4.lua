@@ -49,7 +49,7 @@ local characters, skill_check = {
 
 function _has_dc(t)
   if not t then return false end
-  local x = t.Backpack:FindFirstChild("Death Counter")
+  local x = t.Backpack:FindFirstChild("Death Counter") or t.Backpack:FindFirstChild("Death Blow")
   if x then return true end return false
 end
 
