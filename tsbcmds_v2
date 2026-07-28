@@ -1,3 +1,4 @@
+local ws = game:GetService("Workspace")
 local plrs = game:GetService("Players")
 local plr = plrs.LocalPlayer
 local cmds = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Modules/refs/heads/main/Commands.lua"))()
@@ -17,4 +18,8 @@ cmds.addcmd("skill", {"skill", "gs"}, "get some skill, available ability... etc"
   if char and char:FindFirstChild("Communicate") then
     char.Communicate:FireServer({SkillName = name, Goal = "Custom Character", Action = "GiveSkillToSelf"})
   end
+end)
+
+cmds.addcmd("music", {"music", "m"}, "play some music", function(name)
+  local fldr = ws
 end)
