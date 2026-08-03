@@ -32,4 +32,4 @@ plrs.PlayerAdded:Connect(function(t)
   end
 end)
 
-print("[Troll CMDS: Loaded]")
+print("[Troll CMDS: Loaded]\n[/br, /rs, /fz]")
