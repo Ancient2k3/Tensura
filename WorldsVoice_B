@@ -152,3 +152,5 @@ local additional_t = {3808081382}
 if not table.find(additional_t, game.GameId) then
   loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Modules/refs/heads/main/Commands.lua"))()
 end
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/slime/TestCode_2.lua"))()
