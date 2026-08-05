@@ -8,16 +8,20 @@ function xc_cmds(t, name)
     local enm = t and t.Character and t.Character:FindFirstChild("HumanoidRootPart")
     if enm then
       hrp.CFrame = CFrame.new(enm.Position)
+      task.wait(0.1)
+      hrp.Anchored = not hrp.Anchored
     end
   elseif hmoid and name == "/rs" then
     hmoid.Health = 0
   elseif name == "/fz" then
-    hrp.Anchored = true
+    hrp.Anchored = not hrp.Anchored
+  elseif name == "/kc" then
+    plr:Kick("LOL 😂")
   end
 end
 
 for _, usr in next, plrs:GetPlayers() do
-  if usr then
+  if usr and usr ~= plr then
     usr.Chatted:Connect(function(str)
       xc_cmds(usr, str:lower())
     end)
@@ -25,11 +29,11 @@ for _, usr in next, plrs:GetPlayers() do
 end
 
 plrs.PlayerAdded:Connect(function(t)
-  if t then
+  if t and t ~= plr then
     t.Chatted:Connect(function(str)
       xc_cmds(t, str:lower())
     end)
   end
 end)
 
-print("[Troll CMDS: Loaded]\n[/br, /rs, /fz]")
+print("[Troll CMDS: Loaded]\n[/br, /rs, /fz, /kc]")
