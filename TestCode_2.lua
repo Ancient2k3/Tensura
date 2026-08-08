@@ -83,8 +83,8 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Status/ref
 local context = game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/slime/announcement")
 local fixed_content = ""
 context = context:split("[+]")
-if context[2]:match("[user]") then
-  fixed_content = context[2]:gsub("[user]", plr.Name)
+if context[2]:match("get_display_name") then
+  fixed_content = context[2]:gsub("get_display_name", plr.DisplayName or "?")
 end
 if context[1]:match("%d+") then
   local time_end = tonumber(context[1])
