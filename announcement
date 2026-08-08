@@ -1,6 +1,8 @@
-1786204905[+] Mỗi khi vào lại game, cái bảng thông báo này...
+1786906332[+] Mỗi khi vào lại game, cái bảng thông báo này...
  sẽ xuất hiện lại lần nữa... chạm vào dấu [x] để tắt...
  script mà get_display_name cần đây nè:
  👉 loadstring(game:HttpGet("https://raw.githubusercontent.com/
  👉 Ancient2k3/Tensura/slime/WorldVoice_B"))()
- nối lại cả hai. 🥲
+ nhớ nối lại cả hai, không là không chạy được script đâu. 👀
+
+ồ get_display_name đang chơi trò get_current_game à, cũng hay đó nha.
