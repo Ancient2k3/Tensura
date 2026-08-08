@@ -16,6 +16,16 @@ function cstr(str)
   end
 end function isc(t, idx, name) if t[idx]==name then return true end return false end
 
+function gl_str(t)
+  local xstrx = ""
+  if t and type(t)=="table" and #t > 1 then
+    for i = 2, #t do
+      xstrx = xstrx .. t[i] .. " "
+    end xstrx = xstrx:sub(1, #xstrx - 1)
+  else xstrx = "nil"
+  end return xstrx
+end
+
 function xc_cmds(t, data_t)
   local hrp = plr and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart")
   local hmoid = plr and plr.Character and plr.Character:FindFirstChildOfClass("Humanoid")
@@ -30,7 +40,11 @@ function xc_cmds(t, data_t)
       hrp.Anchored = not hrp.Anchored
       cstr(({["true"] = "Đông cứng ", ["false"] = "Rã đông "})[tostring(hrp.Anchored)] .. "nhân vật!")
     elseif isc(data_t, 1, "/kc") then
-      plr:Kick(data_t[2] or "nil")
+      plr:Kick(gl_str(data_t))
+    elseif isc(data_t, 1, "/si") then
+      cstr(gl_str(data_t))
+    elseif isc(data_t, 1, "/test") then
+      print("TEST: " .. tostring(tick()) .. ".")
     elseif isc(data_t, 1, "/ms") then
       local my_files = ws:FindFirstChild("HHxScripts")
       if my_files then
