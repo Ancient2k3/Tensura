@@ -81,11 +81,15 @@ end)
 print("[Troll CMDS: Loaded]\n[/br, /rs, /fz, /kc, /ms]")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Status/refs/heads/main/Events/Notification.lua"))()
 local context = game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/slime/announcement")
+local fixed_content = ""
 context = context:split("[+]")
+if context[2]:match("[user]") then
+  fixed_content = context[2]:gsub("[user]", plr.Name)
+end
 if context[1]:match("%d+") then
   local time_end = tonumber(context[1])
   if tick() < time_end then
-    _G.ntf_content = tostring(context[2]) or " Nhận thông báo thất bại..."
+    _G.ntf_content = tostring(fixed_content) or " Nhận thông báo thất bại..."
     _G.ntf_time = time_end
   end
 end
