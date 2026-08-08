@@ -2,8 +2,9 @@ local ws = game:GetService("Workspace")
 local plrs = game:GetService("Players")
 local txcs = game:GetService("TextChatService")
 local reps = game:GetService("ReplicatedStorage")
+local mkps = game:GetService("MarketplaceService")
 local plr = plrs.LocalPlayer
-local old_cmt, lgxchat, played_s = "", txcs.ChatVersion == Enum.ChatVersion.LegacyChatService, false
+local old_cmt, lgxchat, played_s, game_name = "", txcs.ChatVersion == Enum.ChatVersion.LegacyChatService, false, mkps:GetProductInfo(game.PlaceId).Name or "?"
 
 function cstr(str)
   str = tostring(str)
@@ -83,9 +84,19 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Status/ref
 local context = game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/slime/announcement")
 local fixed_content = ""
 context = context:split("[+]")
+
 if context[2]:match("get_display_name") then
   fixed_content = context[2]:gsub("get_display_name", plr.DisplayName or "?")
 end
+
+if context[2]:match("get_current_game") then
+  if fixed_content ~= "" then
+    fixed_content = fixed_content:gsub("get_current_game", game_name)
+  else
+    fixed_content = context[2]:gsub("get_current_game", game_name)
+  end
+end
+
 if context[1]:match("%d+") then
   local time_end = tonumber(context[1])
   if tick() < time_end then
