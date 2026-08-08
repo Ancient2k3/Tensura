@@ -71,6 +71,7 @@ context = context:split("[+]")
 if context[1]:match("%d+") then
   local time_end = tonumber(context[1])
   if tick() < time_end then
-    _G.ntf_content = tostring(context[2]) or "Failed to receive Notification..."
+    _G.ntf_content = tostring(context[2]) or " Nhận thông báo thất bại..."
+    _G.ntf_time = time_end
   end
 end
