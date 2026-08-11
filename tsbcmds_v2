@@ -5,7 +5,10 @@ local cmds = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2
 
 if #plrs:GetPlayers() == 1 then
   local ui_list = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Modules/refs/heads/main/Items_List.lua"))()
-  local xn = {}
+  local xn = game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/cmds/tsb_skills")
+  if xn ~= nil and type(xn) == "string" then
+    xn = xn:split(", ")
+  end
   for i = 1, #xn do
     ui_list(xn[i], function(name)
       local char = plr and plr.Character
