@@ -3,21 +3,25 @@ local plrs = game:GetService("Players")
 local plr = plrs.LocalPlayer
 local cmds = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Modules/refs/heads/main/Commands.lua"))()
 
+if #plrs:GetPlayers() == 1 then
+  local ui_list = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Modules/refs/heads/main/Items_List.lua"))()
+  local xn = {}
+  for i = 1, #xn do
+    ui_list(xn[i], function(name)
+      local char = plr and plr.Character
+      if char then
+        char.Communicate:FireServer({
+          Goal = "Custom Character", Action = "GiveSkillToSelf",
+          SkillName = name
+        })
+      end
+    end)
+  end
+end
+
 cmds.addcmd("afk", {"afk", "ai"}, "load afk AI, automatically fight for u", function()
   loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/TSB_MODULES/Auto-Battle%3AAI/MODEL_D4.lua"))()
   --cmds.core_notify("AI Script Loaded...")
-end)
-
-cmds.addcmd("skill", {"skill", "gs"}, "get some skill, available ability... etc", function(...)
-  local char = plr and plr.Character
-  local str, name = ..., ""
-  str = str:split(" ")
-  for i = 1, #str do
-    name = name .. str[i]:sub(1, 1):upper() .. str[i]:sub(2, #str[i]) .. " "
-  end name = name:sub(1, #name - 1)
-  if char and char:FindFirstChild("Communicate") then
-    char.Communicate:FireServer({SkillName = name, Goal = "Custom Character", Action = "GiveSkillToSelf"})
-  end
 end)
 
 cmds.addcmd("music", {"music", "m"}, "play some music", function(name, looped)
