@@ -10,12 +10,12 @@ if #plrs:GetPlayers() == 1 then
     xn = xn:split(", ")
   end
   for i = 1, #xn do
-    ui_list(xn[i], function(name)
+    ui_list(xn[i], function()
       local char = plr and plr.Character
       if char then
         char.Communicate:FireServer({
           Goal = "Custom Character", Action = "GiveSkillToSelf",
-          SkillName = name
+          SkillName = xn[i]
         })
       end
     end)
