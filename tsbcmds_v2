@@ -8,18 +8,35 @@ if #plrs:GetPlayers() == 1 then
   local xn = game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/cmds/tsb_skills")
   if xn ~= nil and type(xn) == "string" then
     xn = xn:split(", ")
+  end local total_moveset = 0
+
+  function rcv_item(action, name)
+    local char = plr and plr.Character
+    if char then
+      char.Communicate:FireServer({
+        Goal = "Custom Character", Action = action,
+        SkillName = name
+      })
+    end
   end
-  for i = 1, #xn do
-    ui_list(xn[i], function()
-      local char = plr and plr.Character
-      if char then
-        char.Communicate:FireServer({
-          Goal = "Custom Character", Action = "GiveSkillToSelf",
-          SkillName = xn[i]
-        })
+
+  ui_list("CLEAR MOVESETS", function()
+    local _bp = plr and plr.Backpack
+    if _bp and #_bp:GetChildren() > 0 then
+      for _, item_inst in next, _bp:GetChildren() do
+        if item_inst:IsA("Tool") then
+          rcv_item("RemoveSkillFromSelf", item_inst.Name)
+          task.wait(0.2)
+        end
       end
-    end)
-  end
+    end
+  end) for i = 1, #xn do
+    ui_list(xn[i], function()
+      rcv_item("GiveSkillToSelf", xn[i])
+    end) total_moveset = total_moveset + 1
+  end ui_list("Movesets count: " .. tostring(total_moveset) .. ".", function()
+    print("[Total Movesets: " .. tostring(total_moveset) .. ". ]")
+  end)
 end
 
 cmds.addcmd("afk", {"afk", "ai"}, "load afk AI, automatically fight for u", function()
