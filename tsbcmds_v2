@@ -19,7 +19,18 @@ if #plrs:GetPlayers() == 1 then
       })
     end
   end
-
+  
+  function random_unique(count, min, max)
+    local result, used = {}, {}
+    while #result < count do
+      local n = math.random(min, max)
+      if not used[n] then
+        used[n] = true
+        result[#result + 1] = n
+      end
+    end return result
+  end
+  
   ui_list("CLEAR MOVESETS", function()
     local _bp = plr and plr.Backpack
     if _bp and #_bp:GetChildren() > 0 then
@@ -30,7 +41,19 @@ if #plrs:GetPlayers() == 1 then
         end
       end
     end
-  end) for i = 1, #xn do
+  end)
+  
+  ui_list("RANDOM MOVESETS", function()
+    local chosen_nums = random_unique(4, 1, #xn)
+    if #chosen_nums >= 4 then
+      for i = 1, 4 do
+        rcv_item("GiveSkillToSelf", xn[chosen_nums[i]])
+        task.wait(0.2)
+      end
+    end
+  end)
+  
+  for i = 1, #xn do
     ui_list(xn[i], function()
       rcv_item("GiveSkillToSelf", xn[i])
     end) total_moveset = total_moveset + 1
@@ -47,7 +70,8 @@ end)
 cmds.addcmd("music", {"music", "m"}, "play some music", function(name, looped)
   local fldr, rslt = ws.HHxScripts.Assets.Audios, nil
   for _, v in next, fldr:GetChildren() do
-    if v.Name:lower():match(name) then
+    if v:IsA("Sound") then v:Pause() end
+    if v:IsA("Sound") and v.Name:lower():match(name) then
       rslt = v
       break
     end
