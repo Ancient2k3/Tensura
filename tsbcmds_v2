@@ -31,7 +31,7 @@ if #plrs:GetPlayers() == 1 then
     end return result
   end
   
-  ui_list("CLEAR MOVESETS", function()
+  ui_list.add_button("CLEAR MOVESETS", function()
     local _bp = plr and plr.Backpack
     if _bp and #_bp:GetChildren() > 0 then
       for _, item_inst in next, _bp:GetChildren() do
@@ -43,7 +43,7 @@ if #plrs:GetPlayers() == 1 then
     end
   end)
   
-  ui_list("RANDOM MOVESETS", function()
+  ui_list.add_button("RANDOM MOVESETS", function()
     local chosen_nums = random_unique(4, 1, #xn)
     if #chosen_nums >= 4 then
       for i = 1, 4 do
@@ -54,10 +54,10 @@ if #plrs:GetPlayers() == 1 then
   end)
   
   for i = 1, #xn do
-    ui_list(xn[i], function()
+    ui_list.add_button(xn[i], function()
       rcv_item("GiveSkillToSelf", xn[i])
     end) total_moveset = total_moveset + 1
-  end ui_list("Movesets count: " .. tostring(total_moveset) .. ".", function()
+  end ui_list.add_button("Movesets count: " .. tostring(total_moveset) .. ".", function()
     print("[Total Movesets: " .. tostring(total_moveset) .. ". ]")
   end)
 end
