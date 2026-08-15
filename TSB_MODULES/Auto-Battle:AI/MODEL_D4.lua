@@ -20,7 +20,7 @@ anim_inst_object.AnimationId = "rbxassetid://15957361339"
 local vars, ignore_anims = {
   retreat_dist = 35,
   escape_dist = 60,
-  ai_walkspeed = 99,
+  ai_walkspeed = 425,
   oldest_str = "",
   oldest_char = "",
   oldest_position = Vector3.new(0, 9999, 0),
@@ -120,7 +120,7 @@ function _tpto(usr, pos)
         "I'm behind you AX", "Not that way AX, I'm here...", "Hehehe...", "Tele-por-ted. AX", "Just kidding AX..."
       })[math.random(1, 5)]:gsub("AX", bait)
       vars.chat_func = true
-      _chat_str(content)
+      _chat_str("[BOT]: " .. content)
       vars.chat_func = false
     end
   end
