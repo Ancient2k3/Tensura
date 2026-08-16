@@ -20,7 +20,7 @@ anim_inst_object.AnimationId = "rbxassetid://15957361339"
 local vars, ignore_anims = {
   retreat_dist = 35,
   escape_dist = 60,
-  ai_walkspeed = 425,
+  ai_walkspeed = 125,
   oldest_str = "",
   oldest_char = "",
   oldest_position = Vector3.new(0, 9999, 0),
@@ -130,6 +130,7 @@ function _normal_tpto(pos)
   local hrp = plr and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart")
   local hmoid = plr and plr.Character and plr.Character:FindFirstChild("Humanoid")
   if hrp and hmoid and hmoid.Health > 0 then
+    hrp.Velocity = Vector3.new(0, 0, 0)
     hrp.CFrame = CFrame.new(pos.X, pos.Y, pos.Z, select(4, hrp.CFrame:components()))
   end
 end
