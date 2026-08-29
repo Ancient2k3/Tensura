@@ -26,7 +26,7 @@ local vars, ignore_anims = {
   oldest_position = Vector3.new(0, 9999, 0),
   spawned_pos = Vector3.new(0, 450, 0),
   current_void_position = 350,
-  can_spam_target_lock = true,
+  can_spam_target_lock = false,
   chat_func = false,
   is_low_health = false,
   is_legacy_chat = txcs.ChatVersion == Enum.ChatVersion.LegacyChatService
@@ -119,9 +119,7 @@ function _tpto(usr, pos)
       local content = ({
         "I'm behind you AX", "Not that way AX, I'm here...", "Hehehe...", "Tele-por-ted. AX", "Just kidding AX..."
       })[math.random(1, 5)]:gsub("AX", bait)
-      vars.chat_func = true
-      _chat_str("[BOT]: " .. content)
-      vars.chat_func = false
+      _chat_str(content)
     end
   end
 end
@@ -168,9 +166,7 @@ function _use_ult()
   local ult = tonumber(plr:GetAttribute("Ultimate")) == 100
   if comm and ult then
     comm:FireServer({Goal = "KeyPress", Key = Enum.KeyCode.G})
-    vars.chat_func = true
-    _chat_str("IT'S ULT TIME...") -- fun chat when activated
-    vars.chat_func = false
+    _chat_str("IT'S ULT TIME...")
   end
 end
 
@@ -197,10 +193,9 @@ function _main_init()
     local mech_on = target:FindFirstChild("Mech")
     if mech_on then
       mech_on:Destroy()
-      _chat_str("To preventing lag issues... user " .. target.Name:sub(1, 4) .. "... Mech has been deleted!")
     end
     if not vars.is_low_health and vars.can_spam_target_lock then
-      _chat_str("Target Lock: <" .. target.Name:sub(1, 4):upper() .. "...> !")
+      print("[AI]: Khoá mục tiêu " .. target.Name:sub(1, 4):upper() .. ".")
     end
   if hmoid and hmoid.Health < 35 and hmoid.Health > 0 then
     local char = plr and plr.Character or nil
