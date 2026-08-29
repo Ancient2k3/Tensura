@@ -1,6 +1,11 @@
 -- Test: 4 --
 local ui = loadstring(game:HttpGet("https://raw.githubusercontent.com/HoangHienXScripts/Scripts/refs/heads/main/modules/quickbuttons.lua"))()
+local x_content = game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/TSB_MODULES/Auto-Battle%3AAI/D4_FunChat")
 ui.set_configs({saving_state = false})
+
+repeat task.wait()
+until x_content and type(x_content) == "string"
+x_content = x_content:split("~")
 
 local ws, plrs, txcs, reps, runs, bulls
 ws = game:GetService("Workspace")
@@ -116,10 +121,10 @@ function _tpto(usr, pos)
       hrp.CFrame = CFrame.new(pos)
       _play_anim()
       local bait = plrs[usr.Name].DisplayName:sub(1, 4)
-      local content = ({
-        "I'm behind you AX", "Not that way AX, I'm here...", "Hehehe...", "Tele-por-ted. AX", "Just kidding AX..."
-      })[math.random(1, 5)]:gsub("AX", bait)
+      local content = x_content[math.random(1, #x_content - 1)]:gsub("AX", bait)
+      vars.chat_func = true
       _chat_str(content)
+      vars.chat_func = false
     end
   end
 end
@@ -166,7 +171,9 @@ function _use_ult()
   local ult = tonumber(plr:GetAttribute("Ultimate")) == 100
   if comm and ult then
     comm:FireServer({Goal = "KeyPress", Key = Enum.KeyCode.G})
-    _chat_str("IT'S ULT TIME...")
+    vars.chat_func = true
+    _chat_str(x_content[#x_content])
+    vars.chat_func = false
   end
 end
 
