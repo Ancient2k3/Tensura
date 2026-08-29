@@ -280,8 +280,8 @@ if hrp then
 end
 
 vars.chat_func = true
-_chat_str("==== AI auto battle ready to fight ====")
-_chat_str("=== Press Start ===")
+_chat_str("[AI Launched]")
+_chat_str("[v1.4, by HHxScripts]")
 vars.chat_func = false
 
 runs.RenderStepped:Connect(function()
