@@ -63,7 +63,7 @@ if #plrs:GetPlayers() == 1 then
 end
 
 cmds.addcmd("afk", {"afk", "ai"}, "load afk AI, automatically fight for u", function()
-  loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/place/TSB_MODULES/Auto-Battle%3AAI/MODEL_D4.lua"))()
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/dcac66881a98a18a63ca35d34c8ec83d3a1a1217/TSB_MODULES/Auto-Battle%3AAI/MODEL_D4.lua"))()
   --cmds.core_notify("AI Script Loaded...")
 end)
 
