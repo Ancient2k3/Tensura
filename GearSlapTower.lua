@@ -7,13 +7,15 @@ statui = service"StarterGui"
 txcs = service"TextChatService"
 rs = service"RunService"
 
-local plr, rmt, tools, legacy, cons, atra
+local plr, rmt, tools, legacy, cons, atra, last_cmd, aura_mode
 plr = plrs.LocalPlayer
 rmt = reps.RemoteEvents.mapManagerRemote
 tools = ws.Givers.ToolGivers
 legacy = txcs.ChatVersion == Enum.ChatVersion.LegacyChatService
 cons = {}
 atra = false
+last_cmd = ""
+aura_mode = "speed"
 
 repeat task.wait()
 until game:IsLoaded() and plr and plr.Character and plr.Character:FindFirstChildOfClass("Humanoid")
@@ -53,10 +55,12 @@ end
 
 function send_cmd(msg)
   msg = tostring(msg)
-  if not legacy then
-    txcs.TextChannels.RBXGeneral:SendAsync(msg)
-  else
-    reps.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg, "All")
+  if msg ~= last_cmd then last_cmd = msg
+    if not legacy then
+      txcs.TextChannels.RBXGeneral:SendAsync(msg)
+    else
+      reps.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg, "All")
+    end
   end
 end
 
@@ -84,7 +88,7 @@ plr.Chatted:Connect(function(msg)
       table.insert(cons, rs.RenderStepped:Connect(function()
         local enm = nearby()
         if enm and enm.Character and not is_slowed(enm) then
-          send_cmd("/w x /speed "..enm.Name.." 0")
+          send_cmd("/w x /"..aura_mode.." "..enm.Name.." 0")
           tag_slowed(enm)
         end
       end))
@@ -93,5 +97,8 @@ plr.Chatted:Connect(function(msg)
         for i = 1, #cons do cons[i]:Disconnect() cons[i] = nil end
       end
     end
+  elseif str[1] == "mode" then
+    aura_mode = str[2]
+    print(aura_mode.." selected.")
   end
 end) print("cmds: claim, bomb, aura.")
