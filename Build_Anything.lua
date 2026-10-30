@@ -12,7 +12,7 @@ htps = game:GetService("HttpService")
 local plr, vars
 plr = plrs.LocalPlayer
 vars = {
-  gravity = ws.Gravity
+  grav = ws.Gravity
 }
 
 local custom_structures = {
@@ -396,11 +396,13 @@ function reloadbuilt()
   cubes_data = htps:JSONDecode(readfile("HHxScripts/" .. plr.Name:upper() .. "_CUBES_DATA.json"))
   pbar_background.Visible = true
   local total_objects = getcount()
+  ws.Gravity = 0
   for i = 1, total_objects do
     placing(cubes_data["object_" .. tostring(i)].name, cubes_data["object_" .. tostring(i)].position)
     update_visualizer(i, total_objects, cubes_data["object_" .. tostring(i)].name)
   end display_index_object.Text = "Finished!"
   task.wait(1.25)
+  ws.Gravity = vars.grav
   pbar_background.Visible = false
   update_listsfile_position()
 end
@@ -412,11 +414,13 @@ function reloadbuilt_2(name)
     cubes_data = htps:JSONDecode(readfile("HHxScripts/" .. name .. ".json"))
     pbar_background.Visible = true
     local total_objects = getcount()
+    ws.Gravity = 0
     for i = 1, total_objects do
       placing(cubes_data["object_" .. tostring(i)].name, cubes_data["object_" .. tostring(i)].position)
       update_visualizer(i, total_objects, cubes_data["object_" .. tostring(i)].name)
     end display_index_object.Text = "Finished!"
     task.wait(1.25)
+    ws.Gravity = vars.grav
     pbar_background.Visible = false
     update_listsfile_position()
     is_reloading_built_2 = false
