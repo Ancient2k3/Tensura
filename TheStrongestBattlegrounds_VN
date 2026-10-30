@@ -177,7 +177,7 @@ Button4Corner.Parent = button4
 Button4Corner.CornerRadius = UDim.new(0, 10)
 
 button4.MouseButton1Click:Connect(function()
-    loadstring(game:HttpGet('https://raw.githubusercontent.com/GhostPlayer352/Test4/main/Auto%20Fling%20Player'))()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/Ancient2k3/DetectTool/refs/heads/main/Flinger.lua'))()
 
     local CoreGui = game:GetService("StarterGui")
 
@@ -1783,7 +1783,14 @@ end)
 
 -- Auto Chat: EZ --
 function ChatMessage(str)
-game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(str, "All")
+  local txcs = game:GetService("TextChatService")
+  local reps = game:GetService("ReplicatedStorage")
+  local chatv = txcs and txcs.ChatVersion == Enum.ChatVersion.LegacyChatService
+  if not chatv then
+    txcs.TextChannels.RBXGeneral:SendAsync(str)
+  else
+    reps.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(str, "All")
+  end
 end
 
 function DetectZeroHealth()
