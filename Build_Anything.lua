@@ -285,9 +285,9 @@ function placing(name, pos)
   if not type(pos) == "table" then ntf("It's not table, script errored!") return end
   local hrp = plr and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart")
   if hrp then
-    task.spawn(function()
       hrp.CFrame = CFrame.new(Vector3.new(unpack(pos)) + Vector3.new(0, 5, 0))
-      task.wait(0.02)
+      task.wait(0.125)
+    task.spawn(function()
       rls.Events.Place:InvokeServer(name, CFrame.new(unpack(pos)) * CFrame.Angles(0, 0, 0), workspace.Baseplate)
     end)
   end
