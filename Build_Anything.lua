@@ -9,8 +9,11 @@ core = game:GetService("CoreGui")
 stat = game:GetService("StarterGui")
 htps = game:GetService("HttpService")
 
-local plr
+local plr, vars
 plr = plrs.LocalPlayer
+vars = {
+  gravity = ws.Gravity
+}
 
 local custom_structures = {
   ["Mossy Structure"] = "https://raw.githubusercontent.com/Ancient2k3/Tensura/refs/heads/main/Data/Build_Anything/Rune.json"
@@ -282,9 +285,12 @@ function placing(name, pos)
   if not type(pos) == "table" then ntf("It's not table, script errored!") return end
   local hrp = plr and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart")
   if hrp then
-    hrp.CFrame = CFrame.new(Vector3.new(unpack(pos)) + Vector3.new(0, 5, 0))
-  end task.wait(0.5)
-  rls.Events.Place:InvokeServer(name, CFrame.new(unpack(pos)) * CFrame.Angles(0, 0, 0), workspace.Baseplate)
+    task.spawn(function()
+      hrp.CFrame = CFrame.new(Vector3.new(unpack(pos)) + Vector3.new(0, 5, 0))
+      task.wait(0.02)
+      rls.Events.Place:InvokeServer(name, CFrame.new(unpack(pos)) * CFrame.Angles(0, 0, 0), workspace.Baseplate)
+    end)
+  end
 end
 
 function Get_nearby_player()
