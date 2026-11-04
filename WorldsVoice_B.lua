@@ -25,7 +25,7 @@ local script_data = {
     [994732206] = "https://raw.githubusercontent.com/NganHa2k3/RobloxScript_1/refs/heads/main/BloxFruits_Language",
 
     -- The Strongest Battlegrounds --
-    [3808081382] = "https://raw.githubusercontent.com/NganHa2k3/RobloxScript_1/main/TheStrongestBattlegrounds_Language",
+    [3808081382] = "https://raw.githubusercontent.com/HoangHienXScripts/Projekts/refs/heads/main/TSB/fix_lag.lua", --"https://raw.githubusercontent.com/NganHa2k3/RobloxScript_1/main/TheStrongestBattlegrounds_Language"
 
     -- The Chosen One --
     [3983828495] = "https://raw.githubusercontent.com/NganHa2k3/Tensura/place/TheChosenOne",
@@ -111,7 +111,7 @@ loading_script(game.GameId)
 
 local music_start = workspace.HHxScripts.Assets.Audios[valid_songs[math.random(1, #valid_songs)]]
 music_start.Volume = 1.75
-music_start:Play()
+--music_start:Play()
 print("[Played: " .. music_start.Name:upper() .. ".]")
 
 local uh_game = tostring(game.GameId)
